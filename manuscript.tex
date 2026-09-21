@@ -14,6 +14,11 @@
 
 \begin{document}
 
+% Running title (for journal header; IEEEtran has no dedicated \runningtitle
+% command --- if moving to a Wiley/STVR template, set this via that template's
+% short-title mechanism, e.g. \runninghead{LLM Unit Test Generation for Express.js}).
+% Running title: LLM Unit Test Generation for Express.js
+
 \title{A Single-Run Empirical Comparison of Free-Tier LLMs on Express.js Unit Test Generation and Line Coverage}
 
 \author{
@@ -25,6 +30,15 @@ kanishk.bairagi00@gmail.com
 }
 }
 
+% ---- Corresponding author details (for journal submission systems /
+% cover page; not all fields render under IEEEtran's \author macro, so
+% they are also listed explicitly here for manual entry into the
+% journal's submission form). ----
+% Corresponding author: Kanishk Bairagi
+% Postal address: [INSERT YOUR FULL POSTAL ADDRESS HERE BEFORE SUBMISSION]
+% Email: kanishk.bairagi00@gmail.com
+% ORCID: https://orcid.org/0009-0001-8029-1973
+
 \maketitle
 
 \begin{abstract}
@@ -32,7 +46,7 @@ Automated unit test generation is pivotal to software reliability in asynchronou
 \end{abstract}
 
 \begin{IEEEkeywords}
-automated test generation, large language models, Express.js, unit testing, Jest, ES Modules, code coverage, mutation testing, software quality assurance
+Large language models; automated test generation; software testing; Express.js; mutation testing; empirical software engineering
 \end{IEEEkeywords}
 
 % ============================================================
@@ -293,11 +307,29 @@ Because this is a single run, we cannot yet say whether these are stable, system
 
 \subsection{Data and Code Availability}
 
-To support replication, including running the repeated-trial extension described above, the evaluation harness, controller dataset, generated test suites, and raw JSON execution logs are made available at: \url{https://github.com/Kanishk/express-llm-benchmark}.
+To support replication, including running the repeated-trial extension described above, the evaluation harness, controller dataset, generated test suites, and raw JSON execution logs are made available at: \url{https://github.com/kanishkbairagi/express_llm_benchmark1}.
 
 \subsection{Conclusion}
 
 This paper reported a single-run empirical comparison of two publicly accessible models available without direct API charges during the study period---\textit{gemini-3.6-flash} and \textit{gpt-oss-120b}---for automated unit test generation in asynchronous Express.js microservices. In this run, \textit{gemini-3.6-flash} achieved a 100\% suite success rate across 25 controllers, 439 passing assertions with zero failures, 94.73\% mean line coverage, and an 87.87\% mutation score. \textit{gpt-oss-120b} achieved a 72\% suite success rate, 62.71\% mean line coverage, and a 59.79\% overall mutation score, with failures traced to ES Module mocking syntax errors and explicit import omissions. Exact binomial McNemar's ($p = 0.0156$) and Wilcoxon signed-rank ($p \approx 0.00024$) tests indicate this single-run gap is unlikely to reflect chance sign/rank patterns alone. We view this as a preliminary but informative signal for resource-constrained teams choosing between free-tier LLM endpoints, and we identify repeated-trial replication, third-party benchmark datasets, and comparison against paid frontier models as the most valuable next steps.
+
+% ============================================================
+\section*{Declarations}
+
+\subsection*{Data Availability Statement}
+The evaluation harness, controller dataset, generated test suites, and raw JSON execution logs supporting this study are publicly available at: \url{https://github.com/kanishkbairagi/expressllmbenchmark1}.
+
+\subsection*{Funding}
+This research received no external funding.
+
+\subsection*{Conflict of Interest}
+The author declares that there is no conflict of interest.
+
+\subsection*{Ethics Approval}
+This study did not involve human participants, human subjects, or animals; therefore, ethics approval was not required.
+
+\subsection*{Author Contributions}
+Kanishk Bairagi conceived and designed the study, developed the evaluation harness, conducted the experiments and analysis, prepared the research artifacts, and wrote the manuscript.
 
 % ============================================================
 \bibliographystyle{IEEEtran}
@@ -347,4 +379,3 @@ in \textit{Proc. 36th IEEE/ACM Int. Conf. Software Engineering (ICSE)}, Hyderaba
 \end{thebibliography}
 
 \end{document}
-
