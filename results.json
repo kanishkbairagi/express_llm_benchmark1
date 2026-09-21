@@ -1,0 +1,427 @@
+{
+  "benchmarkTimestamp": "2026-09-18T11:43:02.451Z",
+  "totalControllers": 25,
+  "totalEvaluations": 50,
+  "models": {
+    "gemini-3.6-flash": {
+      "evaluatedControllers": 25,
+      "totalTestAssertionsPassed": 439,
+      "totalTestAssertionsFailed": 0,
+      "testPassRatePercentage": 100,
+      "syntaxOrRuntimeErrorCount": 0,
+      "syntaxErrorRatePercentage": 0,
+      "meanLineCoveragePercentage": 94.73
+    },
+    "gpt-oss-120b": {
+      "evaluatedControllers": 25,
+      "totalTestAssertionsPassed": 215,
+      "totalTestAssertionsFailed": 1,
+      "testPassRatePercentage": 99.54,
+      "syntaxOrRuntimeErrorCount": 7,
+      "syntaxErrorRatePercentage": 28,
+      "meanLineCoveragePercentage": 62.71
+    }
+  },
+  "results": [
+    {
+      "targetFile": "01_auth_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 13,
+      "failCount": 0,
+      "lineCoveragePercentage": 86.05,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "01_auth_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 12,
+      "failCount": 0,
+      "lineCoveragePercentage": 86.05,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "02_product_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 15,
+      "failCount": 0,
+      "lineCoveragePercentage": 94.23,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "02_product_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 13,
+      "failCount": 0,
+      "lineCoveragePercentage": 88.46,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "03_payment_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 19,
+      "failCount": 0,
+      "lineCoveragePercentage": 89.8,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "03_payment_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 11,
+      "failCount": 0,
+      "lineCoveragePercentage": 83.67,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "04_upload_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 10,
+      "failCount": 0,
+      "lineCoveragePercentage": 91.89,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "04_upload_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 9,
+      "failCount": 0,
+      "lineCoveragePercentage": 91.89,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "05_order_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 15,
+      "failCount": 0,
+      "lineCoveragePercentage": 89.66,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "05_order_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 13,
+      "failCount": 1,
+      "lineCoveragePercentage": 89.66,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "06_user_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 19,
+      "failCount": 0,
+      "lineCoveragePercentage": 89.33,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "06_user_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 16,
+      "failCount": 0,
+      "lineCoveragePercentage": 85.33,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "07_cart_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 28,
+      "failCount": 0,
+      "lineCoveragePercentage": 96.08,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "07_cart_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 0,
+      "failCount": 0,
+      "lineCoveragePercentage": 0,
+      "executionStatus": "SYNTAX_OR_RUNTIME_ERROR"
+    },
+    {
+      "targetFile": "08_comment_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 18,
+      "failCount": 0,
+      "lineCoveragePercentage": 93.55,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "08_comment_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 0,
+      "failCount": 0,
+      "lineCoveragePercentage": 0,
+      "executionStatus": "SYNTAX_OR_RUNTIME_ERROR"
+    },
+    {
+      "targetFile": "09_notification_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 19,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "09_notification_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 12,
+      "failCount": 0,
+      "lineCoveragePercentage": 84.09,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "10_analytics_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 18,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "10_analytics_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 11,
+      "failCount": 0,
+      "lineCoveragePercentage": 97.14,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "11_oauth_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 13,
+      "failCount": 0,
+      "lineCoveragePercentage": 88.24,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "11_oauth_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 11,
+      "failCount": 0,
+      "lineCoveragePercentage": 74.51,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "12_subscription_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 16,
+      "failCount": 0,
+      "lineCoveragePercentage": 90.91,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "12_subscription_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 13,
+      "failCount": 0,
+      "lineCoveragePercentage": 90.91,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "13_search_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 17,
+      "failCount": 0,
+      "lineCoveragePercentage": 94.74,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "13_search_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 0,
+      "failCount": 0,
+      "lineCoveragePercentage": 0,
+      "executionStatus": "SYNTAX_OR_RUNTIME_ERROR"
+    },
+    {
+      "targetFile": "14_review_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 30,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "14_review_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 12,
+      "failCount": 0,
+      "lineCoveragePercentage": 85.45,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "15_category_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 17,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "15_category_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 0,
+      "failCount": 0,
+      "lineCoveragePercentage": 0,
+      "executionStatus": "SYNTAX_OR_RUNTIME_ERROR"
+    },
+    {
+      "targetFile": "16_shipping_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 15,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "16_shipping_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 11,
+      "failCount": 0,
+      "lineCoveragePercentage": 92.68,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "17_coupon_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 24,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "17_coupon_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 0,
+      "failCount": 0,
+      "lineCoveragePercentage": 0,
+      "executionStatus": "SYNTAX_OR_RUNTIME_ERROR"
+    },
+    {
+      "targetFile": "18_wishlist_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 16,
+      "failCount": 0,
+      "lineCoveragePercentage": 89.58,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "18_wishlist_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 14,
+      "failCount": 0,
+      "lineCoveragePercentage": 89.58,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "19_audit_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 20,
+      "failCount": 0,
+      "lineCoveragePercentage": 96.36,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "19_audit_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 12,
+      "failCount": 0,
+      "lineCoveragePercentage": 81.82,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "20_chat_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 21,
+      "failCount": 0,
+      "lineCoveragePercentage": 91.67,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "20_chat_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 0,
+      "failCount": 0,
+      "lineCoveragePercentage": 0,
+      "executionStatus": "SYNTAX_OR_RUNTIME_ERROR"
+    },
+    {
+      "targetFile": "21_rbac_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 19,
+      "failCount": 0,
+      "lineCoveragePercentage": 88.68,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "21_rbac_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 14,
+      "failCount": 0,
+      "lineCoveragePercentage": 84.91,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "22_twofactor_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 22,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "22_twofactor_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 14,
+      "failCount": 0,
+      "lineCoveragePercentage": 81.97,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "23_export_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 10,
+      "failCount": 0,
+      "lineCoveragePercentage": 97.37,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "23_export_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 7,
+      "failCount": 0,
+      "lineCoveragePercentage": 92.11,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "24_webhook_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 14,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "24_webhook_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 10,
+      "failCount": 0,
+      "lineCoveragePercentage": 87.5,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "25_health_controller.js",
+      "model": "gemini-3.6-flash",
+      "passCount": 11,
+      "failCount": 0,
+      "lineCoveragePercentage": 100,
+      "executionStatus": "SUCCESS"
+    },
+    {
+      "targetFile": "25_health_controller.js",
+      "model": "gpt-oss-120b",
+      "passCount": 0,
+      "failCount": 0,
+      "lineCoveragePercentage": 0,
+      "executionStatus": "SYNTAX_OR_RUNTIME_ERROR"
+    }
+  ]
+}

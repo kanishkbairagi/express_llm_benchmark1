@@ -1,0 +1,15 @@
+# Environment variables
+.env
+.env.*
+
+# Dependencies
+node_modules/
+
+# Stryker temporary files
+.stryker-tmp/
+
+# Test coverage
+coverage/
+
+# Generated reports
+reports/

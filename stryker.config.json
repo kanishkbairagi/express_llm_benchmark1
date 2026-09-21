@@ -1,0 +1,40 @@
+{
+    "$schema":  "https://raw.githubusercontent.com/stryker-mutator/stryker-js/master/packages/api/schema/stryker-core.json",
+    "testRunner":  "jest",
+    "plugins":  [
+                    "@stryker-mutator/jest-runner"
+                ],
+    "mutate":  [
+                   "dataset/*.js",
+                   "!tests/**"
+               ],
+    "testRunnerNodeArgs":  [
+                               "--experimental-vm-modules"
+                           ],
+    "reporters":  [
+                      "html",
+                      "clear-text",
+                      "json"
+                  ],
+    "concurrency":  4,
+    "timeoutMS":  5000,
+    "timeoutFactor":  1.5,
+    "ignorePatterns":  [
+                           "node_modules/**",
+                           "build/**",
+                           "dist/**",
+                           "coverage/**",
+                           ".stryker-tmp/**"
+                       ],
+    "jest":  {
+                 "projectType":  "custom",
+                 "config":  {
+                                "testMatch":  [
+                                                  "**/tests/*_gemini-3.6-flash.test.js"
+                                              ],
+                                "transform":  {
+
+                                              }
+                            }
+             }
+}

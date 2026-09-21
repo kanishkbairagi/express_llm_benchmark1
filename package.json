@@ -1,0 +1,25 @@
+{
+  "name": "express-llm-benchmark",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Benchmark environment for LLM-generated Express.js unit tests",
+  "main": "benchmark.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "benchmark": "node benchmark.js",
+    "mutate": "stryker run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^2.22.0",
+    "dotenv": "^17.4.2",
+    "jest": "^30.5.1",
+    "openai": "^7.15.0"
+  },
+  "devDependencies": {
+    "@stryker-mutator/core": "^10.0.0",
+    "@stryker-mutator/jest-runner": "^10.0.0"
+  }
+}

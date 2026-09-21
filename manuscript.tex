@@ -1,0 +1,350 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{hyperref}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{A Single-Run Empirical Comparison of Free-Tier LLMs on Express.js Unit Test Generation and Line Coverage}
+
+\author{
+\IEEEauthorblockN{Kanishk Bairagi}
+\IEEEauthorblockA{
+\textit{Independent Researcher}\\
+India\\
+kanishk.bairagi00@gmail.com
+}
+}
+
+\maketitle
+
+\begin{abstract}
+Automated unit test generation is pivotal to software reliability in asynchronous Node.js microservices. While Large Language Models (LLMs) demonstrate strong code synthesis, empirical evaluations comparing publicly accessible LLM endpoints available without direct API charges during the study period remain limited. This paper reports a single deterministic-decoding run ($T=0$) comparing two such models---\textit{gemini-3.6-flash} (Google Cloud, GA July 2026)~\cite{gemini36flashcard} and \textit{gpt-oss-120b} (OpenAI open-weight model via Groq, August 2025)~\cite{openaiopts120b}---across 25 realistic Express.js controllers written in native ES Modules (ESM). Tests were executed under Jest (\texttt{--experimental-vm-modules}) and evaluated on suite success rate, assertion pass rate, line coverage, and Stryker JS mutation testing. In this single run, \textit{gemini-3.6-flash} achieved a 100\% suite success rate (25/25), 439 passing assertions with zero execution errors, 94.73\% mean line coverage, and an 87.87\% mutation score (3,367/3,832 mutants killed). \textit{gpt-oss-120b} achieved a 72\% suite success rate (18/25), 62.71\% mean line coverage, and a 59.79\% overall mutation score (81.41\% on its 18 executable suites), with 7 suites failing due to ESM module-hoisting violations and explicit import omissions. Exact binomial McNemar's ($p = 0.0156$) and exact Wilcoxon signed-rank ($p \approx 0.00024$) tests indicate the observed gap is unlikely to be a coincidence of this particular run, but because both models are queried only once per controller, these results should be read as a preliminary, single-run signal rather than a stable estimate of either model's true reliability; we discuss this limitation explicitly and outline a repeated-trial protocol for future replication.
+\end{abstract}
+
+\begin{IEEEkeywords}
+automated test generation, large language models, Express.js, unit testing, Jest, ES Modules, code coverage, mutation testing, software quality assurance
+\end{IEEEkeywords}
+
+% ============================================================
+\section{Introduction}
+
+Unit testing is fundamental to modern software quality assurance, yet manual test creation remains a time-consuming and error-prone bottleneck in back-end engineering. In the Node.js ecosystem, Express.js serves as the dominant application framework for building RESTful web services and microservices. However, authoring unit tests for Express.js handlers introduces distinct structural complexities: non-blocking asynchronous request loops, multi-stage middleware chains, complex HTTP response status code semantics (2xx, 4xx, 5xx), and heterogeneous external I/O boundaries (e.g., relational databases, document stores, payment gateways, and cloud storage). Mocking these asynchronous boundaries manually requires substantial overhead and meticulous boilerplate management.
+
+The rapid advances in Large Language Models (LLMs) have positioned generative AI as a compelling paradigm for automated unit test generation. While commercial models impose financial constraints on continuous integration pipelines, evaluating the efficacy of these systems on practical code bases is a high-impact research challenge.
+
+Furthermore, modern Node.js development has increasingly migrated from CommonJS (\texttt{require}) to native ECMAScript Modules (ES Modules / ESM). Testing ESM modules under popular test frameworks like Jest requires explicit VM module flags (\texttt{--experimental-vm-modules}) and strict adherence to explicit dependency imports (e.g., importing \texttt{jest} explicitly from \texttt{@jest/globals}). Automated test generation tools that assume CommonJS global bindings frequently fail under ESM strict mode.
+
+To address these empirical gaps, this study presents a controlled, single-run benchmark comparing two models available at zero marginal cost: Google's \textit{gemini-3.6-flash}~\cite{gemini36flashcard} and Groq's hosted \textit{gpt-oss-120b}~\cite{openaiopts120b}. We construct an evaluation harness featuring 25 realistic Express.js controllers written in native ES Modules, incorporating realistic middleware pipelines, complex parameter validation, error-handling routines, multi-service stubs, and Stryker JS mutation testing quality checks. We deliberately frame this as a \emph{single-run} study: at $T=0$ we expected near-deterministic outputs, but hosted API endpoints can still vary across calls due to backend load balancing or silent model updates, so we treat our findings as a first empirical signal rather than a definitive claim, and we release the harness so the study can be replicated with repeated trials.
+
+\textbf{Contributions.} The primary contributions of this paper are:
+\begin{enumerate}
+    \item \textbf{A Benchmark Dataset}: A dataset of 25 hand-authored Express.js controller modules covering diverse industry domains and complex asynchronous control flows.
+    \item \textbf{An Automated Execution Harness}: A reusable evaluation pipeline incorporating native ESM sanitization, isolated execution via Jest VM modules, statistical hypothesis testing, and Stryker mutation score collection, designed to support both single-run and repeated-trial evaluation.
+    \item \textbf{Empirical Findings}: A single-run quantitative comparison of \textit{gemini-3.6-flash} and \textit{gpt-oss-120b} across assertion success rates, line coverage, mutation fault detection, and a taxonomy of ESM failure modes.
+\end{enumerate}
+
+Our research addresses three core Research Questions:
+\begin{itemize}
+    \item \textbf{RQ1 (Execution Reliability)}: What suite success rates and assertion pass rates do these models achieve, in a single run, when generating unit tests for asynchronous Express.js controllers?
+    \item \textbf{RQ2 (Coverage \& Fault Detection Efficacy)}: What mean line coverage and mutation scores are achieved across diverse controller domains in this run, and how large is the observed gap relative to what chance alone would produce?
+    \item \textbf{RQ3 (Failure Taxonomy)}: What are the primary root causes of the observed test suite generation failures, and how do the two models differ in ESM compliance?
+\end{itemize}
+
+% ============================================================
+\section{Related Work}
+\label{sec:related}
+
+\subsection{LLM-Driven Test Generation}
+
+Automated test generation has transitioned from classic search-based software testing (SBST) toward deep learning and LLM-assisted techniques. Lemieux et al.~\cite{lemieux2023codamosa} introduced CodaMOSA, combining search-based algorithms with LLM prompting to overcome coverage plateaus in complex Python methods. Xie et al.~\cite{chen2023chatunitest} proposed ChatUniTest, an iterative framework applying a compile-and-fix feedback loop for JUnit test generation in Java. Tufano et al.~\cite{tufano2021unit} demonstrated that sequence-to-sequence neural architectures trained on open-source repositories could synthesize realistic method-level unit tests.
+
+Yuan et al.~\cite{yuan2024evaluating} evaluated ChatGPT (GPT-3.5) on Java benchmarks, concluding that while LLMs generate high-quality tests for simple functions, performance degrades on deep control flows requiring complex object instantiations. Recent work in JavaScript/TypeScript test generation, such as TestPilot by Sch\"afer et al.~\cite{schafer2024testpilot}, has demonstrated the viability of adaptive prompt synthesis for NPM packages. Our work expands upon this literature by evaluating modern endpoints specifically on asynchronous JavaScript/Node.js microservices under native ES Module strict mode.
+
+\subsection{JavaScript/Node.js Testing Ecosystems}
+
+Despite the ubiquity of JavaScript in industrial software, automated test generation research has historically concentrated on statically typed languages like Java. Early work such as JSEFT by Mirshokraie et al.~\cite{mirshokraie2015jseft} targeted event-driven browser JavaScript but predates modern ECMAScript standards (\texttt{async}/\texttt{await}, ES Modules, Promises). While recent studies have begun evaluating LLM code synthesis for JavaScript/TypeScript repositories~\cite{schafer2024testpilot}, empirical data regarding model reliability across asynchronous Express.js microservices remains sparse.
+
+\subsection{ES Module Compliance and Test Framework Dynamics}
+
+In Node.js, the transition from CommonJS to native ES Modules introduces structural challenges for test execution. Jest's experimental ESM execution environment requires explicit import semantics from \texttt{@jest/globals} and strict module mocking hoisting rules (\texttt{jest.unstable\_mockModule}). Existing test generators predominantly output CommonJS constructs (\texttt{require}, global \texttt{jest} scope), leading to runtime failures under native ESM runners. This study explicitly incorporates ESM compliance into the evaluation harness.
+
+% ============================================================
+\section{Dataset Architecture \& Experimental Harness}
+\label{sec:dataset}
+
+\subsection{Controller Dataset Design}
+
+To evaluate model performance across real-world application workflows, we authored a benchmark suite of 25 Express.js controllers. Each controller encapsulates a real-world service domain featuring asynchronous database operations, third-party API integrations, complex request validation, and multi-tier HTTP response handling. All files adopt native ES Module syntax (\texttt{"type": "module"}). Because these controllers were hand-authored by the same person conducting the evaluation, we flag this explicitly as a potential source of dataset-model alignment bias in Section~\ref{sec:threats}, rather than treat the dataset as a neutral, external benchmark. Table~\ref{tab:controllers} details the dataset domain breakdown.
+
+\begin{table}[ht]
+\centering
+\caption{Benchmark Dataset: 25 Realistic Controller Scenarios}
+\label{tab:controllers}
+\begin{tabular}{@{}cll@{}}
+\toprule
+\textbf{\#} & \textbf{Controller} & \textbf{Domain / Architectural Pattern} \\
+\midrule
+01 & auth & JWT signup, login, bcrypt hashing \\
+02 & product & Multi-field filtering, sorting, pagination \\
+03 & payment & Stripe webhook signature \& event handling \\
+04 & upload & Multer stream processing + S3 upload \\
+05 & order & Inventory deduction \& ACID transactions \\
+06 & user & Profile mutation \& password-reset tokens \\
+07 & cart & Item CRUD, quantity checks, coupon application \\
+08 & comment & Threaded hierarchical comments, moderation \\
+09 & notification & Multi-channel push notification dispatch \\
+10 & analytics & Event aggregation \& time-series aggregation \\
+11 & oauth & OAuth 2.0 PKCE exchange, refresh tokens \\
+12 & subscription & SaaS billing tiers \& prorated upgrade logic \\
+13 & search & Elasticsearch full-text index queries \\
+14 & review & Product ratings, sentiment calculation \\
+15 & category & Nested category tree traversal \\
+16 & shipping & Carrier API rate calculation, label generation \\
+17 & coupon & Percentage/fixed discount validation \\
+18 & wishlist & User wishlist state mutations \\
+19 & audit & Immutable system audit-log insertion \\
+20 & chat & WebSocket channel state \& message dispatch \\
+21 & rbac & Granular role-based access control \\
+22 & twofactor & TOTP secret generation \& validation \\
+23 & export & Large-dataset CSV/XLSX stream export \\
+24 & webhook & Inbound HMAC signature verification \\
+25 & health & Microservice liveness/readiness probes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Models and Prompt Design}
+
+We evaluated two publicly accessible LLM endpoints available without direct API charges during the study period: \textit{gemini-3.6-flash} (accessed via Google Cloud/AI Studio public free-tier developer API, enforcing a 15 RPM rate limit; model GA release July 21, 2026)~\cite{gemini36flashcard} and \textit{gpt-oss-120b} (accessed via Groq's high-throughput free-tier API; OpenAI model release August 5, 2025)~\cite{openaiopts120b}. Both models were queried once per controller with deterministic decoding parameters (Temperature $T = 0.0$, Top-P $= 1.0$). We note that $T=0.0$ reduces but does not fully guarantee output determinism on hosted, load-balanced inference infrastructure; a single query per controller therefore captures one realization of each model's behavior rather than its full output distribution. Each controller prompt consumed approximately 1,450 input tokens and 1,450 output tokens, totaling approximately 72,500 API tokens (36,250 input + 36,250 output) per model across the benchmark suite.
+
+All queries utilized the following standardized zero-shot prompt:
+
+\begin{quote}
+\small
+\texttt{"Write a complete, executable Jest unit test file for the following Express.js controller. Requirements: 1) Use ES Module syntax (import/export). 2) Explicitly import \{ jest \} from '@jest/globals'. 3) Mock all external dependencies, Express req, res, and next objects. 4) Ensure high statement and branch coverage. Return ONLY executable code inside a JavaScript code block."}
+\end{quote}
+
+\subsection{Automated Execution Harness}
+
+The evaluation harness, developed in Node.js 22, executes a systematic 5-stage pipeline for every controller-model pair:
+
+\begin{enumerate}
+    \item \textbf{Zero-Shot Generation}: Controller code is injected into the prompt and dispatched via API.
+    \item \textbf{Post-Processing Sanitization}: Output passes through a sanitizer (\texttt{sanitizeImports}) that strips markdown blocks and normalizes relative imports to \texttt{../dataset/<controller>.js}.
+    \item \textbf{Isolated Execution}: Test suites are written to \texttt{./tests/} and executed via Jest in ESM mode:
+    \begin{center}
+    \texttt{node --experimental-vm-modules node\_modules/jest/bin/jest.js --coverage --json}
+    \end{center}
+    \item \textbf{Mutation Testing Evaluation}: Stryker JS (\texttt{@stryker-mutator/core}) evaluates assertion fault detection strength across synthesized mutants.
+    \item \textbf{Metric Extraction \& Statistical Analysis}: Output logs are parsed to extract assertion pass counts, line coverage percentages, mutation scores, and statistical significance metrics via \texttt{scipy.stats}.
+\end{enumerate}
+
+The harness supports an optional repeated-trial mode (Section~\ref{sec:threats}) that re-executes stages 1--5 $k$ times per controller-model pair and aggregates results with means and standard deviations; the results reported in this paper correspond to $k=1$.
+
+\subsection{Evaluation Metrics}
+
+Performance is quantified using the following metrics:
+\begin{itemize}
+    \item \textbf{Suite Success Rate (\%)}: Percentage of controllers generating executable test suites with zero syntax or runtime crashes.
+    \item \textbf{Assertion Pass Rate (\%)}: Proportion of executed assertions that pass successfully:
+    \begin{equation}
+    \text{Pass Rate} = \frac{\sum \text{Passes}}{\sum \text{Passes} + \sum \text{Failures}} \times 100
+    \end{equation}
+    \item \textbf{Mean Line Coverage (\%)}: Arithmetic mean of line coverage reported by Istanbul/c8 across all 25 controllers (assigning 0\% to failed suites).
+    \item \textbf{Mutation Score (\%)}: Ratio of killed mutants to total evaluated mutants:
+    \begin{equation}
+    \text{Mutation Score} = \frac{\text{Killed Mutants}}{\text{Total Mutants}} \times 100
+    \end{equation}
+\end{itemize}
+
+% ============================================================
+\section{Results \& Discussion}
+\label{sec:results}
+
+All results in this section reflect a single run per controller per model ($k=1$); we repeat this caveat at point of use rather than only in the abstract, since single-run point estimates should not be read as stable population parameters for either model.
+
+\subsection{Aggregate Benchmark Performance}
+
+Table~\ref{tab:aggregate} summarizes the benchmark metrics aggregated across all 25 Express.js controllers in this single run. \textit{gemini-3.6-flash} outperformed \textit{gpt-oss-120b} across all primary evaluation dimensions measured.
+
+\begin{table}[ht]
+\centering
+\caption{Aggregate Benchmark Performance Comparison (Single Run)}
+\label{tab:aggregate}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Metric} & \textbf{gemini-3.6-flash} & \textbf{gpt-oss-120b} \\
+\midrule
+Suite Success Rate         & \textbf{25/25 (100\%)} & 18/25 (72\%)   \\
+Total Assertions Passed    & \textbf{439}           & 215            \\
+Total Assertions Failed    & \textbf{0}             & 1              \\
+Assertion Pass Rate        & \textbf{100.00\%}      & 99.54\%        \\
+Syntax/Runtime Errors      & \textbf{0}             & 7              \\
+Suite Failure Rate         & \textbf{0.00\%}        & 28.00\%        \\
+Mean Line Coverage         & \textbf{94.73\%}       & 62.71\%        \\
+Mutation Score (Overall)   & \textbf{87.87\%}       & 59.79\%*       \\
+Mutation Score (Passing)   & \textbf{87.87\%}       & 81.41\%        \\
+Mean Assertions / Suite    & \textbf{17.56}         & 11.94          \\
+\bottomrule
+\multicolumn{3}{@{}l}{\footnotesize * Groq overall score treats 7 broken/unparseable suites as 0\% mutation score.}
+\end{tabular}
+\end{table}
+
+In this run, \textit{gemini-3.6-flash} executed all 25 test suites without a single runtime exception or failing assertion. It also generated 439 passing assertions---more than double the 215 generated by \textit{gpt-oss-120b} (+104.2\% output yield in this run).
+
+\subsection{Per-Controller Granular Analysis}
+
+Table~\ref{tab:percontroller} breaks down performance per controller file for this run. Test suites that encountered runtime or syntax errors during execution are flagged as ``ERR'' (yielding 0\% line coverage).
+
+\begin{table*}[ht]
+\centering
+\caption{Per-Controller Evaluation: Line Coverage (\%), Assertion Counts, and Failures (Single Run)}
+\label{tab:percontroller}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}clrrrrrr@{}}
+\toprule
+& & \multicolumn{3}{c}{\textbf{gemini-3.6-flash}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+\textbf{\#} & \textbf{Controller Name} & \textbf{Line Cov.} & \textbf{Pass} & \textbf{Fail} & \textbf{Line Cov.} & \textbf{Pass} & \textbf{Fail} \\
+\midrule
+01 & auth           & 86.05\%  & 13 & 0 & 86.05\%  & 12 &  0 \\
+02 & product        & 94.23\%  & 15 & 0 & 88.46\%  & 13 &  0 \\
+03 & payment        & 89.80\%  & 19 & 0 & 83.67\%  & 11 &  0 \\
+04 & upload         & 91.89\%  & 10 & 0 & 91.89\%  &  9 &  0 \\
+05 & order          & 89.66\%  & 15 & 0 & 89.66\%  & 13 &  1 \\
+06 & user           & 89.33\%  & 19 & 0 & 85.33\%  & 16 &  0 \\
+07 & cart           & 96.08\%  & 28 & 0 & \multicolumn{3}{c}{ERR} \\
+08 & comment        & 93.55\%  & 18 & 0 & \multicolumn{3}{c}{ERR} \\
+09 & notification   & 100.00\% & 19 & 0 & 84.09\%  & 12 &  0 \\
+10 & analytics      & 100.00\% & 18 & 0 & 97.14\%  & 11 &  0 \\
+11 & oauth          & 88.24\%  & 13 & 0 & 74.51\%  & 11 &  0 \\
+12 & subscription   & 90.91\%  & 16 & 0 & 90.91\%  & 13 &  0 \\
+13 & search         & 94.74\%  & 17 & 0 & \multicolumn{3}{c}{ERR} \\
+14 & review         & 100.00\% & 30 & 0 & 85.45\%  & 12 &  0 \\
+15 & category       & 100.00\% & 17 & 0 & \multicolumn{3}{c}{ERR} \\
+16 & shipping       & 100.00\% & 15 & 0 & 92.68\%  & 11 &  0 \\
+17 & coupon         & 100.00\% & 24 & 0 & \multicolumn{3}{c}{ERR} \\
+18 & wishlist       & 89.58\%  & 16 & 0 & 89.58\%  & 14 &  0 \\
+19 & audit          & 96.36\%  & 20 & 0 & 81.82\%  & 12 &  0 \\
+20 & chat           & 91.67\%  & 21 & 0 & \multicolumn{3}{c}{ERR} \\
+21 & rbac           & 88.68\%  & 19 & 0 & 84.91\%  & 14 &  0 \\
+22 & twofactor      & 100.00\% & 22 & 0 & 81.97\%  & 14 &  0 \\
+23 & export         & 97.37\%  & 10 & 0 & 92.11\%  &  7 &  0 \\
+24 & webhook        & 100.00\% & 14 & 0 & 87.50\%  & 10 &  0 \\
+25 & health         & 100.00\% & 11 & 0 & \multicolumn{3}{c}{ERR} \\
+\midrule
+\multicolumn{2}{l}{\textbf{Arithmetic Mean / Total}} & \textbf{94.73\%} & \textbf{439} & \textbf{0} & \textbf{62.71\%} & \textbf{215} & \textbf{1} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Statistical Significance Testing}
+\label{sec:stats}
+
+We emphasize up front that the tests in this subsection assess whether the gap observed \emph{in this single run} is larger than chance sign/rank patterns would produce under a null of no difference---they do not, and cannot, establish that either model's true long-run reliability differs by these exact margins. Repeated trials (Section~\ref{sec:threats}) would be required for that stronger claim.
+
+Suite-level outcomes were compared with an exact binomial McNemar test. Of 25 paired outcomes, 7 were discordant ($b=7$: Gemini succeeded, Groq failed; $c=0$), giving $p = 2 \times 0.5^7 = 0.0156$.
+
+To avoid counting the same failures twice, line coverage was compared only on the 18 controllers where both models produced executable suites in this run. After excluding 5 ties (\textit{auth}, \textit{upload}, \textit{order}, \textit{subscription}, \textit{wishlist}), Gemini achieved higher coverage on all 13 remaining controllers. A two-sided exact Wilcoxon signed-rank test on these 13 paired differences gives $W = 0$, $p = 2/2^{13} \approx 0.00024$ (verified numerically via \texttt{scipy.stats.wilcoxon} with \texttt{mode='exact'}). Within this single run, this indicates that \textit{gemini-3.6-flash} produced deeper coverage than \textit{gpt-oss-120b} on every controller both models executed successfully, a pattern unlikely to arise from a coin-flip-like null by chance alone --- though, again, we cannot rule out that a different run on a different day would show a smaller (or larger) gap.
+
+\subsection{Mutation Analysis}
+
+Stryker JS generated 3,832 mutants across the 25 controllers. In this run, \textit{gemini-3.6-flash} killed 3,367 (\textbf{87.87\%}). \textit{gpt-oss-120b}'s 18 executable suites covered 2,814 mutants and killed 2,291 (\textbf{81.41\%}). Counting the 7 failed suites as zero kills (1,018 mutants), its overall score is $2{,}291/3{,}832 =$ \textbf{59.79\%}. The overall gap in this run is therefore driven largely by suite failures rather than by weaker assertions alone in the suites that did execute.
+
+\subsection{Failure Mode Taxonomy}
+
+Analysis of the execution logs from this run revealed clear systematic differences in model failure modes:
+
+\subsubsection{gpt-oss-120b Failure Analysis (7 Failed Suites)}
+The 7 execution failures produced by \textit{gpt-oss-120b} fell into three primary taxonomy categories:
+\begin{enumerate}
+    \item \textbf{Missing \texttt{@jest/globals} Explicit Imports (4 suites)}: The model assumed CommonJS global scope, referencing \texttt{jest.fn()} directly without importing \texttt{jest} from \texttt{@jest/globals}, triggering \texttt{ReferenceError: jest is not defined}.
+    \item \textbf{Invalid ESM Mock Hoisting (2 suites)}: Calls to \texttt{jest.mock()} were declared inside block scopes or test hooks (\texttt{beforeEach}), violating ESM hoisting semantics and causing runtime module initialization failures.
+    \item \textbf{Malformed Mock Constructor (1 suite)}: A mock object for a database model returned a plain object literal instead of a constructible class, resulting in a runtime \texttt{TypeError}.
+\end{enumerate}
+Because this is a single run, we cannot yet say whether these are stable, systematic tendencies of \textit{gpt-oss-120b} or artifacts of this particular sampling; the repeated-trial protocol in Section~\ref{sec:threats} is designed to distinguish the two.
+
+\subsubsection{gemini-3.6-flash Behavior in This Run (0 Failed Suites)}
+\textit{gemini-3.6-flash} exhibited zero code generation failures in this run. Transient HTTP 503 errors occurred during peak API usage but were fully mitigated by harness retries at the network layer (i.e., re-sending the same request after a transport-level failure, not re-sampling the model's output).
+
+% ============================================================
+\section{Threats to Validity \& Conclusion}
+\label{sec:threats}
+
+\subsection{Threats to Validity}
+
+\textbf{Internal Validity.} The sanitizer (\texttt{sanitizeImports}) normalizes markdown fences and relative import paths; it did not reliably inject the \texttt{@jest/globals} import in four \textit{gpt-oss-120b} outputs, which we report as execution failures rather than repairing manually. Most importantly, all results in this paper derive from a \textbf{single run per controller per model} ($k=1$, $T=0.0$). While $T=0.0$ is intended to minimize sampling variance, hosted inference endpoints are not guaranteed to be fully deterministic across calls (due to load-balancing across hardware, batching effects, or silent backend updates), so a single sample cannot rule out run-to-run variance in either model's outputs. We treat the current results as a first empirical signal and have built (but not yet executed at scale) a repeated-trial ($k \geq 3$) extension of the harness described in Section~\ref{sec:dataset}, which we identify as the highest-priority direction for immediate follow-up work.
+
+\textbf{External Validity \& Dataset Confound.} The 25 benchmark controllers were hand-authored by the author to mirror production patterns. Because the same person who authored the dataset also designed the prompts and ran the evaluation, we cannot rule out unconscious structural alignment between the dataset's coding style and either model's training distribution. Independent, third-party benchmark datasets would strengthen external validity.
+
+\textbf{Construct Validity.} High line coverage alone can be an incomplete proxy for test suite effectiveness, as demonstrated by Inozemtseva and Holmes~\cite{inozemtseva2014coverage}. We mitigated this threat by conducting Stryker JS mutation testing across all 25 controllers, evaluating 3,832 synthesized mutants to measure semantic fault detection capability alongside line coverage. We did not, however, compare against a non-LLM test generation baseline or a paid frontier model, so the absolute quality bar implied by these numbers should be interpreted cautiously.
+
+\textbf{Conclusion Validity.} API rate limits required built-in retry mechanisms under free-tier endpoints. Given the single-run design discussed above, we present our statistical tests (Section~\ref{sec:stats}) as evidence that the observed gap is unlikely to be a coincidence of rank/sign patterns within this run, not as proof that the gap would replicate identically across repeated trials.
+
+\subsection{Data and Code Availability}
+
+To support replication, including running the repeated-trial extension described above, the evaluation harness, controller dataset, generated test suites, and raw JSON execution logs are made available at: \url{https://github.com/Kanishk/express-llm-benchmark}.
+
+\subsection{Conclusion}
+
+This paper reported a single-run empirical comparison of two publicly accessible models available without direct API charges during the study period---\textit{gemini-3.6-flash} and \textit{gpt-oss-120b}---for automated unit test generation in asynchronous Express.js microservices. In this run, \textit{gemini-3.6-flash} achieved a 100\% suite success rate across 25 controllers, 439 passing assertions with zero failures, 94.73\% mean line coverage, and an 87.87\% mutation score. \textit{gpt-oss-120b} achieved a 72\% suite success rate, 62.71\% mean line coverage, and a 59.79\% overall mutation score, with failures traced to ES Module mocking syntax errors and explicit import omissions. Exact binomial McNemar's ($p = 0.0156$) and Wilcoxon signed-rank ($p \approx 0.00024$) tests indicate this single-run gap is unlikely to reflect chance sign/rank patterns alone. We view this as a preliminary but informative signal for resource-constrained teams choosing between free-tier LLM endpoints, and we identify repeated-trial replication, third-party benchmark datasets, and comparison against paid frontier models as the most valuable next steps.
+
+% ============================================================
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{00}
+
+\bibitem{gemini36flashcard}
+Google Cloud, ``Gemini 3.6 Flash Model Specifications and Pricing,'' Google Cloud Documentation, Jul. 2026. [Online]. Available: \url{https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash}
+
+\bibitem{openaiopts120b}
+OpenAI, ``Introducing gpt-oss: 120B and 20B Open-Weight Models,'' OpenAI Official Blog, Aug. 2025. [Online]. Available: \url{https://openai.com/index/introducing-gpt-oss/}
+
+\bibitem{lemieux2023codamosa}
+C.~Lemieux, J.~P.~Inala, S.~K.~Lahiri, and S.~Sen,
+``CodaMOSA: Escaping coverage plateaus in test generation with pre-trained large language models,''
+in \textit{Proc. 45th IEEE/ACM Int. Conf. Software Engineering (ICSE)}, Melbourne, Australia, 2023, pp. 919--931.
+
+\bibitem{chen2023chatunitest}
+Z.~Xie, Y.~Chen, C.~Chen, S.~Deng, and J.~Yin,
+``ChatUniTest: A ChatGPT-based automated unit test generation tool,''
+\textit{arXiv preprint arXiv:2305.04764}, 2023.
+
+\bibitem{tufano2021unit}
+M.~Tufano, D.~Drain, A.~Svyatkovskiy, S.~K.~Deng, and N.~Sundaresan,
+``Unit test case generation with transformers and focal context,''
+\textit{arXiv preprint arXiv:2009.05617}, 2021.
+
+\bibitem{yuan2024evaluating}
+Z.~Yuan, Y.~Lou, M.~Liu, S.~Ding, K.~Wang, Y.~Chen, and X.~Peng,
+``No more manual tests? Evaluating and improving ChatGPT for unit test generation,''
+\textit{arXiv preprint arXiv:2305.04207}, 2023.
+
+\bibitem{schafer2024testpilot}
+M.~Sch\"afer, S.~Nadi, A.~Eghbali, and F.~Tip,
+``An empirical evaluation of using large language models for automated unit test generation,''
+\textit{IEEE Trans. Software Engineering}, vol. 50, no. 1, pp. 85--105, 2024.
+
+\bibitem{mirshokraie2015jseft}
+S.~Mirshokraie, A.~Mesbah, and K.~Pattabiraman,
+``JSEFT: Automated JavaScript unit test generation,''
+in \textit{Proc. 8th IEEE Int. Conf. Software Testing, Verification and Validation (ICST)}, Graz, Austria, 2015, pp. 1--10.
+
+\bibitem{inozemtseva2014coverage}
+L.~Inozemtseva and R.~Holmes,
+``Coverage is not strongly correlated with test suite effectiveness,''
+in \textit{Proc. 36th IEEE/ACM Int. Conf. Software Engineering (ICSE)}, Hyderabad, India, 2014, pp. 435--445.
+
+\end{thebibliography}
+
+\end{document}
+
