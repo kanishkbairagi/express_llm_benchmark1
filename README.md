@@ -53,10 +53,4 @@ The benchmark dataset was hand-authored by the same person who ran the
 evaluation, which is a known source of potential dataset-model alignment
 bias — see the paper for full discussion.
 
-## License
 
-MIT (or your preferred license — add a LICENSE file before publishing)
-
-## Citation
-
-If you use this dataset or harness, please cite the accompanying paper.
