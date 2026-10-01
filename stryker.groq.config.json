@@ -1,0 +1,60 @@
+{
+  "$schema": "https://raw.githubusercontent.com/stryker-mutator/stryker-js/master/packages/api/schema/stryker-core.json",
+  "testRunner": "jest",
+  "plugins": [
+    "@stryker-mutator/jest-runner"
+  ],
+  "mutate": [
+    "dataset/*.js",
+    "!tests/**"
+  ],
+  "testRunnerNodeArgs": [
+    "--experimental-vm-modules"
+  ],
+  "reporters": [
+    "html",
+    "clear-text",
+    "json"
+  ],
+  "htmlReporter": {
+    "fileName": "reports/mutation_groq/mutation.html"
+  },
+  "jsonReporter": {
+    "fileName": "reports/mutation_groq/mutation.json"
+  },
+  "concurrency": 4,
+  "timeoutMS": 5000,
+  "timeoutFactor": 1.5,
+  "ignorePatterns": [
+    "node_modules/**",
+    "build/**",
+    "dist/**",
+    "coverage/**",
+    ".stryker-tmp/**"
+  ],
+  "jest": {
+    "projectType": "custom",
+    "config": {
+      "testMatch": [
+        "**/tests/01_auth_controller_gpt-oss-120b.test.js",
+        "**/tests/02_product_controller_gpt-oss-120b.test.js",
+        "**/tests/03_payment_controller_gpt-oss-120b.test.js",
+        "**/tests/04_upload_controller_gpt-oss-120b.test.js",
+        "**/tests/06_user_controller_gpt-oss-120b.test.js",
+        "**/tests/09_notification_controller_gpt-oss-120b.test.js",
+        "**/tests/10_analytics_controller_gpt-oss-120b.test.js",
+        "**/tests/11_oauth_controller_gpt-oss-120b.test.js",
+        "**/tests/12_subscription_controller_gpt-oss-120b.test.js",
+        "**/tests/14_review_controller_gpt-oss-120b.test.js",
+        "**/tests/16_shipping_controller_gpt-oss-120b.test.js",
+        "**/tests/18_wishlist_controller_gpt-oss-120b.test.js",
+        "**/tests/19_audit_controller_gpt-oss-120b.test.js",
+        "**/tests/21_rbac_controller_gpt-oss-120b.test.js",
+        "**/tests/22_twofactor_controller_gpt-oss-120b.test.js",
+        "**/tests/23_export_controller_gpt-oss-120b.test.js",
+        "**/tests/24_webhook_controller_gpt-oss-120b.test.js"
+      ],
+      "transform": {}
+    }
+  }
+}

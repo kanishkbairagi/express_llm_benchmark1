@@ -13,3 +13,7 @@ coverage/
 
 # Generated reports
 reports/
+
+# Trial outputs and generated test suites
+results/trials_dryrun/
+tests_trials/
