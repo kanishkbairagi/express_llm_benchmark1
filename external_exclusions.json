@@ -72,6 +72,12 @@
     "details": "Repository quota limit of 3 files reached for panshak/accountill"
   },
   {
+    "target": "Rajatm544/MERN-Ecommerce:backend/controllers/orderControllers.js",
+    "type": "file",
+    "reason": "import_time_side_effects",
+    "details": "Top-level module execution instantiates Stripe client without API key (crashes on import)"
+  },
+  {
     "target": "sanidhyy/mern-admin:server/controllers/general.js",
     "type": "file",
     "reason": "insufficient_handlers",

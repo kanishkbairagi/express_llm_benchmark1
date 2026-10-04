@@ -98,6 +98,14 @@ const verifiedManifest = [
     ]
   },
   {
+    repo_url: "https://github.com/kinngh/shopify-node-express-mongodb-app",
+    commit_hash: "eae7e908215773cd2e56affe717f31f52f82c937",
+    license: "MIT",
+    file_path: "server/controllers/gdpr.js",
+    line_count: 91,
+    import_closure: []
+  },
+  {
     repo_url: "https://github.com/mongo-express/mongo-express",
     commit_hash: "cf7403a562076fa529217d7abaa2bbfd93f458c6",
     license: "MIT",
@@ -157,16 +165,6 @@ const verifiedManifest = [
     line_count: 134,
     import_closure: [
       "server/models/ProfileModel.js"
-    ]
-  },
-  {
-    repo_url: "https://github.com/Rajatm544/MERN-Ecommerce",
-    commit_hash: "f085a88ac64d89c1ff804ef103bcc18fefabc023",
-    license: "MIT",
-    file_path: "backend/controllers/orderControllers.js",
-    line_count: 204,
-    import_closure: [
-      "backend/models/orderModel.js"
     ]
   },
   {
@@ -305,6 +303,7 @@ const exclusions = [
   { target: "orifmilod/iCinema:controller/movie.js", type: "file", reason: "import_closure_exceeded", details: "Recursive local import closure has 6 files (> 5 max)" },
   { target: "pietheinstrengholt/rssmonster:server/controllers/accountSettings.js", type: "file", reason: "import_closure_exceeded", details: "Recursive local import closure exceeds 5 files (service/config dependencies)" },
   { target: "panshak/accountill:server/controllers/user.js", type: "file", reason: "repo_quota_reached", details: "Repository quota limit of 3 files reached for panshak/accountill" },
+  { target: "Rajatm544/MERN-Ecommerce:backend/controllers/orderControllers.js", type: "file", reason: "import_time_side_effects", details: "Top-level module execution instantiates Stripe client without API key (crashes on import)" },
   { target: "sanidhyy/mern-admin:server/controllers/general.js", type: "file", reason: "insufficient_handlers", details: "Exports 2 handlers (< 3 required)" },
   { target: "sanidhyy/mern-admin:server/controllers/management.js", type: "file", reason: "insufficient_handlers", details: "Exports 2 handlers (< 3 required)" },
   { target: "SanjulaD/web-cw:backend/controllers/productSeedController.js", type: "file", reason: "repo_quota_reached", details: "Repository quota limit of 3 files reached for SanjulaD/web-cw" },
