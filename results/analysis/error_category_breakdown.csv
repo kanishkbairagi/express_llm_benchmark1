@@ -1,0 +1,3 @@
+model,AssertionFailure,SyntaxError,none
+gemini-3.6-flash,12,2,111
+gpt-oss-120b,25,1,99

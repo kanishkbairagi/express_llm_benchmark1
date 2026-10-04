@@ -1,0 +1,3 @@
+model,STOP,stop
+gemini-3.6-flash,125,0
+gpt-oss-120b,0,125
