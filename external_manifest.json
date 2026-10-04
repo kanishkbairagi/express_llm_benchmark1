@@ -1,0 +1,268 @@
+[
+  {
+    "repo_url": "https://github.com/burakorkmez/mern-github-app",
+    "commit_hash": "b4a0b687ef0e7ea6a6f768287520110f755046ff",
+    "license": "MIT",
+    "file_path": "backend/controllers/user.controller.js",
+    "line_count": 65,
+    "import_closure": [
+      "backend/models/user.model.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/digitomize/digitomize",
+    "commit_hash": "e7797ede78d19d3781fec1a2e1e22c790411d7f1",
+    "license": "MIT",
+    "file_path": "backend/DSA_sheets/controllers/questionController.js",
+    "line_count": 125,
+    "import_closure": [
+      "backend/DSA_sheets/models/questionModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/digitomize/digitomize",
+    "commit_hash": "e7797ede78d19d3781fec1a2e1e22c790411d7f1",
+    "license": "MIT",
+    "file_path": "backend/DSA_sheets/controllers/sheetController.js",
+    "line_count": 232,
+    "import_closure": [
+      "backend/DSA_sheets/models/sheetModel.js",
+      "backend/DSA_sheets/controllers/questionController.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/dimartarmizi/OmniCloud",
+    "commit_hash": "51b949a638817e54434338a737de9055628cedac",
+    "license": "MIT",
+    "file_path": "backend/src/routes/authRoutes.js",
+    "line_count": 67,
+    "import_closure": [
+      "backend/src/config/env.js",
+      "backend/src/services/authService.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/iampranavdhar/Library-Management-System-MERN",
+    "commit_hash": "2ebbee87e22342eaff417432ed3aabecefcfc7c0",
+    "license": "MIT",
+    "file_path": "backend/routes/books.js",
+    "line_count": 103,
+    "import_closure": [
+      "backend/models/Book.js",
+      "backend/models/BookCategory.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/iampranavdhar/Library-Management-System-MERN",
+    "commit_hash": "2ebbee87e22342eaff417432ed3aabecefcfc7c0",
+    "license": "MIT",
+    "file_path": "backend/routes/transactions.js",
+    "line_count": 73,
+    "import_closure": [
+      "backend/models/Book.js",
+      "backend/models/BookTransaction.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/iampranavdhar/Library-Management-System-MERN",
+    "commit_hash": "2ebbee87e22342eaff417432ed3aabecefcfc7c0",
+    "license": "MIT",
+    "file_path": "backend/routes/users.js",
+    "line_count": 103,
+    "import_closure": [
+      "backend/models/User.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/mongo-express/mongo-express",
+    "commit_hash": "cf7403a562076fa529217d7abaa2bbfd93f458c6",
+    "license": "MIT",
+    "file_path": "lib/routes/database.js",
+    "line_count": 101,
+    "import_closure": [
+      "lib/utils.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/mongo-express/mongo-express",
+    "commit_hash": "cf7403a562076fa529217d7abaa2bbfd93f458c6",
+    "license": "MIT",
+    "file_path": "lib/routes/document.js",
+    "line_count": 132,
+    "import_closure": [
+      "lib/bson.js",
+      "lib/filters.js",
+      "lib/utils.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/mongo-express/mongo-express",
+    "commit_hash": "cf7403a562076fa529217d7abaa2bbfd93f458c6",
+    "license": "MIT",
+    "file_path": "lib/routes/gridfs.js",
+    "line_count": 161,
+    "import_closure": [
+      "lib/utils.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/panshak/accountill",
+    "commit_hash": "399f2a35dcdd542fc84ffaf4f35a064e62c6d22a",
+    "license": "MIT",
+    "file_path": "server/controllers/clients.js",
+    "line_count": 102,
+    "import_closure": [
+      "server/models/ClientModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/panshak/accountill",
+    "commit_hash": "399f2a35dcdd542fc84ffaf4f35a064e62c6d22a",
+    "license": "MIT",
+    "file_path": "server/controllers/invoices.js",
+    "line_count": 101,
+    "import_closure": [
+      "server/models/InvoiceModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/panshak/accountill",
+    "commit_hash": "399f2a35dcdd542fc84ffaf4f35a064e62c6d22a",
+    "license": "MIT",
+    "file_path": "server/controllers/profile.js",
+    "line_count": 134,
+    "import_closure": [
+      "server/models/ProfileModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/Rajatm544/MERN-Ecommerce",
+    "commit_hash": "f085a88ac64d89c1ff804ef103bcc18fefabc023",
+    "license": "MIT",
+    "file_path": "backend/controllers/orderControllers.js",
+    "line_count": 204,
+    "import_closure": [
+      "backend/models/orderModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/Rajatm544/MERN-Ecommerce",
+    "commit_hash": "f085a88ac64d89c1ff804ef103bcc18fefabc023",
+    "license": "MIT",
+    "file_path": "backend/controllers/productControllers.js",
+    "line_count": 171,
+    "import_closure": [
+      "backend/models/productModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/sanidhyy/mern-admin",
+    "commit_hash": "c4860c9ffd9453db758e2fe058f48a37d498e41f",
+    "license": "MIT",
+    "file_path": "server/controllers/client.js",
+    "line_count": 119,
+    "import_closure": [
+      "server/models/Product.js",
+      "server/models/ProductStat.js",
+      "server/models/User.js",
+      "server/models/Transaction.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/SanjulaD/web-cw",
+    "commit_hash": "4e7f54996d9c21ad59b087960d335f9e4f8d9994",
+    "license": "MIT",
+    "file_path": "backend/controllers/consumerProductControlller.js",
+    "line_count": 94,
+    "import_closure": [
+      "backend/models/consumerProductModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/SanjulaD/web-cw",
+    "commit_hash": "4e7f54996d9c21ad59b087960d335f9e4f8d9994",
+    "license": "MIT",
+    "file_path": "backend/controllers/orderController.js",
+    "line_count": 122,
+    "import_closure": [
+      "backend/models/orderSeedModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/SanjulaD/web-cw",
+    "commit_hash": "4e7f54996d9c21ad59b087960d335f9e4f8d9994",
+    "license": "MIT",
+    "file_path": "backend/controllers/productLendMachineController.js",
+    "line_count": 94,
+    "import_closure": [
+      "backend/models/productLendMachineModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/ShakirFarhan/Realtime-Chat",
+    "commit_hash": "c6a2524907b8e5cf63356c2144af41e51398461b",
+    "license": "MIT",
+    "file_path": "server/controllers/chatControllers.js",
+    "line_count": 132,
+    "import_closure": [
+      "server/models/chatModel.js",
+      "server/models/userModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/ShakirFarhan/Realtime-Chat",
+    "commit_hash": "c6a2524907b8e5cf63356c2144af41e51398461b",
+    "license": "MIT",
+    "file_path": "server/controllers/user.js",
+    "line_count": 128,
+    "import_closure": [
+      "server/models/userModel.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/trananhtuat/fullstack-mern-movie-2022",
+    "commit_hash": "8879023af1c8751fe36dc4e6e11a6a250a49f153",
+    "license": "MIT",
+    "file_path": "server/src/controllers/review.controller.js",
+    "line_count": 57,
+    "import_closure": [
+      "server/src/handlers/response.handler.js",
+      "server/src/models/review.model.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/trananhtuat/fullstack-mern-movie-2022",
+    "commit_hash": "8879023af1c8751fe36dc4e6e11a6a250a49f153",
+    "license": "MIT",
+    "file_path": "server/src/controllers/user.controller.js",
+    "line_count": 103,
+    "import_closure": [
+      "server/src/models/user.model.js",
+      "server/src/handlers/response.handler.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/trananhtuat/fullstack-mern-movie-2022",
+    "commit_hash": "8879023af1c8751fe36dc4e6e11a6a250a49f153",
+    "license": "MIT",
+    "file_path": "server/src/routes/review.route.js",
+    "line_count": 41,
+    "import_closure": [
+      "server/src/controllers/review.controller.js",
+      "server/src/middlewares/token.middleware.js",
+      "server/src/handlers/request.handler.js"
+    ]
+  },
+  {
+    "repo_url": "https://github.com/trananhtuat/react-openai-chat",
+    "commit_hash": "8b0f865b5ff2a06a4a5fb5f45646196726b016ea",
+    "license": "MIT",
+    "file_path": "server/routes/user.route.js",
+    "line_count": 42,
+    "import_closure": [
+      "server/controllers/user.controller.js",
+      "server/middlewares/token.middleware.js",
+      "server/utils/validator.js"
+    ]
+  }
+]
