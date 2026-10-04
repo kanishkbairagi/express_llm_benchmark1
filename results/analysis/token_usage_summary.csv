@@ -3,7 +3,9 @@ gemini-3.6-flash,promptTokens,125,1305.08,272.34731146922695,709.0,1979.0
 gemini-3.6-flash,completionTokens,125,3044.24,690.4233904384441,1726.0,4994.0
 gemini-3.6-flash,thinkingOrReasoningTokens,125,1681.832,1039.0687187061058,483.0,5003.0
 gemini-3.6-flash,totalTokens,125,6031.152,1331.5238968940812,3312.0,10018.0
+gemini-3.6-flash,total output tokens (Gemini = completion + thinking; Groq = completion),125,4726.072,1195.3450721646814,2331.0,8594.0
 gpt-oss-120b,promptTokens,125,1183.8,234.51029965688346,671.0,1764.0
 gpt-oss-120b,completionTokens,125,2463.128,508.83725733441815,1536.0,4003.0
 gpt-oss-120b,thinkingOrReasoningTokens,125,417.656,179.8627211281229,198.0,2064.0
 gpt-oss-120b,totalTokens,125,3646.928,692.2157641436897,2207.0,5537.0
+gpt-oss-120b,total output tokens (Gemini = completion + thinking; Groq = completion),125,2463.128,508.83725733441815,1536.0,4003.0

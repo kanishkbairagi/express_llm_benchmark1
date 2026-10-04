@@ -74,18 +74,16 @@ def compute_wilcoxon_exact(diffs):
     non_zero = diffs[diffs != 0.0]
     n_nonzero = len(non_zero)
 
+    zero_diffs = int(np.sum(diffs == 0.0))
+
     if n_nonzero == 0:
         return {
             'n_total': n_total,
             'n_nonzero': 0,
-            'ties_count': 0,
+            'ties_count': zero_diffs,
             'statistic': 0.0,
             'pvalue': 1.0
         }
-
-    abs_vals = np.abs(non_zero)
-    _, counts = np.unique(abs_vals, return_counts=True)
-    ties_count = int(np.sum(counts[counts > 1]))
 
     try:
         res = stats.wilcoxon(non_zero, method='exact', alternative='two-sided')
@@ -100,7 +98,7 @@ def compute_wilcoxon_exact(diffs):
     return {
         'n_total': n_total,
         'n_nonzero': n_nonzero,
-        'ties_count': ties_count,
+        'ties_count': zero_diffs,
         'statistic': stat,
         'pvalue': pval
     }
@@ -631,6 +629,157 @@ def analyze_per_controller_means(df, output_dir):
 
 
 
+def analyze_sensitivity_a(df, output_dir):
+    """
+    Sensitivity A (Trial-level matching):
+    For each controller, average only over trials where BOTH models' suites executed.
+    Include every controller with at least 1 such trial.
+    Runs the same comparison table as (c) and reports n.
+    """
+    print("\n--- SENSITIVITY A: TRIAL-LEVEL MATCHING ---")
+    controllers = sorted(df['controller'].unique())
+
+    # Find matched trials per controller where BOTH models executed (errorCategory != 'SyntaxError')
+    matched_trials = {}
+    for c in controllers:
+        gem_t = set(df[(df['controller'] == c) & (df['model'] == 'gemini-3.6-flash') & (df['errorCategory'] != 'SyntaxError')]['trial'])
+        groq_t = set(df[(df['controller'] == c) & (df['model'] == 'gpt-oss-120b') & (df['errorCategory'] != 'SyntaxError')]['trial'])
+        matched_trials[c] = gem_t.intersection(groq_t)
+
+    eligible_controllers = [c for c in controllers if len(matched_trials[c]) >= 1]
+    print(f"Controllers included with >= 1 matched trial: {len(eligible_controllers)}/{len(controllers)}")
+    
+    metrics = [
+        ('line_coverage', 'lineCoverage', False),
+        ('branch_coverage', 'branchCoverage', False),
+        ('function_coverage', 'functionCoverage', False),
+        ('mutation_score_strict', 'mutation_score_strict', True),
+        ('mutation_score_stryker', 'mutation_score_stryker', True)
+    ]
+
+    results = []
+    raw_pvals = []
+    for name, col, is_mut in metrics:
+        gem_means = {}
+        groq_means = {}
+        for c in eligible_controllers:
+            t_set = matched_trials[c]
+            c_gem = df[(df['controller'] == c) & (df['model'] == 'gemini-3.6-flash') & (df['trial'].isin(t_set))]
+            c_groq = df[(df['controller'] == c) & (df['model'] == 'gpt-oss-120b') & (df['trial'].isin(t_set))]
+            if is_mut:
+                v_gem = c_gem[c_gem['suiteOk'] == True][col].mean()
+                v_groq = c_groq[c_groq['suiteOk'] == True][col].mean()
+            else:
+                v_gem = c_gem[col].mean()
+                v_groq = c_groq[col].mean()
+            if pd.notna(v_gem) and pd.notna(v_groq):
+                gem_means[c] = v_gem
+                groq_means[c] = v_groq
+
+        common = sorted(set(gem_means.keys()).intersection(groq_means.keys()))
+        g_arr = np.array([gem_means[c] for c in common])
+        q_arr = np.array([groq_means[c] for c in common])
+        diffs = g_arr - q_arr
+
+        mean_diff = float(np.mean(diffs))
+        gem_mean = float(np.mean(g_arr))
+        groq_mean = float(np.mean(q_arr))
+
+        w_res = compute_wilcoxon_exact(diffs)
+        ci_low, ci_high = cluster_bootstrap_ci(diffs, np.mean, B=10000, seed=RANDOM_SEED)
+
+        raw_pvals.append(w_res['pvalue'])
+        results.append({
+            'outcome': name,
+            'controllers_n': len(common),
+            'gemini_mean': gem_mean,
+            'groq_mean': groq_mean,
+            'mean_difference': mean_diff,
+            'ci_95_low': ci_low,
+            'ci_95_high': ci_high,
+            'wilcoxon_W': w_res['statistic'],
+            'wilcoxon_n_nonzero': w_res['n_nonzero'],
+            'wilcoxon_ties': w_res['ties_count'],
+            'raw_pvalue': w_res['pvalue']
+        })
+
+    adj_pvals = holm_adjust(raw_pvals)
+    for i, adj_p in enumerate(adj_pvals):
+        results[i]['holm_adj_pvalue'] = float(adj_p)
+
+    sens_a_df = pd.DataFrame(results)
+    sens_a_df.to_csv(os.path.join(output_dir, 'sensitivity_a_trial_matched.csv'), index=False)
+    print("\nSensitivity A Comparison Table (Gemini - Groq, Trial-Matched):")
+    print(sens_a_df.to_string(index=False))
+    return sens_a_df
+
+
+def analyze_sensitivity_b(df, output_dir):
+    """
+    Sensitivity B (All 25 controllers with zeros for non-executable suites, SECONDARY):
+    For all 25 controllers, per-controller mean over all 5 trials with zeros for non-executable suites.
+    Runs the same comparison table as (c) and reports n=25.
+    """
+    print("\n--- SENSITIVITY B: ALL 25 CONTROLLERS WITH ZEROS FOR NON-EXECUTABLE SUITES (SECONDARY) ---")
+    controllers = sorted(df['controller'].unique())
+
+    df_b = df.copy()
+    # Non-executable suites (SyntaxError) get 0.0 for mutation scores (coverage is already 0.0 in trial_result.json)
+    df_b.loc[df_b['errorCategory'] == 'SyntaxError', 'mutation_score_strict'] = 0.0
+    df_b.loc[df_b['errorCategory'] == 'SyntaxError', 'mutation_score_stryker'] = 0.0
+
+    metrics = [
+        ('line_coverage', 'lineCoverage'),
+        ('branch_coverage', 'branchCoverage'),
+        ('function_coverage', 'functionCoverage'),
+        ('mutation_score_strict', 'mutation_score_strict'),
+        ('mutation_score_stryker', 'mutation_score_stryker')
+    ]
+
+    results = []
+    raw_pvals = []
+    for name, col in metrics:
+        gem_m = df_b[df_b['model'] == 'gemini-3.6-flash'].groupby('controller')[col].mean()
+        groq_m = df_b[df_b['model'] == 'gpt-oss-120b'].groupby('controller')[col].mean()
+
+        common = sorted(gem_m.dropna().index.intersection(groq_m.dropna().index))
+        g_arr = gem_m.loc[common].to_numpy()
+        q_arr = groq_m.loc[common].to_numpy()
+        diffs = g_arr - q_arr
+
+        mean_diff = float(np.mean(diffs))
+        gem_mean = float(np.mean(g_arr))
+        groq_mean = float(np.mean(q_arr))
+
+        w_res = compute_wilcoxon_exact(diffs)
+        ci_low, ci_high = cluster_bootstrap_ci(diffs, np.mean, B=10000, seed=RANDOM_SEED)
+
+        raw_pvals.append(w_res['pvalue'])
+        results.append({
+            'outcome': name,
+            'controllers_n': len(common),
+            'gemini_mean': gem_mean,
+            'groq_mean': groq_mean,
+            'mean_difference': mean_diff,
+            'ci_95_low': ci_low,
+            'ci_95_high': ci_high,
+            'wilcoxon_W': w_res['statistic'],
+            'wilcoxon_n_nonzero': w_res['n_nonzero'],
+            'wilcoxon_ties': w_res['ties_count'],
+            'raw_pvalue': w_res['pvalue']
+        })
+
+    adj_pvals = holm_adjust(raw_pvals)
+    for i, adj_p in enumerate(adj_pvals):
+        results[i]['holm_adj_pvalue'] = float(adj_p)
+
+    sens_b_df = pd.DataFrame(results)
+    sens_b_df.to_csv(os.path.join(output_dir, 'sensitivity_b_all25_zeros_SECONDARY.csv'), index=False)
+    print("\nSensitivity B Comparison Table (Gemini - Groq, All 25 with Zeros, SECONDARY):")
+    print(sens_b_df.to_string(index=False))
+    return sens_b_df
+
+
 def analyze_suite_success_and_flips(df, output_dir):
     """
     (d) Suite success rate per model with controller-level bootstrap CI,
@@ -728,17 +877,37 @@ def analyze_token_usage(df, output_dir):
     (f) Measured token usage per model (mean prompt, completion, thinking/reasoning, total).
     """
     print("\n--- (f) MEASURED TOKEN USAGE PER MODEL ---")
-    token_metrics = ['promptTokens', 'completionTokens', 'thinkingOrReasoningTokens', 'totalTokens']
+    df = df.copy()
+    def compute_total_output(row):
+        m = row['model']
+        comp = row['completionTokens']
+        comp = float(comp) if pd.notna(comp) else 0.0
+        if 'gemini' in m:
+            think = row['thinkingOrReasoningTokens']
+            think = float(think) if pd.notna(think) else 0.0
+            return comp + think
+        else:
+            return comp
+
+    df['totalOutputTokens'] = df.apply(compute_total_output, axis=1)
+
+    token_metrics = [
+        ('promptTokens', 'promptTokens'),
+        ('completionTokens', 'completionTokens'),
+        ('thinkingOrReasoningTokens', 'thinkingOrReasoningTokens'),
+        ('totalTokens', 'totalTokens'),
+        ('totalOutputTokens', 'total output tokens (Gemini = completion + thinking; Groq = completion)')
+    ]
 
     rows = []
     models = sorted(df['model'].unique())
     for m in models:
         m_df = df[df['model'] == m]
-        for t_col in token_metrics:
-            series = pd.to_numeric(m_df[t_col], errors='coerce').dropna()
+        for col_name, display_label in token_metrics:
+            series = pd.to_numeric(m_df[col_name], errors='coerce').dropna()
             rows.append({
                 'model': m,
-                'token_type': t_col,
+                'token_type': display_label,
                 'count_valid': len(series),
                 'mean': float(series.mean()) if len(series) > 0 else np.nan,
                 'std': float(series.std(ddof=1)) if len(series) > 1 else np.nan,
@@ -789,6 +958,10 @@ def main():
 
     # (c) Primary comparison
     analyze_primary_comparison(df, output_dir)
+
+    # Sensitivity Analyses
+    analyze_sensitivity_a(df, output_dir)
+    analyze_sensitivity_b(df, output_dir)
 
     # Per-controller summary breakdown
     analyze_per_controller_means(df, output_dir)
