@@ -1,0 +1,243 @@
+```javascript
+import { jest } from '@jest/globals';
+import {
+  signup,
+  login,
+  User,
+  PasswordHelper,
+  TokenService
+} from '../dataset/01_auth_controller.js';
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('Auth Controller - signup', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('returns 400 when required fields are missing', async () => {
+    const req = { body: { email: 'test@example.com', password: 'password123' } }; // missing name
+    const res = mockRes();
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Missing required fields: email, password, and name are required'
+    });
+  });
+
+  test('returns 400 for invalid email format', async () => {
+    const req = { body: { email: 'invalid-email', password: 'password123', name: 'John' } };
+    const res = mockRes();
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid email format'
+    });
+  });
+
+  test('returns 400 when password is too short', async () => {
+    const req = { body: { email: 'test@example.com', password: 'short', name: 'John' } };
+    const res = mockRes();
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Password must be at least 8 characters long'
+    });
+  });
+
+  test('returns 409 when user already exists', async () => {
+    jest.spyOn(User, 'findOne').mockResolvedValue({ id: 'existing-id' });
+    const req = { body: { email: 'test@example.com', password: 'password123', name: 'John' } };
+    const res = mockRes();
+
+    await signup(req, res);
+
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'An account with this email already exists'
+    });
+  });
+
+  test('creates a new user and returns 201 with token on success', async () => {
+    jest.spyOn(User, 'findOne').mockResolvedValue(null);
+    const hashed = 'hashed_password123';
+    jest.spyOn(PasswordHelper, 'hash').mockResolvedValue(hashed);
+    const createdUser = {
+      id: 'new-id',
+      name: 'John',
+      email: 'test@example.com',
+      role: 'user',
+      password: hashed,
+      isBlocked: false,
+      createdAt: new Date()
+    };
+    jest.spyOn(User, 'create').mockResolvedValue(createdUser);
+    const token = 'mock_jwt_token_new-id';
+    jest.spyOn(TokenService, 'generateToken').mockReturnValue(token);
+
+    const req = { body: { email: 'test@example.com', password: 'password123', name: ' John ' } };
+    const res = mockRes();
+
+    await signup(req, res);
+
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
+    expect(PasswordHelper.hash).toHaveBeenCalledWith('password123');
+    expect(User.create).toHaveBeenCalledWith({
+      name: 'John',
+      email: 'test@example.com',
+      password: hashed,
+      role: 'user',
+      isBlocked: false
+    });
+    expect(TokenService.generateToken).toHaveBeenCalledWith({ id: 'new-id', role: 'user' });
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'User registered successfully',
+      data: {
+        user: {
+          id: 'new-id',
+          name: 'John',
+          email: 'test@example.com',
+          role: 'user'
+        },
+        token
+      }
+    });
+  });
+});
+
+describe('Auth Controller - login', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('returns 400 when email or password is missing', async () => {
+    const req = { body: { email: 'test@example.com' } }; // missing password
+    const res = mockRes();
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Email and password are required'
+    });
+  });
+
+  test('returns 401 when user is not found', async () => {
+    jest.spyOn(User, 'findOne').mockResolvedValue(null);
+    const req = { body: { email: 'unknown@example.com', password: 'any' } };
+    const res = mockRes();
+
+    await login(req, res);
+
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'unknown@example.com' });
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid email or password'
+    });
+  });
+
+  test('returns 403 when account is blocked', async () => {
+    const blockedUser = {
+      id: 'blocked-id',
+      name: 'Blocked User',
+      email: 'blocked@example.com',
+      password: 'hashed_pw',
+      role: 'user',
+      isBlocked: true
+    };
+    jest.spyOn(User, 'findOne').mockResolvedValue(blockedUser);
+    const req = { body: { email: 'blocked@example.com', password: 'any' } };
+    const res = mockRes();
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Account has been suspended'
+    });
+  });
+
+  test('returns 401 when password does not match', async () => {
+    const user = {
+      id: 'user-id',
+      name: 'John',
+      email: 'john@example.com',
+      password: 'hashed_correct',
+      role: 'user',
+      isBlocked: false
+    };
+    jest.spyOn(User, 'findOne').mockResolvedValue(user);
+    jest.spyOn(PasswordHelper, 'compare').mockResolvedValue(false);
+    const req = { body: { email: 'john@example.com', password: 'wrongpw' } };
+    const res = mockRes();
+
+    await login(req, res);
+
+    expect(PasswordHelper.compare).toHaveBeenCalledWith('wrongpw', 'hashed_correct');
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid email or password'
+    });
+  });
+
+  test('returns 200 with token on successful login', async () => {
+    const user = {
+      id: 'user-id',
+      name: 'John',
+      email: 'john@example.com',
+      password: 'hashed_pw',
+      role: 'admin',
+      isBlocked: false
+    };
+    jest.spyOn(User, 'findOne').mockResolvedValue(user);
+    jest.spyOn(PasswordHelper, 'compare').mockResolvedValue(true);
+    const token = 'mock_jwt_token_user-id';
+    jest.spyOn(TokenService, 'generateToken').mockReturnValue(token);
+
+    const req = { body: { email: 'john@example.com', password: 'any' } };
+    const res = mockRes();
+
+    await login(req, res);
+
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'john@example.com' });
+    expect(PasswordHelper.compare).toHaveBeenCalledWith('any', 'hashed_pw');
+    expect(TokenService.generateToken).toHaveBeenCalledWith({ id: 'user-id', role: 'admin' });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Login successful',
+      data: {
+        user: {
+          id: 'user-id',
+          name: 'John',
+          email: 'john@example.com',
+          role: 'admin'
+        },
+        token
+      }
+    });
+  });
+});
+```

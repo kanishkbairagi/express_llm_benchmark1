@@ -1,0 +1,1446 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 11,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 11,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791052803379,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 8,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Google callback – missing code",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Google callback – missing code",
+          "startAt": 1791052803733
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Google callback – invalid code",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Google callback – invalid code",
+          "startAt": 1791052803743
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Google callback – existing provider user",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Google callback – existing provider user",
+          "startAt": 1791052803745
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Google callback – existing email user, link provider",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Google callback – existing email user, link provider",
+          "startAt": 1791052803749
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Google callback – new user creation",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Google callback – new user creation",
+          "startAt": 1791052803752
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Github callback – missing code",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Github callback – missing code",
+          "startAt": 1791052803754
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Github callback – invalid code",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Github callback – invalid code",
+          "startAt": 1791052803755
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Github callback – profile without email",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Github callback – profile without email",
+          "startAt": 1791052803756
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Github callback – existing provider user",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Github callback – existing provider user",
+          "startAt": 1791052803758
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 8,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Github callback – existing email user, link provider",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Github callback – existing email user, link provider",
+          "startAt": 1791052803760
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controllers"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controllers Github callback – new user creation",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Github callback – new user creation",
+          "startAt": 1791052803768
+        }
+      ],
+      "endTime": 1791052803772,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\11_oauth_controller_gpt-oss-120b_trial4.test.js",
+      "startTime": 1791052803509,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\11_oauth_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\11_oauth_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 25
+          },
+          "end": {
+            "line": 9,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 52
+          },
+          "end": {
+            "line": 5,
+            "column": 56
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 32
+          },
+          "end": {
+            "line": 6,
+            "column": 36
+          }
+        },
+        "3": {
+          "start": {
+            "line": 7,
+            "column": 27
+          },
+          "end": {
+            "line": 7,
+            "column": 86
+          }
+        },
+        "4": {
+          "start": {
+            "line": 8,
+            "column": 56
+          },
+          "end": {
+            "line": 8,
+            "column": 60
+          }
+        },
+        "5": {
+          "start": {
+            "line": 11,
+            "column": 28
+          },
+          "end": {
+            "line": 31,
+            "column": 1
+          }
+        },
+        "6": {
+          "start": {
+            "line": 13,
+            "column": 4
+          },
+          "end": {
+            "line": 13,
+            "column": 74
+          }
+        },
+        "7": {
+          "start": {
+            "line": 13,
+            "column": 33
+          },
+          "end": {
+            "line": 13,
+            "column": 74
+          }
+        },
+        "8": {
+          "start": {
+            "line": 14,
+            "column": 4
+          },
+          "end": {
+            "line": 19,
+            "column": 6
+          }
+        },
+        "9": {
+          "start": {
+            "line": 22,
+            "column": 4
+          },
+          "end": {
+            "line": 22,
+            "column": 74
+          }
+        },
+        "10": {
+          "start": {
+            "line": 22,
+            "column": 33
+          },
+          "end": {
+            "line": 22,
+            "column": 74
+          }
+        },
+        "11": {
+          "start": {
+            "line": 23,
+            "column": 4
+          },
+          "end": {
+            "line": 28,
+            "column": 6
+          }
+        },
+        "12": {
+          "start": {
+            "line": 30,
+            "column": 28
+          },
+          "end": {
+            "line": 30,
+            "column": 58
+          }
+        },
+        "13": {
+          "start": {
+            "line": 33,
+            "column": 36
+          },
+          "end": {
+            "line": 94,
+            "column": 1
+          }
+        },
+        "14": {
+          "start": {
+            "line": 34,
+            "column": 2
+          },
+          "end": {
+            "line": 93,
+            "column": 3
+          }
+        },
+        "15": {
+          "start": {
+            "line": 35,
+            "column": 28
+          },
+          "end": {
+            "line": 35,
+            "column": 43
+          }
+        },
+        "16": {
+          "start": {
+            "line": 37,
+            "column": 4
+          },
+          "end": {
+            "line": 42,
+            "column": 5
+          }
+        },
+        "17": {
+          "start": {
+            "line": 38,
+            "column": 6
+          },
+          "end": {
+            "line": 41,
+            "column": 9
+          }
+        },
+        "18": {
+          "start": {
+            "line": 45,
+            "column": 4
+          },
+          "end": {
+            "line": 52,
+            "column": 5
+          }
+        },
+        "19": {
+          "start": {
+            "line": 46,
+            "column": 6
+          },
+          "end": {
+            "line": 46,
+            "column": 66
+          }
+        },
+        "20": {
+          "start": {
+            "line": 48,
+            "column": 6
+          },
+          "end": {
+            "line": 51,
+            "column": 9
+          }
+        },
+        "21": {
+          "start": {
+            "line": 54,
+            "column": 46
+          },
+          "end": {
+            "line": 54,
+            "column": 59
+          }
+        },
+        "22": {
+          "start": {
+            "line": 55,
+            "column": 15
+          },
+          "end": {
+            "line": 55,
+            "column": 67
+          }
+        },
+        "23": {
+          "start": {
+            "line": 57,
+            "column": 4
+          },
+          "end": {
+            "line": 70,
+            "column": 5
+          }
+        },
+        "24": {
+          "start": {
+            "line": 58,
+            "column": 6
+          },
+          "end": {
+            "line": 58,
+            "column": 48
+          }
+        },
+        "25": {
+          "start": {
+            "line": 59,
+            "column": 6
+          },
+          "end": {
+            "line": 69,
+            "column": 7
+          }
+        },
+        "26": {
+          "start": {
+            "line": 60,
+            "column": 8
+          },
+          "end": {
+            "line": 60,
+            "column": 66
+          }
+        },
+        "27": {
+          "start": {
+            "line": 62,
+            "column": 8
+          },
+          "end": {
+            "line": 68,
+            "column": 11
+          }
+        },
+        "28": {
+          "start": {
+            "line": 72,
+            "column": 18
+          },
+          "end": {
+            "line": 72,
+            "column": 78
+          }
+        },
+        "29": {
+          "start": {
+            "line": 74,
+            "column": 4
+          },
+          "end": {
+            "line": 86,
+            "column": 7
+          }
+        },
+        "30": {
+          "start": {
+            "line": 88,
+            "column": 4
+          },
+          "end": {
+            "line": 92,
+            "column": 7
+          }
+        },
+        "31": {
+          "start": {
+            "line": 96,
+            "column": 36
+          },
+          "end": {
+            "line": 165,
+            "column": 1
+          }
+        },
+        "32": {
+          "start": {
+            "line": 97,
+            "column": 2
+          },
+          "end": {
+            "line": 164,
+            "column": 3
+          }
+        },
+        "33": {
+          "start": {
+            "line": 98,
+            "column": 21
+          },
+          "end": {
+            "line": 98,
+            "column": 36
+          }
+        },
+        "34": {
+          "start": {
+            "line": 100,
+            "column": 4
+          },
+          "end": {
+            "line": 105,
+            "column": 5
+          }
+        },
+        "35": {
+          "start": {
+            "line": 101,
+            "column": 6
+          },
+          "end": {
+            "line": 104,
+            "column": 9
+          }
+        },
+        "36": {
+          "start": {
+            "line": 108,
+            "column": 4
+          },
+          "end": {
+            "line": 115,
+            "column": 5
+          }
+        },
+        "37": {
+          "start": {
+            "line": 109,
+            "column": 6
+          },
+          "end": {
+            "line": 109,
+            "column": 66
+          }
+        },
+        "38": {
+          "start": {
+            "line": 111,
+            "column": 6
+          },
+          "end": {
+            "line": 114,
+            "column": 9
+          }
+        },
+        "39": {
+          "start": {
+            "line": 117,
+            "column": 50
+          },
+          "end": {
+            "line": 117,
+            "column": 63
+          }
+        },
+        "40": {
+          "start": {
+            "line": 119,
+            "column": 4
+          },
+          "end": {
+            "line": 124,
+            "column": 5
+          }
+        },
+        "41": {
+          "start": {
+            "line": 120,
+            "column": 6
+          },
+          "end": {
+            "line": 123,
+            "column": 9
+          }
+        },
+        "42": {
+          "start": {
+            "line": 126,
+            "column": 15
+          },
+          "end": {
+            "line": 126,
+            "column": 67
+          }
+        },
+        "43": {
+          "start": {
+            "line": 128,
+            "column": 4
+          },
+          "end": {
+            "line": 141,
+            "column": 5
+          }
+        },
+        "44": {
+          "start": {
+            "line": 129,
+            "column": 6
+          },
+          "end": {
+            "line": 129,
+            "column": 48
+          }
+        },
+        "45": {
+          "start": {
+            "line": 130,
+            "column": 6
+          },
+          "end": {
+            "line": 140,
+            "column": 7
+          }
+        },
+        "46": {
+          "start": {
+            "line": 131,
+            "column": 8
+          },
+          "end": {
+            "line": 131,
+            "column": 66
+          }
+        },
+        "47": {
+          "start": {
+            "line": 133,
+            "column": 8
+          },
+          "end": {
+            "line": 139,
+            "column": 11
+          }
+        },
+        "48": {
+          "start": {
+            "line": 143,
+            "column": 18
+          },
+          "end": {
+            "line": 143,
+            "column": 78
+          }
+        },
+        "49": {
+          "start": {
+            "line": 145,
+            "column": 4
+          },
+          "end": {
+            "line": 157,
+            "column": 7
+          }
+        },
+        "50": {
+          "start": {
+            "line": 159,
+            "column": 4
+          },
+          "end": {
+            "line": 163,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 20
+            },
+            "end": {
+              "line": 5,
+              "column": 21
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 52
+            },
+            "end": {
+              "line": 5,
+              "column": 56
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 15
+            },
+            "end": {
+              "line": 6,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 32
+            },
+            "end": {
+              "line": 6,
+              "column": 36
+            }
+          },
+          "line": 6
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 7,
+              "column": 10
+            },
+            "end": {
+              "line": 7,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 27
+            },
+            "end": {
+              "line": 7,
+              "column": 86
+            }
+          },
+          "line": 7
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 16
+            },
+            "end": {
+              "line": 8,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 56
+            },
+            "end": {
+              "line": 8,
+              "column": 60
+            }
+          },
+          "line": 8
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 12,
+              "column": 22
+            },
+            "end": {
+              "line": 12,
+              "column": 23
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 38
+            },
+            "end": {
+              "line": 20,
+              "column": 3
+            }
+          },
+          "line": 12
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 21,
+              "column": 22
+            },
+            "end": {
+              "line": 21,
+              "column": 23
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 21,
+              "column": 38
+            },
+            "end": {
+              "line": 29,
+              "column": 3
+            }
+          },
+          "line": 21
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 30,
+              "column": 15
+            },
+            "end": {
+              "line": 30,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 30,
+              "column": 28
+            },
+            "end": {
+              "line": 30,
+              "column": 58
+            }
+          },
+          "line": 30
+        },
+        "7": {
+          "name": "(anonymous_7)",
+          "decl": {
+            "start": {
+              "line": 33,
+              "column": 36
+            },
+            "end": {
+              "line": 33,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 33,
+              "column": 56
+            },
+            "end": {
+              "line": 94,
+              "column": 1
+            }
+          },
+          "line": 33
+        },
+        "8": {
+          "name": "(anonymous_8)",
+          "decl": {
+            "start": {
+              "line": 96,
+              "column": 36
+            },
+            "end": {
+              "line": 96,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 96,
+              "column": 56
+            },
+            "end": {
+              "line": 165,
+              "column": 1
+            }
+          },
+          "line": 96
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 4
+            },
+            "end": {
+              "line": 13,
+              "column": 74
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 13,
+                "column": 4
+              },
+              "end": {
+                "line": 13,
+                "column": 74
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 13
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 4
+            },
+            "end": {
+              "line": 22,
+              "column": 74
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 22,
+                "column": 4
+              },
+              "end": {
+                "line": 22,
+                "column": 74
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 22
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 35,
+              "column": 28
+            },
+            "end": {
+              "line": 35,
+              "column": 43
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 35,
+                "column": 28
+              },
+              "end": {
+                "line": 35,
+                "column": 37
+              }
+            },
+            {
+              "start": {
+                "line": 35,
+                "column": 41
+              },
+              "end": {
+                "line": 35,
+                "column": 43
+              }
+            }
+          ],
+          "line": 35
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 37,
+              "column": 4
+            },
+            "end": {
+              "line": 42,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 37,
+                "column": 4
+              },
+              "end": {
+                "line": 42,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 37
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 57,
+              "column": 4
+            },
+            "end": {
+              "line": 70,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 57,
+                "column": 4
+              },
+              "end": {
+                "line": 70,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 57
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 59,
+              "column": 6
+            },
+            "end": {
+              "line": 69,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 59,
+                "column": 6
+              },
+              "end": {
+                "line": 69,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 61,
+                "column": 13
+              },
+              "end": {
+                "line": 69,
+                "column": 7
+              }
+            }
+          ],
+          "line": 59
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 98,
+              "column": 21
+            },
+            "end": {
+              "line": 98,
+              "column": 36
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 98,
+                "column": 21
+              },
+              "end": {
+                "line": 98,
+                "column": 30
+              }
+            },
+            {
+              "start": {
+                "line": 98,
+                "column": 34
+              },
+              "end": {
+                "line": 98,
+                "column": 36
+              }
+            }
+          ],
+          "line": 98
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 100,
+              "column": 4
+            },
+            "end": {
+              "line": 105,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 100,
+                "column": 4
+              },
+              "end": {
+                "line": 105,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 100
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 119,
+              "column": 4
+            },
+            "end": {
+              "line": 124,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 119,
+                "column": 4
+              },
+              "end": {
+                "line": 124,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 119
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 128,
+              "column": 4
+            },
+            "end": {
+              "line": 141,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 128,
+                "column": 4
+              },
+              "end": {
+                "line": 141,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 128
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 130,
+              "column": 6
+            },
+            "end": {
+              "line": 140,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 130,
+                "column": 6
+              },
+              "end": {
+                "line": 140,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 132,
+                "column": 13
+              },
+              "end": {
+                "line": 140,
+                "column": 7
+              }
+            }
+          ],
+          "line": 130
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 1,
+        "14": 5,
+        "15": 5,
+        "16": 5,
+        "17": 1,
+        "18": 4,
+        "19": 4,
+        "20": 1,
+        "21": 3,
+        "22": 3,
+        "23": 3,
+        "24": 2,
+        "25": 2,
+        "26": 1,
+        "27": 1,
+        "28": 3,
+        "29": 3,
+        "30": 0,
+        "31": 1,
+        "32": 6,
+        "33": 6,
+        "34": 6,
+        "35": 1,
+        "36": 5,
+        "37": 5,
+        "38": 1,
+        "39": 4,
+        "40": 4,
+        "41": 1,
+        "42": 3,
+        "43": 3,
+        "44": 2,
+        "45": 2,
+        "46": 1,
+        "47": 1,
+        "48": 3,
+        "49": 3,
+        "50": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 5,
+        "8": 6
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          5,
+          0
+        ],
+        "3": [
+          1,
+          4
+        ],
+        "4": [
+          2,
+          1
+        ],
+        "5": [
+          1,
+          1
+        ],
+        "6": [
+          6,
+          0
+        ],
+        "7": [
+          1,
+          5
+        ],
+        "8": [
+          1,
+          3
+        ],
+        "9": [
+          2,
+          1
+        ],
+        "10": [
+          1,
+          1
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "ec0b289273a9ca96a1938a5d839d47cb69f60d72"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "20_chat_controller.js",
+  "trial": 3,
+  "startedAt": "2026-10-03T18:21:21.276Z",
+  "finishedAt": "2026-10-03T18:21:40.446Z",
+  "suiteOk": true,
+  "testsPassed": 18,
+  "testsFailed": 0,
+  "testsTotal": 18,
+  "errorCategory": "none",
+  "statementCoverage": 91.67,
+  "branchCoverage": 94.64,
+  "functionCoverage": 28.57,
+  "lineCoverage": 91.67,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1365,
+    "completionTokens": 3534,
+    "totalTokens": 5779,
+    "thinkingTokens": 880
+  },
+  "latencyMs": 16989
+}

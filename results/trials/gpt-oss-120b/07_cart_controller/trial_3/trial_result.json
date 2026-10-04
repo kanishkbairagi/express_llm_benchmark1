@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "07_cart_controller.js",
+  "trial": 3,
+  "startedAt": "2026-10-03T18:02:46.579Z",
+  "finishedAt": "2026-10-03T18:02:57.978Z",
+  "suiteOk": false,
+  "testsPassed": 19,
+  "testsFailed": 1,
+  "testsTotal": 20,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 89.22,
+  "branchCoverage": 89.86,
+  "functionCoverage": 66.67,
+  "lineCoverage": 88.89,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1764,
+    "completionTokens": 3773,
+    "totalTokens": 5537,
+    "reasoningTokens": 467
+  },
+  "latencyMs": 9062
+}

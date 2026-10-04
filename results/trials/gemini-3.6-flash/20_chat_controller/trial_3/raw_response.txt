@@ -1,0 +1,401 @@
+```javascript
+import {
+  getRoomHistory,
+  sendMessage,
+  ChatRoom,
+  ChatMessage
+} from '../dataset/20_chat_controller.js';
+
+describe('20_chat_controller', () => {
+  let mockRes;
+
+  const createMockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  beforeEach(() => {
+    mockRes = createMockRes();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('getRoomHistory', () => {
+    test('should return 401 if user is not authenticated', async () => {
+      const req = {
+        params: { roomId: 'room_1' },
+        query: {}
+      };
+
+      await getRoomHistory(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 if roomId is missing', async () => {
+      const req = {
+        user: { id: 'user_1' },
+        params: {}
+      };
+
+      await getRoomHistory(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Room ID is required'
+      });
+    });
+
+    test('should return 404 if chat room is not found', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue(null);
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'non_existent_room' }
+      };
+
+      await getRoomHistory(req, mockRes);
+
+      expect(ChatRoom.findById).toHaveBeenCalledWith('non_existent_room');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Chat room not found'
+      });
+    });
+
+    test('should return 403 if user is not a member of the room', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1' });
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(false);
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' }
+      };
+
+      await getRoomHistory(req, mockRes);
+
+      expect(ChatRoom.isMember).toHaveBeenCalledWith('room_1', 'user_1');
+      expect(mockRes.status).toHaveBeenCalledWith(403);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Access denied: You are not a member of this chat room'
+      });
+    });
+
+    test('should return 400 for invalid limit values (< 1, > 100, NaN)', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1' });
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(true);
+
+      const invalidLimits = ['invalid', '0', '101'];
+
+      for (const limit of invalidLimits) {
+        const req = {
+          user: { id: 'user_1' },
+          params: { roomId: 'room_1' },
+          query: { limit }
+        };
+
+        await getRoomHistory(req, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+        expect(mockRes.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Limit must be an integer between 1 and 100'
+        });
+      }
+    });
+
+    test('should return 400 if before date query parameter is invalid', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1' });
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(true);
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        query: { before: 'not-a-valid-date' }
+      };
+
+      await getRoomHistory(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid before timestamp format'
+      });
+    });
+
+    test('should return 200 and messages list on successful request', async () => {
+      const mockRoom = { id: 'room_1' };
+      const mockMessages = [
+        { id: 'msg_1', content: 'Hello' },
+        { id: 'msg_2', content: 'World' }
+      ];
+
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue(mockRoom);
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(true);
+      jest.spyOn(ChatMessage, 'findByRoom').mockResolvedValue(mockMessages);
+
+      const req = {
+        query: { userId: 'user_1', limit: '2', before: '2023-01-01T00:00:00.000Z' },
+        params: { roomId: 'room_1' }
+      };
+
+      await getRoomHistory(req, mockRes);
+
+      expect(ChatMessage.findByRoom).toHaveBeenCalledWith('room_1', {
+        limit: 2,
+        before: new Date('2023-01-01T00:00:00.000Z')
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          roomId: 'room_1',
+          count: 2,
+          hasMore: true,
+          messages: mockMessages
+        }
+      });
+    });
+
+    test('should return 500 when an internal error occurs', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockRejectedValue(new Error('Database error'));
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' }
+      };
+
+      await getRoomHistory(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve chat history',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('sendMessage', () => {
+    test('should return 401 if senderId is missing', async () => {
+      const req = {
+        params: { roomId: 'room_1' },
+        body: { content: 'Hello' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 if roomId is missing', async () => {
+      const req = {
+        user: { id: 'user_1' },
+        body: { content: 'Hello' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Room ID is required'
+      });
+    });
+
+    test('should return 400 if neither content nor attachment is provided', async () => {
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        body: { content: '   ', attachmentUrl: '' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Message must contain either text content or an attachment'
+      });
+    });
+
+    test('should return 400 if content exceeds 2000 characters', async () => {
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        body: { content: 'a'.repeat(2001) }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Message text cannot exceed 2000 characters'
+      });
+    });
+
+    test('should return 404 if chat room is not found', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue(null);
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        body: { content: 'Hello' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Chat room not found'
+      });
+    });
+
+    test('should return 400 if chat room is archived', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1', isArchived: true });
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        body: { content: 'Hello' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Cannot send messages in an archived room'
+      });
+    });
+
+    test('should return 403 if user is not a member of the room', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1', isArchived: false });
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(false);
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        body: { content: 'Hello' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(ChatRoom.isMember).toHaveBeenCalledWith('room_1', 'user_1');
+      expect(mockRes.status).toHaveBeenCalledWith(403);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'You do not have permission to post in this room'
+      });
+    });
+
+    test('should successfully send a text message and update activity', async () => {
+      const mockCreatedMsg = {
+        id: 'msg_123',
+        roomId: 'room_1',
+        senderId: 'user_1',
+        content: 'Hello World',
+        attachmentUrl: null
+      };
+
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1' });
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(true);
+      jest.spyOn(ChatMessage, 'create').mockResolvedValue(mockCreatedMsg);
+      jest.spyOn(ChatRoom, 'updateLastActivity').mockResolvedValue(true);
+
+      const req = {
+        body: { senderId: 'user_1', content: '  Hello World  ' },
+        params: { roomId: 'room_1' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(ChatMessage.create).toHaveBeenCalledWith({
+        roomId: 'room_1',
+        senderId: 'user_1',
+        content: 'Hello World',
+        attachmentUrl: null
+      });
+      expect(ChatRoom.updateLastActivity).toHaveBeenCalledWith('room_1', expect.any(Date));
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: mockCreatedMsg
+      });
+    });
+
+    test('should successfully send an attachment-only message', async () => {
+      const mockCreatedMsg = {
+        id: 'msg_124',
+        roomId: 'room_1',
+        senderId: 'user_1',
+        content: null,
+        attachmentUrl: 'https://example.com/file.png'
+      };
+
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1' });
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(true);
+      jest.spyOn(ChatMessage, 'create').mockResolvedValue(mockCreatedMsg);
+      jest.spyOn(ChatRoom, 'updateLastActivity').mockResolvedValue(true);
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        body: { attachmentUrl: '  https://example.com/file.png  ' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(ChatMessage.create).toHaveBeenCalledWith({
+        roomId: 'room_1',
+        senderId: 'user_1',
+        content: null,
+        attachmentUrl: 'https://example.com/file.png'
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: mockCreatedMsg
+      });
+    });
+
+    test('should return 500 when message creation throws an error', async () => {
+      jest.spyOn(ChatRoom, 'findById').mockResolvedValue({ id: 'room_1' });
+      jest.spyOn(ChatRoom, 'isMember').mockResolvedValue(true);
+      jest.spyOn(ChatMessage, 'create').mockRejectedValue(new Error('Write error'));
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { roomId: 'room_1' },
+        body: { content: 'Test' }
+      };
+
+      await sendMessage(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to send message',
+        details: 'Write error'
+      });
+    });
+  });
+});
+```

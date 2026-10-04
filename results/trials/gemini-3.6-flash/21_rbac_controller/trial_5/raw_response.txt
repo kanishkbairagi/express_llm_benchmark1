@@ -1,0 +1,299 @@
+```javascript
+import {
+  assignRoleToUser,
+  revokeRoleFromUser,
+  UserAccount,
+  RoleDefinition
+} from '../dataset/21_rbac_controller.js';
+
+describe('21_rbac_controller unit tests', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      user: null,
+      body: {}
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  describe('assignRoleToUser', () => {
+    it('should return 403 if requester is missing or does not have admin privileges', async () => {
+      req.user = undefined;
+      await assignRoleToUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(403);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Forbidden: Requires administrator privileges to assign roles'
+      });
+
+      req.user = { role: 'editor' };
+      await assignRoleToUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(403);
+    });
+
+    it('should return 400 if targetUserId or roleName is missing', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123' }; // missing roleName
+
+      await assignRoleToUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'targetUserId and roleName are required'
+      });
+
+      req.body = { roleName: 'editor' }; // missing targetUserId
+      await assignRoleToUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should return 403 if an admin tries to assign super_admin role', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'super_admin' };
+
+      await assignRoleToUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(403);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Only super_admin can assign the super_admin role'
+      });
+    });
+
+    it('should return 404 if role does not exist in catalog', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'invalid_role' };
+
+      jest.spyOn(RoleDefinition, 'findByName').mockResolvedValue(null);
+
+      await assignRoleToUser(req, res);
+      expect(RoleDefinition.findByName).toHaveBeenCalledWith('invalid_role');
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Role "invalid_role" does not exist in the system catalog'
+      });
+    });
+
+    it('should return 404 if target user is not found', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'editor' };
+
+      jest.spyOn(RoleDefinition, 'findByName').mockResolvedValue({ name: 'editor' });
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue(null);
+
+      await assignRoleToUser(req, res);
+      expect(UserAccount.findById).toHaveBeenCalledWith('u123');
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User with ID u123 not found'
+      });
+    });
+
+    it('should return 409 if target user already possesses the role', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'EDITOR ' };
+
+      jest.spyOn(RoleDefinition, 'findByName').mockResolvedValue({ name: 'editor' });
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue({ id: 'u123', roles: ['editor'] });
+
+      await assignRoleToUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User already has the "editor" role'
+      });
+    });
+
+    it('should successfully assign role with default scope "global"', async () => {
+      req.user = { role: 'super_admin' };
+      req.body = { targetUserId: 'u123', roleName: 'super_admin' };
+
+      jest.spyOn(RoleDefinition, 'findByName').mockResolvedValue({ name: 'super_admin' });
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue({ id: 'u123', roles: [] });
+      jest.spyOn(UserAccount, 'addRole').mockResolvedValue({ id: 'u123', roles: ['super_admin'] });
+
+      await assignRoleToUser(req, res);
+      expect(UserAccount.addRole).toHaveBeenCalledWith('u123', 'super_admin', 'global');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Role "super_admin" successfully granted to user',
+        data: {
+          userId: 'u123',
+          roles: ['super_admin'],
+          scope: 'global'
+        }
+      });
+    });
+
+    it('should successfully assign role with custom scope', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'editor', scope: 'billing' };
+
+      jest.spyOn(RoleDefinition, 'findByName').mockResolvedValue({ name: 'editor' });
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue({ id: 'u123', roles: [] });
+      jest.spyOn(UserAccount, 'addRole').mockResolvedValue({ id: 'u123', roles: ['editor'] });
+
+      await assignRoleToUser(req, res);
+      expect(UserAccount.addRole).toHaveBeenCalledWith('u123', 'editor', 'billing');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Role "editor" successfully granted to user',
+        data: {
+          userId: 'u123',
+          roles: ['editor'],
+          scope: 'billing'
+        }
+      });
+    });
+
+    it('should return 500 when an internal error occurs', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'editor' };
+
+      jest.spyOn(RoleDefinition, 'findByName').mockRejectedValue(new Error('Database error'));
+
+      await assignRoleToUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to assign role',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('revokeRoleFromUser', () => {
+    it('should return 403 if requester is missing or lacks admin privileges', async () => {
+      req.user = { role: 'member' };
+      await revokeRoleFromUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(403);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Forbidden: Requires administrator privileges to revoke roles'
+      });
+    });
+
+    it('should return 400 if targetUserId or roleName is missing', async () => {
+      req.user = { role: 'admin' };
+      req.body = { roleName: 'editor' }; // missing targetUserId
+
+      await revokeRoleFromUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'targetUserId and roleName are required'
+      });
+    });
+
+    it('should return 404 if target user is not found', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'editor' };
+
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue(null);
+
+      await revokeRoleFromUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User with ID u123 not found'
+      });
+    });
+
+    it('should return 400 if user does not possess the specified role', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'editor' };
+
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue({ id: 'u123', roles: ['viewer'] });
+
+      await revokeRoleFromUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User does not possess the "editor" role'
+      });
+    });
+
+    it('should return 400 if revoking the last remaining super_admin', async () => {
+      req.user = { role: 'super_admin' };
+      req.body = { targetUserId: 'u123', roleName: 'super_admin' };
+
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue({ id: 'u123', roles: ['super_admin'] });
+      jest.spyOn(UserAccount, 'countSuperAdmins').mockResolvedValue(1);
+
+      await revokeRoleFromUser(req, res);
+      expect(UserAccount.countSuperAdmins).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Cannot revoke the last remaining super_admin role in the system'
+      });
+    });
+
+    it('should successfully revoke super_admin role if count is greater than 1', async () => {
+      req.user = { role: 'super_admin' };
+      req.body = { targetUserId: 'u123', roleName: 'super_admin' };
+
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue({ id: 'u123', roles: ['super_admin'] });
+      jest.spyOn(UserAccount, 'countSuperAdmins').mockResolvedValue(2);
+      jest.spyOn(UserAccount, 'removeRole').mockResolvedValue({ id: 'u123', roles: [] });
+
+      await revokeRoleFromUser(req, res);
+      expect(UserAccount.removeRole).toHaveBeenCalledWith('u123', 'super_admin');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Role "super_admin" successfully revoked from user',
+        data: {
+          userId: 'u123',
+          roles: []
+        }
+      });
+    });
+
+    it('should successfully revoke a standard role', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'editor' };
+
+      jest.spyOn(UserAccount, 'findById').mockResolvedValue({ id: 'u123', roles: ['editor', 'viewer'] });
+      jest.spyOn(UserAccount, 'removeRole').mockResolvedValue({ id: 'u123', roles: ['viewer'] });
+
+      await revokeRoleFromUser(req, res);
+      expect(UserAccount.removeRole).toHaveBeenCalledWith('u123', 'editor');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Role "editor" successfully revoked from user',
+        data: {
+          userId: 'u123',
+          roles: ['viewer']
+        }
+      });
+    });
+
+    it('should return 500 when an internal error occurs during revocation', async () => {
+      req.user = { role: 'admin' };
+      req.body = { targetUserId: 'u123', roleName: 'editor' };
+
+      jest.spyOn(UserAccount, 'findById').mockRejectedValue(new Error('Connection failure'));
+
+      await revokeRoleFromUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to revoke role',
+        details: 'Connection failure'
+      });
+    });
+  });
+});
+```

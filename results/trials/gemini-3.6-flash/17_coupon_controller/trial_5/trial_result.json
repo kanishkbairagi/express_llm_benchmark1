@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "17_coupon_controller.js",
+  "trial": 5,
+  "startedAt": "2026-10-04T11:14:35.136Z",
+  "finishedAt": "2026-10-04T11:15:00.774Z",
+  "suiteOk": true,
+  "testsPassed": 30,
+  "testsFailed": 0,
+  "testsTotal": 30,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 95.12,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1812,
+    "completionTokens": 4682,
+    "totalTokens": 7416,
+    "thinkingTokens": 922
+  },
+  "latencyMs": 23586
+}

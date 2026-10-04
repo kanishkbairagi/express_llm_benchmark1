@@ -1,0 +1,326 @@
+import { jest } from '@jest/globals';
+import {
+  updateProfile,
+  requestPasswordReset,
+  resetPassword,
+  User,
+  EmailService,
+  CryptoHelper
+} from '../dataset/06_user_controller.js';
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('User Controller', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('updateProfile', () => {
+    test('returns 401 when no user identifier is provided', async () => {
+      const req = { body: {} };
+      const res = mockRes();
+
+      await updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('returns 404 when user does not exist', async () => {
+      const req = {
+        user: { id: 'nonexistent' },
+        body: {}
+      };
+      const res = mockRes();
+
+      jest.spyOn(User, 'findById').mockResolvedValue(null);
+
+      await updateProfile(req, res);
+
+      expect(User.findById).toHaveBeenCalledWith('nonexistent');
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User not found'
+      });
+    });
+
+    test('returns 400 for empty name', async () => {
+      const req = {
+        user: { id: 'uid' },
+        body: { name: '   ' }
+      };
+      const res = mockRes();
+
+      jest.spyOn(User, 'findById').mockResolvedValue({ id: 'uid' });
+
+      await updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Name cannot be empty'
+      });
+    });
+
+    test('returns 400 for bio longer than 250 chars', async () => {
+      const longBio = 'a'.repeat(251);
+      const req = {
+        user: { id: 'uid' },
+        body: { bio: longBio }
+      };
+      const res = mockRes();
+
+      jest.spyOn(User, 'findById').mockResolvedValue({ id: 'uid' });
+
+      await updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Bio must be a string up to 250 characters'
+      });
+    });
+
+    test('returns 400 for invalid phone format', async () => {
+      const req = {
+        user: { id: 'uid' },
+        body: { phone: '12345' }
+      };
+      const res = mockRes();
+
+      jest.spyOn(User, 'findById').mockResolvedValue({ id: 'uid' });
+
+      await updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid international phone number format'
+      });
+    });
+
+    test('returns 400 for malformed avatar URL', async () => {
+      const req = {
+        user: { id: 'uid' },
+        body: { avatarUrl: 'ht!tp://bad-url' }
+      };
+      const res = mockRes();
+
+      jest.spyOn(User, 'findById').mockResolvedValue({ id: 'uid' });
+
+      await updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid avatar URL'
+      });
+    });
+
+    test('successfully updates profile with valid fields', async () => {
+      const req = {
+        user: { id: 'uid' },
+        body: {
+          name: '  Alice  ',
+          bio: 'Hello world',
+          phone: '+12345678901',
+          avatarUrl: 'https://example.com/avatar.png'
+        }
+      };
+      const res = mockRes();
+
+      const mockUser = { id: 'uid', name: 'Old' };
+      jest.spyOn(User, 'findById').mockResolvedValue(mockUser);
+      const updateSpy = jest.spyOn(User, 'update').mockImplementation(async (id, data) => ({
+        id,
+        ...mockUser,
+        ...data
+      }));
+
+      await updateProfile(req, res);
+
+      expect(User.findById).toHaveBeenCalledWith('uid');
+      expect(updateSpy).toHaveBeenCalledWith('uid', {
+        name: 'Alice',
+        bio: 'Hello world',
+        phone: '+12345678901',
+        avatarUrl: 'https://example.com/avatar.png'
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Profile updated successfully',
+        data: expect.objectContaining({
+          id: 'uid',
+          name: 'Alice',
+          bio: 'Hello world',
+          phone: '+12345678901',
+          avatarUrl: 'https://example.com/avatar.png'
+        })
+      });
+    });
+  });
+
+  describe('requestPasswordReset', () => {
+    test('returns 400 when email is missing', async () => {
+      const req = { body: {} };
+      const res = mockRes();
+
+      await requestPasswordReset(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Email is required'
+      });
+    });
+
+    test('returns 400 for invalid email format', async () => {
+      const req = { body: { email: 'not-an-email' } };
+      const res = mockRes();
+
+      await requestPasswordReset(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid email format'
+      });
+    });
+
+    test('responds with generic success when user not found', async () => {
+      const req = { body: { email: 'unknown@example.com' } };
+      const res = mockRes();
+
+      jest.spyOn(User, 'findByEmail').mockResolvedValue(null);
+
+      await requestPasswordReset(req, res);
+
+      expect(User.findByEmail).toHaveBeenCalledWith('unknown@example.com');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'If an account exists with that email, a password reset link has been dispatched'
+      });
+    });
+
+    test('processes reset flow when user exists', async () => {
+      const req = { body: { email: 'User@Example.com' } };
+      const res = mockRes();
+
+      const mockUser = { id: 'uid', email: 'user@example.com' };
+      jest.spyOn(User, 'findByEmail').mockResolvedValue(mockUser);
+      const tokenSpy = jest.spyOn(CryptoHelper, 'generateToken');
+      const saveSpy = jest.spyOn(User, 'saveResetToken').mockResolvedValue(true);
+      const emailSpy = jest.spyOn(EmailService, 'sendResetEmail').mockResolvedValue(true);
+
+      await requestPasswordReset(req, res);
+
+      expect(User.findByEmail).toHaveBeenCalledWith('user@example.com');
+      expect(tokenSpy).toHaveBeenCalled();
+      const generatedToken = tokenSpy.mock.results[0].value;
+      expect(saveSpy).toHaveBeenCalledWith('uid', generatedToken, expect.any(Date));
+      expect(emailSpy).toHaveBeenCalledWith('user@example.com', generatedToken);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'If an account exists with that email, a password reset link has been dispatched'
+      });
+    });
+  });
+
+  describe('resetPassword', () => {
+    test('returns 400 when token or newPassword missing', async () => {
+      const req = { body: { token: 'abc' } };
+      const res = mockRes();
+
+      await resetPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Token and newPassword are required'
+      });
+    });
+
+    test('returns 400 when newPassword is too short', async () => {
+      const req = { body: { token: 'tkn', newPassword: 'short' } };
+      const res = mockRes();
+
+      await resetPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'New password must be at least 8 characters long'
+      });
+    });
+
+    test('returns 400 when reset token not found', async () => {
+      const req = { body: { token: 'invalid', newPassword: 'validPass123' } };
+      const res = mockRes();
+
+      jest.spyOn(User, 'findByResetToken').mockResolvedValue(null);
+
+      await resetPassword(req, res);
+
+      expect(User.findByResetToken).toHaveBeenCalledWith('invalid');
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid or expired password reset token'
+      });
+    });
+
+    test('returns 400 when token has expired', async () => {
+      const req = { body: { token: 'expired', newPassword: 'validPass123' } };
+      const res = mockRes();
+
+      const pastDate = new Date(Date.now() - 1000);
+      const mockUser = { id: 'uid', resetTokenExpires: pastDate.toISOString() };
+      jest.spyOn(User, 'findByResetToken').mockResolvedValue(mockUser);
+
+      await resetPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Password reset token has expired'
+      });
+    });
+
+    test('successfully resets password with valid token and password', async () => {
+      const req = { body: { token: 'valid', newPassword: 'StrongPass123' } };
+      const res = mockRes();
+
+      const futureDate = new Date(Date.now() + 3600 * 1000);
+      const mockUser = { id: 'uid', resetTokenExpires: futureDate.toISOString() };
+      jest.spyOn(User, 'findByResetToken').mockResolvedValue(mockUser);
+      const hashSpy = jest.spyOn(CryptoHelper, 'hashPassword').mockResolvedValue('hashed_StrongPass123');
+      const updateSpy = jest.spyOn(User, 'update').mockResolvedValue({});
+
+      await resetPassword(req, res);
+
+      expect(CryptoHelper.hashPassword).toHaveBeenCalledWith('StrongPass123');
+      expect(User.update).toHaveBeenCalledWith('uid', {
+        password: 'hashed_StrongPass123',
+        resetToken: null,
+        resetTokenExpires: null
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Password has been successfully reset'
+      });
+    });
+  });
+});

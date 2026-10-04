@@ -1,0 +1,392 @@
+// 20_chat_controller.test.js
+import { jest } from '@jest/globals';
+import {
+  getRoomHistory,
+  sendMessage,
+  ChatRoom,
+  ChatMessage
+} from '../dataset/20_chat_controller.js';
+
+const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+describe('getRoomHistory', () => {
+  test('returns 401 when authentication is missing', async () => {
+    const req = { params: { roomId: 'r1' }, query: {} };
+    const res = mockResponse();
+
+    await getRoomHistory(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  test('returns 400 when roomId param is missing', async () => {
+    const req = { user: { id: 'u1' }, params: {}, query: {} };
+    const res = mockResponse();
+
+    await getRoomHistory(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Room ID is required'
+    });
+  });
+
+  test('returns 404 when chat room does not exist', async () => {
+    const req = { user: { id: 'u1' }, params: { roomId: 'r1' }, query: {} };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue(null);
+
+    await getRoomHistory(req, res);
+
+    expect(ChatRoom.findById).toHaveBeenCalledWith('r1');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Chat room not found'
+    });
+  });
+
+  test('returns 403 when user is not a member of the room', async () => {
+    const req = { user: { id: 'u1' }, params: { roomId: 'r1' }, query: {} };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue({ id: 'r1' });
+    ChatRoom.isMember.mockResolvedValue(false);
+
+    await getRoomHistory(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Access denied: You are not a member of this chat room'
+    });
+  });
+
+  test('returns 400 for invalid limit values', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      query: { limit: '0' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue({ id: 'r1' });
+    ChatRoom.isMember.mockResolvedValue(true);
+
+    await getRoomHistory(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Limit must be an integer between 1 and 100'
+    });
+  });
+
+  test('returns 400 for invalid before timestamp', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      query: { before: 'invalid-date' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue({ id: 'r1' });
+    ChatRoom.isMember.mockResolvedValue(true);
+
+    await getRoomHistory(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid before timestamp format'
+    });
+  });
+
+  test('returns 200 with messages and hasMore false when count < limit', async () => {
+    const messages = [{ id: 'm1' }, { id: 'm2' }];
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      query: { limit: '5' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue({ id: 'r1' });
+    ChatRoom.isMember.mockResolvedValue(true);
+    ChatMessage.findByRoom.mockResolvedValue(messages);
+
+    await getRoomHistory(req, res);
+
+    expect(ChatMessage.findByRoom).toHaveBeenCalledWith('r1', {
+      limit: 5,
+      before: null
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        roomId: 'r1',
+        count: 2,
+        hasMore: false,
+        messages
+      }
+    });
+  });
+
+  test('returns 200 with hasMore true when messages length equals limit', async () => {
+    const messages = Array.from({ length: 10 }, (_, i) => ({ id: `m${i}` }));
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      query: { limit: '10' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue({ id: 'r1' });
+    ChatRoom.isMember.mockResolvedValue(true);
+    ChatMessage.findByRoom.mockResolvedValue(messages);
+
+    await getRoomHistory(req, res);
+
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        roomId: 'r1',
+        count: 10,
+        hasMore: true,
+        messages
+      }
+    });
+  });
+
+  test('returns 500 on unexpected error', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      query: {}
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockRejectedValue(new Error('DB failure'));
+
+    await getRoomHistory(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Failed to retrieve chat history',
+      details: 'DB failure'
+    });
+  });
+});
+
+describe('sendMessage', () => {
+  test('returns 401 when authentication is missing', async () => {
+    const req = { params: { roomId: 'r1' }, body: {} };
+    const res = mockResponse();
+
+    await sendMessage(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  test('returns 400 when roomId param is missing', async () => {
+    const req = { user: { id: 'u1' }, params: {}, body: { content: 'hi' } };
+    const res = mockResponse();
+
+    await sendMessage(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Room ID is required'
+    });
+  });
+
+  test('returns 400 when both content and attachment are missing', async () => {
+    const req = { user: { id: 'u1' }, params: { roomId: 'r1' }, body: {} };
+    const res = mockResponse();
+
+    await sendMessage(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Message must contain either text content or an attachment'
+    });
+  });
+
+  test('returns 400 when content exceeds 2000 characters', async () => {
+    const longText = 'a'.repeat(2001);
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      body: { content: longText }
+    };
+    const res = mockResponse();
+
+    await sendMessage(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Message text cannot exceed 2000 characters'
+    });
+  });
+
+  test('returns 404 when chat room does not exist', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      body: { content: 'hello' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue(null);
+
+    await sendMessage(req, res);
+
+    expect(ChatRoom.findById).toHaveBeenCalledWith('r1');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Chat room not found'
+    });
+  });
+
+  test('returns 400 when room is archived', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      body: { content: 'hello' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue({ id: 'r1', isArchived: true });
+
+    await sendMessage(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Cannot send messages in an archived room'
+    });
+  });
+
+  test('returns 403 when sender is not a member of the room', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      body: { content: 'hello' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockResolvedValue({ id: 'r1', isArchived: false });
+    ChatRoom.isMember.mockResolvedValue(false);
+
+    await sendMessage(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'You do not have permission to post in this room'
+    });
+  });
+
+  test('successful message creation with text only', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      body: { content: '  Hello World  ' }
+    };
+    const res = mockResponse();
+
+    const createdMessage = { id: 'msg123', roomId: 'r1', senderId: 'u1', content: 'Hello World', attachmentUrl: null };
+    ChatRoom.findById.mockResolvedValue({ id: 'r1', isArchived: false });
+    ChatRoom.isMember.mockResolvedValue(true);
+    ChatMessage.create.mockResolvedValue(createdMessage);
+    ChatRoom.updateLastActivity.mockResolvedValue(true);
+
+    await sendMessage(req, res);
+
+    expect(ChatMessage.create).toHaveBeenCalledWith({
+      roomId: 'r1',
+      senderId: 'u1',
+      content: 'Hello World',
+      attachmentUrl: null
+    });
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: createdMessage
+    });
+  });
+
+  test('successful message creation with attachment only', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      body: { attachmentUrl: '  http://example.com/img.png  ' }
+    };
+    const res = mockResponse();
+
+    const createdMessage = { id: 'msg124', roomId: 'r1', senderId: 'u1', content: null, attachmentUrl: 'http://example.com/img.png' };
+    ChatRoom.findById.mockResolvedValue({ id: 'r1', isArchived: false });
+    ChatRoom.isMember.mockResolvedValue(true);
+    ChatMessage.create.mockResolvedValue(createdMessage);
+    ChatRoom.updateLastActivity.mockResolvedValue(true);
+
+    await sendMessage(req, res);
+
+    expect(ChatMessage.create).toHaveBeenCalledWith({
+      roomId: 'r1',
+      senderId: 'u1',
+      content: null,
+      attachmentUrl: 'http://example.com/img.png'
+    });
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: createdMessage
+    });
+  });
+
+  test('returns 500 on unexpected error', async () => {
+    const req = {
+      user: { id: 'u1' },
+      params: { roomId: 'r1' },
+      body: { content: 'hi' }
+    };
+    const res = mockResponse();
+
+    ChatRoom.findById.mockRejectedValue(new Error('DB error'));
+
+    await sendMessage(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Failed to send message',
+      details: 'DB error'
+    });
+  });
+});

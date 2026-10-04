@@ -1,0 +1,275 @@
+```javascript
+import { jest } from '@jest/globals';
+import {
+  ingestWebhook,
+  getDeliveryStatus,
+  WebhookEventStore,
+  EventDispatcher
+} from '../dataset/24_webhook_controller.js';
+
+describe('24_webhook_controller', () => {
+  let mockRes;
+
+  beforeEach(() => {
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('WebhookEventStore & EventDispatcher default implementations', () => {
+    test('WebhookEventStore.findEvent should return null by default', async () => {
+      const result = await WebhookEventStore.findEvent('evt_123');
+      expect(result).toBeNull();
+    });
+
+    test('WebhookEventStore.saveEvent should return saved record with timestamp', async () => {
+      const eventData = { eventId: 'evt_123', eventType: 'user.created', payload: {} };
+      const result = await WebhookEventStore.saveEvent(eventData);
+      expect(result).toMatchObject({
+        id: 'evt_123',
+        eventId: 'evt_123',
+        eventType: 'user.created',
+        payload: {}
+      });
+      expect(result.receivedAt).toBeInstanceOf(Date);
+    });
+
+    test('WebhookEventStore.getDeliveryStatus should return null by default', async () => {
+      const result = await WebhookEventStore.getDeliveryStatus('evt_123');
+      expect(result).toBeNull();
+    });
+
+    test('EventDispatcher.dispatch should return queued status with queueId', async () => {
+      const result = await EventDispatcher.dispatch('user.created', { id: 1 });
+      expect(result.queued).toBe(true);
+      expect(result.queueId).toMatch(/^job_\d+/);
+    });
+  });
+
+  describe('ingestWebhook', () => {
+    const validHeaders = { 'x-webhook-token': 'wh_secret_live_tok_abc123' };
+    const validBody = {
+      eventId: 'evt_001',
+      eventType: 'payment.succeeded',
+      timestamp: '2023-10-01T12:00:00Z',
+      payload: { amount: 1000 }
+    };
+
+    test('should return 401 if req.headers is missing or token is missing', async () => {
+      const req = { headers: null };
+      await ingestWebhook(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Unauthorized: Invalid or missing x-webhook-token header'
+      });
+    });
+
+    test('should return 401 if token is unauthorized', async () => {
+      const req = { headers: { 'x-webhook-token': 'invalid_token' } };
+      await ingestWebhook(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Unauthorized: Invalid or missing x-webhook-token header'
+      });
+    });
+
+    test('should return 400 if required body fields are missing', async () => {
+      const req = {
+        headers: validHeaders,
+        body: { eventId: 'evt_001', eventType: 'payment.succeeded' } // missing payload
+      };
+      await ingestWebhook(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Missing required payload fields: eventId, eventType, and payload are required'
+      });
+    });
+
+    test('should return 400 if req.body is undefined', async () => {
+      const req = { headers: validHeaders };
+      await ingestWebhook(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Missing required payload fields: eventId, eventType, and payload are required'
+      });
+    });
+
+    test('should return 200 duplicate message if event already exists', async () => {
+      jest.spyOn(WebhookEventStore, 'findEvent').mockResolvedValueOnce({ id: 'evt_001' });
+
+      const req = { headers: validHeaders, body: validBody };
+      await ingestWebhook(req, mockRes);
+
+      expect(WebhookEventStore.findEvent).toHaveBeenCalledWith('evt_001');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Duplicate event acknowledged',
+        duplicate: true,
+        eventId: 'evt_001'
+      });
+    });
+
+    test('should successfully ingest new event with provided timestamp', async () => {
+      jest.spyOn(WebhookEventStore, 'findEvent').mockResolvedValueOnce(null);
+      jest.spyOn(WebhookEventStore, 'saveEvent').mockResolvedValueOnce({
+        id: 'evt_001',
+        eventId: 'evt_001',
+        eventType: 'payment.succeeded',
+        timestamp: '2023-10-01T12:00:00Z',
+        payload: { amount: 1000 }
+      });
+      jest.spyOn(EventDispatcher, 'dispatch').mockResolvedValueOnce({
+        queued: true,
+        queueId: 'job_12345'
+      });
+
+      const req = { headers: validHeaders, body: validBody };
+      await ingestWebhook(req, mockRes);
+
+      expect(WebhookEventStore.saveEvent).toHaveBeenCalledWith({
+        eventId: 'evt_001',
+        eventType: 'payment.succeeded',
+        timestamp: '2023-10-01T12:00:00Z',
+        payload: { amount: 1000 }
+      });
+      expect(EventDispatcher.dispatch).toHaveBeenCalledWith('payment.succeeded', { amount: 1000 });
+      expect(mockRes.status).toHaveBeenCalledWith(202);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Event accepted for asynchronous processing',
+        data: {
+          eventId: 'evt_001',
+          queueJobId: 'job_12345',
+          status: 'queued'
+        }
+      });
+    });
+
+    test('should default timestamp if not provided in req.body', async () => {
+      jest.spyOn(WebhookEventStore, 'findEvent').mockResolvedValueOnce(null);
+      jest.spyOn(WebhookEventStore, 'saveEvent').mockImplementationOnce(async (data) => ({
+        id: data.eventId,
+        ...data
+      }));
+      jest.spyOn(EventDispatcher, 'dispatch').mockResolvedValueOnce({
+        queued: true,
+        queueId: 'job_999'
+      });
+
+      const bodyWithoutTimestamp = {
+        eventId: 'evt_002',
+        eventType: 'order.created',
+        payload: { orderId: 456 }
+      };
+
+      const req = { headers: validHeaders, body: bodyWithoutTimestamp };
+      await ingestWebhook(req, mockRes);
+
+      expect(WebhookEventStore.saveEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          eventId: 'evt_002',
+          eventType: 'order.created',
+          timestamp: expect.any(String),
+          payload: { orderId: 456 }
+        })
+      );
+      expect(mockRes.status).toHaveBeenCalledWith(202);
+    });
+
+    test('should return 500 if an error occurs during processing', async () => {
+      jest.spyOn(WebhookEventStore, 'findEvent').mockRejectedValueOnce(new Error('Database error'));
+
+      const req = { headers: validHeaders, body: validBody };
+      await ingestWebhook(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to ingest webhook event',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('getDeliveryStatus', () => {
+    test('should return 400 if eventId parameter is missing', async () => {
+      const req = { params: {} };
+      await getDeliveryStatus(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Event ID parameter is required'
+      });
+    });
+
+    test('should return 400 if req.params is undefined', async () => {
+      const req = {};
+      await getDeliveryStatus(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Event ID parameter is required'
+      });
+    });
+
+    test('should return 404 if event status is not found', async () => {
+      jest.spyOn(WebhookEventStore, 'getDeliveryStatus').mockResolvedValueOnce(null);
+
+      const req = { params: { eventId: 'evt_999' } };
+      await getDeliveryStatus(req, mockRes);
+
+      expect(WebhookEventStore.getDeliveryStatus).toHaveBeenCalledWith('evt_999');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Webhook event with ID evt_999 was not found'
+      });
+    });
+
+    test('should return 200 with delivery status if event is found', async () => {
+      const mockStatusData = { eventId: 'evt_123', status: 'delivered', attempts: 1 };
+      jest.spyOn(WebhookEventStore, 'getDeliveryStatus').mockResolvedValueOnce(mockStatusData);
+
+      const req = { params: { eventId: 'evt_123' } };
+      await getDeliveryStatus(req, mockRes);
+
+      expect(WebhookEventStore.getDeliveryStatus).toHaveBeenCalledWith('evt_123');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: mockStatusData
+      });
+    });
+
+    test('should return 500 if an error occurs while fetching status', async () => {
+      jest.spyOn(WebhookEventStore, 'getDeliveryStatus').mockRejectedValueOnce(new Error('Connection failure'));
+
+      const req = { params: { eventId: 'evt_123' } };
+      await getDeliveryStatus(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to check event delivery status',
+        details: 'Connection failure'
+      });
+    });
+  });
+});
+```

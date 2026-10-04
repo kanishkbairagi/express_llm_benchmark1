@@ -1,0 +1,208 @@
+import { jest } from '@jest/globals';
+import {
+  getNotifications,
+  markAsRead,
+  markAllAsRead,
+  NotificationModel
+} from '../dataset/09_notification_controller.js';
+
+describe('Notification Controller', () => {
+  let req;
+  let res;
+
+  const mockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  beforeEach(() => {
+    req = {};
+    res = mockRes();
+    jest.clearAllMocks();
+  });
+
+  describe('getNotifications', () => {
+    it('should return 401 when userId is missing', async () => {
+      await getNotifications(req, res);
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    it('should return 400 for invalid limit', async () => {
+      req.user = { id: 'u1' };
+      req.query = { limit: 'abc' };
+      await getNotifications(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Limit must be an integer between 1 and 50'
+      });
+    });
+
+    it('should forward unreadOnly flag and limit to model', async () => {
+      req.user = { id: 'u2' };
+      req.query = { unreadOnly: 'true', limit: '10' };
+      const mockFind = jest
+        .spyOn(NotificationModel, 'findByUser')
+        .mockResolvedValue({ unreadCount: 5, notifications: [] });
+
+      await getNotifications(req, res);
+      expect(mockFind).toHaveBeenCalledWith('u2', {
+        unreadOnly: true,
+        limit: 10
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it('should handle model errors with 500', async () => {
+      req.user = { id: 'u3' };
+      jest
+        .spyOn(NotificationModel, 'findByUser')
+        .mockRejectedValue(new Error('db fail'));
+
+      await getNotifications(req, res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to fetch notifications',
+        details: 'db fail'
+      });
+    });
+
+    it('should return successful response with data', async () => {
+      req.user = { id: 'u4' };
+      const data = {
+        unreadCount: 2,
+        notifications: [{ id: 'n1' }, { id: 'n2' }]
+      };
+      jest.spyOn(NotificationModel, 'findByUser').mockResolvedValue(data);
+
+      await getNotifications(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data
+      });
+    });
+  });
+
+  describe('markAsRead', () => {
+    const baseNotification = {
+      id: 'notif1',
+      userId: 'owner',
+      isRead: false
+    };
+
+    it('should return 401 when userId is missing', async () => {
+      req.params = { notificationId: 'any' };
+      await markAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(401);
+    });
+
+    it('should return 400 when notificationId is missing', async () => {
+      req.user = { id: 'owner' };
+      await markAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should return 404 when notification not found', async () => {
+      req.user = { id: 'owner' };
+      req.params = { notificationId: 'missing' };
+      jest.spyOn(NotificationModel, 'findById').mockResolvedValue(null);
+      await markAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+
+    it('should return 403 when user does not own the notification', async () => {
+      req.user = { id: 'other' };
+      req.params = { notificationId: 'notif1' };
+      jest.spyOn(NotificationModel, 'findById').mockResolvedValue(baseNotification);
+      await markAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(403);
+    });
+
+    it('should return 200 with already read message if notification isRead', async () => {
+      const readNotif = { ...baseNotification, isRead: true };
+      req.user = { id: 'owner' };
+      req.params = { notificationId: 'notif1' };
+      jest.spyOn(NotificationModel, 'findById').mockResolvedValue(readNotif);
+      await markAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Notification is already marked as read',
+        data: readNotif
+      });
+    });
+
+    it('should update and return the notification when not read', async () => {
+      const updated = { ...baseNotification, isRead: true, readAt: new Date() };
+      req.user = { id: 'owner' };
+      req.params = { notificationId: 'notif1' };
+      jest.spyOn(NotificationModel, 'findById').mockResolvedValue(baseNotification);
+      jest.spyOn(NotificationModel, 'update').mockResolvedValue(updated);
+      await markAsRead(req, res);
+      expect(NotificationModel.update).toHaveBeenCalledWith('notif1', {
+        isRead: true,
+        readAt: expect.any(Date)
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Notification marked as read',
+        data: updated
+      });
+    });
+
+    it('should handle unexpected errors with 500', async () => {
+      req.user = { id: 'owner' };
+      req.params = { notificationId: 'notif1' };
+      jest.spyOn(NotificationModel, 'findById').mockRejectedValue(new Error('boom'));
+      await markAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to update notification',
+        details: 'boom'
+      });
+    });
+  });
+
+  describe('markAllAsRead', () => {
+    it('should return 401 when userId missing', async () => {
+      await markAllAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(401);
+    });
+
+    it('should return 200 with updated count on success', async () => {
+      req.user = { id: 'uAll' };
+      const mockResult = { count: 7 };
+      jest.spyOn(NotificationModel, 'markAllReadForUser').mockResolvedValue(mockResult);
+      await markAllAsRead(req, res);
+      expect(NotificationModel.markAllReadForUser).toHaveBeenCalledWith('uAll');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'All notifications marked as read',
+        data: { updatedCount: 7 }
+      });
+    });
+
+    it('should handle errors with 500', async () => {
+      req.user = { id: 'uAll' };
+      jest.spyOn(NotificationModel, 'markAllReadForUser').mockRejectedValue(new Error('fail'));
+      await markAllAsRead(req, res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to mark notifications as read',
+        details: 'fail'
+      });
+    });
+  });
+});

@@ -1,0 +1,194 @@
+import { jest } from '@jest/globals';
+import { SystemHealth, getLiveness, getReadiness } from '../dataset/25_health_controller.js';
+
+describe('25_health_controller unit tests', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {};
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.restoreAllMocks();
+  });
+
+  describe('SystemHealth helper defaults', () => {
+    test('pingDatabase should return UP status and latency', async () => {
+      const result = await SystemHealth.pingDatabase();
+      expect(result).toEqual({ status: 'UP', latencyMs: 3 });
+    });
+
+    test('pingRedis should return UP status and latency', async () => {
+      const result = await SystemHealth.pingRedis();
+      expect(result).toEqual({ status: 'UP', latencyMs: 1 });
+    });
+  });
+
+  describe('getLiveness', () => {
+    test('should return 200 and status UP on success', async () => {
+      await getLiveness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'UP',
+          timestamp: expect.any(String),
+          uptimeSeconds: expect.any(Number)
+        })
+      );
+    });
+
+    test('should return 500 if process.uptime throws an error', async () => {
+      jest.spyOn(process, 'uptime').mockImplementationOnce(() => {
+        throw new Error('Uptime system error');
+      });
+
+      await getLiveness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'DOWN',
+        error: 'Uptime system error'
+      });
+    });
+  });
+
+  describe('getReadiness', () => {
+    test('should return 200 and status UP when all checks pass', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'UP', latencyMs: 2 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'UP', latencyMs: 1 });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'UP',
+          timestamp: expect.any(String),
+          checks: expect.objectContaining({
+            database: { status: 'UP', latencyMs: 2 },
+            redis: { status: 'UP', latencyMs: 1 },
+            memory: expect.objectContaining({
+              status: expect.stringMatching(/UP|WARN/),
+              heapUsedMb: expect.any(Number),
+              rssMb: expect.any(Number)
+            })
+          })
+        })
+      );
+    });
+
+    test('should return 503 if database returns status other than UP', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'DEGRADED', latencyMs: 500 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'UP', latencyMs: 1 });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(503);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'DOWN',
+          checks: expect.objectContaining({
+            database: { status: 'DEGRADED', latencyMs: 500 }
+          })
+        })
+      );
+    });
+
+    test('should return 503 if database check throws an error', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockRejectedValue(new Error('DB Connection Timeout'));
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'UP', latencyMs: 1 });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(503);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'DOWN',
+          checks: expect.objectContaining({
+            database: { status: 'DOWN', error: 'DB Connection Timeout' }
+          })
+        })
+      );
+    });
+
+    test('should return 503 if redis returns status other than UP', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'UP', latencyMs: 2 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'DOWN', latencyMs: 0 });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(503);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'DOWN',
+          checks: expect.objectContaining({
+            redis: { status: 'DOWN', latencyMs: 0 }
+          })
+        })
+      );
+    });
+
+    test('should return 503 if redis check throws an error', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'UP', latencyMs: 2 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockRejectedValue(new Error('Redis Connection Error'));
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(503);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'DOWN',
+          checks: expect.objectContaining({
+            redis: { status: 'DOWN', error: 'Redis Connection Error' }
+          })
+        })
+      );
+    });
+
+    test('should set memory check status to WARN when heapUsed > 1500MB but still return overall status UP', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'UP', latencyMs: 2 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'UP', latencyMs: 1 });
+      jest.spyOn(process, 'memoryUsage').mockReturnValue({
+        heapUsed: 1600 * 1024 * 1024,
+        rss: 2000 * 1024 * 1024,
+        heapTotal: 2000 * 1024 * 1024,
+        external: 0,
+        arrayBuffers: 0
+      });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'UP',
+          checks: expect.objectContaining({
+            memory: {
+              status: 'WARN',
+              heapUsedMb: 1600,
+              rssMb: 2000
+            }
+          })
+        })
+      );
+    });
+
+    test('should return 500 when an unhandled exception occurs inside getReadiness', async () => {
+      jest.spyOn(process, 'memoryUsage').mockImplementationOnce(() => {
+        throw new Error('Memory access violation');
+      });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'DOWN',
+        error: 'Failed to execute readiness checks',
+        details: 'Memory access violation'
+      });
+    });
+  });
+});

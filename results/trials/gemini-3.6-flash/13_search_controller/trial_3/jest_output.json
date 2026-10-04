@@ -1,0 +1,1458 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 14,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 14,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791051228281,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "SearchIndex default mock implementation"
+          ],
+          "duration": 8,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests SearchIndex default mock implementation SearchIndex.search default response",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SearchIndex.search default response",
+          "startAt": 1791051228639
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "SearchIndex default mock implementation"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests SearchIndex default mock implementation SearchIndex.suggest default response",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SearchIndex.suggest default response",
+          "startAt": 1791051228648
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "searchProducts"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests searchProducts should return 400 if q parameter is missing, empty, or not a string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if q parameter is missing, empty, or not a string",
+          "startAt": 1791051228650
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "searchProducts"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests searchProducts should return 400 if sanitized query length is less than 2",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if sanitized query length is less than 2",
+          "startAt": 1791051228653
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "searchProducts"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests searchProducts should return 400 for invalid pagination parameters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 for invalid pagination parameters",
+          "startAt": 1791051228656
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "searchProducts"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests searchProducts should return 200 and search results with default pagination and optional filters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 200 and search results with default pagination and optional filters",
+          "startAt": 1791051228658
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "searchProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests searchProducts should fallback to default page 1 and limit 20 when pagination parameters are omitted",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should fallback to default page 1 and limit 20 when pagination parameters are omitted",
+          "startAt": 1791051228660
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "searchProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests searchProducts should return 500 if SearchIndex.search throws an error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 500 if SearchIndex.search throws an error",
+          "startAt": 1791051228662
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "searchProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests searchProducts should handle missing req.query object gracefully",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle missing req.query object gracefully",
+          "startAt": 1791051228663
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests getSearchSuggestions should return 400 if q parameter is missing, empty, or not a string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if q parameter is missing, empty, or not a string",
+          "startAt": 1791051228664
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests getSearchSuggestions should return 200 with empty array if query prefix sanitizes to empty string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 200 with empty array if query prefix sanitizes to empty string",
+          "startAt": 1791051228666
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests getSearchSuggestions should return 200 with suggestions for valid query prefix",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 200 with suggestions for valid query prefix",
+          "startAt": 1791051228668
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests getSearchSuggestions should return 500 if SearchIndex.suggest throws an error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 500 if SearchIndex.suggest throws an error",
+          "startAt": 1791051228669
+        },
+        {
+          "ancestorTitles": [
+            "13_search_controller unit tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "13_search_controller unit tests getSearchSuggestions should handle missing req.query object gracefully",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle missing req.query object gracefully",
+          "startAt": 1791051228671
+        }
+      ],
+      "endTime": 1791051228675,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\13_search_controller_gemini-3.6-flash_trial3.test.js",
+      "startTime": 1791051228414,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\13_search_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\13_search_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 27
+          },
+          "end": {
+            "line": 15,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 54
+          },
+          "end": {
+            "line": 13,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 14,
+            "column": 29
+          },
+          "end": {
+            "line": 14,
+            "column": 31
+          }
+        },
+        "3": {
+          "start": {
+            "line": 17,
+            "column": 28
+          },
+          "end": {
+            "line": 19,
+            "column": 1
+          }
+        },
+        "4": {
+          "start": {
+            "line": 18,
+            "column": 2
+          },
+          "end": {
+            "line": 18,
+            "column": 67
+          }
+        },
+        "5": {
+          "start": {
+            "line": 21,
+            "column": 30
+          },
+          "end": {
+            "line": 81,
+            "column": 1
+          }
+        },
+        "6": {
+          "start": {
+            "line": 22,
+            "column": 2
+          },
+          "end": {
+            "line": 80,
+            "column": 3
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 70
+          },
+          "end": {
+            "line": 23,
+            "column": 85
+          }
+        },
+        "8": {
+          "start": {
+            "line": 25,
+            "column": 4
+          },
+          "end": {
+            "line": 30,
+            "column": 5
+          }
+        },
+        "9": {
+          "start": {
+            "line": 26,
+            "column": 6
+          },
+          "end": {
+            "line": 29,
+            "column": 9
+          }
+        },
+        "10": {
+          "start": {
+            "line": 32,
+            "column": 23
+          },
+          "end": {
+            "line": 32,
+            "column": 45
+          }
+        },
+        "11": {
+          "start": {
+            "line": 33,
+            "column": 4
+          },
+          "end": {
+            "line": 38,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 34,
+            "column": 6
+          },
+          "end": {
+            "line": 37,
+            "column": 9
+          }
+        },
+        "13": {
+          "start": {
+            "line": 40,
+            "column": 20
+          },
+          "end": {
+            "line": 40,
+            "column": 38
+          }
+        },
+        "14": {
+          "start": {
+            "line": 41,
+            "column": 21
+          },
+          "end": {
+            "line": 41,
+            "column": 40
+          }
+        },
+        "15": {
+          "start": {
+            "line": 43,
+            "column": 4
+          },
+          "end": {
+            "line": 48,
+            "column": 5
+          }
+        },
+        "16": {
+          "start": {
+            "line": 44,
+            "column": 6
+          },
+          "end": {
+            "line": 47,
+            "column": 9
+          }
+        },
+        "17": {
+          "start": {
+            "line": 50,
+            "column": 20
+          },
+          "end": {
+            "line": 50,
+            "column": 22
+          }
+        },
+        "18": {
+          "start": {
+            "line": 51,
+            "column": 4
+          },
+          "end": {
+            "line": 51,
+            "column": 53
+          }
+        },
+        "19": {
+          "start": {
+            "line": 51,
+            "column": 18
+          },
+          "end": {
+            "line": 51,
+            "column": 53
+          }
+        },
+        "20": {
+          "start": {
+            "line": 52,
+            "column": 4
+          },
+          "end": {
+            "line": 52,
+            "column": 58
+          }
+        },
+        "21": {
+          "start": {
+            "line": 52,
+            "column": 18
+          },
+          "end": {
+            "line": 52,
+            "column": 58
+          }
+        },
+        "22": {
+          "start": {
+            "line": 53,
+            "column": 4
+          },
+          "end": {
+            "line": 53,
+            "column": 58
+          }
+        },
+        "23": {
+          "start": {
+            "line": 53,
+            "column": 18
+          },
+          "end": {
+            "line": 53,
+            "column": 58
+          }
+        },
+        "24": {
+          "start": {
+            "line": 55,
+            "column": 26
+          },
+          "end": {
+            "line": 60,
+            "column": 6
+          }
+        },
+        "25": {
+          "start": {
+            "line": 62,
+            "column": 4
+          },
+          "end": {
+            "line": 73,
+            "column": 7
+          }
+        },
+        "26": {
+          "start": {
+            "line": 75,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 7
+          }
+        },
+        "27": {
+          "start": {
+            "line": 83,
+            "column": 36
+          },
+          "end": {
+            "line": 115,
+            "column": 1
+          }
+        },
+        "28": {
+          "start": {
+            "line": 84,
+            "column": 2
+          },
+          "end": {
+            "line": 114,
+            "column": 3
+          }
+        },
+        "29": {
+          "start": {
+            "line": 85,
+            "column": 18
+          },
+          "end": {
+            "line": 85,
+            "column": 33
+          }
+        },
+        "30": {
+          "start": {
+            "line": 87,
+            "column": 4
+          },
+          "end": {
+            "line": 92,
+            "column": 5
+          }
+        },
+        "31": {
+          "start": {
+            "line": 88,
+            "column": 6
+          },
+          "end": {
+            "line": 91,
+            "column": 9
+          }
+        },
+        "32": {
+          "start": {
+            "line": 94,
+            "column": 19
+          },
+          "end": {
+            "line": 94,
+            "column": 41
+          }
+        },
+        "33": {
+          "start": {
+            "line": 95,
+            "column": 4
+          },
+          "end": {
+            "line": 100,
+            "column": 5
+          }
+        },
+        "34": {
+          "start": {
+            "line": 96,
+            "column": 6
+          },
+          "end": {
+            "line": 99,
+            "column": 9
+          }
+        },
+        "35": {
+          "start": {
+            "line": 102,
+            "column": 24
+          },
+          "end": {
+            "line": 102,
+            "column": 57
+          }
+        },
+        "36": {
+          "start": {
+            "line": 104,
+            "column": 4
+          },
+          "end": {
+            "line": 107,
+            "column": 7
+          }
+        },
+        "37": {
+          "start": {
+            "line": 109,
+            "column": 4
+          },
+          "end": {
+            "line": 113,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 10
+            },
+            "end": {
+              "line": 5,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 54
+            },
+            "end": {
+              "line": 13,
+              "column": 3
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 14,
+              "column": 11
+            },
+            "end": {
+              "line": 14,
+              "column": 12
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 14,
+              "column": 29
+            },
+            "end": {
+              "line": 14,
+              "column": 31
+            }
+          },
+          "line": 14
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 17,
+              "column": 28
+            },
+            "end": {
+              "line": 17,
+              "column": 29
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 38
+            },
+            "end": {
+              "line": 19,
+              "column": 1
+            }
+          },
+          "line": 17
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 21,
+              "column": 30
+            },
+            "end": {
+              "line": 21,
+              "column": 31
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 21,
+              "column": 50
+            },
+            "end": {
+              "line": 81,
+              "column": 1
+            }
+          },
+          "line": 21
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 83,
+              "column": 36
+            },
+            "end": {
+              "line": 83,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 83,
+              "column": 56
+            },
+            "end": {
+              "line": 115,
+              "column": 1
+            }
+          },
+          "line": 83
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 45
+            },
+            "end": {
+              "line": 23,
+              "column": 53
+            }
+          },
+          "type": "default-arg",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 52
+              },
+              "end": {
+                "line": 23,
+                "column": 53
+              }
+            }
+          ],
+          "line": 23
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 55
+            },
+            "end": {
+              "line": 23,
+              "column": 65
+            }
+          },
+          "type": "default-arg",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 63
+              },
+              "end": {
+                "line": 23,
+                "column": 65
+              }
+            }
+          ],
+          "line": 23
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 70
+            },
+            "end": {
+              "line": 23,
+              "column": 85
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 70
+              },
+              "end": {
+                "line": 23,
+                "column": 79
+              }
+            },
+            {
+              "start": {
+                "line": 23,
+                "column": 83
+              },
+              "end": {
+                "line": 23,
+                "column": 85
+              }
+            }
+          ],
+          "line": 23
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 25,
+              "column": 4
+            },
+            "end": {
+              "line": 30,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 25,
+                "column": 4
+              },
+              "end": {
+                "line": 30,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 25
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 25,
+              "column": 8
+            },
+            "end": {
+              "line": 25,
+              "column": 60
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 25,
+                "column": 8
+              },
+              "end": {
+                "line": 25,
+                "column": 10
+              }
+            },
+            {
+              "start": {
+                "line": 25,
+                "column": 14
+              },
+              "end": {
+                "line": 25,
+                "column": 35
+              }
+            },
+            {
+              "start": {
+                "line": 25,
+                "column": 39
+              },
+              "end": {
+                "line": 25,
+                "column": 60
+              }
+            }
+          ],
+          "line": 25
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 33,
+              "column": 4
+            },
+            "end": {
+              "line": 38,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 33,
+                "column": 4
+              },
+              "end": {
+                "line": 38,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 33
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 4
+            },
+            "end": {
+              "line": 48,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 4
+              },
+              "end": {
+                "line": 48,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 43
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 8
+            },
+            "end": {
+              "line": 43,
+              "column": 90
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 8
+              },
+              "end": {
+                "line": 43,
+                "column": 22
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 26
+              },
+              "end": {
+                "line": 43,
+                "column": 37
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 41
+              },
+              "end": {
+                "line": 43,
+                "column": 56
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 60
+              },
+              "end": {
+                "line": 43,
+                "column": 72
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 76
+              },
+              "end": {
+                "line": 43,
+                "column": 90
+              }
+            }
+          ],
+          "line": 43
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 51,
+              "column": 4
+            },
+            "end": {
+              "line": 51,
+              "column": 53
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 51,
+                "column": 4
+              },
+              "end": {
+                "line": 51,
+                "column": 53
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 51
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 52,
+              "column": 4
+            },
+            "end": {
+              "line": 52,
+              "column": 58
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 52,
+                "column": 4
+              },
+              "end": {
+                "line": 52,
+                "column": 58
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 52
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 53,
+              "column": 4
+            },
+            "end": {
+              "line": 53,
+              "column": 58
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 53,
+                "column": 4
+              },
+              "end": {
+                "line": 53,
+                "column": 58
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 53
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 85,
+              "column": 18
+            },
+            "end": {
+              "line": 85,
+              "column": 33
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 85,
+                "column": 18
+              },
+              "end": {
+                "line": 85,
+                "column": 27
+              }
+            },
+            {
+              "start": {
+                "line": 85,
+                "column": 31
+              },
+              "end": {
+                "line": 85,
+                "column": 33
+              }
+            }
+          ],
+          "line": 85
+        },
+        "12": {
+          "loc": {
+            "start": {
+              "line": 87,
+              "column": 4
+            },
+            "end": {
+              "line": 92,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 87,
+                "column": 4
+              },
+              "end": {
+                "line": 92,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 87
+        },
+        "13": {
+          "loc": {
+            "start": {
+              "line": 87,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 60
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 87,
+                "column": 8
+              },
+              "end": {
+                "line": 87,
+                "column": 10
+              }
+            },
+            {
+              "start": {
+                "line": 87,
+                "column": 14
+              },
+              "end": {
+                "line": 87,
+                "column": 35
+              }
+            },
+            {
+              "start": {
+                "line": 87,
+                "column": 39
+              },
+              "end": {
+                "line": 87,
+                "column": 60
+              }
+            }
+          ],
+          "line": 87
+        },
+        "14": {
+          "loc": {
+            "start": {
+              "line": 95,
+              "column": 4
+            },
+            "end": {
+              "line": 100,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 95,
+                "column": 4
+              },
+              "end": {
+                "line": 100,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 95
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 11,
+        "5": 1,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 4,
+        "10": 8,
+        "11": 8,
+        "12": 1,
+        "13": 7,
+        "14": 7,
+        "15": 7,
+        "16": 4,
+        "17": 3,
+        "18": 3,
+        "19": 1,
+        "20": 3,
+        "21": 1,
+        "22": 3,
+        "23": 1,
+        "24": 3,
+        "25": 2,
+        "26": 1,
+        "27": 1,
+        "28": 6,
+        "29": 6,
+        "30": 6,
+        "31": 3,
+        "32": 3,
+        "33": 3,
+        "34": 1,
+        "35": 2,
+        "36": 1,
+        "37": 1
+      },
+      "f": {
+        "0": 1,
+        "1": 1,
+        "2": 11,
+        "3": 12,
+        "4": 6
+      },
+      "b": {
+        "0": [
+          7
+        ],
+        "1": [
+          7
+        ],
+        "2": [
+          12,
+          1
+        ],
+        "3": [
+          4,
+          8
+        ],
+        "4": [
+          12,
+          10,
+          9
+        ],
+        "5": [
+          1,
+          7
+        ],
+        "6": [
+          4,
+          3
+        ],
+        "7": [
+          7,
+          6,
+          5,
+          5,
+          4
+        ],
+        "8": [
+          1,
+          2
+        ],
+        "9": [
+          1,
+          2
+        ],
+        "10": [
+          1,
+          2
+        ],
+        "11": [
+          6,
+          1
+        ],
+        "12": [
+          3,
+          3
+        ],
+        "13": [
+          6,
+          4,
+          4
+        ],
+        "14": [
+          1,
+          2
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "ca439d580ec7fad68e937c640109aa3ef8fd726d"
+    }
+  }
+}

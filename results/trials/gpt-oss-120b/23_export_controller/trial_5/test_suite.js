@@ -1,0 +1,172 @@
+import { jest } from '@jest/globals';
+import { exportOrdersCsv, ExportDataService } from '../dataset/23_export_controller.js';
+
+describe('exportOrdersCsv controller', () => {
+  const mockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('returns 400 when startDate or endDate are missing', async () => {
+    const req = { query: { startDate: '2023-01-01' } };
+    const res = mockRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Both startDate and endDate query parameters are required',
+    });
+  });
+
+  test('returns 400 for invalid date format', async () => {
+    const req = { query: { startDate: 'invalid', endDate: '2023-01-10' } };
+    const res = mockRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid date format. Expected ISO-8601 string',
+    });
+  });
+
+  test('returns 400 when startDate is later than endDate', async () => {
+    const req = {
+      query: { startDate: '2023-02-01', endDate: '2023-01-01' },
+    };
+    const res = mockRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'startDate cannot be later than endDate',
+    });
+  });
+
+  test('returns 400 for invalid status filter', async () => {
+    const req = {
+      query: {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+        status: 'unknown',
+      },
+    };
+    const res = mockRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error:
+        'Invalid status filter. Allowed values: pending, paid, shipped, cancelled',
+    });
+  });
+
+  test('returns success with empty CSV when no records are found', async () => {
+    jest
+      .spyOn(ExportDataService, 'fetchOrdersForExport')
+      .mockResolvedValue([]);
+
+    const req = {
+      query: {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+      },
+    };
+    const res = mockRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(ExportDataService.fetchOrdersForExport).toHaveBeenCalledWith({
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-31'),
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    const payload = res.json.mock.calls[0][0];
+    expect(payload).toMatchObject({
+      success: true,
+      message: 'No records found for the specified period',
+      data: {
+        rowCount: 0,
+        csvContent: '',
+      },
+    });
+    expect(payload.data.exportedAt).toMatch(
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
+    );
+  });
+
+  test('generates CSV with proper escaping and returns correct metadata', async () => {
+    const records = [
+      {
+        id: 'ORD,001',
+        userId: 'CUST"123',
+        total: 99.5,
+        status: 'paid',
+        createdAt: '2023-01-15T08:30:00Z',
+      },
+      {
+        id: 'ORD002',
+        customerId: 'CUST002',
+        total: 150,
+        status: 'shipped',
+        createdAt: '2023-01-20T12:45:10Z',
+      },
+    ];
+
+    jest
+      .spyOn(ExportDataService, 'fetchOrdersForExport')
+      .mockResolvedValue(records);
+
+    const req = {
+      query: {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+        status: 'PAID',
+      },
+    };
+    const res = mockRes();
+
+    await exportOrdersCsv(req, res);
+
+    // verify filters passed (status lower‑cased)
+    expect(ExportDataService.fetchOrdersForExport).toHaveBeenCalledWith({
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-31'),
+      status: 'paid',
+    });
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    const payload = res.json.mock.calls[0][0];
+    expect(payload.success).toBe(true);
+    expect(payload.message).toBe('Export generated successfully');
+    expect(payload.data.rowCount).toBe(2);
+    expect(payload.data.fileName).toBe(
+      'orders_export_2023-01-01_to_2023-01-31.csv'
+    );
+    expect(payload.data.mimeType).toBe('text/csv');
+
+    // expected CSV lines
+    const expectedHeaders = 'Order ID,Customer ID,Total Amount,Status,Date';
+    const expectedRow1 = `"ORD,001","CUST""123",99.50,paid,2023-01-15T08:30:00.000Z`;
+    const expectedRow2 = `ORD002,CUST002,150.00,shipped,2023-01-20T12:45:10.000Z`;
+    const expectedCsv = `${expectedHeaders}\r\n${expectedRow1}\r\n${expectedRow2}`;
+
+    expect(payload.data.csvContent).toBe(expectedCsv);
+    expect(payload.data.exportedAt).toMatch(
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
+    );
+  });
+});

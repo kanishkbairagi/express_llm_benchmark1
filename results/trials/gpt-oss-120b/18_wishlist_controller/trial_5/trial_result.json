@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "18_wishlist_controller.js",
+  "trial": 5,
+  "startedAt": "2026-10-04T11:15:56.299Z",
+  "finishedAt": "2026-10-04T11:16:03.155Z",
+  "suiteOk": true,
+  "testsPassed": 11,
+  "testsFailed": 0,
+  "testsTotal": 11,
+  "errorCategory": "none",
+  "statementCoverage": 83.33,
+  "branchCoverage": 85.29,
+  "functionCoverage": 37.5,
+  "lineCoverage": 83.33,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1030,
+    "completionTokens": 1900,
+    "totalTokens": 2930,
+    "reasoningTokens": 299
+  },
+  "latencyMs": 4705
+}

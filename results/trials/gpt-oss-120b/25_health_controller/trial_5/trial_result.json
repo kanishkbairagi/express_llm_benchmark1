@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "25_health_controller.js",
+  "trial": 5,
+  "startedAt": "2026-10-04T11:20:54.845Z",
+  "finishedAt": "2026-10-04T11:21:01.765Z",
+  "suiteOk": false,
+  "testsPassed": 6,
+  "testsFailed": 1,
+  "testsTotal": 7,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 83.87,
+  "branchCoverage": 90,
+  "functionCoverage": 50,
+  "lineCoverage": 86.21,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 671,
+    "completionTokens": 1998,
+    "totalTokens": 2669,
+    "reasoningTokens": 481
+  },
+  "latencyMs": 4911
+}

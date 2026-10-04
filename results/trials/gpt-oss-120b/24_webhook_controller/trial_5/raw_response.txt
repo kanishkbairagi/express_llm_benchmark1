@@ -1,0 +1,226 @@
+```javascript
+import {
+  ingestWebhook,
+  getDeliveryStatus,
+  WebhookEventStore,
+  EventDispatcher
+} from '../dataset/24_webhook_controller.js';
+
+describe('Webhook Controller - ingestWebhook', () => {
+  const mockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Default mock implementations
+    WebhookEventStore.findEvent = jest.fn().mockResolvedValue(null);
+    WebhookEventStore.saveEvent = jest.fn().mockImplementation(async (data) => ({
+      id: data.eventId,
+      ...data,
+      receivedAt: new Date()
+    }));
+    EventDispatcher.dispatch = jest.fn().mockResolvedValue({ queued: true, queueId: 'job_123' });
+  });
+
+  test('returns 401 when token is missing', async () => {
+    const req = { headers: {}, body: {} };
+    const res = mockRes();
+
+    await ingestWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Unauthorized: Invalid or missing x-webhook-token header'
+    });
+  });
+
+  test('returns 401 when token is invalid', async () => {
+    const req = { headers: { 'x-webhook-token': 'invalid_token' }, body: {} };
+    const res = mockRes();
+
+    await ingestWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Unauthorized: Invalid or missing x-webhook-token header'
+    });
+  });
+
+  test('returns 400 when required payload fields are missing', async () => {
+    const req = {
+      headers: { 'x-webhook-token': 'wh_secret_test_tok_xyz789' },
+      body: { eventId: 'e1' } // missing eventType and payload
+    };
+    const res = mockRes();
+
+    await ingestWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Missing required payload fields: eventId, eventType, and payload are required'
+    });
+  });
+
+  test('returns 200 with duplicate flag when event already exists', async () => {
+    WebhookEventStore.findEvent = jest.fn().mockResolvedValue({ id: 'e1' });
+
+    const req = {
+      headers: { 'x-webhook-token': 'wh_secret_live_tok_abc123' },
+      body: { eventId: 'e1', eventType: 'order.created', payload: { foo: 'bar' } }
+    };
+    const res = mockRes();
+
+    await ingestWebhook(req, res);
+
+    expect(WebhookEventStore.findEvent).toHaveBeenCalledWith('e1');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Duplicate event acknowledged',
+      duplicate: true,
+      eventId: 'e1'
+    });
+  });
+
+  test('processes a new event and returns 202 with queue information', async () => {
+    const req = {
+      headers: { 'x-webhook-token': 'wh_secret_live_tok_abc123' },
+      body: {
+        eventId: 'e2',
+        eventType: 'order.paid',
+        timestamp: '2023-01-01T00:00:00Z',
+        payload: { amount: 100 }
+      }
+    };
+    const res = mockRes();
+
+    await ingestWebhook(req, res);
+
+    expect(WebhookEventStore.findEvent).toHaveBeenCalledWith('e2');
+    expect(WebhookEventStore.saveEvent).toHaveBeenCalledWith({
+      eventId: 'e2',
+      eventType: 'order.paid',
+      timestamp: '2023-01-01T00:00:00Z',
+      payload: { amount: 100 }
+    });
+    expect(EventDispatcher.dispatch).toHaveBeenCalledWith('order.paid', { amount: 100 });
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Event accepted for asynchronous processing',
+      data: {
+        eventId: 'e2',
+        queueJobId: 'job_123',
+        status: 'queued'
+      }
+    });
+  });
+
+  test('handles unexpected errors and returns 500', async () => {
+    WebhookEventStore.findEvent = jest.fn().mockRejectedValue(new Error('DB failure'));
+
+    const req = {
+      headers: { 'x-webhook-token': 'wh_secret_test_tok_xyz789' },
+      body: {
+        eventId: 'e3',
+        eventType: 'order.refunded',
+        payload: { reason: 'customer request' }
+      }
+    };
+    const res = mockRes();
+
+    await ingestWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Failed to ingest webhook event',
+      details: 'DB failure'
+    });
+  });
+});
+
+describe('Webhook Controller - getDeliveryStatus', () => {
+  const mockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    WebhookEventStore.getDeliveryStatus = jest.fn().mockResolvedValue(null);
+  });
+
+  test('returns 400 when eventId param is missing', async () => {
+    const req = { params: {} };
+    const res = mockRes();
+
+    await getDeliveryStatus(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Event ID parameter is required'
+    });
+  });
+
+  test('returns 404 when delivery status not found', async () => {
+    WebhookEventStore.getDeliveryStatus = jest.fn().mockResolvedValue(null);
+
+    const req = { params: { eventId: 'missing-id' } };
+    const res = mockRes();
+
+    await getDeliveryStatus(req, res);
+
+    expect(WebhookEventStore.getDeliveryStatus).toHaveBeenCalledWith('missing-id');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Webhook event with ID missing-id was not found'
+    });
+  });
+
+  test('returns 200 with delivery status when found', async () => {
+    const mockStatus = { delivered: true, at: '2023-01-01T12:00:00Z' };
+    WebhookEventStore.getDeliveryStatus = jest.fn().mockResolvedValue(mockStatus);
+
+    const req = { params: { eventId: 'e4' } };
+    const res = mockRes();
+
+    await getDeliveryStatus(req, res);
+
+    expect(WebhookEventStore.getDeliveryStatus).toHaveBeenCalledWith('e4');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: mockStatus
+    });
+  });
+
+  test('handles unexpected errors and returns 500', async () => {
+    WebhookEventStore.getDeliveryStatus = jest.fn().mockRejectedValue(new Error('Cache error'));
+
+    const req = { params: { eventId: 'e5' } };
+    const res = mockRes();
+
+    await getDeliveryStatus(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Failed to check event delivery status',
+      details: 'Cache error'
+    });
+  });
+});
+```

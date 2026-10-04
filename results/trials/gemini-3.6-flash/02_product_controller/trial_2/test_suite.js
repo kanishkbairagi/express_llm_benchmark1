@@ -1,0 +1,326 @@
+import { jest } from '@jest/globals';
+import { Product, getProducts, getProductById } from '../dataset/02_product_controller.js';
+
+describe('02_product_controller', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      query: {},
+      params: {}
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.restoreAllMocks();
+  });
+
+  describe('getProducts', () => {
+    test('should return default paginated products successfully', async () => {
+      const mockData = {
+        count: 2,
+        rows: [{ id: '1', name: 'Product 1' }, { id: '2', name: 'Product 2' }]
+      };
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue(mockData);
+
+      await getProducts(req, res);
+
+      expect(Product.findAndCountAll).toHaveBeenCalledWith({
+        filters: {},
+        sortBy: 'createdAt',
+        sortOrder: 'desc',
+        offset: 0,
+        limit: 10
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          items: mockData.rows,
+          pagination: {
+            totalItems: 2,
+            totalPages: 1,
+            currentPage: 1,
+            limit: 10,
+            hasNextPage: false,
+            hasPrevPage: false
+          }
+        }
+      });
+    });
+
+    test('should handle missing req.query gracefully', async () => {
+      const mockData = { count: 0, rows: [] };
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue(mockData);
+
+      await getProducts({}, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          items: [],
+          pagination: {
+            totalItems: 0,
+            totalPages: 1,
+            currentPage: 1,
+            limit: 10,
+            hasNextPage: false,
+            hasPrevPage: false
+          }
+        }
+      });
+    });
+
+    test('should reject invalid page parameter', async () => {
+      req.query.page = '0';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Page parameter must be a positive integer'
+      });
+
+      req.query.page = 'abc';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should reject invalid limit parameter', async () => {
+      req.query.limit = '0';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Limit parameter must be between 1 and 100'
+      });
+
+      req.query.limit = '101';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      req.query.limit = 'invalid';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should validate and trim category filter', async () => {
+      req.query.category = '   ';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid category filter'
+      });
+
+      req.query.category = ' Electronics ';
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue({ count: 0, rows: [] });
+      await getProducts(req, res);
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          filters: expect.objectContaining({ category: 'Electronics' })
+        })
+      );
+    });
+
+    test('should validate minPrice filter', async () => {
+      req.query.minPrice = '-5';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'minPrice must be a non-negative number'
+      });
+
+      req.query.minPrice = 'abc';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      req.query.minPrice = '15.5';
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue({ count: 0, rows: [] });
+      await getProducts(req, res);
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          filters: expect.objectContaining({ minPrice: 15.5 })
+        })
+      );
+    });
+
+    test('should validate maxPrice filter and compare with minPrice', async () => {
+      req.query.maxPrice = '-1';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      req.query.minPrice = '50';
+      req.query.maxPrice = '40';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'maxPrice cannot be less than minPrice'
+      });
+
+      req.query.maxPrice = '100';
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue({ count: 0, rows: [] });
+      await getProducts(req, res);
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          filters: expect.objectContaining({ minPrice: 50, maxPrice: 100 })
+        })
+      );
+    });
+
+    test('should parse inStock query param accurately', async () => {
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue({ count: 0, rows: [] });
+
+      req.query.inStock = 'true';
+      await getProducts(req, res);
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({ filters: expect.objectContaining({ inStock: true }) })
+      );
+
+      req.query.inStock = true;
+      await getProducts(req, res);
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({ filters: expect.objectContaining({ inStock: true }) })
+      );
+
+      req.query.inStock = 'false';
+      await getProducts(req, res);
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({ filters: expect.objectContaining({ inStock: false }) })
+      );
+    });
+
+    test('should validate sortBy field', async () => {
+      req.query.sortBy = 'unsupportedField';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: expect.stringContaining('Invalid sortBy field')
+      });
+
+      req.query.sortBy = 'rating';
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue({ count: 0, rows: [] });
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    test('should validate and normalize sortOrder', async () => {
+      req.query.sortOrder = 'invalidOrder';
+      await getProducts(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'sortOrder must be either "asc" or "desc"'
+      });
+
+      req.query.sortOrder = 'ASC';
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue({ count: 0, rows: [] });
+      await getProducts(req, res);
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({ sortOrder: 'asc' })
+      );
+    });
+
+    test('should correctly compute multi-page pagination status', async () => {
+      req.query.page = '2';
+      req.query.limit = '5';
+      jest.spyOn(Product, 'findAndCountAll').mockResolvedValue({ count: 12, rows: [] });
+
+      await getProducts(req, res);
+
+      expect(Product.findAndCountAll).toHaveBeenCalledWith(
+        expect.objectContaining({ offset: 5, limit: 5 })
+      );
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          items: [],
+          pagination: {
+            totalItems: 12,
+            totalPages: 3,
+            currentPage: 2,
+            limit: 5,
+            hasNextPage: true,
+            hasPrevPage: true
+          }
+        }
+      });
+    });
+
+    test('should handle database exception in getProducts', async () => {
+      jest.spyOn(Product, 'findAndCountAll').mockRejectedValue(new Error('DB failure'));
+
+      await getProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve products',
+        details: 'DB failure'
+      });
+    });
+  });
+
+  describe('getProductById', () => {
+    test('should return 400 if product ID is missing or invalid', async () => {
+      await getProductById(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      req.params.id = '   ';
+      await getProductById({}, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product ID is required'
+      });
+    });
+
+    test('should return 404 if product is not found', async () => {
+      req.params.id = 'p123';
+      jest.spyOn(Product, 'findById').mockResolvedValue(null);
+
+      await getProductById(req, res);
+
+      expect(Product.findById).toHaveBeenCalledWith('p123');
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product with ID p123 not found'
+      });
+    });
+
+    test('should return 200 and product data when found', async () => {
+      req.params.id = '  p123  ';
+      const mockProduct = { id: 'p123', name: 'Test Product', price: 99.99 };
+      jest.spyOn(Product, 'findById').mockResolvedValue(mockProduct);
+
+      await getProductById(req, res);
+
+      expect(Product.findById).toHaveBeenCalledWith('p123');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: mockProduct
+      });
+    });
+
+    test('should handle database exception in getProductById', async () => {
+      req.params.id = 'p123';
+      jest.spyOn(Product, 'findById').mockRejectedValue(new Error('Connection error'));
+
+      await getProductById(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to fetch product details',
+        details: 'Connection error'
+      });
+    });
+  });
+});

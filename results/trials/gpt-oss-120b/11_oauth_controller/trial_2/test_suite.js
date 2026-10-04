@@ -1,0 +1,254 @@
+import { jest } from '@jest/globals';
+import {
+  handleGoogleCallback,
+  handleGithubCallback,
+  OAuthUser,
+  OAuthService
+} from '../dataset/11_oauth_controller.js';
+
+describe('OAuth Controllers', () => {
+  const makeRes = () => {
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
+    return res;
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  /*** Google Callback ***/
+  describe('handleGoogleCallback', () => {
+    it('should create a new user when provider and email are unknown', async () => {
+      // mock exchange
+      jest.spyOn(OAuthService, 'exchangeGoogleCode').mockResolvedValue({
+        googleId: 'g_123',
+        email: 'newuser@gmail.com',
+        name: 'New User',
+        avatar: 'http://avatar.com/new'
+      });
+      // user lookups return null
+      jest.spyOn(OAuthUser, 'findByProviderId').mockResolvedValue(null);
+      jest.spyOn(OAuthUser, 'findByEmail').mockResolvedValue(null);
+      // creation returns a user object
+      const createdUser = {
+        id: 'usr_1',
+        email: 'newuser@gmail.com',
+        name: 'New User',
+        avatar: 'http://avatar.com/new'
+      };
+      jest.spyOn(OAuthUser, 'create').mockResolvedValue(createdUser);
+      const res = makeRes();
+
+      await handleGoogleCallback({ query: { code: 'valid_code' } }, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: true,
+          message: 'Google authentication successful',
+          data: {
+            token: expect.stringContaining('mock_oauth_jwt_'),
+            user: expect.objectContaining({
+              id: createdUser.id,
+              name: createdUser.name,
+              email: createdUser.email,
+              avatar: createdUser.avatar
+            })
+          }
+        })
+      );
+      // ensure linkProvider not called
+      expect(OAuthUser.linkProvider).not.toHaveBeenCalled();
+    });
+
+    it('should link provider to existing user found by email', async () => {
+      jest.spyOn(OAuthService, 'exchangeGoogleCode').mockResolvedValue({
+        googleId: 'g_456',
+        email: 'existing@gmail.com',
+        name: 'Existing',
+        avatar: 'http://avatar.com/existing'
+      });
+      jest.spyOn(OAuthUser, 'findByProviderId').mockResolvedValue(null);
+      const existingUser = {
+        id: 'usr_2',
+        email: 'existing@gmail.com',
+        name: 'Existing',
+        avatar: 'http://avatar.com/existing'
+      };
+      jest.spyOn(OAuthUser, 'findByEmail').mockResolvedValue(existingUser);
+      jest.spyOn(OAuthUser, 'linkProvider').mockResolvedValue(true);
+      const res = makeRes();
+
+      await handleGoogleCallback({ query: { code: 'valid_code' } }, res);
+
+      expect(OAuthUser.linkProvider).toHaveBeenCalledWith(
+        existingUser.id,
+        'google',
+        'g_456'
+      );
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: true,
+          data: {
+            token: expect.stringContaining('mock_oauth_jwt_'),
+            user: expect.objectContaining({ id: existingUser.id })
+          }
+        })
+      );
+    });
+
+    it('should return 400 when code is missing', async () => {
+      const res = makeRes();
+
+      await handleGoogleCallback({ query: {} }, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authorization code is missing from callback'
+      });
+    });
+
+    it('should return 401 when exchange fails', async () => {
+      jest.spyOn(OAuthService, 'exchangeGoogleCode').mockRejectedValue(
+        new Error('Bad verification code')
+      );
+      const res = makeRes();
+
+      await handleGoogleCallback({ query: { code: 'invalid_code' } }, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication failed: Invalid authorization code'
+      });
+    });
+  });
+
+  /*** Github Callback ***/
+  describe('handleGithubCallback', () => {
+    it('should create a new user when provider and email are unknown', async () => {
+      jest.spyOn(OAuthService, 'exchangeGithubCode').mockResolvedValue({
+        githubId: 'gh_111',
+        email: 'newgh@github.com',
+        username: 'newgh',
+        avatar: 'http://avatar.com/ghnew'
+      });
+      jest.spyOn(OAuthUser, 'findByProviderId').mockResolvedValue(null);
+      jest.spyOn(OAuthUser, 'findByEmail').mockResolvedValue(null);
+      const createdUser = {
+        id: 'usr_3',
+        email: 'newgh@github.com',
+        name: 'newgh',
+        avatar: 'http://avatar.com/ghnew'
+      };
+      jest.spyOn(OAuthUser, 'create').mockResolvedValue(createdUser);
+      const res = makeRes();
+
+      await handleGithubCallback({ query: { code: 'valid_code' } }, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: true,
+          message: 'GitHub authentication successful',
+          data: {
+            token: expect.stringContaining('mock_oauth_jwt_'),
+            user: expect.objectContaining({
+              id: createdUser.id,
+              name: createdUser.name,
+              email: createdUser.email,
+              avatar: createdUser.avatar
+            })
+          }
+        })
+      );
+    });
+
+    it('should link provider to existing user found by email', async () => {
+      jest.spyOn(OAuthService, 'exchangeGithubCode').mockResolvedValue({
+        githubId: 'gh_222',
+        email: 'existgh@github.com',
+        username: 'existgh',
+        avatar: 'http://avatar.com/ghexist'
+      });
+      jest.spyOn(OAuthUser, 'findByProviderId').mockResolvedValue(null);
+      const existingUser = {
+        id: 'usr_4',
+        email: 'existgh@github.com',
+        name: 'existgh',
+        avatar: 'http://avatar.com/ghexist'
+      };
+      jest.spyOn(OAuthUser, 'findByEmail').mockResolvedValue(existingUser);
+      jest.spyOn(OAuthUser, 'linkProvider').mockResolvedValue(true);
+      const res = makeRes();
+
+      await handleGithubCallback({ query: { code: 'valid_code' } }, res);
+
+      expect(OAuthUser.linkProvider).toHaveBeenCalledWith(
+        existingUser.id,
+        'github',
+        'gh_222'
+      );
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: true,
+          data: {
+            token: expect.stringContaining('mock_oauth_jwt_'),
+            user: expect.objectContaining({ id: existingUser.id })
+          }
+        })
+      );
+    });
+
+    it('should return 422 when email is missing from Github profile', async () => {
+      jest.spyOn(OAuthService, 'exchangeGithubCode').mockResolvedValue({
+        githubId: 'gh_333',
+        email: null,
+        username: 'noemail',
+        avatar: 'http://avatar.com/noemail'
+      });
+      const res = makeRes();
+
+      await handleGithubCallback({ query: { code: 'valid_code' } }, res);
+
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Unable to retrieve verified email from GitHub account'
+      });
+    });
+
+    it('should return 400 when code is missing', async () => {
+      const res = makeRes();
+
+      await handleGithubCallback({ query: {} }, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authorization code is missing from callback'
+      });
+    });
+
+    it('should return 401 when exchange fails', async () => {
+      jest.spyOn(OAuthService, 'exchangeGithubCode').mockRejectedValue(
+        new Error('Bad verification code')
+      );
+      const res = makeRes();
+
+      await handleGithubCallback({ query: { code: 'invalid_code' } }, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication failed: Invalid GitHub authorization code'
+      });
+    });
+  });
+});

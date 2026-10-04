@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "19_audit_controller.js",
+  "trial": 4,
+  "startedAt": "2026-10-04T10:49:11.423Z",
+  "finishedAt": "2026-10-04T10:49:52.789Z",
+  "suiteOk": false,
+  "testsPassed": 15,
+  "testsFailed": 2,
+  "testsTotal": 17,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 96.36,
+  "branchCoverage": 96.55,
+  "functionCoverage": 50,
+  "lineCoverage": 96.15,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1398,
+    "completionTokens": 2933,
+    "totalTokens": 7899,
+    "thinkingTokens": 3568
+  },
+  "latencyMs": 27122
+}

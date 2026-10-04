@@ -1,0 +1,378 @@
+```javascript
+import {
+  AddressValidationService,
+  CarrierRateService,
+  validateShippingAddress,
+  calculateShippingRates
+} from '../dataset/16_shipping_controller.js';
+
+describe('16_shipping_controller Unit Tests', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = { body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.clearAllMocks();
+  });
+
+  describe('AddressValidationService & CarrierRateService direct unit tests', () => {
+    it('should verify address correctly with default service mock', async () => {
+      const address = {
+        street: ' 123 Main St ',
+        city: ' New York ',
+        state: ' ny ',
+        postalCode: ' 10001 ',
+        country: ' us '
+      };
+
+      const result = await AddressValidationService.verify(address);
+      expect(result).toEqual({
+        isValid: true,
+        normalized: {
+          street: '123 Main St',
+          city: 'New York',
+          state: 'NY',
+          postalCode: '10001',
+          country: 'US'
+        }
+      });
+    });
+
+    it('should calculate carrier rates correctly with default service mock', async () => {
+      const rates = await CarrierRateService.getRates(2, 'US');
+      expect(rates).toEqual([
+        { service: 'standard', rate: 10.0, estDays: '3-5 business days' },
+        { service: 'express', rate: 22.0, estDays: '1-2 business days' },
+        { service: 'overnight', rate: 43.0, estDays: 'Next business day' }
+      ]);
+    });
+  });
+
+  describe('validateShippingAddress', () => {
+    it('should return 400 if req.body is missing required address fields', async () => {
+      req.body = { street: '123 Main St', city: 'Metropolis' }; // state and postalCode missing
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Incomplete address: street, city, state, and postalCode are required'
+      });
+    });
+
+    it('should handle undefined req.body', async () => {
+      req.body = undefined;
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Incomplete address: street, city, state, and postalCode are required'
+      });
+    });
+
+    it('should return 422 if shipping destination is restricted', async () => {
+      req.body = {
+        street: '123 Main St',
+        city: 'Havana',
+        state: 'Havana',
+        postalCode: '10100',
+        country: 'cu'
+      };
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Shipping is not available to destination country code "CU"'
+      });
+    });
+
+    it('should return 400 if US postal code is invalid', async () => {
+      req.body = {
+        street: '123 Main St',
+        city: 'New York',
+        state: 'NY',
+        postalCode: 'ABCDE',
+        country: 'US'
+      };
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid US postal code format (expected 12345 or 12345-6789)'
+      });
+    });
+
+    it('should validate US address successfully with 5-digit zip', async () => {
+      req.body = {
+        street: '123 Main St',
+        city: 'New York',
+        state: 'NY',
+        postalCode: '10001'
+      };
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Address verified',
+        data: {
+          isValid: true,
+          normalized: {
+            street: '123 Main St',
+            city: 'New York',
+            state: 'NY',
+            postalCode: '10001',
+            country: 'US'
+          }
+        }
+      });
+    });
+
+    it('should validate US address successfully with 9-digit zip', async () => {
+      req.body = {
+        street: '123 Main St',
+        city: 'New York',
+        state: 'NY',
+        postalCode: '10001-1234',
+        country: 'US'
+      };
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Address verified',
+        data: expect.any(Object)
+      });
+    });
+
+    it('should validate non-US address successfully without checking US zip format', async () => {
+      req.body = {
+        street: '456 Queen St',
+        city: 'Toronto',
+        state: 'ON',
+        postalCode: 'M5V 2A2',
+        country: 'CA'
+      };
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Address verified',
+        data: {
+          isValid: true,
+          normalized: {
+            street: '456 Queen St',
+            city: 'Toronto',
+            state: 'ON',
+            postalCode: 'M5V 2A2',
+            country: 'CA'
+          }
+        }
+      });
+    });
+
+    it('should return 500 when AddressValidationService throws an error', async () => {
+      req.body = {
+        street: '123 Main St',
+        city: 'New York',
+        state: 'NY',
+        postalCode: '10001',
+        country: 'US'
+      };
+
+      jest.spyOn(AddressValidationService, 'verify').mockRejectedValueOnce(new Error('Validation service down'));
+
+      await validateShippingAddress(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Address validation failed',
+        details: 'Validation service down'
+      });
+    });
+  });
+
+  describe('calculateShippingRates', () => {
+    it('should return 400 if destination is missing or invalid', async () => {
+      req.body = { packageDetails: { weightKg: 2, dimensions: { length: 10, width: 10, height: 10 } } };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Destination country and postalCode are required'
+      });
+    });
+
+    it('should return 400 if destination country or postalCode is missing', async () => {
+      req.body = { destination: { country: 'US' } };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Destination country and postalCode are required'
+      });
+    });
+
+    it('should return 422 if destination country is restricted', async () => {
+      req.body = {
+        destination: { country: 'KP', postalCode: '100000' }
+      };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Carrier does not ship to "KP"'
+      });
+    });
+
+    it('should return 400 if packageDetails is missing or not an object', async () => {
+      req.body = {
+        destination: { country: 'US', postalCode: '10001' },
+        packageDetails: 'invalid'
+      };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'packageDetails object is required'
+      });
+    });
+
+    it('should return 400 if weightKg is invalid', async () => {
+      req.body = {
+        destination: { country: 'US', postalCode: '10001' },
+        packageDetails: {
+          weightKg: -1,
+          dimensions: { length: 10, width: 10, height: 10 }
+        }
+      };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Package weightKg must be a positive number'
+      });
+    });
+
+    it('should return 400 if dimensions are invalid or <= 0', async () => {
+      req.body = {
+        destination: { country: 'US', postalCode: '10001' },
+        packageDetails: {
+          weightKg: 2,
+          dimensions: { length: 10, width: 0, height: 10 }
+        }
+      };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Valid dimensions (length, width, height > 0) in cm are required'
+      });
+    });
+
+    it('should calculate rates using actual weight when actual weight > volumetric weight', async () => {
+      // Dimensions: 10x10x10 cm = 1000 cm3 / 5000 = 0.2 kg volumetric
+      // weightKg: 5 kg -> billable weight = 5 kg
+      req.body = {
+        destination: { country: 'US', postalCode: '10001' },
+        packageDetails: {
+          weightKg: 5,
+          dimensions: { length: 10, width: 10, height: 10 }
+        }
+      };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          billableWeightKg: 5,
+          isVolumetric: false,
+          options: [
+            { service: 'standard', cost: 17.5, currency: 'USD', estimatedDelivery: '3-5 business days' },
+            { service: 'express', cost: 37.0, currency: 'USD', estimatedDelivery: '1-2 business days' },
+            { service: 'overnight', cost: 70.0, currency: 'USD', estimatedDelivery: 'Next business day' }
+          ]
+        }
+      });
+    });
+
+    it('should calculate rates using volumetric weight when volumetric weight > actual weight', async () => {
+      // Dimensions: 50x50x50 cm = 125,000 cm3 / 5000 = 25 kg volumetric
+      // weightKg: 2 kg -> billable weight = 25 kg
+      req.body = {
+        destination: { country: 'CA', postalCode: 'M5V 2A2' },
+        packageDetails: {
+          weightKg: 2,
+          dimensions: { length: 50, width: 50, height: 50 }
+        }
+      };
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          billableWeightKg: 25,
+          isVolumetric: true,
+          options: expect.arrayContaining([
+            expect.objectContaining({ service: 'standard', cost: 67.5 })
+          ])
+        }
+      });
+    });
+
+    it('should return 500 when CarrierRateService fails', async () => {
+      req.body = {
+        destination: { country: 'US', postalCode: '10001' },
+        packageDetails: {
+          weightKg: 2,
+          dimensions: { length: 10, width: 10, height: 10 }
+        }
+      };
+
+      jest.spyOn(CarrierRateService, 'getRates').mockRejectedValueOnce(new Error('Carrier API timeout'));
+
+      await calculateShippingRates(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to compute shipping rates',
+        details: 'Carrier API timeout'
+      });
+    });
+  });
+});
+```

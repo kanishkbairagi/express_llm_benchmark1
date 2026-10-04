@@ -1,0 +1,1429 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 1,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 11,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 12,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791110710773,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "searchProducts"
+          ],
+          "duration": 10,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests searchProducts should return 400 if q parameter is missing, empty, or not a string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if q parameter is missing, empty, or not a string",
+          "startAt": 1791110711135
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "searchProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests searchProducts should return 400 if req.query is undefined",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if req.query is undefined",
+          "startAt": 1791110711147
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "searchProducts"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests searchProducts should return 400 if sanitized search query length is less than 2 characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if sanitized search query length is less than 2 characters",
+          "startAt": 1791110711148
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "searchProducts"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests searchProducts should return 400 for invalid pagination parameters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 for invalid pagination parameters",
+          "startAt": 1791110711150
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "searchProducts"
+          ],
+          "duration": 10,
+          "failing": false,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  Object {\n    \"filters\": Object {},\n    \"limit\": 20,\n    \"page\": 1,\n-   \"query\": \"laptop   brand\",\n+   \"query\": \"laptop  brand\",\n  },\n\nNumber of calls: 1",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  Object {\n    \"filters\": Object {},\n    \"limit\": 20,\n    \"page\": 1,\n-   \"query\": \"laptop   brand\",\n+   \"query\": \"laptop  brand\",\n  },\n\nNumber of calls: 1\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials\\13_search_controller_gemini-3.6-flash_trial4.test.js:103:25)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Search Controller Unit Tests searchProducts should execute search successfully with default pagination and filters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should execute search successfully with default pagination and filters",
+          "startAt": 1791110711152
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "searchProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests searchProducts should apply category, minPrice, maxPrice filters correctly",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should apply category, minPrice, maxPrice filters correctly",
+          "startAt": 1791110711168
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "searchProducts"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests searchProducts should handle search index errors and return 500 status",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle search index errors and return 500 status",
+          "startAt": 1791110711169
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests getSearchSuggestions should return 400 if q parameter is missing, empty, or not a string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if q parameter is missing, empty, or not a string",
+          "startAt": 1791110711171
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests getSearchSuggestions should return 400 if req.query is undefined",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if req.query is undefined",
+          "startAt": 1791110711173
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests getSearchSuggestions should return 200 with empty array if sanitized prefix length is less than 1",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 200 with empty array if sanitized prefix length is less than 1",
+          "startAt": 1791110711174
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests getSearchSuggestions should return suggestions successfully",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return suggestions successfully",
+          "startAt": 1791110711179
+        },
+        {
+          "ancestorTitles": [
+            "Search Controller Unit Tests",
+            "getSearchSuggestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Search Controller Unit Tests getSearchSuggestions should handle suggestion errors and return 500 status",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle suggestion errors and return 500 status",
+          "startAt": 1791110711184
+        }
+      ],
+      "endTime": 1791110711217,
+      "message": "  ● Search Controller Unit Tests › searchProducts › should execute search successfully with default pagination and filters\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    - Expected\n    + Received\n\n      Object {\n        \"filters\": Object {},\n        \"limit\": 20,\n        \"page\": 1,\n    -   \"query\": \"laptop   brand\",\n    +   \"query\": \"laptop  brand\",\n      },\n\n    Number of calls: 1\n\n    \u001b[0m \u001b[90m 101 |\u001b[39m       \u001b[36mawait\u001b[39m searchProducts(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 102 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 103 |\u001b[39m       expect(spySearch)\u001b[33m.\u001b[39mtoHaveBeenCalledWith({\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 104 |\u001b[39m         query\u001b[33m:\u001b[39m \u001b[32m'laptop   brand'\u001b[39m\u001b[33m,\u001b[39m\n     \u001b[90m 105 |\u001b[39m         filters\u001b[33m:\u001b[39m {}\u001b[33m,\u001b[39m\n     \u001b[90m 106 |\u001b[39m         page\u001b[33m:\u001b[39m \u001b[35m1\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials/13_search_controller_gemini-3.6-flash_trial4.test.js:103:25)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\13_search_controller_gemini-3.6-flash_trial4.test.js",
+      "startTime": 1791110710907,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\13_search_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\13_search_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 27
+          },
+          "end": {
+            "line": 15,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 54
+          },
+          "end": {
+            "line": 13,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 14,
+            "column": 29
+          },
+          "end": {
+            "line": 14,
+            "column": 31
+          }
+        },
+        "3": {
+          "start": {
+            "line": 17,
+            "column": 28
+          },
+          "end": {
+            "line": 19,
+            "column": 1
+          }
+        },
+        "4": {
+          "start": {
+            "line": 18,
+            "column": 2
+          },
+          "end": {
+            "line": 18,
+            "column": 67
+          }
+        },
+        "5": {
+          "start": {
+            "line": 21,
+            "column": 30
+          },
+          "end": {
+            "line": 81,
+            "column": 1
+          }
+        },
+        "6": {
+          "start": {
+            "line": 22,
+            "column": 2
+          },
+          "end": {
+            "line": 80,
+            "column": 3
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 70
+          },
+          "end": {
+            "line": 23,
+            "column": 85
+          }
+        },
+        "8": {
+          "start": {
+            "line": 25,
+            "column": 4
+          },
+          "end": {
+            "line": 30,
+            "column": 5
+          }
+        },
+        "9": {
+          "start": {
+            "line": 26,
+            "column": 6
+          },
+          "end": {
+            "line": 29,
+            "column": 9
+          }
+        },
+        "10": {
+          "start": {
+            "line": 32,
+            "column": 23
+          },
+          "end": {
+            "line": 32,
+            "column": 45
+          }
+        },
+        "11": {
+          "start": {
+            "line": 33,
+            "column": 4
+          },
+          "end": {
+            "line": 38,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 34,
+            "column": 6
+          },
+          "end": {
+            "line": 37,
+            "column": 9
+          }
+        },
+        "13": {
+          "start": {
+            "line": 40,
+            "column": 20
+          },
+          "end": {
+            "line": 40,
+            "column": 38
+          }
+        },
+        "14": {
+          "start": {
+            "line": 41,
+            "column": 21
+          },
+          "end": {
+            "line": 41,
+            "column": 40
+          }
+        },
+        "15": {
+          "start": {
+            "line": 43,
+            "column": 4
+          },
+          "end": {
+            "line": 48,
+            "column": 5
+          }
+        },
+        "16": {
+          "start": {
+            "line": 44,
+            "column": 6
+          },
+          "end": {
+            "line": 47,
+            "column": 9
+          }
+        },
+        "17": {
+          "start": {
+            "line": 50,
+            "column": 20
+          },
+          "end": {
+            "line": 50,
+            "column": 22
+          }
+        },
+        "18": {
+          "start": {
+            "line": 51,
+            "column": 4
+          },
+          "end": {
+            "line": 51,
+            "column": 53
+          }
+        },
+        "19": {
+          "start": {
+            "line": 51,
+            "column": 18
+          },
+          "end": {
+            "line": 51,
+            "column": 53
+          }
+        },
+        "20": {
+          "start": {
+            "line": 52,
+            "column": 4
+          },
+          "end": {
+            "line": 52,
+            "column": 58
+          }
+        },
+        "21": {
+          "start": {
+            "line": 52,
+            "column": 18
+          },
+          "end": {
+            "line": 52,
+            "column": 58
+          }
+        },
+        "22": {
+          "start": {
+            "line": 53,
+            "column": 4
+          },
+          "end": {
+            "line": 53,
+            "column": 58
+          }
+        },
+        "23": {
+          "start": {
+            "line": 53,
+            "column": 18
+          },
+          "end": {
+            "line": 53,
+            "column": 58
+          }
+        },
+        "24": {
+          "start": {
+            "line": 55,
+            "column": 26
+          },
+          "end": {
+            "line": 60,
+            "column": 6
+          }
+        },
+        "25": {
+          "start": {
+            "line": 62,
+            "column": 4
+          },
+          "end": {
+            "line": 73,
+            "column": 7
+          }
+        },
+        "26": {
+          "start": {
+            "line": 75,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 7
+          }
+        },
+        "27": {
+          "start": {
+            "line": 83,
+            "column": 36
+          },
+          "end": {
+            "line": 115,
+            "column": 1
+          }
+        },
+        "28": {
+          "start": {
+            "line": 84,
+            "column": 2
+          },
+          "end": {
+            "line": 114,
+            "column": 3
+          }
+        },
+        "29": {
+          "start": {
+            "line": 85,
+            "column": 18
+          },
+          "end": {
+            "line": 85,
+            "column": 33
+          }
+        },
+        "30": {
+          "start": {
+            "line": 87,
+            "column": 4
+          },
+          "end": {
+            "line": 92,
+            "column": 5
+          }
+        },
+        "31": {
+          "start": {
+            "line": 88,
+            "column": 6
+          },
+          "end": {
+            "line": 91,
+            "column": 9
+          }
+        },
+        "32": {
+          "start": {
+            "line": 94,
+            "column": 19
+          },
+          "end": {
+            "line": 94,
+            "column": 41
+          }
+        },
+        "33": {
+          "start": {
+            "line": 95,
+            "column": 4
+          },
+          "end": {
+            "line": 100,
+            "column": 5
+          }
+        },
+        "34": {
+          "start": {
+            "line": 96,
+            "column": 6
+          },
+          "end": {
+            "line": 99,
+            "column": 9
+          }
+        },
+        "35": {
+          "start": {
+            "line": 102,
+            "column": 24
+          },
+          "end": {
+            "line": 102,
+            "column": 57
+          }
+        },
+        "36": {
+          "start": {
+            "line": 104,
+            "column": 4
+          },
+          "end": {
+            "line": 107,
+            "column": 7
+          }
+        },
+        "37": {
+          "start": {
+            "line": 109,
+            "column": 4
+          },
+          "end": {
+            "line": 113,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 10
+            },
+            "end": {
+              "line": 5,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 54
+            },
+            "end": {
+              "line": 13,
+              "column": 3
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 14,
+              "column": 11
+            },
+            "end": {
+              "line": 14,
+              "column": 12
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 14,
+              "column": 29
+            },
+            "end": {
+              "line": 14,
+              "column": 31
+            }
+          },
+          "line": 14
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 17,
+              "column": 28
+            },
+            "end": {
+              "line": 17,
+              "column": 29
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 38
+            },
+            "end": {
+              "line": 19,
+              "column": 1
+            }
+          },
+          "line": 17
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 21,
+              "column": 30
+            },
+            "end": {
+              "line": 21,
+              "column": 31
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 21,
+              "column": 50
+            },
+            "end": {
+              "line": 81,
+              "column": 1
+            }
+          },
+          "line": 21
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 83,
+              "column": 36
+            },
+            "end": {
+              "line": 83,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 83,
+              "column": 56
+            },
+            "end": {
+              "line": 115,
+              "column": 1
+            }
+          },
+          "line": 83
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 45
+            },
+            "end": {
+              "line": 23,
+              "column": 53
+            }
+          },
+          "type": "default-arg",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 52
+              },
+              "end": {
+                "line": 23,
+                "column": 53
+              }
+            }
+          ],
+          "line": 23
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 55
+            },
+            "end": {
+              "line": 23,
+              "column": 65
+            }
+          },
+          "type": "default-arg",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 63
+              },
+              "end": {
+                "line": 23,
+                "column": 65
+              }
+            }
+          ],
+          "line": 23
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 70
+            },
+            "end": {
+              "line": 23,
+              "column": 85
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 70
+              },
+              "end": {
+                "line": 23,
+                "column": 79
+              }
+            },
+            {
+              "start": {
+                "line": 23,
+                "column": 83
+              },
+              "end": {
+                "line": 23,
+                "column": 85
+              }
+            }
+          ],
+          "line": 23
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 25,
+              "column": 4
+            },
+            "end": {
+              "line": 30,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 25,
+                "column": 4
+              },
+              "end": {
+                "line": 30,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 25
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 25,
+              "column": 8
+            },
+            "end": {
+              "line": 25,
+              "column": 60
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 25,
+                "column": 8
+              },
+              "end": {
+                "line": 25,
+                "column": 10
+              }
+            },
+            {
+              "start": {
+                "line": 25,
+                "column": 14
+              },
+              "end": {
+                "line": 25,
+                "column": 35
+              }
+            },
+            {
+              "start": {
+                "line": 25,
+                "column": 39
+              },
+              "end": {
+                "line": 25,
+                "column": 60
+              }
+            }
+          ],
+          "line": 25
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 33,
+              "column": 4
+            },
+            "end": {
+              "line": 38,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 33,
+                "column": 4
+              },
+              "end": {
+                "line": 38,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 33
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 4
+            },
+            "end": {
+              "line": 48,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 4
+              },
+              "end": {
+                "line": 48,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 43
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 8
+            },
+            "end": {
+              "line": 43,
+              "column": 90
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 8
+              },
+              "end": {
+                "line": 43,
+                "column": 22
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 26
+              },
+              "end": {
+                "line": 43,
+                "column": 37
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 41
+              },
+              "end": {
+                "line": 43,
+                "column": 56
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 60
+              },
+              "end": {
+                "line": 43,
+                "column": 72
+              }
+            },
+            {
+              "start": {
+                "line": 43,
+                "column": 76
+              },
+              "end": {
+                "line": 43,
+                "column": 90
+              }
+            }
+          ],
+          "line": 43
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 51,
+              "column": 4
+            },
+            "end": {
+              "line": 51,
+              "column": 53
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 51,
+                "column": 4
+              },
+              "end": {
+                "line": 51,
+                "column": 53
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 51
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 52,
+              "column": 4
+            },
+            "end": {
+              "line": 52,
+              "column": 58
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 52,
+                "column": 4
+              },
+              "end": {
+                "line": 52,
+                "column": 58
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 52
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 53,
+              "column": 4
+            },
+            "end": {
+              "line": 53,
+              "column": 58
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 53,
+                "column": 4
+              },
+              "end": {
+                "line": 53,
+                "column": 58
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 53
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 85,
+              "column": 18
+            },
+            "end": {
+              "line": 85,
+              "column": 33
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 85,
+                "column": 18
+              },
+              "end": {
+                "line": 85,
+                "column": 27
+              }
+            },
+            {
+              "start": {
+                "line": 85,
+                "column": 31
+              },
+              "end": {
+                "line": 85,
+                "column": 33
+              }
+            }
+          ],
+          "line": 85
+        },
+        "12": {
+          "loc": {
+            "start": {
+              "line": 87,
+              "column": 4
+            },
+            "end": {
+              "line": 92,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 87,
+                "column": 4
+              },
+              "end": {
+                "line": 92,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 87
+        },
+        "13": {
+          "loc": {
+            "start": {
+              "line": 87,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 60
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 87,
+                "column": 8
+              },
+              "end": {
+                "line": 87,
+                "column": 10
+              }
+            },
+            {
+              "start": {
+                "line": 87,
+                "column": 14
+              },
+              "end": {
+                "line": 87,
+                "column": 35
+              }
+            },
+            {
+              "start": {
+                "line": 87,
+                "column": 39
+              },
+              "end": {
+                "line": 87,
+                "column": 60
+              }
+            }
+          ],
+          "line": 87
+        },
+        "14": {
+          "loc": {
+            "start": {
+              "line": 95,
+              "column": 4
+            },
+            "end": {
+              "line": 100,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 95,
+                "column": 4
+              },
+              "end": {
+                "line": 100,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 95
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 12,
+        "5": 1,
+        "6": 13,
+        "7": 13,
+        "8": 13,
+        "9": 4,
+        "10": 9,
+        "11": 9,
+        "12": 1,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 5,
+        "17": 3,
+        "18": 3,
+        "19": 1,
+        "20": 3,
+        "21": 1,
+        "22": 3,
+        "23": 1,
+        "24": 3,
+        "25": 2,
+        "26": 1,
+        "27": 1,
+        "28": 7,
+        "29": 7,
+        "30": 7,
+        "31": 4,
+        "32": 3,
+        "33": 3,
+        "34": 1,
+        "35": 2,
+        "36": 1,
+        "37": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 12,
+        "3": 13,
+        "4": 7
+      },
+      "b": {
+        "0": [
+          10
+        ],
+        "1": [
+          8
+        ],
+        "2": [
+          13,
+          1
+        ],
+        "3": [
+          4,
+          9
+        ],
+        "4": [
+          13,
+          11,
+          10
+        ],
+        "5": [
+          1,
+          8
+        ],
+        "6": [
+          5,
+          3
+        ],
+        "7": [
+          8,
+          7,
+          6,
+          5,
+          4
+        ],
+        "8": [
+          1,
+          2
+        ],
+        "9": [
+          1,
+          2
+        ],
+        "10": [
+          1,
+          2
+        ],
+        "11": [
+          7,
+          1
+        ],
+        "12": [
+          4,
+          3
+        ],
+        "13": [
+          7,
+          5,
+          4
+        ],
+        "14": [
+          1,
+          2
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "ca439d580ec7fad68e937c640109aa3ef8fd726d"
+    }
+  }
+}

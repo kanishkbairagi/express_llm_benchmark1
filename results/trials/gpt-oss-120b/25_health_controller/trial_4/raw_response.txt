@@ -1,0 +1,125 @@
+```javascript
+import { jest } from '@jest/globals';
+import {
+  getLiveness,
+  getReadiness,
+  SystemHealth
+} from '../dataset/25_health_controller.js';
+
+describe('Health Controller', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {};
+
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
+
+    jest.spyOn(process, 'uptime').mockReturnValue(123.456);
+    jest.spyOn(process, 'memoryUsage').mockReturnValue({
+      heapUsed: 500 * 1024 * 1024, // 500 MB
+      rss: 800 * 1024 * 1024 // 800 MB
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+  });
+
+  describe('getLiveness', () => {
+    test('should respond with 200 and correct payload', async () => {
+      await getLiveness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload).toMatchObject({
+        status: 'UP'
+      });
+      expect(typeof payload.timestamp).toBe('string');
+      expect(payload.uptimeSeconds).toBe(Math.floor(process.uptime()));
+    });
+  });
+
+  describe('getReadiness', () => {
+    test('should return 200 when all checks are healthy and memory is OK', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'UP', latencyMs: 3 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'UP', latencyMs: 1 });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.status).toBe('UP');
+      expect(payload.checks.database).toEqual({ status: 'UP', latencyMs: 3 });
+      expect(payload.checks.redis).toEqual({ status: 'UP', latencyMs: 1 });
+      expect(payload.checks.memory.status).toBe('UP');
+    });
+
+    test('should return 503 when database ping fails', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockRejectedValue(new Error('DB error'));
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'UP', latencyMs: 1 });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(503);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.status).toBe('DOWN');
+      expect(payload.checks.database).toMatchObject({ status: 'DOWN', error: 'DB error' });
+      expect(payload.checks.redis).toEqual({ status: 'UP', latencyMs: 1 });
+    });
+
+    test('should return 503 when redis ping fails', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'UP', latencyMs: 3 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockRejectedValue(new Error('Redis error'));
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(503);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.status).toBe('DOWN');
+      expect(payload.checks.redis).toMatchObject({ status: 'DOWN', error: 'Redis error' });
+    });
+
+    test('should flag memory warning but still return UP when other checks pass', async () => {
+      jest.spyOn(SystemHealth, 'pingDatabase').mockResolvedValue({ status: 'UP', latencyMs: 3 });
+      jest.spyOn(SystemHealth, 'pingRedis').mockResolvedValue({ status: 'UP', latencyMs: 1 });
+
+      // Simulate high heap usage (>1.5GB)
+      jest.spyOn(process, 'memoryUsage').mockReturnValue({
+        heapUsed: 2 * 1024 * 1024 * 1024, // 2 GB
+        rss: 2.5 * 1024 * 1024 * 1024
+      });
+
+      await getReadiness(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.status).toBe('UP');
+      expect(payload.checks.memory.status).toBe('WARN');
+      // heapUsedMb should be roughly 2048
+      expect(payload.checks.memory.heapUsedMb).toBeGreaterThan(1500);
+    });
+
+    test('should handle unexpected error and respond with 500', async () => {
+      // Force an unexpected error inside getReadiness by mocking json to throw
+      const brokenRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(() => {
+          throw new Error('Unexpected');
+        })
+      };
+
+      await getReadiness(req, brokenRes);
+
+      expect(brokenRes.status).toHaveBeenCalledWith(500);
+      const payload = brokenRes.json.mock.calls[0][0];
+      expect(payload.status).toBe('DOWN');
+      expect(payload.error).toBe('Failed to execute readiness checks');
+    });
+  });
+});
+```

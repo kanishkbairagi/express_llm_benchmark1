@@ -1,0 +1,309 @@
+import { jest } from '@jest/globals';
+import {
+  handleStripeWebhook,
+  Order,
+  Subscription,
+  WebhookLog,
+  StripeService
+} from '../dataset/03_payment_controller.js';
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  // Default mocks
+  Order.findById = jest.fn().mockResolvedValue({ id: 'order-123' });
+  Order.updateStatus = jest.fn().mockResolvedValue({});
+  Subscription.updateStatus = jest.fn().mockResolvedValue({});
+  WebhookLog.findOne = jest.fn().mockResolvedValue(null);
+  WebhookLog.create = jest.fn().mockResolvedValue({});
+  StripeService.constructEvent = jest
+    .fn()
+    .mockImplementation((payload, sig) => {
+      if (!sig || sig === 'invalid_signature') {
+        throw new Error('Invalid signature verification failed');
+      }
+      return typeof payload === 'string' ? JSON.parse(payload) : payload;
+    });
+});
+
+describe('handleStripeWebhook', () => {
+  test('returns 400 when stripe-signature header is missing', async () => {
+    const req = { headers: {}, body: '{}' };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Missing stripe-signature header'
+    });
+  });
+
+  test('returns 400 when signature verification fails', async () => {
+    const req = {
+      headers: { 'stripe-signature': 'invalid_signature' },
+      body: '{}'
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json.mock.calls[0][0].error).toMatch(
+      /Webhook signature verification failed/
+    );
+  });
+
+  test('returns 400 for malformed event object', async () => {
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify({ id: 'evt_1' }) // missing type
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Malformed event object'
+    });
+  });
+
+  test('acknowledges already processed event', async () => {
+    WebhookLog.findOne.mockResolvedValue({ id: 'log-123' });
+
+    const event = {
+      id: 'evt_dup',
+      type: 'payment_intent.succeeded',
+      data: { object: {} }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(WebhookLog.findOne).toHaveBeenCalledWith({ eventId: 'evt_dup' });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      received: true,
+      message: 'Event already processed'
+    });
+  });
+
+  test('payment_intent.succeeded missing orderId returns 422', async () => {
+    const event = {
+      id: 'evt_1',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_1',
+          amount_received: 2000,
+          metadata: {}
+        }
+      }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(422);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Payment intent succeeded but missing orderId metadata'
+    });
+  });
+
+  test('payment_intent.succeeded order not found returns 404', async () => {
+    Order.findById.mockResolvedValue(null);
+
+    const event = {
+      id: 'evt_2',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_2',
+          amount_received: 3000,
+          metadata: { orderId: 'order-999' }
+        }
+      }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Order.findById).toHaveBeenCalledWith('order-999');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Order order-999 not found'
+    });
+  });
+
+  test('successful payment_intent.succeeded processes order and logs event', async () => {
+    const event = {
+      id: 'evt_3',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_3',
+          amount_received: 5000,
+          metadata: { orderId: 'order-123' }
+        }
+      }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Order.findById).toHaveBeenCalledWith('order-123');
+    expect(Order.updateStatus).toHaveBeenCalledWith('order-123', 'paid', {
+      transactionId: 'pi_3',
+      amountPaid: 5000
+    });
+    expect(WebhookLog.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        eventId: 'evt_3',
+        eventType: 'payment_intent.succeeded',
+        status: 'processed'
+      })
+    );
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      received: true,
+      eventType: 'payment_intent.succeeded'
+    });
+  });
+
+  test('payment_intent.payment_failed updates order status if orderId present', async () => {
+    const event = {
+      id: 'evt_4',
+      type: 'payment_intent.payment_failed',
+      data: {
+        object: {
+          id: 'pi_4',
+          metadata: { orderId: 'order-123' },
+          last_payment_error: { message: 'Card declined' }
+        }
+      }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Order.updateStatus).toHaveBeenCalledWith('order-123', 'payment_failed', {
+      failureMessage: 'Card declined'
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      received: true,
+      eventType: 'payment_intent.payment_failed'
+    });
+  });
+
+  test('customer.subscription.deleted updates subscription status', async () => {
+    const event = {
+      id: 'evt_5',
+      type: 'customer.subscription.deleted',
+      data: {
+        object: { id: 'sub_123' }
+      }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Subscription.updateStatus).toHaveBeenCalledWith('sub_123', 'canceled');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      received: true,
+      eventType: 'customer.subscription.deleted'
+    });
+  });
+
+  test('unhandled event type is acknowledged without side‑effects', async () => {
+    const event = {
+      id: 'evt_6',
+      type: 'invoice.created',
+      data: { object: {} }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Order.updateStatus).not.toHaveBeenCalled();
+    expect(Subscription.updateStatus).not.toHaveBeenCalled();
+    expect(WebhookLog.create).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      received: true,
+      eventType: 'invoice.created'
+    });
+  });
+
+  test('internal error returns 500 with details', async () => {
+    Order.updateStatus.mockRejectedValue(new Error('DB failure'));
+
+    const event = {
+      id: 'evt_7',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_7',
+          amount_received: 1000,
+          metadata: { orderId: 'order-123' }
+        }
+      }
+    };
+    const req = {
+      headers: { 'stripe-signature': 'valid_sig' },
+      body: JSON.stringify(event)
+    };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Error processing webhook event',
+        details: 'DB failure'
+      })
+    );
+  });
+});

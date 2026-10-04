@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "13_search_controller.js",
+  "trial": 1,
+  "startedAt": "2026-10-02T16:09:26.306Z",
+  "finishedAt": "2026-10-02T16:09:32.923Z",
+  "suiteOk": true,
+  "testsPassed": 9,
+  "testsFailed": 0,
+  "testsTotal": 9,
+  "errorCategory": "none",
+  "statementCoverage": 94.74,
+  "branchCoverage": 93.94,
+  "functionCoverage": 60,
+  "lineCoverage": 94.29,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 921,
+    "completionTokens": 1781,
+    "totalTokens": 2702,
+    "reasoningTokens": 449
+  },
+  "latencyMs": 4520
+}

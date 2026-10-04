@@ -1,0 +1,307 @@
+import { jest } from '@jest/globals';
+import { createOrder, cancelOrder, Inventory, OrderModel } from '../dataset/05_order_controller.js';
+
+describe('Order Controller Tests', () => {
+  let mockReq;
+  let mockRes;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+  });
+
+  describe('createOrder', () => {
+    it('should return 401 if user authentication is missing', async () => {
+      mockReq = { body: {} };
+
+      await createOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User authentication required'
+      });
+    });
+
+    it('should return 400 if items array is missing or empty', async () => {
+      mockReq = {
+        user: { id: 'user_1' },
+        body: { items: [] }
+      };
+
+      await createOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Order must contain at least one item'
+      });
+    });
+
+    it('should return 400 if shipping address is incomplete', async () => {
+      mockReq = {
+        user: { id: 'user_1' },
+        body: {
+          items: [{ productId: 'p1', quantity: 2 }],
+          shippingAddress: { street: '123 St', city: 'Metropolis' } // missing postalCode
+        }
+      };
+
+      await createOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Complete shipping address is required (street, city, postalCode)'
+      });
+    });
+
+    it('should return 400 if an item has an invalid quantity or missing productId', async () => {
+      mockReq = {
+        user: { id: 'user_1' },
+        body: {
+          items: [{ productId: 'p1', quantity: 1.5 }],
+          shippingAddress: { street: '123 St', city: 'Metropolis', postalCode: '10001' }
+        }
+      };
+
+      await createOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Each item must have a valid productId and an integer quantity greater than zero'
+      });
+    });
+
+    it('should return 404 if a product is not found in inventory', async () => {
+      mockReq = {
+        user: { id: 'user_1' },
+        body: {
+          items: [{ productId: 'p_invalid', quantity: 1 }],
+          shippingAddress: { street: '123 St', city: 'Metropolis', postalCode: '10001' }
+        }
+      };
+
+      jest.spyOn(Inventory, 'findProduct').mockResolvedValue(null);
+
+      await createOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product with ID p_invalid not found'
+      });
+    });
+
+    it('should return 409 if product stock is insufficient', async () => {
+      mockReq = {
+        user: { id: 'user_1' },
+        body: {
+          items: [{ productId: 'p1', quantity: 10 }],
+          shippingAddress: { street: '123 St', city: 'Metropolis', postalCode: '10001' }
+        }
+      };
+
+      jest.spyOn(Inventory, 'findProduct').mockResolvedValue({
+        id: 'p1',
+        name: 'Test Product',
+        price: 50,
+        stock: 5
+      });
+
+      await createOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(409);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Insufficient stock for product "Test Product". Available: 5, requested: 10'
+      });
+    });
+
+    it('should successfully create an order and deduct inventory', async () => {
+      mockReq = {
+        body: {
+          userId: 'user_1',
+          items: [{ productId: 'p1', quantity: 2 }],
+          shippingAddress: { street: '123 St', city: 'Metropolis', postalCode: '10001' }
+        }
+      };
+
+      const mockProduct = { id: 'p1', name: 'Widget', price: 100, stock: 10 };
+      const createdOrder = {
+        id: 'ord_123',
+        userId: 'user_1',
+        items: [{ productId: 'p1', name: 'Widget', unitPrice: 100, quantity: 2, total: 200 }],
+        subtotal: 200,
+        tax: 16,
+        total: 216,
+        status: 'pending',
+        shippingAddress: mockReq.body.shippingAddress
+      };
+
+      jest.spyOn(Inventory, 'findProduct').mockResolvedValue(mockProduct);
+      jest.spyOn(Inventory, 'decrementStock').mockResolvedValue(true);
+      jest.spyOn(OrderModel, 'create').mockResolvedValue(createdOrder);
+
+      await createOrder(mockReq, mockRes);
+
+      expect(Inventory.decrementStock).toHaveBeenCalledWith('p1', 2);
+      expect(OrderModel.create).toHaveBeenCalledWith({
+        userId: 'user_1',
+        items: [{ productId: 'p1', name: 'Widget', unitPrice: 100, quantity: 2, total: 200 }],
+        subtotal: 200,
+        tax: 16,
+        total: 216,
+        status: 'pending',
+        shippingAddress: mockReq.body.shippingAddress
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Order created successfully',
+        data: createdOrder
+      });
+    });
+
+    it('should return 500 when an exception occurs', async () => {
+      mockReq = {
+        user: { id: 'user_1' },
+        body: {
+          items: [{ productId: 'p1', quantity: 1 }],
+          shippingAddress: { street: '123 St', city: 'Metropolis', postalCode: '10001' }
+        }
+      };
+
+      jest.spyOn(Inventory, 'findProduct').mockRejectedValue(new Error('Database error'));
+
+      await createOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to process order creation',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('cancelOrder', () => {
+    it('should return 400 if orderId is missing', async () => {
+      mockReq = { params: {} };
+
+      await cancelOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Order ID is required'
+      });
+    });
+
+    it('should return 404 if order is not found', async () => {
+      mockReq = { params: { orderId: 'ord_404' } };
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue(null);
+
+      await cancelOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Order with ID ord_404 not found'
+      });
+    });
+
+    it('should return 403 if user is not authorized to cancel the order', async () => {
+      mockReq = {
+        params: { orderId: 'ord_123' },
+        user: { id: 'user_2', role: 'customer' }
+      };
+
+      const mockOrder = { id: 'ord_123', userId: 'user_1', status: 'pending' };
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue(mockOrder);
+
+      await cancelOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(403);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Unauthorized to cancel this order'
+      });
+    });
+
+    it('should return 400 if order status is non-cancellable', async () => {
+      mockReq = {
+        params: { orderId: 'ord_123' },
+        user: { id: 'user_1' }
+      };
+
+      const mockOrder = { id: 'ord_123', userId: 'user_1', status: 'shipped' };
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue(mockOrder);
+
+      await cancelOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Cannot cancel an order with status "shipped"'
+      });
+    });
+
+    it('should successfully cancel order and restore inventory', async () => {
+      mockReq = {
+        params: { orderId: 'ord_123' },
+        user: { id: 'admin_user', role: 'admin' }
+      };
+
+      const mockOrder = {
+        id: 'ord_123',
+        userId: 'user_1',
+        status: 'pending',
+        items: [{ productId: 'p1', quantity: 2 }]
+      };
+
+      const mockUpdatedOrder = {
+        ...mockOrder,
+        status: 'cancelled',
+        cancelledAt: expect.any(Date)
+      };
+
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue(mockOrder);
+      jest.spyOn(Inventory, 'incrementStock').mockResolvedValue(true);
+      jest.spyOn(OrderModel, 'update').mockResolvedValue(mockUpdatedOrder);
+
+      await cancelOrder(mockReq, mockRes);
+
+      expect(Inventory.incrementStock).toHaveBeenCalledWith('p1', 2);
+      expect(OrderModel.update).toHaveBeenCalledWith('ord_123', {
+        status: 'cancelled',
+        cancelledAt: expect.any(Date)
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Order cancelled successfully and stock restored',
+        data: mockUpdatedOrder
+      });
+    });
+
+    it('should return 500 when an exception occurs in cancelOrder', async () => {
+      mockReq = { params: { orderId: 'ord_123' } };
+      jest.spyOn(OrderModel, 'findById').mockRejectedValue(new Error('Connection failure'));
+
+      await cancelOrder(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to cancel order',
+        details: 'Connection failure'
+      });
+    });
+  });
+});

@@ -1,0 +1,341 @@
+```javascript
+import {
+  getWishlist,
+  addToWishlist,
+  removeFromWishlist,
+  ProductCatalog,
+  WishlistModel
+} from '../dataset/18_wishlist_controller.js';
+
+describe('18_wishlist_controller Unit Tests', () => {
+  let mockRes;
+
+  beforeEach(() => {
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.clearAllMocks();
+  });
+
+  describe('Default Mock DB Models', () => {
+    test('ProductCatalog findById returns null by default', async () => {
+      const res = await ProductCatalog.findById('prod123');
+      expect(res).toBeNull();
+    });
+
+    test('WishlistModel default methods execution', async () => {
+      const userRes = await WishlistModel.findByUserId('user1');
+      expect(userRes).toEqual({ userId: 'user1', items: [] });
+
+      const addRes = await WishlistModel.addItem('user1', { productId: 'p1' });
+      expect(addRes).toEqual({ userId: 'user1', items: [{ productId: 'p1' }] });
+
+      const removeRes = await WishlistModel.removeItem('user1', 'p1');
+      expect(removeRes).toBe(true);
+
+      const hasRes = await WishlistModel.hasItem('user1', 'p1');
+      expect(hasRes).toBe(false);
+    });
+  });
+
+  describe('getWishlist', () => {
+    test('should return 401 if no userId is provided in user or query', async () => {
+      const req = { user: null, query: {} };
+
+      await getWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 200 with wishlist items when req.user.id is present', async () => {
+      const req = { user: { id: 'user123' } };
+      const wishlistData = { userId: 'user123', items: [{ productId: 'p1' }, { productId: 'p2' }] };
+      jest.spyOn(WishlistModel, 'findByUserId').mockResolvedValueOnce(wishlistData);
+
+      await getWishlist(req, mockRes);
+
+      expect(WishlistModel.findByUserId).toHaveBeenCalledWith('user123');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          userId: 'user123',
+          totalItems: 2,
+          items: wishlistData.items
+        }
+      });
+    });
+
+    test('should return 200 using req.query.userId when req.user is absent', async () => {
+      const req = { query: { userId: 'userQuery456' } };
+      jest.spyOn(WishlistModel, 'findByUserId').mockResolvedValueOnce({ userId: 'userQuery456', items: [] });
+
+      await getWishlist(req, mockRes);
+
+      expect(WishlistModel.findByUserId).toHaveBeenCalledWith('userQuery456');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          userId: 'userQuery456',
+          totalItems: 0,
+          items: []
+        }
+      });
+    });
+
+    test('should handle null/falsy wishlist response from WishlistModel gracefully', async () => {
+      const req = { user: { id: 'userEmpty' } };
+      jest.spyOn(WishlistModel, 'findByUserId').mockResolvedValueOnce(null);
+
+      await getWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          userId: 'userEmpty',
+          totalItems: 0,
+          items: []
+        }
+      });
+    });
+
+    test('should return 500 when WishlistModel throws an error', async () => {
+      const req = { user: { id: 'userError' } };
+      jest.spyOn(WishlistModel, 'findByUserId').mockRejectedValueOnce(new Error('Database error'));
+
+      await getWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve wishlist',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('addToWishlist', () => {
+    test('should return 401 if userId is missing', async () => {
+      const req = { body: { productId: 'p123' } };
+
+      await addToWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 if productId is missing or not a string', async () => {
+      const req1 = { user: { id: 'u1' }, body: {} };
+      await addToWishlist(req1, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Valid productId is required'
+      });
+
+      mockRes.status.mockClear();
+      mockRes.json.mockClear();
+
+      const req2 = { user: { id: 'u1' }, body: { productId: 12345 } };
+      await addToWishlist(req2, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Valid productId is required'
+      });
+    });
+
+    test('should return 404 if product is not found in ProductCatalog', async () => {
+      const req = { user: { id: 'u1' }, body: { productId: 'p123' } };
+      jest.spyOn(ProductCatalog, 'findById').mockResolvedValueOnce(null);
+
+      await addToWishlist(req, mockRes);
+
+      expect(ProductCatalog.findById).toHaveBeenCalledWith('p123');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product not found'
+      });
+    });
+
+    test('should return 409 if product is already in the wishlist', async () => {
+      const req = { user: { id: 'u1' }, body: { productId: 'p123' } };
+      jest.spyOn(ProductCatalog, 'findById').mockResolvedValueOnce({ id: 'p123', title: 'Test Item' });
+      jest.spyOn(WishlistModel, 'hasItem').mockResolvedValueOnce(true);
+
+      await addToWishlist(req, mockRes);
+
+      expect(WishlistModel.hasItem).toHaveBeenCalledWith('u1', 'p123');
+      expect(mockRes.status).toHaveBeenCalledWith(409);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product is already present in your wishlist'
+      });
+    });
+
+    test('should return 201 and add item using product.title and slice note to 100 chars', async () => {
+      const longNote = 'A'.repeat(150);
+      const req = {
+        body: { userId: 'u1', productId: 'p123', note: longNote }
+      };
+      const product = { id: 'p123', title: 'Product Title', price: 29.99 };
+
+      jest.spyOn(ProductCatalog, 'findById').mockResolvedValueOnce(product);
+      jest.spyOn(WishlistModel, 'hasItem').mockResolvedValueOnce(false);
+      jest.spyOn(WishlistModel, 'addItem').mockImplementationOnce(async (userId, item) => ({
+        userId,
+        items: [item]
+      }));
+
+      await addToWishlist(req, mockRes);
+
+      expect(WishlistModel.addItem).toHaveBeenCalledWith('u1', expect.objectContaining({
+        productId: 'p123',
+        title: 'Product Title',
+        price: 29.99,
+        note: 'A'.repeat(100),
+        addedAt: expect.any(Date)
+      }));
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Item added to wishlist',
+        data: {
+          userId: 'u1',
+          items: [
+            expect.objectContaining({
+              productId: 'p123',
+              title: 'Product Title',
+              price: 29.99,
+              note: 'A'.repeat(100)
+            })
+          ]
+        }
+      });
+    });
+
+    test('should fallback to product.name if title is absent and set note to null if omitted', async () => {
+      const req = {
+        user: { id: 'u1' },
+        body: { productId: 'p123' }
+      };
+      const product = { id: 'p123', name: 'Product Name', price: 15.00 };
+
+      jest.spyOn(ProductCatalog, 'findById').mockResolvedValueOnce(product);
+      jest.spyOn(WishlistModel, 'hasItem').mockResolvedValueOnce(false);
+      jest.spyOn(WishlistModel, 'addItem').mockImplementationOnce(async (userId, item) => ({
+        userId,
+        items: [item]
+      }));
+
+      await addToWishlist(req, mockRes);
+
+      expect(WishlistModel.addItem).toHaveBeenCalledWith('u1', expect.objectContaining({
+        productId: 'p123',
+        title: 'Product Name',
+        price: 15.00,
+        note: null
+      }));
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+    });
+
+    test('should return 500 when an exception occurs', async () => {
+      const req = { user: { id: 'u1' }, body: { productId: 'p123' } };
+      jest.spyOn(ProductCatalog, 'findById').mockRejectedValueOnce(new Error('Catalog connection failure'));
+
+      await addToWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to add item to wishlist',
+        details: 'Catalog connection failure'
+      });
+    });
+  });
+
+  describe('removeFromWishlist', () => {
+    test('should return 401 if userId is not provided', async () => {
+      const req = { params: { productId: 'p123' } };
+
+      await removeFromWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 if productId is missing in req.params', async () => {
+      const req = { user: { id: 'u1' }, params: {} };
+
+      await removeFromWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product ID is required'
+      });
+    });
+
+    test('should return 404 if item is not found in user wishlist', async () => {
+      const req = { user: { id: 'u1' }, params: { productId: 'p123' } };
+      jest.spyOn(WishlistModel, 'hasItem').mockResolvedValueOnce(false);
+
+      await removeFromWishlist(req, mockRes);
+
+      expect(WishlistModel.hasItem).toHaveBeenCalledWith('u1', 'p123');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product not found in your wishlist'
+      });
+    });
+
+    test('should return 200 and remove item successfully when item exists in wishlist', async () => {
+      const req = { body: { userId: 'u2' }, params: { productId: 'p123' } };
+      jest.spyOn(WishlistModel, 'hasItem').mockResolvedValueOnce(true);
+      jest.spyOn(WishlistModel, 'removeItem').mockResolvedValueOnce(true);
+
+      await removeFromWishlist(req, mockRes);
+
+      expect(WishlistModel.hasItem).toHaveBeenCalledWith('u2', 'p123');
+      expect(WishlistModel.removeItem).toHaveBeenCalledWith('u2', 'p123');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Product removed from wishlist',
+        data: { productId: 'p123' }
+      });
+    });
+
+    test('should return 500 when WishlistModel method throws an error', async () => {
+      const req = { user: { id: 'u1' }, params: { productId: 'p123' } };
+      jest.spyOn(WishlistModel, 'hasItem').mockRejectedValueOnce(new Error('Remove failed'));
+
+      await removeFromWishlist(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to remove item from wishlist',
+        details: 'Remove failed'
+      });
+    });
+  });
+});
+```

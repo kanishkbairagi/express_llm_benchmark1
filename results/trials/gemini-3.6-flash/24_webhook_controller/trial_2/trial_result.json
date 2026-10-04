@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "24_webhook_controller.js",
+  "trial": 2,
+  "startedAt": "2026-10-03T18:09:39.484Z",
+  "finishedAt": "2026-10-03T18:10:11.826Z",
+  "suiteOk": true,
+  "testsPassed": 11,
+  "testsFailed": 0,
+  "testsTotal": 11,
+  "errorCategory": "none",
+  "statementCoverage": 87.5,
+  "branchCoverage": 91.3,
+  "functionCoverage": 33.33,
+  "lineCoverage": 87.5,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 912,
+    "completionTokens": 2041,
+    "totalTokens": 3857,
+    "thinkingTokens": 904
+  },
+  "latencyMs": 15050
+}

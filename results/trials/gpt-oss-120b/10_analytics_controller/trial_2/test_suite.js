@@ -1,0 +1,209 @@
+import { jest } from '@jest/globals';
+import {
+  getRevenueMetrics,
+  getTopSellingProducts,
+  OrderAnalytics
+} from '../dataset/10_analytics_controller.js';
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('getRevenueMetrics', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('returns 400 when startDate or endDate is missing', async () => {
+    const req = { query: { startDate: '2023-01-01' } };
+    const res = mockRes();
+
+    await getRevenueMetrics(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Both startDate and endDate')
+      })
+    );
+  });
+
+  test('returns 400 for invalid date format', async () => {
+    const req = { query: { startDate: 'invalid', endDate: '2023-01-31' } };
+    const res = mockRes();
+
+    await getRevenueMetrics(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Invalid date format')
+      })
+    );
+  });
+
+  test('returns 400 when startDate is later than endDate', async () => {
+    const req = { query: { startDate: '2023-02-01', endDate: '2023-01-31' } };
+    const res = mockRes();
+
+    await getRevenueMetrics(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('startDate cannot be later than endDate')
+      })
+    );
+  });
+
+  test('returns 400 for unsupported groupBy value', async () => {
+    const req = {
+      query: { startDate: '2023-01-01', endDate: '2023-01-31', groupBy: 'weekly' }
+    };
+    const res = mockRes();
+
+    await getRevenueMetrics(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Invalid groupBy')
+      })
+    );
+  });
+
+  test('returns 200 with correct summary and timeSeries on success', async () => {
+    const mockData = [
+      { period: '2023-01-01', totalRevenue: 100, totalOrders: 2, avgOrderValue: 50 },
+      { period: '2023-01-02', totalRevenue: 200, totalOrders: 4, avgOrderValue: 50 }
+    ];
+    jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue(mockData);
+
+    const req = {
+      query: { startDate: '2023-01-01', endDate: '2023-01-31', groupBy: 'day' }
+    };
+    const res = mockRes();
+
+    await getRevenueMetrics(req, res);
+
+    expect(OrderAnalytics.aggregate).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: true,
+        data: {
+          summary: {
+            totalRevenue: 300,
+            totalOrders: 6,
+            avgOrderValue: 50
+          },
+          timeSeries: mockData
+        }
+      })
+    );
+  });
+
+  test('returns 500 when aggregation throws an error', async () => {
+    jest.spyOn(OrderAnalytics, 'aggregate').mockRejectedValue(new Error('DB failure'));
+
+    const req = {
+      query: { startDate: '2023-01-01', endDate: '2023-01-31' }
+    };
+    const res = mockRes();
+
+    await getRevenueMetrics(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Failed to generate revenue analytics')
+      })
+    );
+  });
+});
+
+describe('getTopSellingProducts', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('returns 400 when limit is invalid (non‑numeric)', async () => {
+    const req = { query: { limit: 'abc' } };
+    const res = mockRes();
+
+    await getTopSellingProducts(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Limit must be a number')
+      })
+    );
+  });
+
+  test('returns 400 when limit is out of allowed range', async () => {
+    const req = { query: { limit: '0' } };
+    const res = mockRes();
+
+    await getTopSellingProducts(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Limit must be a number')
+      })
+    );
+  });
+
+  test('returns 200 with correct count and items on success', async () => {
+    const mockProducts = [
+      { productId: 'p1', productName: 'Product 1', totalUnitsSold: 10, totalRevenue: 100 },
+      { productId: 'p2', productName: 'Product 2', totalUnitsSold: 8, totalRevenue: 80 }
+    ];
+    jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue(mockProducts);
+
+    const req = { query: { limit: '2' } };
+    const res = mockRes();
+
+    await getTopSellingProducts(req, res);
+
+    expect(OrderAnalytics.aggregate).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: true,
+        data: {
+          count: mockProducts.length,
+          items: mockProducts
+        }
+      })
+    );
+  });
+
+  test('returns 500 when aggregation throws an error', async () => {
+    jest.spyOn(OrderAnalytics, 'aggregate').mockRejectedValue(new Error('Aggregation error'));
+
+    const req = { query: { limit: '5' } };
+    const res = mockRes();
+
+    await getTopSellingProducts(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Failed to aggregate top selling products')
+      })
+    );
+  });
+});

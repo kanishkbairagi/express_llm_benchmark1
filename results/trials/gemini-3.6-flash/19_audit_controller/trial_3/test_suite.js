@@ -1,0 +1,353 @@
+import { jest } from '@jest/globals';
+import { getAuditLogs, createAuditEntry, AuditLogModel } from '../dataset/19_audit_controller.js';
+
+describe('Audit Controller Unit Tests', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      user: { role: 'admin', id: 'user_123' },
+      query: {},
+      body: {},
+      headers: {}
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.restoreAllMocks();
+  });
+
+  describe('getAuditLogs', () => {
+    test('should return 403 if user is not authenticated or lacks required role', async () => {
+      req.user = { role: 'user' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(403);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Access denied: Requires administrator or auditor privileges'
+      });
+    });
+
+    test('should return 403 if req.user is undefined', async () => {
+      delete req.user;
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(403);
+    });
+
+    test('should allow auditor role and return logs', async () => {
+      req.user = { role: 'auditor' };
+      const mockResult = { total: 1, logs: [{ id: '1', action: 'LOGIN' }] };
+      jest.spyOn(AuditLogModel, 'findWithFilters').mockResolvedValue(mockResult);
+
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          total: 1,
+          page: 1,
+          totalPages: 1,
+          logs: mockResult.logs
+        }
+      });
+    });
+
+    test('should return 400 for invalid page parameter', async () => {
+      req.query = { page: '0' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Pagination parameters must be positive integers (limit <= 100)'
+      });
+    });
+
+    test('should return 400 for limit greater than 100', async () => {
+      req.query = { limit: '101' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should return 400 for non-numeric page or limit', async () => {
+      req.query = { page: 'abc', limit: '20' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should return 400 for invalid action filter', async () => {
+      req.query = { action: 'INVALID_ACTION' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: expect.stringContaining('Invalid action filter')
+        })
+      );
+    });
+
+    test('should return 400 for invalid severity filter', async () => {
+      req.query = { severity: 'super_critical' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: expect.stringContaining('Invalid severity filter')
+        })
+      );
+    });
+
+    test('should return 400 for invalid startDate format', async () => {
+      req.query = { startDate: 'invalid-date' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid startDate format'
+      });
+    });
+
+    test('should return 400 for invalid endDate format', async () => {
+      req.query = { endDate: 'invalid-date' };
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid endDate format'
+      });
+    });
+
+    test('should pass filters and pagination correctly when query parameters are valid', async () => {
+      req.query = {
+        actorId: ' user_456 ',
+        action: 'login',
+        severity: 'INFO',
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+        page: '2',
+        limit: '10'
+      };
+
+      const spy = jest.spyOn(AuditLogModel, 'findWithFilters').mockResolvedValue({ total: 25, logs: [] });
+
+      await getAuditLogs(req, res);
+
+      expect(spy).toHaveBeenCalledWith(
+        {
+          actorId: 'user_456',
+          action: 'LOGIN',
+          severity: 'info',
+          startDate: new Date('2023-01-01'),
+          endDate: new Date('2023-01-31')
+        },
+        { skip: 10, limit: 10 }
+      );
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          total: 25,
+          page: 2,
+          totalPages: 3,
+          logs: []
+        }
+      });
+    });
+
+    test('should handle total = 0 and calculate totalPages as 1', async () => {
+      jest.spyOn(AuditLogModel, 'findWithFilters').mockResolvedValue({ total: 0, logs: [] });
+
+      await getAuditLogs(req, res);
+
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          total: 0,
+          page: 1,
+          totalPages: 1,
+          logs: []
+        }
+      });
+    });
+
+    test('should handle req.query being undefined', async () => {
+      delete req.query;
+      jest.spyOn(AuditLogModel, 'findWithFilters').mockResolvedValue({ total: 0, logs: [] });
+
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    test('should return 500 when database throws an error', async () => {
+      jest.spyOn(AuditLogModel, 'findWithFilters').mockRejectedValue(new Error('DB Connection Lost'));
+
+      await getAuditLogs(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve system audit logs',
+        details: 'DB Connection Lost'
+      });
+    });
+  });
+
+  describe('createAuditEntry', () => {
+    test('should create audit entry with default actorId and default severity when optional fields are omitted', async () => {
+      delete req.user;
+      req.body = {
+        action: 'create',
+        targetResourceId: 'res_101',
+        targetResourceType: 'DOCUMENT'
+      };
+      req.ip = '192.168.1.1';
+
+      const mockCreatedLog = { id: 'audit_123', ...req.body };
+      const spy = jest.spyOn(AuditLogModel, 'create').mockResolvedValue(mockCreatedLog);
+
+      await createAuditEntry(req, res);
+
+      expect(spy).toHaveBeenCalledWith({
+        actorId: 'system',
+        action: 'CREATE',
+        targetResourceId: 'res_101',
+        targetResourceType: 'DOCUMENT',
+        severity: 'info',
+        details: {},
+        ipAddress: '192.168.1.1'
+      });
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: mockCreatedLog
+      });
+    });
+
+    test('should extract ipAddress from x-forwarded-for header if req.ip is not set', async () => {
+      req.body = {
+        action: 'UPDATE',
+        targetResourceId: 'res_102',
+        targetResourceType: 'USER'
+      };
+      req.headers['x-forwarded-for'] = '10.0.0.1';
+
+      const spy = jest.spyOn(AuditLogModel, 'create').mockResolvedValue({});
+
+      await createAuditEntry(req, res);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          ipAddress: '10.0.0.1'
+        })
+      );
+    });
+
+    test('should fallback to 127.0.0.1 when ip and headers are missing', async () => {
+      req.body = {
+        action: 'DELETE',
+        targetResourceId: 'res_103',
+        targetResourceType: 'ROLE'
+      };
+
+      const spy = jest.spyOn(AuditLogModel, 'create').mockResolvedValue({});
+
+      await createAuditEntry(req, res);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          ipAddress: '127.0.0.1'
+        })
+      );
+    });
+
+    test('should return 400 if required fields are missing', async () => {
+      req.body = { action: 'LOGIN' };
+
+      await createAuditEntry(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'action, targetResourceId, and targetResourceType are required'
+      });
+    });
+
+    test('should return 400 if req.body is missing or undefined', async () => {
+      delete req.body;
+
+      await createAuditEntry(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should return 400 for invalid action', async () => {
+      req.body = {
+        action: 'BAD_ACTION',
+        targetResourceId: '123',
+        targetResourceType: 'USER'
+      };
+
+      await createAuditEntry(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: expect.stringContaining('Invalid action')
+        })
+      );
+    });
+
+    test('should return 400 for invalid severity', async () => {
+      req.body = {
+        action: 'LOGIN',
+        targetResourceId: '123',
+        targetResourceType: 'USER',
+        severity: 'fatal'
+      };
+
+      await createAuditEntry(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: expect.stringContaining('Invalid severity level')
+        })
+      );
+    });
+
+    test('should return 500 when database create operation fails', async () => {
+      req.body = {
+        action: 'LOGIN',
+        targetResourceId: '123',
+        targetResourceType: 'USER'
+      };
+
+      jest.spyOn(AuditLogModel, 'create').mockRejectedValue(new Error('Write failure'));
+
+      await createAuditEntry(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to record audit log entry',
+        details: 'Write failure'
+      });
+    });
+  });
+});

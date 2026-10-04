@@ -1,0 +1,311 @@
+```javascript
+import {
+  validateShippingAddress,
+  calculateShippingRates,
+  AddressValidationService,
+  CarrierRateService
+} from '../dataset/16_shipping_controller.js';
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('validateShippingAddress', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('returns 200 with normalized address when input is valid US address', async () => {
+    const req = {
+      body: {
+        street: ' 123 Main St ',
+        city: ' Anytown ',
+        state: ' ny ',
+        postalCode: '12345',
+        country: 'us'
+      }
+    };
+    const res = mockRes();
+
+    const verifyMock = jest.spyOn(AddressValidationService, 'verify').mockResolvedValue({
+      isValid: true,
+      normalized: {
+        street: '123 Main St',
+        city: 'Anytown',
+        state: 'NY',
+        postalCode: '12345',
+        country: 'US'
+      }
+    });
+
+    await validateShippingAddress(req, res);
+
+    expect(verifyMock).toHaveBeenCalledWith({
+      street: ' 123 Main St ',
+      city: ' Anytown ',
+      state: ' ny ',
+      postalCode: '12345',
+      country: 'US'
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: true,
+        message: 'Address verified',
+        data: expect.objectContaining({ isValid: true })
+      })
+    );
+  });
+
+  test('returns 400 when required fields are missing', async () => {
+    const req = { body: { city: 'A', state: 'B', postalCode: '12345' } };
+    const res = mockRes();
+
+    await validateShippingAddress(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Incomplete address')
+      })
+    );
+  });
+
+  test('returns 422 for restricted country codes', async () => {
+    const req = {
+      body: {
+        street: 'St',
+        city: 'C',
+        state: 'D',
+        postalCode: '12345',
+        country: 'ir'
+      }
+    };
+    const res = mockRes();
+
+    await validateShippingAddress(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(422);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Shipping is not available')
+      })
+    );
+  });
+
+  test('returns 400 for invalid US postal code format', async () => {
+    const req = {
+      body: {
+        street: 'St',
+        city: 'C',
+        state: 'D',
+        postalCode: '12-345',
+        country: 'US'
+      }
+    };
+    const res = mockRes();
+
+    await validateShippingAddress(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Invalid US postal code')
+      })
+    );
+  });
+
+  test('returns 500 when AddressValidationService throws', async () => {
+    const req = {
+      body: {
+        street: 'St',
+        city: 'C',
+        state: 'D',
+        postalCode: '12345',
+        country: 'US'
+      }
+    };
+    const res = mockRes();
+
+    jest.spyOn(AddressValidationService, 'verify').mockRejectedValue(new Error('service down'));
+
+    await validateShippingAddress(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Address validation failed',
+        details: 'service down'
+      })
+    );
+  });
+});
+
+describe('calculateShippingRates', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  const baseReq = {
+    body: {
+      destination: { country: 'US', postalCode: '90210' },
+      packageDetails: {
+        weightKg: 2,
+        dimensions: { length: 30, width: 20, height: 10 } // volumetric = 1.2 kg
+      }
+    }
+  };
+
+  test('returns 200 with computed rates and volumetric flag when volumetric > actual weight', async () => {
+    const req = { ...baseReq };
+    const res = mockRes();
+
+    const getRatesMock = jest
+      .spyOn(CarrierRateService, 'getRates')
+      .mockResolvedValue([
+        { service: 'standard', rate: 10.123, estDays: '3-5 business days' },
+        { service: 'express', rate: 20.456, estDays: '1-2 business days' }
+      ]);
+
+    await calculateShippingRates(req, res);
+
+    const expectedBillable = parseFloat(Math.max(2, (30 * 20 * 10) / 5000).toFixed(2)); // 2.4 kg
+    expect(getRatesMock).toHaveBeenCalledWith(expectedBillable, 'US');
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: true,
+        data: expect.objectContaining({
+          billableWeightKg: expectedBillable,
+          isVolumetric: true,
+          options: [
+            { service: 'standard', cost: 10.12, currency: 'USD', estimatedDelivery: '3-5 business days' },
+            { service: 'express', cost: 20.46, currency: 'USD', estimatedDelivery: '1-2 business days' }
+          ]
+        })
+      })
+    );
+  });
+
+  test('returns 400 when destination fields are missing', async () => {
+    const req = { body: { packageDetails: baseReq.body.packageDetails } };
+    const res = mockRes();
+
+    await calculateShippingRates(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Destination country and postalCode')
+      })
+    );
+  });
+
+  test('returns 422 for restricted destination country', async () => {
+    const req = {
+      body: {
+        destination: { country: 'KP', postalCode: '12345' },
+        packageDetails: baseReq.body.packageDetails
+      }
+    };
+    const res = mockRes();
+
+    await calculateShippingRates(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(422);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Carrier does not ship')
+      })
+    );
+  });
+
+  test('returns 400 when packageDetails is missing', async () => {
+    const req = {
+      body: { destination: baseReq.body.destination }
+    };
+    const res = mockRes();
+
+    await calculateShippingRates(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('packageDetails')
+      })
+    );
+  });
+
+  test('returns 400 for non‑positive weightKg', async () => {
+    const req = {
+      body: {
+        destination: baseReq.body.destination,
+        packageDetails: { weightKg: 0, dimensions: baseReq.body.packageDetails.dimensions }
+      }
+    };
+    const res = mockRes();
+
+    await calculateShippingRates(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Package weightKg')
+      })
+    );
+  });
+
+  test('returns 400 for invalid dimensions', async () => {
+    const req = {
+      body: {
+        destination: baseReq.body.destination,
+        packageDetails: {
+          weightKg: 1,
+          dimensions: { length: -5, width: 10, height: 10 }
+        }
+      }
+    };
+    const res = mockRes();
+
+    await calculateShippingRates(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Valid dimensions')
+      })
+    );
+  });
+
+  test('returns 500 when CarrierRateService throws', async () => {
+    const req = { ...baseReq };
+    const res = mockRes();
+
+    jest.spyOn(CarrierRateService, 'getRates').mockRejectedValue(new Error('service outage'));
+
+    await calculateShippingRates(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Failed to compute shipping rates',
+        details: 'service outage'
+      })
+    );
+  });
+});
+```

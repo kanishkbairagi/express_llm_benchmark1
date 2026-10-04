@@ -1,0 +1,22 @@
+{
+  "finishReason": "STOP",
+  "isTruncated": false,
+  "isEmpty": false,
+  "usage": {
+    "promptTokens": 1531,
+    "completionTokens": 3413,
+    "totalTokens": 6958,
+    "thinkingTokens": 2014
+  },
+  "latencyMs": 25686,
+  "effectiveConfig": {
+    "model": "gemini-3.6-flash",
+    "maxOutputTokens": 32768,
+    "temperature": "provider default",
+    "top_p": "provider default",
+    "top_k": "provider default",
+    "thinking": "provider default"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "D-C_ar_dDPiiqfkPjcLZ4QQ"
+}

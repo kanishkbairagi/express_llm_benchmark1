@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "21_rbac_controller.js",
+  "trial": 1,
+  "startedAt": "2026-10-02T16:24:58.558Z",
+  "finishedAt": "2026-10-02T16:25:09.665Z",
+  "suiteOk": true,
+  "testsPassed": 13,
+  "testsFailed": 0,
+  "testsTotal": 13,
+  "errorCategory": "none",
+  "statementCoverage": 84.91,
+  "branchCoverage": 88.89,
+  "functionCoverage": 25,
+  "lineCoverage": 84.91,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1226,
+    "completionTokens": 2389,
+    "totalTokens": 3615,
+    "reasoningTokens": 439
+  },
+  "latencyMs": 9060
+}

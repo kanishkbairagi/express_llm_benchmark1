@@ -1,0 +1,396 @@
+```javascript
+import {
+  addReview,
+  getProductReviews,
+  ProductCatalog,
+  ReviewModel
+} from '../dataset/14_review_controller.js';
+
+describe('14_review_controller.js unit tests', () => {
+  let mockRes;
+
+  beforeEach(() => {
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.restoreAllMocks();
+  });
+
+  describe('Default Database Model Mocks', () => {
+    it('ProductCatalog default methods work as expected', async () => {
+      await expect(ProductCatalog.findById('p1')).resolves.toBeNull();
+      await expect(ProductCatalog.updateStats('p1', { averageRating: 4, totalReviews: 10 }))
+        .resolves.toEqual({ id: 'p1', averageRating: 4, totalReviews: 10 });
+    });
+
+    it('ReviewModel default methods work as expected', async () => {
+      await expect(ReviewModel.findOne({ productId: 'p1' })).resolves.toBeNull();
+      
+      const created = await ReviewModel.create({ productId: 'p1', rating: 5 });
+      expect(created.productId).toBe('p1');
+      expect(created.id).toMatch(/^rev_/);
+      expect(created.createdAt).toBeInstanceOf(Date);
+
+      await expect(ReviewModel.findByProductId('p1', {})).resolves.toEqual({ reviews: [], total: 0 });
+      
+      const stats = await ReviewModel.calculateRatingStats('p1');
+      expect(stats).toEqual({
+        averageRating: 0,
+        totalReviews: 0,
+        distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+      });
+    });
+  });
+
+  describe('addReview controller', () => {
+    it('should return 401 if user is not authenticated', async () => {
+      const req = {
+        params: { productId: 'prod_1' },
+        body: { rating: 5, title: 'Great', comment: 'Valid comment length' }
+      };
+
+      await addReview(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    it('should return 400 if productId is missing', async () => {
+      const req = {
+        user: { id: 'user_1' },
+        params: {},
+        body: { rating: 5, title: 'Great', comment: 'Valid comment length' }
+      };
+
+      await addReview(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product ID is required'
+      });
+    });
+
+    it('should return 400 for invalid rating values', async () => {
+      const invalidRatings = [0, 6, 3.5, 'abc', null];
+
+      for (const rating of invalidRatings) {
+        const req = {
+          user: { id: 'user_1' },
+          params: { productId: 'prod_1' },
+          body: { rating, title: 'Great', comment: 'Valid comment length' }
+        };
+
+        await addReview(req, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+        expect(mockRes.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Rating must be an integer between 1 and 5'
+        });
+      }
+    });
+
+    it('should return 400 for invalid or empty title', async () => {
+      const invalidTitles = [undefined, '', '   ', 123];
+
+      for (const title of invalidTitles) {
+        const req = {
+          user: { id: 'user_1' },
+          params: { productId: 'prod_1' },
+          body: { rating: 5, title, comment: 'Valid comment length' }
+        };
+
+        await addReview(req, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+        expect(mockRes.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Review title is required'
+        });
+      }
+    });
+
+    it('should return 400 for invalid or short comment', async () => {
+      const invalidComments = [undefined, '', 'Too short', 12345678901];
+
+      for (const comment of invalidComments) {
+        const req = {
+          user: { id: 'user_1' },
+          params: { productId: 'prod_1' },
+          body: { rating: 5, title: 'Great title', comment }
+        };
+
+        await addReview(req, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+        expect(mockRes.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Review comment must be at least 10 characters long'
+        });
+      }
+    });
+
+    it('should return 404 if product is not found', async () => {
+      jest.spyOn(ProductCatalog, 'findById').mockResolvedValue(null);
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { productId: 'non_existent_prod' },
+        body: { rating: 5, title: 'Great product', comment: 'Valid comment length long enough' }
+      };
+
+      await addReview(req, mockRes);
+
+      expect(ProductCatalog.findById).toHaveBeenCalledWith('non_existent_prod');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product not found'
+      });
+    });
+
+    it('should return 409 if user already reviewed the product', async () => {
+      jest.spyOn(ProductCatalog, 'findById').mockResolvedValue({ id: 'prod_1' });
+      jest.spyOn(ReviewModel, 'findOne').mockResolvedValue({ id: 'existing_review' });
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { productId: 'prod_1' },
+        body: { rating: 5, title: 'Great product', comment: 'Valid comment length long enough' }
+      };
+
+      await addReview(req, mockRes);
+
+      expect(ReviewModel.findOne).toHaveBeenCalledWith({ productId: 'prod_1', userId: 'user_1' });
+      expect(mockRes.status).toHaveBeenCalledWith(409);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'You have already submitted a review for this product'
+      });
+    });
+
+    it('should successfully submit review using userId from body when req.user is absent', async () => {
+      const mockProduct = { id: 'prod_1' };
+      const mockCreatedReview = { id: 'rev_123', productId: 'prod_1', userId: 'user_body', rating: 4, title: 'Nice', comment: 'Valid comment length' };
+      const mockStats = { averageRating: 4, totalReviews: 1, distribution: { 4: 1 } };
+
+      jest.spyOn(ProductCatalog, 'findById').mockResolvedValue(mockProduct);
+      jest.spyOn(ReviewModel, 'findOne').mockResolvedValue(null);
+      jest.spyOn(ReviewModel, 'create').mockResolvedValue(mockCreatedReview);
+      jest.spyOn(ReviewModel, 'calculateRatingStats').mockResolvedValue(mockStats);
+      jest.spyOn(ProductCatalog, 'updateStats').mockResolvedValue({ id: 'prod_1', ...mockStats });
+
+      const req = {
+        params: { productId: 'prod_1' },
+        body: {
+          userId: 'user_body',
+          rating: '4',
+          title: ' Nice product ',
+          comment: '  This product is really nice and solid!  '
+        }
+      };
+
+      await addReview(req, mockRes);
+
+      expect(ReviewModel.create).toHaveBeenCalledWith({
+        productId: 'prod_1',
+        userId: 'user_body',
+        rating: 4,
+        title: 'Nice product',
+        comment: 'This product is really nice and solid!'
+      });
+      expect(ProductCatalog.updateStats).toHaveBeenCalledWith('prod_1', {
+        averageRating: 4,
+        totalReviews: 1
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Review submitted successfully',
+        data: {
+          review: mockCreatedReview,
+          productStats: mockStats
+        }
+      });
+    });
+
+    it('should return 500 when an exception occurs', async () => {
+      jest.spyOn(ProductCatalog, 'findById').mockRejectedValue(new Error('Database error'));
+
+      const req = {
+        user: { id: 'user_1' },
+        params: { productId: 'prod_1' },
+        body: { rating: 5, title: 'Great product', comment: 'Valid comment length long enough' }
+      };
+
+      await addReview(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to submit review',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('getProductReviews controller', () => {
+    it('should return 400 if productId is missing', async () => {
+      const req = { params: {} };
+
+      await getProductReviews(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product ID is required'
+      });
+    });
+
+    it('should return 400 for invalid page parameter', async () => {
+      const invalidPages = ['0', '-1', 'invalid'];
+
+      for (const page of invalidPages) {
+        const req = {
+          params: { productId: 'prod_1' },
+          query: { page }
+        };
+
+        await getProductReviews(req, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+        expect(mockRes.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Invalid pagination parameters: page >= 1, 1 <= limit <= 50'
+        });
+      }
+    });
+
+    it('should return 400 for invalid limit parameter', async () => {
+      const invalidLimits = ['0', '51', '-5', 'invalid'];
+
+      for (const limit of invalidLimits) {
+        const req = {
+          params: { productId: 'prod_1' },
+          query: { limit }
+        };
+
+        await getProductReviews(req, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+        expect(mockRes.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Invalid pagination parameters: page >= 1, 1 <= limit <= 50'
+        });
+      }
+    });
+
+    it('should return 400 for invalid minRating query parameter', async () => {
+      const invalidRatings = ['0', '6', 'invalid'];
+
+      for (const minRating of invalidRatings) {
+        const req = {
+          params: { productId: 'prod_1' },
+          query: { minRating }
+        };
+
+        await getProductReviews(req, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+        expect(mockRes.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'minRating must be an integer between 1 and 5'
+        });
+      }
+    });
+
+    it('should successfully return product reviews with default pagination', async () => {
+      const mockStats = { averageRating: 4.5, totalReviews: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } };
+      jest.spyOn(ReviewModel, 'calculateRatingStats').mockResolvedValue(mockStats);
+      jest.spyOn(ReviewModel, 'findByProductId').mockResolvedValue({ reviews: [], total: 0 });
+
+      const req = {
+        params: { productId: 'prod_1' }
+      };
+
+      await getProductReviews(req, mockRes);
+
+      expect(ReviewModel.calculateRatingStats).toHaveBeenCalledWith('prod_1');
+      expect(ReviewModel.findByProductId).toHaveBeenCalledWith('prod_1', {
+        page: 1,
+        limit: 10,
+        filters: {}
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          stats: mockStats,
+          pagination: {
+            totalReviews: 0,
+            currentPage: 1,
+            totalPages: 1
+          },
+          reviews: []
+        }
+      });
+    });
+
+    it('should successfully return product reviews with minRating filter and custom pagination', async () => {
+      const mockStats = { averageRating: 4.8, totalReviews: 25, distribution: { 4: 5, 5: 20 } };
+      const mockReviews = [{ id: 'rev_1', rating: 5, title: 'Excellent' }];
+
+      jest.spyOn(ReviewModel, 'calculateRatingStats').mockResolvedValue(mockStats);
+      jest.spyOn(ReviewModel, 'findByProductId').mockResolvedValue({ reviews: mockReviews, total: 25 });
+
+      const req = {
+        params: { productId: 'prod_1' },
+        query: { page: '2', limit: '10', minRating: '4' }
+      };
+
+      await getProductReviews(req, mockRes);
+
+      expect(ReviewModel.findByProductId).toHaveBeenCalledWith('prod_1', {
+        page: 2,
+        limit: 10,
+        filters: { minRating: 4 }
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          stats: mockStats,
+          pagination: {
+            totalReviews: 25,
+            currentPage: 2,
+            totalPages: 3
+          },
+          reviews: mockReviews
+        }
+      });
+    });
+
+    it('should return 500 if an error is thrown during retrieval', async () => {
+      jest.spyOn(ReviewModel, 'calculateRatingStats').mockRejectedValue(new Error('Calculation failed'));
+
+      const req = {
+        params: { productId: 'prod_1' }
+      };
+
+      await getProductReviews(req, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve product reviews',
+        details: 'Calculation failed'
+      });
+    });
+  });
+});
+```

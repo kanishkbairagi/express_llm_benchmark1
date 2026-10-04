@@ -1,0 +1,240 @@
+```javascript
+import { jest } from '@jest/globals';
+import { uploadImage, deleteImage, S3Service, FileRecord } from '../dataset/04_upload_controller.js';
+
+describe('Upload Controller', () => {
+  let mockReq;
+  let mockRes;
+
+  beforeEach(() => {
+    mockReq = {
+      params: {},
+      user: undefined,
+      file: undefined
+    };
+
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+
+    jest.restoreAllMocks();
+  });
+
+  describe('uploadImage', () => {
+    const validFile = {
+      originalname: 'test-image.jpg',
+      mimetype: 'image/jpeg',
+      size: 1024 * 1024, // 1MB
+      buffer: Buffer.from('fake-image-data')
+    };
+
+    test('should return 400 if no file is uploaded', async () => {
+      mockReq.file = undefined;
+
+      await uploadImage(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'No file uploaded. Form field "image" is required.'
+      });
+    });
+
+    test('should return 415 if mime type is not allowed', async () => {
+      mockReq.file = {
+        ...validFile,
+        mimetype: 'application/pdf'
+      };
+
+      await uploadImage(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(415);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Unsupported media type: application/pdf. Allowed types: image/jpeg, image/png, image/webp'
+      });
+    });
+
+    test('should return 413 if file exceeds maximum size', async () => {
+      mockReq.file = {
+        ...validFile,
+        size: 6 * 1024 * 1024 // 6MB
+      };
+
+      await uploadImage(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(413);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'File exceeds maximum allowed size of 5MB'
+      });
+    });
+
+    test('should successfully upload image for authenticated user', async () => {
+      mockReq.file = validFile;
+      mockReq.user = { id: 'user_456' };
+
+      jest.spyOn(S3Service, 'upload').mockResolvedValue({
+        Location: 'https://mock-s3-bucket.s3.amazonaws.com/uploads/mock-key.jpg',
+        Key: 'uploads/mock-key.jpg',
+        Bucket: 'mock-s3-bucket'
+      });
+
+      jest.spyOn(FileRecord, 'create').mockResolvedValue({
+        id: 'file_rec_123',
+        originalName: validFile.originalname,
+        s3Key: 'uploads/mock-key.jpg',
+        url: 'https://mock-s3-bucket.s3.amazonaws.com/uploads/mock-key.jpg',
+        size: validFile.size,
+        mimetype: validFile.mimetype,
+        uploadedBy: 'user_456',
+        createdAt: new Date()
+      });
+
+      await uploadImage(mockReq, mockRes);
+
+      expect(S3Service.upload).toHaveBeenCalledWith(
+        expect.objectContaining({
+          buffer: validFile.buffer,
+          originalname: validFile.originalname,
+          mimetype: validFile.mimetype,
+          key: expect.stringMatching(/^uploads\/\d+-test-image_jpg\.jpg$/)
+        })
+      );
+
+      expect(FileRecord.create).toHaveBeenCalledWith({
+        originalName: validFile.originalname,
+        s3Key: 'uploads/mock-key.jpg',
+        url: 'https://mock-s3-bucket.s3.amazonaws.com/uploads/mock-key.jpg',
+        size: validFile.size,
+        mimetype: validFile.mimetype,
+        uploadedBy: 'user_456'
+      });
+
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Image uploaded successfully',
+        data: {
+          fileId: 'file_rec_123',
+          url: 'https://mock-s3-bucket.s3.amazonaws.com/uploads/mock-key.jpg',
+          size: validFile.size,
+          mimetype: validFile.mimetype
+        }
+      });
+    });
+
+    test('should default uploadedBy to "anonymous" when req.user is undefined', async () => {
+      mockReq.file = validFile;
+
+      jest.spyOn(S3Service, 'upload').mockResolvedValue({
+        Location: 'https://mock-s3-bucket.s3.amazonaws.com/uploads/mock-key.jpg',
+        Key: 'uploads/mock-key.jpg'
+      });
+
+      const createSpy = jest.spyOn(FileRecord, 'create').mockResolvedValue({
+        id: 'file_rec_123',
+        url: 'https://mock-s3-bucket.s3.amazonaws.com/uploads/mock-key.jpg',
+        size: validFile.size,
+        mimetype: validFile.mimetype
+      });
+
+      await uploadImage(mockReq, mockRes);
+
+      expect(createSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          uploadedBy: 'anonymous'
+        })
+      );
+    });
+
+    test('should return 500 when S3 upload fails', async () => {
+      mockReq.file = validFile;
+      jest.spyOn(S3Service, 'upload').mockRejectedValue(new Error('S3 Connection Failed'));
+
+      await uploadImage(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to upload image',
+        details: 'S3 Connection Failed'
+      });
+    });
+  });
+
+  describe('deleteImage', () => {
+    test('should return 400 if fileId parameter is missing', async () => {
+      mockReq.params = {};
+
+      await deleteImage(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'File ID parameter is required'
+      });
+    });
+
+    test('should return 404 if file record is not found', async () => {
+      mockReq.params = { fileId: 'non_existent_id' };
+      jest.spyOn(FileRecord, 'findById').mockResolvedValue(null);
+
+      await deleteImage(mockReq, mockRes);
+
+      expect(FileRecord.findById).toHaveBeenCalledWith('non_existent_id');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'File with ID non_existent_id not found'
+      });
+    });
+
+    test('should successfully delete file from S3 and database', async () => {
+      const mockFileRecord = {
+        id: 'file_rec_123',
+        s3Key: 'uploads/test-file.jpg'
+      };
+
+      mockReq.params = { fileId: 'file_rec_123' };
+
+      jest.spyOn(FileRecord, 'findById').mockResolvedValue(mockFileRecord);
+      jest.spyOn(S3Service, 'delete').mockResolvedValue({ DeleteMarker: true });
+      jest.spyOn(FileRecord, 'delete').mockResolvedValue(true);
+
+      await deleteImage(mockReq, mockRes);
+
+      expect(FileRecord.findById).toHaveBeenCalledWith('file_rec_123');
+      expect(S3Service.delete).toHaveBeenCalledWith('uploads/test-file.jpg');
+      expect(FileRecord.delete).toHaveBeenCalledWith('file_rec_123');
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'File deleted successfully',
+        data: { fileId: 'file_rec_123' }
+      });
+    });
+
+    test('should return 500 when deletion service throws error', async () => {
+      mockReq.params = { fileId: 'file_rec_123' };
+
+      jest.spyOn(FileRecord, 'findById').mockResolvedValue({
+        id: 'file_rec_123',
+        s3Key: 'uploads/test-file.jpg'
+      });
+      jest.spyOn(S3Service, 'delete').mockRejectedValue(new Error('AWS S3 Error'));
+
+      await deleteImage(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to delete file',
+        details: 'AWS S3 Error'
+      });
+    });
+  });
+});
+```

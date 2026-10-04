@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "24_webhook_controller.js",
+  "trial": 2,
+  "startedAt": "2026-10-03T17:52:47.698Z",
+  "finishedAt": "2026-10-03T17:52:54.107Z",
+  "suiteOk": true,
+  "testsPassed": 10,
+  "testsFailed": 0,
+  "testsTotal": 10,
+  "errorCategory": "none",
+  "statementCoverage": 87.5,
+  "branchCoverage": 86.96,
+  "functionCoverage": 33.33,
+  "lineCoverage": 87.5,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 846,
+    "completionTokens": 1918,
+    "totalTokens": 2764,
+    "reasoningTokens": 367
+  },
+  "latencyMs": 4687
+}

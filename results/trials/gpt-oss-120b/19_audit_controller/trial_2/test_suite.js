@@ -1,0 +1,275 @@
+import { jest } from '@jest/globals';
+import { getAuditLogs, createAuditEntry, AuditLogModel } from '../dataset/19_audit_controller.js';
+
+describe('Audit Controller - getAuditLogs', () => {
+  let req;
+  let res;
+
+  const buildRes = () => {
+    const resObj = {};
+    resObj.status = jest.fn().mockReturnValue(resObj);
+    resObj.json = jest.fn().mockReturnValue(resObj);
+    return resObj;
+  };
+
+  beforeEach(() => {
+    req = { query: {}, user: {} };
+    res = buildRes();
+    jest.clearAllMocks();
+    // Default mock implementations
+    AuditLogModel.findWithFilters = jest.fn().mockResolvedValue({ total: 0, logs: [] });
+  });
+
+  test('returns 403 when user role is not admin nor auditor', async () => {
+    req.user.role = 'user';
+    await getAuditLogs(req, res);
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Access denied: Requires administrator or auditor privileges',
+    });
+  });
+
+  test('returns 400 for invalid pagination parameters', async () => {
+    req.user.role = 'admin';
+    req.query = { page: '0', limit: '-5' };
+    await getAuditLogs(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Pagination parameters must be positive integers (limit <= 100)',
+    });
+  });
+
+  test('returns 400 for invalid action filter', async () => {
+    req.user.role = 'auditor';
+    req.query = { action: 'invalid_action' };
+    await getAuditLogs(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: `Invalid action filter. Allowed: ${[
+        'LOGIN',
+        'LOGOUT',
+        'CREATE',
+        'UPDATE',
+        'DELETE',
+        'PERMISSION_CHANGE',
+      ].join(', ')}`,
+    });
+  });
+
+  test('returns 400 for invalid severity filter', async () => {
+    req.user.role = 'admin';
+    req.query = { severity: 'fatal' };
+    await getAuditLogs(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: `Invalid severity filter. Allowed: ${['info', 'warning', 'critical'].join(', ')}`,
+    });
+  });
+
+  test('returns 400 for malformed startDate', async () => {
+    req.user.role = 'admin';
+    req.query = { startDate: 'not-a-date' };
+    await getAuditLogs(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid startDate format',
+    });
+  });
+
+  test('returns 200 with correct pagination data on success', async () => {
+    req.user.role = 'admin';
+    req.query = { page: '2', limit: '10', actorId: '123' };
+    const mockResult = {
+      total: 35,
+      logs: [{ id: 'log1' }, { id: 'log2' }],
+    };
+    AuditLogModel.findWithFilters.mockResolvedValue(mockResult);
+
+    await getAuditLogs(req, res);
+
+    expect(AuditLogModel.findWithFilters).toHaveBeenCalledWith(
+      { actorId: '123' },
+      { skip: 10, limit: 10 }
+    );
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        total: 35,
+        page: 2,
+        totalPages: 4,
+        logs: mockResult.logs,
+      },
+    });
+  });
+
+  test('handles unexpected errors with 500', async () => {
+    req.user.role = 'admin';
+    AuditLogModel.findWithFilters.mockRejectedValue(new Error('DB failure'));
+
+    await getAuditLogs(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Failed to retrieve system audit logs',
+        details: 'DB failure',
+      })
+    );
+  });
+});
+
+describe('Audit Controller - createAuditEntry', () => {
+  let req;
+  let res;
+
+  const buildRes = () => {
+    const r = {};
+    r.status = jest.fn().mockReturnValue(r);
+    r.json = jest.fn().mockReturnValue(r);
+    return r;
+  };
+
+  beforeEach(() => {
+    req = { body: {}, user: {}, ip: undefined, headers: {} };
+    res = buildRes();
+    jest.clearAllMocks();
+    AuditLogModel.create = jest.fn().mockResolvedValue({ id: 'audit_1' });
+  });
+
+  test('returns 400 when required fields are missing', async () => {
+    req.user.id = 'u1';
+    req.body = { action: 'login' }; // missing targetResourceId & targetResourceType
+    await createAuditEntry(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'action, targetResourceId, and targetResourceType are required',
+    });
+  });
+
+  test('returns 400 for invalid action', async () => {
+    req.body = {
+      action: 'invalid',
+      targetResourceId: 'r1',
+      targetResourceType: 'type',
+    };
+    await createAuditEntry(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: `Invalid action. Allowed: ${[
+        'LOGIN',
+        'LOGOUT',
+        'CREATE',
+        'UPDATE',
+        'DELETE',
+        'PERMISSION_CHANGE',
+      ].join(', ')}`,
+    });
+  });
+
+  test('returns 400 for invalid severity', async () => {
+    req.body = {
+      action: 'login',
+      targetResourceId: 'r1',
+      targetResourceType: 'type',
+      severity: 'danger',
+    };
+    await createAuditEntry(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: `Invalid severity level. Allowed: ${['info', 'warning', 'critical'].join(', ')}`,
+    });
+  });
+
+  test('creates audit entry successfully and uses ip from req.ip', async () => {
+    req.user.id = 'user123';
+    req.ip = '10.0.0.5';
+    req.body = {
+      action: 'create',
+      targetResourceId: 'res42',
+      targetResourceType: 'document',
+      severity: 'warning',
+      details: { foo: 'bar' },
+    };
+
+    const fakeCreated = {
+      id: 'audit_123',
+      actorId: 'user123',
+      action: 'CREATE',
+      targetResourceId: 'res42',
+      targetResourceType: 'document',
+      severity: 'warning',
+      details: { foo: 'bar' },
+      ipAddress: '10.0.0.5',
+      timestamp: new Date(),
+    };
+    AuditLogModel.create.mockResolvedValue(fakeCreated);
+
+    await createAuditEntry(req, res);
+
+    expect(AuditLogModel.create).toHaveBeenCalledWith({
+      actorId: 'user123',
+      action: 'CREATE',
+      targetResourceId: 'res42',
+      targetResourceType: 'document',
+      severity: 'warning',
+      details: { foo: 'bar' },
+      ipAddress: '10.0.0.5',
+    });
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: fakeCreated,
+    });
+  });
+
+  test('falls back to header x-forwarded-for when ip missing', async () => {
+    req.user.id = 'system';
+    req.headers['x-forwarded-for'] = '203.0.113.9';
+    req.body = {
+      action: 'delete',
+      targetResourceId: 'res99',
+      targetResourceType: 'file',
+    };
+    const fakeCreated = { id: 'audit_999' };
+    AuditLogModel.create.mockResolvedValue(fakeCreated);
+
+    await createAuditEntry(req, res);
+
+    expect(AuditLogModel.create).toHaveBeenCalledWith(
+      expect.objectContaining({ ipAddress: '203.0.113.9' })
+    );
+    expect(res.status).toHaveBeenCalledWith(201);
+  });
+
+  test('handles unexpected errors with 500', async () => {
+    req.body = {
+      action: 'login',
+      targetResourceId: 'r1',
+      targetResourceType: 'type',
+    };
+    AuditLogModel.create.mockRejectedValue(new Error('DB write error'));
+
+    await createAuditEntry(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Failed to record audit log entry',
+        details: 'DB write error',
+      })
+    );
+  });
+});

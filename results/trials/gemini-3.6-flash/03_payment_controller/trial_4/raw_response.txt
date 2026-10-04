@@ -1,0 +1,296 @@
+```javascript
+import {
+  handleStripeWebhook,
+  StripeService,
+  Order,
+  Subscription,
+  WebhookLog
+} from '../dataset/03_payment_controller.js';
+
+describe('Stripe Webhook Controller', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      headers: {
+        'stripe-signature': 'valid_sig_123'
+      },
+      body: {
+        id: 'evt_123',
+        type: 'payment_intent.succeeded',
+        data: {
+          object: {
+            id: 'pi_123',
+            amount_received: 2000,
+            metadata: {
+              orderId: 'ord_123'
+            }
+          }
+        }
+      }
+    };
+
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('StripeService.constructEvent', () => {
+    it('should throw an error if signature is missing or invalid', () => {
+      expect(() => StripeService.constructEvent({}, null, 'secret')).toThrow('Invalid signature verification failed');
+      expect(() => StripeService.constructEvent({}, 'invalid_signature', 'secret')).toThrow('Invalid signature verification failed');
+    });
+
+    it('should parse string payload into JSON', () => {
+      const payloadString = JSON.stringify({ id: 'evt_1', type: 'test' });
+      const result = StripeService.constructEvent(payloadString, 'valid_sig', 'secret');
+      expect(result).toEqual({ id: 'evt_1', type: 'test' });
+    });
+
+    it('should return object payload as-is if not string', () => {
+      const payloadObj = { id: 'evt_1', type: 'test' };
+      const result = StripeService.constructEvent(payloadObj, 'valid_sig', 'secret');
+      expect(result).toEqual(payloadObj);
+    });
+  });
+
+  describe('handleStripeWebhook validation', () => {
+    it('should return 400 if stripe-signature header is missing', async () => {
+      req.headers = {};
+
+      await handleStripeWebhook(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Missing stripe-signature header'
+      });
+    });
+
+    it('should return 400 if stripe-signature header is missing when req.headers is undefined', async () => {
+      delete req.headers;
+
+      await handleStripeWebhook(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Missing stripe-signature header'
+      });
+    });
+
+    it('should return 400 if constructEvent fails verification', async () => {
+      jest.spyOn(StripeService, 'constructEvent').mockImplementationOnce(() => {
+        throw new Error('Invalid signature');
+      });
+
+      await handleStripeWebhook(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Webhook signature verification failed: Invalid signature'
+      });
+    });
+
+    it('should return 400 if event object is malformed (missing id or type)', async () => {
+      jest.spyOn(StripeService, 'constructEvent').mockReturnValueOnce({ id: 'evt_123' });
+
+      await handleStripeWebhook(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Malformed event object'
+      });
+    });
+
+    it('should return 200 with already processed message if duplicate event is received', async () => {
+      jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce({ id: 'log-1', eventId: 'evt_123' });
+
+      await handleStripeWebhook(req, res);
+
+      expect(WebhookLog.findOne).toHaveBeenCalledWith({ eventId: 'evt_123' });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        received: true,
+        message: 'Event already processed'
+      });
+    });
+  });
+
+  describe('handleStripeWebhook event logic', () => {
+    describe('payment_intent.succeeded', () => {
+      it('should return 422 if metadata orderId is missing', async () => {
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        req.body.data.object.metadata = {};
+
+        await handleStripeWebhook(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(422);
+        expect(res.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Payment intent succeeded but missing orderId metadata'
+        });
+      });
+
+      it('should return 404 if order is not found', async () => {
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(Order, 'findById').mockResolvedValueOnce(null);
+
+        await handleStripeWebhook(req, res);
+
+        expect(Order.findById).toHaveBeenCalledWith('ord_123');
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Order ord_123 not found'
+        });
+      });
+
+      it('should update order status to paid and log webhook on success', async () => {
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(Order, 'findById').mockResolvedValueOnce({ id: 'ord_123' });
+        jest.spyOn(Order, 'updateStatus').mockResolvedValueOnce({ id: 'ord_123', status: 'paid' });
+        jest.spyOn(WebhookLog, 'create').mockResolvedValueOnce({ id: 'log-123' });
+
+        await handleStripeWebhook(req, res);
+
+        expect(Order.updateStatus).toHaveBeenCalledWith('ord_123', 'paid', {
+          transactionId: 'pi_123',
+          amountPaid: 2000
+        });
+        expect(WebhookLog.create).toHaveBeenCalledWith({
+          eventId: 'evt_123',
+          eventType: 'payment_intent.succeeded',
+          status: 'processed',
+          processedAt: expect.any(Date)
+        });
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+          received: true,
+          eventType: 'payment_intent.succeeded'
+        });
+      });
+    });
+
+    describe('payment_intent.payment_failed', () => {
+      it('should update order status with payment failure message', async () => {
+        req.body.type = 'payment_intent.payment_failed';
+        req.body.data.object.last_payment_error = { message: 'Card declined' };
+
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(Order, 'updateStatus').mockResolvedValueOnce({});
+        jest.spyOn(WebhookLog, 'create').mockResolvedValueOnce({});
+
+        await handleStripeWebhook(req, res);
+
+        expect(Order.updateStatus).toHaveBeenCalledWith('ord_123', 'payment_failed', {
+          failureMessage: 'Card declined'
+        });
+        expect(res.status).toHaveBeenCalledWith(200);
+      });
+
+      it('should fall back to default failure message if message is missing', async () => {
+        req.body.type = 'payment_intent.payment_failed';
+        req.body.data.object.last_payment_error = {};
+
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(Order, 'updateStatus').mockResolvedValueOnce({});
+
+        await handleStripeWebhook(req, res);
+
+        expect(Order.updateStatus).toHaveBeenCalledWith('ord_123', 'payment_failed', {
+          failureMessage: 'Unknown payment error'
+        });
+      });
+
+      it('should complete processing even if orderId is missing in payment_failed event', async () => {
+        req.body.type = 'payment_intent.payment_failed';
+        delete req.body.data.object.metadata;
+
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(Order, 'updateStatus');
+
+        await handleStripeWebhook(req, res);
+
+        expect(Order.updateStatus).not.toHaveBeenCalled();
+        expect(res.status).toHaveBeenCalledWith(200);
+      });
+    });
+
+    describe('customer.subscription.deleted', () => {
+      it('should update subscription status to canceled', async () => {
+        req.body.type = 'customer.subscription.deleted';
+        req.body.data.object = { id: 'sub_999' };
+
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(Subscription, 'updateStatus').mockResolvedValueOnce({});
+
+        await handleStripeWebhook(req, res);
+
+        expect(Subscription.updateStatus).toHaveBeenCalledWith('sub_999', 'canceled');
+        expect(res.status).toHaveBeenCalledWith(200);
+      });
+
+      it('should skip subscription status update if subId is missing', async () => {
+        req.body.type = 'customer.subscription.deleted';
+        req.body.data.object = {};
+
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(Subscription, 'updateStatus');
+
+        await handleStripeWebhook(req, res);
+
+        expect(Subscription.updateStatus).not.toHaveBeenCalled();
+        expect(res.status).toHaveBeenCalledWith(200);
+      });
+    });
+
+    describe('default / unhandled events', () => {
+      it('should acknowledge and log unhandled event types', async () => {
+        req.body.type = 'customer.created';
+        jest.spyOn(WebhookLog, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(WebhookLog, 'create').mockResolvedValueOnce({});
+
+        await handleStripeWebhook(req, res);
+
+        expect(WebhookLog.create).toHaveBeenCalledWith({
+          eventId: 'evt_123',
+          eventType: 'customer.created',
+          status: 'processed',
+          processedAt: expect.any(Date)
+        });
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+          received: true,
+          eventType: 'customer.created'
+        });
+      });
+    });
+
+    describe('error handling', () => {
+      it('should return 500 when database operation throws an exception', async () => {
+        jest.spyOn(WebhookLog, 'findOne').mockRejectedValueOnce(new Error('Database Connection Error'));
+
+        await handleStripeWebhook(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Error processing webhook event',
+          details: 'Database Connection Error'
+        });
+      });
+    });
+  });
+});
+```

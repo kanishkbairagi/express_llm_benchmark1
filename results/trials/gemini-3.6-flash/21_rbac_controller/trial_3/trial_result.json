@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "21_rbac_controller.js",
+  "trial": 3,
+  "startedAt": "2026-10-03T18:25:01.880Z",
+  "finishedAt": "2026-10-03T18:25:44.124Z",
+  "suiteOk": true,
+  "testsPassed": 17,
+  "testsFailed": 0,
+  "testsTotal": 17,
+  "errorCategory": "none",
+  "statementCoverage": 88.68,
+  "branchCoverage": 91.11,
+  "functionCoverage": 25,
+  "lineCoverage": 88.68,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1344,
+    "completionTokens": 3310,
+    "totalTokens": 6611,
+    "thinkingTokens": 1957
+  },
+  "latencyMs": 23934
+}

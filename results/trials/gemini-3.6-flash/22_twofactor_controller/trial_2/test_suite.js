@@ -1,0 +1,316 @@
+import { jest } from '@jest/globals';
+import {
+  setup2FA,
+  verifyAndEnable2FA,
+  disable2FA,
+  UserMFA,
+  TOTPService
+} from '../dataset/22_twofactor_controller.js';
+
+describe('22_twofactor_controller unit tests', () => {
+  let mockReq;
+  let mockRes;
+
+  beforeEach(() => {
+    mockReq = {
+      body: {},
+      user: null
+    };
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('setup2FA', () => {
+    test('should return 401 if no userId is provided', async () => {
+      await setup2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 if user already has MFA enabled', async () => {
+      mockReq.user = { id: 'user-123', email: 'test@example.com' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue({ id: 'user-123', mfaEnabled: true });
+
+      await setup2FA(mockReq, mockRes);
+
+      expect(UserMFA.findById).toHaveBeenCalledWith('user-123');
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Two-factor authentication is already active for this account'
+      });
+    });
+
+    test('should successfully initiate 2FA setup with user from req.user', async () => {
+      mockReq.user = { id: 'user-123', email: 'custom@domain.com' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue(null);
+      jest.spyOn(UserMFA, 'savePendingSecret').mockResolvedValue(true);
+
+      await setup2FA(mockReq, mockRes);
+
+      expect(UserMFA.savePendingSecret).toHaveBeenCalledWith('user-123', 'JBSWY3DPEHPK3PXP');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'MFA setup initiated. Verify code to complete activation.',
+        data: {
+          secret: 'JBSWY3DPEHPK3PXP',
+          otpAuthUrl: 'otpauth://totp/BenchmarkApp:custom@domain.com?secret=JBSWY3DPEHPK3PXP&issuer=BenchmarkApp',
+          qrCodeDataUrl: 'data:image/png;base64,mockQrCodeDataUrl'
+        }
+      });
+    });
+
+    test('should fallback email to body email or default when user email is absent', async () => {
+      mockReq.body = { userId: 'user-456' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue(null);
+      jest.spyOn(UserMFA, 'savePendingSecret').mockResolvedValue(true);
+
+      await setup2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: true,
+          data: expect.objectContaining({
+            otpAuthUrl: expect.stringContaining('user@example.com')
+          })
+        })
+      );
+    });
+
+    test('should return 500 if an error occurs during setup', async () => {
+      mockReq.user = { id: 'user-123' };
+      jest.spyOn(UserMFA, 'findById').mockRejectedValue(new Error('Database error'));
+
+      await setup2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to initiate 2FA setup',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('verifyAndEnable2FA', () => {
+    test('should return 401 if userId is missing', async () => {
+      mockReq.body = { token: '123456' };
+
+      await verifyAndEnable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 if token is missing or not a string', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: 123456 }; // number instead of string
+
+      await verifyAndEnable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'A 6-digit TOTP verification code is required'
+      });
+    });
+
+    test('should return 400 if token format is invalid (not 6 digits)', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '12345' };
+
+      await verifyAndEnable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Verification code must be exactly 6 digits'
+      });
+    });
+
+    test('should return 400 if user or pendingMfaSecret is not found', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '123456' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue({ id: 'user-123' }); // pendingMfaSecret missing
+
+      await verifyAndEnable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'No pending 2FA setup found. Initiate setup first.'
+      });
+    });
+
+    test('should return 400 if TOTP token verification fails', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '654321' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue({
+        id: 'user-123',
+        pendingMfaSecret: 'JBSWY3DPEHPK3PXP'
+      });
+      jest.spyOn(TOTPService, 'verifyToken').mockReturnValue(false);
+
+      await verifyAndEnable2FA(mockReq, mockRes);
+
+      expect(TOTPService.verifyToken).toHaveBeenCalledWith('JBSWY3DPEHPK3PXP', '654321');
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid or expired 2FA verification code'
+      });
+    });
+
+    test('should successfully verify and enable 2FA', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: ' 123456 ' }; // test trimming
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue({
+        id: 'user-123',
+        pendingMfaSecret: 'JBSWY3DPEHPK3PXP'
+      });
+      jest.spyOn(TOTPService, 'verifyToken').mockReturnValue(true);
+      jest.spyOn(TOTPService, 'generateBackupCodes').mockReturnValue(['BACKUP-1', 'BACKUP-2']);
+      jest.spyOn(UserMFA, 'enableMFA').mockResolvedValue(true);
+
+      await verifyAndEnable2FA(mockReq, mockRes);
+
+      expect(TOTPService.verifyToken).toHaveBeenCalledWith('JBSWY3DPEHPK3PXP', '123456');
+      expect(UserMFA.enableMFA).toHaveBeenCalledWith('user-123', 'JBSWY3DPEHPK3PXP', ['BACKUP-1', 'BACKUP-2']);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Two-factor authentication successfully enabled',
+        data: {
+          mfaEnabled: true,
+          backupCodes: ['BACKUP-1', 'BACKUP-2']
+        }
+      });
+    });
+
+    test('should return 500 if an exception occurs during verification', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '123456' };
+      jest.spyOn(UserMFA, 'findById').mockRejectedValue(new Error('Unexpected error'));
+
+      await verifyAndEnable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to verify and activate 2FA',
+        details: 'Unexpected error'
+      });
+    });
+  });
+
+  describe('disable2FA', () => {
+    test('should return 401 if userId is missing', async () => {
+      mockReq.body = { token: '123456' };
+
+      await disable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 if token is missing', async () => {
+      mockReq.user = { id: 'user-123' };
+
+      await disable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Verification code required to disable 2FA'
+      });
+    });
+
+    test('should return 400 if user is not found or mfaEnabled is false', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '123456' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue({ id: 'user-123', mfaEnabled: false });
+
+      await disable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: '2FA is not enabled on this account'
+      });
+    });
+
+    test('should return 401 if TOTP code is invalid', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '000000' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue({
+        id: 'user-123',
+        mfaEnabled: true,
+        mfaSecret: 'JBSWY3DPEHPK3PXP'
+      });
+      jest.spyOn(TOTPService, 'verifyToken').mockReturnValue(false);
+
+      await disable2FA(mockReq, mockRes);
+
+      expect(TOTPService.verifyToken).toHaveBeenCalledWith('JBSWY3DPEHPK3PXP', '000000');
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid 2FA code'
+      });
+    });
+
+    test('should successfully disable 2FA with valid token', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '123456' };
+      jest.spyOn(UserMFA, 'findById').mockResolvedValue({
+        id: 'user-123',
+        mfaEnabled: true,
+        mfaSecret: 'JBSWY3DPEHPK3PXP'
+      });
+      jest.spyOn(TOTPService, 'verifyToken').mockReturnValue(true);
+      jest.spyOn(UserMFA, 'disableMFA').mockResolvedValue(true);
+
+      await disable2FA(mockReq, mockRes);
+
+      expect(UserMFA.disableMFA).toHaveBeenCalledWith('user-123');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Two-factor authentication has been disabled'
+      });
+    });
+
+    test('should return 500 if an error occurs when disabling 2FA', async () => {
+      mockReq.user = { id: 'user-123' };
+      mockReq.body = { token: '123456' };
+      jest.spyOn(UserMFA, 'findById').mockRejectedValue(new Error('Database failure'));
+
+      await disable2FA(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to disable 2FA',
+        details: 'Database failure'
+      });
+    });
+  });
+});

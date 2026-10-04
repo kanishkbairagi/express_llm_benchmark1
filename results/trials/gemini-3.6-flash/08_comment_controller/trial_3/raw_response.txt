@@ -1,0 +1,357 @@
+```javascript
+import { jest } from '@jest/globals';
+import {
+  createComment,
+  getCommentsByPost,
+  reactToComment,
+  CommentModel
+} from '../dataset/08_comment_controller.js';
+
+describe('Comment Controller Unit Tests', () => {
+  let mockReq;
+  let mockRes;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+
+    mockReq = {
+      body: {},
+      params: {},
+      user: null
+    };
+
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+  });
+
+  describe('createComment', () => {
+    it('should return 401 if userId is missing', async () => {
+      mockReq.body = { postId: 'p1', content: 'Hello' };
+
+      await createComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    it('should return 400 if postId is missing or not a string', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.body = { content: 'Hello' };
+
+      await createComment(mockReq, mockRes);
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Valid postId is required'
+      });
+
+      mockReq.body = { postId: 12345, content: 'Hello' };
+      await createComment(mockReq, mockRes);
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should return 400 if content is missing, not a string, or empty/whitespace', async () => {
+      mockReq.user = { id: 'u1' };
+
+      mockReq.body = { postId: 'p1' };
+      await createComment(mockReq, mockRes);
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+
+      mockReq.body = { postId: 'p1', content: '   ' };
+      await createComment(mockReq, mockRes);
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Comment content cannot be empty'
+      });
+    });
+
+    it('should return 400 if content exceeds 1000 characters', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.body = { postId: 'p1', content: 'a'.repeat(1001) };
+
+      await createComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Comment cannot exceed 1000 characters'
+      });
+    });
+
+    it('should return 404 if parent comment is not found', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.body = { postId: 'p1', content: 'Reply', parentId: 'non_existent' };
+
+      jest.spyOn(CommentModel, 'findById').mockResolvedValue(null);
+
+      await createComment(mockReq, mockRes);
+
+      expect(CommentModel.findById).toHaveBeenCalledWith('non_existent');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Parent comment not found'
+      });
+    });
+
+    it('should return 400 if parent comment already has a parentId (nesting depth restriction)', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.body = { postId: 'p1', content: 'Nested Reply', parentId: 'p_reply_1' };
+
+      jest.spyOn(CommentModel, 'findById').mockResolvedValue({
+        id: 'p_reply_1',
+        postId: 'p1',
+        parentId: 'root_1'
+      });
+
+      await createComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Maximum nesting depth reached: nesting is restricted to one level of replies'
+      });
+    });
+
+    it('should successfully create a top-level comment using req.body.authorId', async () => {
+      mockReq.body = { postId: 'p1', content: '  Top level comment  ', authorId: 'u2' };
+
+      const createdComment = {
+        id: 'cmt_1',
+        postId: 'p1',
+        authorId: 'u2',
+        content: 'Top level comment',
+        parentId: null
+      };
+
+      jest.spyOn(CommentModel, 'create').mockResolvedValue(createdComment);
+
+      await createComment(mockReq, mockRes);
+
+      expect(CommentModel.create).toHaveBeenCalledWith({
+        postId: 'p1',
+        authorId: 'u2',
+        content: 'Top level comment',
+        parentId: null
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Comment created',
+        data: createdComment
+      });
+    });
+
+    it('should successfully create a reply comment', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.body = { postId: 'p1', content: 'Valid Reply', parentId: 'root_1' };
+
+      jest.spyOn(CommentModel, 'findById').mockResolvedValue({
+        id: 'root_1',
+        postId: 'p1',
+        parentId: null
+      });
+
+      const createdReply = {
+        id: 'cmt_2',
+        postId: 'p1',
+        authorId: 'u1',
+        content: 'Valid Reply',
+        parentId: 'root_1'
+      };
+
+      jest.spyOn(CommentModel, 'create').mockResolvedValue(createdReply);
+
+      await createComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Reply created',
+        data: createdReply
+      });
+    });
+
+    it('should return 500 when database throws an exception', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.body = { postId: 'p1', content: 'Hello' };
+
+      jest.spyOn(CommentModel, 'create').mockRejectedValue(new Error('Database error'));
+
+      await createComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to create comment',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('getCommentsByPost', () => {
+    it('should return 400 if postId parameter is missing', async () => {
+      mockReq.params = {};
+
+      await getCommentsByPost(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Post ID is required'
+      });
+    });
+
+    it('should build comment tree correctly for flat comments list', async () => {
+      mockReq.params = { postId: 'p1' };
+
+      const flatComments = [
+        { id: 'c1', parentId: null, content: 'Root 1' },
+        { id: 'c2', parentId: 'c1', content: 'Reply 1 to Root 1' },
+        { id: 'c3', parentId: null, content: 'Root 2' },
+        { id: 'c4', parentId: 'non_existent', content: 'Orphan reply' }
+      ];
+
+      jest.spyOn(CommentModel, 'findByPostId').mockResolvedValue(flatComments);
+
+      await getCommentsByPost(mockReq, mockRes);
+
+      expect(CommentModel.findByPostId).toHaveBeenCalledWith('p1');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+
+      const response = mockRes.json.mock.calls[0][0];
+      expect(response.success).toBe(true);
+      expect(response.data.total).toBe(4);
+      expect(response.data.comments.length).toBe(3); // c1, c3, c4 (orphan falls back to root)
+      expect(response.data.comments[0].replies).toEqual([
+        { id: 'c2', parentId: 'c1', content: 'Reply 1 to Root 1', replies: [] }
+      ]);
+    });
+
+    it('should return 500 when database throws error', async () => {
+      mockReq.params = { postId: 'p1' };
+      jest.spyOn(CommentModel, 'findByPostId').mockRejectedValue(new Error('Fetch failed'));
+
+      await getCommentsByPost(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve comments',
+        details: 'Fetch failed'
+      });
+    });
+  });
+
+  describe('reactToComment', () => {
+    it('should return 401 if userId is missing', async () => {
+      mockReq.params = { commentId: 'c1' };
+      mockReq.body = { reactionType: 'like' };
+
+      await reactToComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    it('should return 400 if commentId parameter is missing', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.body = { reactionType: 'like' };
+
+      await reactToComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Comment ID is required'
+      });
+    });
+
+    it('should return 400 for invalid or missing reactionType', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.params = { commentId: 'c1' };
+
+      // Missing
+      await reactToComment(mockReq, mockRes);
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+
+      // Invalid
+      mockReq.body = { reactionType: 'dislike' };
+      await reactToComment(mockReq, mockRes);
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid reaction. Allowed: like, love, insightful, celebrate'
+      });
+    });
+
+    it('should return 404 if comment is not found', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.params = { commentId: 'c1' };
+      mockReq.body = { reactionType: 'LOVE' };
+
+      jest.spyOn(CommentModel, 'findById').mockResolvedValue(null);
+
+      await reactToComment(mockReq, mockRes);
+
+      expect(CommentModel.findById).toHaveBeenCalledWith('c1');
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Comment not found'
+      });
+    });
+
+    it('should add reaction successfully and normalize reactionType to lower case', async () => {
+      mockReq.body = { userId: 'u1', reactionType: 'INSIGHTFUL' };
+      mockReq.params = { commentId: 'c1' };
+
+      jest.spyOn(CommentModel, 'findById').mockResolvedValue({ id: 'c1' });
+      jest.spyOn(CommentModel, 'addReaction').mockResolvedValue({
+        id: 'c1',
+        reactions: { insightful: 1 }
+      });
+
+      await reactToComment(mockReq, mockRes);
+
+      expect(CommentModel.addReaction).toHaveBeenCalledWith('c1', 'u1', 'insightful');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Reaction "INSIGHTFUL" updated',
+        data: {
+          id: 'c1',
+          reactions: { insightful: 1 }
+        }
+      });
+    });
+
+    it('should return 500 when reaction processing fails', async () => {
+      mockReq.user = { id: 'u1' };
+      mockReq.params = { commentId: 'c1' };
+      mockReq.body = { reactionType: 'like' };
+
+      jest.spyOn(CommentModel, 'findById').mockRejectedValue(new Error('Update failed'));
+
+      await reactToComment(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to process reaction',
+        details: 'Update failed'
+      });
+    });
+  });
+});
+```

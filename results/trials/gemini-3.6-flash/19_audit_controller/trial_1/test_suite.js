@@ -1,0 +1,332 @@
+import { jest } from '@jest/globals';
+import { getAuditLogs, createAuditEntry, AuditLogModel } from '../dataset/19_audit_controller.js';
+
+describe('19_audit_controller unit tests', () => {
+  let mockReq;
+  let mockRes;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+  });
+
+  describe('getAuditLogs', () => {
+    it('should return 403 if user is missing or has an unauthorized role', async () => {
+      mockReq = { user: { role: 'user' } };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(403);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: 'Access denied: Requires administrator or auditor privileges'
+        })
+      );
+    });
+
+    it('should return 403 if req.user is undefined', async () => {
+      mockReq = {};
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(403);
+    });
+
+    it('should return 400 if pagination page parameter is invalid', async () => {
+      mockReq = {
+        user: { role: 'admin' },
+        query: { page: 'invalid' }
+      };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: 'Pagination parameters must be positive integers (limit <= 100)'
+        })
+      );
+    });
+
+    it('should return 400 if pagination limit parameter exceeds 100 or is less than 1', async () => {
+      mockReq = {
+        user: { role: 'admin' },
+        query: { limit: '150' }
+      };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+
+      mockReq.query.limit = '0';
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should return 400 for an invalid action filter', async () => {
+      mockReq = {
+        user: { role: 'auditor' },
+        query: { action: 'INVALID_ACTION' }
+      };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: expect.stringContaining('Invalid action filter')
+        })
+      );
+    });
+
+    it('should return 400 for an invalid severity filter', async () => {
+      mockReq = {
+        user: { role: 'admin' },
+        query: { severity: 'super_critical' }
+      };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: expect.stringContaining('Invalid severity filter')
+        })
+      );
+    });
+
+    it('should return 400 for invalid startDate or endDate formats', async () => {
+      mockReq = {
+        user: { role: 'admin' },
+        query: { startDate: 'not-a-date' }
+      };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid startDate format'
+      });
+
+      mockReq.query = { endDate: 'invalid-end-date' };
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid endDate format'
+      });
+    });
+
+    it('should apply valid filters and return audit logs successfully', async () => {
+      const mockLogsData = {
+        total: 1,
+        logs: [{ id: 'audit_1', action: 'LOGIN', severity: 'info' }]
+      };
+      const findSpy = jest.spyOn(AuditLogModel, 'findWithFilters').mockResolvedValue(mockLogsData);
+
+      mockReq = {
+        user: { role: 'admin' },
+        query: {
+          actorId: ' user_123 ',
+          action: 'login',
+          severity: 'INFO',
+          startDate: '2023-01-01',
+          endDate: '2023-01-31',
+          page: '2',
+          limit: '10'
+        }
+      };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(findSpy).toHaveBeenCalledWith(
+        {
+          actorId: 'user_123',
+          action: 'LOGIN',
+          severity: 'info',
+          startDate: new Date('2023-01-01'),
+          endDate: new Date('2023-01-31')
+        },
+        { skip: 10, limit: 10 }
+      );
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          total: 1,
+          page: 2,
+          totalPages: 1,
+          logs: mockLogsData.logs
+        }
+      });
+    });
+
+    it('should return 500 when database model throws an error', async () => {
+      jest.spyOn(AuditLogModel, 'findWithFilters').mockRejectedValue(new Error('DB Connection Failed'));
+
+      mockReq = {
+        user: { role: 'admin' }
+      };
+
+      await getAuditLogs(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve system audit logs',
+        details: 'DB Connection Failed'
+      });
+    });
+  });
+
+  describe('createAuditEntry', () => {
+    it('should return 400 if required fields are missing', async () => {
+      mockReq = {
+        body: { action: 'LOGIN' }
+      };
+
+      await createAuditEntry(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'action, targetResourceId, and targetResourceType are required'
+      });
+    });
+
+    it('should return 400 if action is invalid', async () => {
+      mockReq = {
+        body: {
+          action: 'INVALID_ACTION',
+          targetResourceId: 'res_1',
+          targetResourceType: 'user'
+        }
+      };
+
+      await createAuditEntry(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: expect.stringContaining('Invalid action.')
+        })
+      );
+    });
+
+    it('should return 400 if severity level is invalid', async () => {
+      mockReq = {
+        body: {
+          action: 'CREATE',
+          targetResourceId: 'res_1',
+          targetResourceType: 'user',
+          severity: 'ultra-high'
+        }
+      };
+
+      await createAuditEntry(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          error: expect.stringContaining('Invalid severity level.')
+        })
+      );
+    });
+
+    it('should create audit entry with default values when user and ip are missing', async () => {
+      const mockCreatedEntry = { id: 'audit_123', actorId: 'system' };
+      const createSpy = jest.spyOn(AuditLogModel, 'create').mockResolvedValue(mockCreatedEntry);
+
+      mockReq = {
+        body: {
+          action: 'delete',
+          targetResourceId: 'res_99',
+          targetResourceType: 'document'
+        }
+      };
+
+      await createAuditEntry(mockReq, mockRes);
+
+      expect(createSpy).toHaveBeenCalledWith({
+        actorId: 'system',
+        action: 'DELETE',
+        targetResourceId: 'res_99',
+        targetResourceType: 'document',
+        severity: 'info',
+        details: {},
+        ipAddress: '127.0.0.1'
+      });
+
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        data: mockCreatedEntry
+      });
+    });
+
+    it('should create audit entry with specified user, ip header, details, and severity', async () => {
+      const mockCreatedEntry = { id: 'audit_456' };
+      const createSpy = jest.spyOn(AuditLogModel, 'create').mockResolvedValue(mockCreatedEntry);
+
+      mockReq = {
+        user: { id: 'usr_789' },
+        headers: { 'x-forwarded-for': '192.168.1.1' },
+        body: {
+          action: 'permission_change',
+          targetResourceId: 'role_admin',
+          targetResourceType: 'role',
+          severity: 'CRITICAL',
+          details: { field: 'permissions' }
+        }
+      };
+
+      await createAuditEntry(mockReq, mockRes);
+
+      expect(createSpy).toHaveBeenCalledWith({
+        actorId: 'usr_789',
+        action: 'PERMISSION_CHANGE',
+        targetResourceId: 'role_admin',
+        targetResourceType: 'role',
+        severity: 'critical',
+        details: { field: 'permissions' },
+        ipAddress: '192.168.1.1'
+      });
+
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+    });
+
+    it('should return 500 when AuditLogModel.create throws an error', async () => {
+      jest.spyOn(AuditLogModel, 'create').mockRejectedValue(new Error('Write failure'));
+
+      mockReq = {
+        body: {
+          action: 'CREATE',
+          targetResourceId: 'res_1',
+          targetResourceType: 'user'
+        }
+      };
+
+      await createAuditEntry(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to record audit log entry',
+        details: 'Write failure'
+      });
+    });
+  });
+});

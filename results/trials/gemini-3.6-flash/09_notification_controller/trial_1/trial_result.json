@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "09_notification_controller.js",
+  "trial": 1,
+  "startedAt": "2026-10-02T15:33:27.271Z",
+  "finishedAt": "2026-10-02T15:34:54.984Z",
+  "suiteOk": true,
+  "testsPassed": 23,
+  "testsFailed": 0,
+  "testsTotal": 23,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 96.97,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1123,
+    "completionTokens": 3377,
+    "totalTokens": 5734,
+    "thinkingTokens": 1234
+  },
+  "latencyMs": 20042
+}

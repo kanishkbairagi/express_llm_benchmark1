@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "18_wishlist_controller.js",
+  "trial": 5,
+  "startedAt": "2026-10-04T11:15:10.915Z",
+  "finishedAt": "2026-10-04T11:15:56.298Z",
+  "suiteOk": true,
+  "testsPassed": 19,
+  "testsFailed": 0,
+  "testsTotal": 19,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 94.12,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1107,
+    "completionTokens": 3318,
+    "totalTokens": 5478,
+    "thinkingTokens": 1053
+  },
+  "latencyMs": 18430
+}

@@ -1,0 +1,329 @@
+import { jest } from '@jest/globals';
+import {
+  getCart,
+  addToCart,
+  updateCartItemQuantity,
+  applyCouponToCart,
+  ProductCatalog,
+  CartModel,
+  DiscountService
+} from '../dataset/07_cart_controller.js';
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+describe('getCart', () => {
+  test('returns 401 when user not authenticated', async () => {
+    const req = { query: {} };
+    const res = mockRes();
+
+    await getCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  test('returns empty cart when none exists', async () => {
+    const req = { user: { id: 'u1' } };
+    const res = mockRes();
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue(null);
+
+    await getCart(req, res);
+
+    expect(CartModel.findByUserId).toHaveBeenCalledWith('u1');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        userId: 'u1',
+        items: [],
+        subtotal: 0,
+        discount: null,
+        discountAmount: 0,
+        total: 0
+      }
+    });
+  });
+});
+
+describe('addToCart', () => {
+  const product = { id: 'p1', name: 'Widget', price: 10 };
+
+  test('returns 401 when user not authenticated', async () => {
+    const req = { body: {} };
+    const res = mockRes();
+
+    await addToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Authentication required' });
+  });
+
+  test('returns 400 when productId missing', async () => {
+    const req = { body: { userId: 'u1' } };
+    const res = mockRes();
+
+    await addToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Product ID is required' });
+  });
+
+  test('returns 400 for invalid quantity', async () => {
+    const req = { body: { userId: 'u1', productId: 'p1', quantity: 0 } };
+    const res = mockRes();
+
+    await addToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Quantity must be a positive integer'
+    });
+  });
+
+  test('returns 404 when product not found', async () => {
+    const req = { body: { userId: 'u1', productId: 'pX' } };
+    const res = mockRes();
+
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValue(null);
+
+    await addToCart(req, res);
+
+    expect(ProductCatalog.findById).toHaveBeenCalledWith('pX');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Product not found' });
+  });
+
+  test('adds new item to a fresh cart and returns saved cart', async () => {
+    const req = { body: { userId: 'u1', productId: 'p1', quantity: 2 } };
+    const res = mockRes();
+
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValue(product);
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue(null);
+    jest.spyOn(CartModel, 'save').mockImplementation(async (c) => ({
+      ...c,
+      updatedAt: new Date()
+    }));
+
+    await addToCart(req, res);
+
+    expect(CartModel.save).toHaveBeenCalled();
+    const savedCart = CartModel.save.mock.calls[0][0];
+    expect(savedCart.items).toEqual([
+      { productId: 'p1', name: 'Widget', price: 10, quantity: 2 }
+    ]);
+    expect(savedCart.subtotal).toBe(20);
+    expect(savedCart.discountAmount).toBe(0);
+    expect(savedCart.total).toBe(20);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Item added to cart',
+      data: expect.objectContaining({
+        userId: 'u1',
+        items: expect.arrayContaining([
+          expect.objectContaining({ productId: 'p1', quantity: 2 })
+        ]),
+        subtotal: 20,
+        discountAmount: 0,
+        total: 20
+      })
+    });
+  });
+
+  test('increments quantity when item already exists', async () => {
+    const existingCart = {
+      userId: 'u1',
+      items: [{ productId: 'p1', name: 'Widget', price: 10, quantity: 1 }],
+      discount: null
+    };
+    const req = { body: { userId: 'u1', productId: 'p1', quantity: 3 } };
+    const res = mockRes();
+
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValue(product);
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue(existingCart);
+    jest.spyOn(CartModel, 'save').mockImplementation(async (c) => ({ ...c, updatedAt: new Date() }));
+
+    await addToCart(req, res);
+
+    const savedCart = CartModel.save.mock.calls[0][0];
+    expect(savedCart.items[0].quantity).toBe(4);
+    expect(savedCart.subtotal).toBe(40);
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+});
+
+describe('updateCartItemQuantity', () => {
+  const baseCart = {
+    userId: 'u1',
+    items: [{ productId: 'p1', name: 'Widget', price: 5, quantity: 2 }],
+    discount: null
+  };
+
+  test('returns 401 when unauthenticated', async () => {
+    const req = { body: {} };
+    const res = mockRes();
+
+    await updateCartItemQuantity(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+  });
+
+  test('returns 400 when required fields missing', async () => {
+    const req = { body: { userId: 'u1' } };
+    const res = mockRes();
+
+    await updateCartItemQuantity(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
+
+  test('returns 404 when cart not found', async () => {
+    const req = { body: { userId: 'u1', productId: 'p1', quantity: 1 } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue(null);
+
+    await updateCartItemQuantity(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+  });
+
+  test('returns 404 when item not in cart', async () => {
+    const req = { body: { userId: 'u1', productId: 'p2', quantity: 1 } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue(baseCart);
+
+    await updateCartItemQuantity(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+  });
+
+  test('updates quantity correctly', async () => {
+    const req = { body: { userId: 'u1', productId: 'p1', quantity: 5 } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue({ ...baseCart });
+    jest.spyOn(CartModel, 'save').mockImplementation(async (c) => ({ ...c, updatedAt: new Date() }));
+
+    await updateCartItemQuantity(req, res);
+
+    const savedCart = CartModel.save.mock.calls[0][0];
+    expect(savedCart.items[0].quantity).toBe(5);
+    expect(savedCart.subtotal).toBe(25);
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  test('removes item when quantity set to 0', async () => {
+    const req = { body: { userId: 'u1', productId: 'p1', quantity: 0 } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue({ ...baseCart });
+    jest.spyOn(CartModel, 'save').mockImplementation(async (c) => ({ ...c, updatedAt: new Date() }));
+
+    await updateCartItemQuantity(req, res);
+
+    const savedCart = CartModel.save.mock.calls[0][0];
+    expect(savedCart.items).toHaveLength(0);
+    expect(savedCart.subtotal).toBe(0);
+    expect(savedCart.total).toBe(0);
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+});
+
+describe('applyCouponToCart', () => {
+  const cartWithItems = {
+    userId: 'u1',
+    items: [{ productId: 'p1', name: 'Widget', price: 50, quantity: 1 }],
+    discount: null,
+    subtotal: 50,
+    discountAmount: 0,
+    total: 50
+  };
+
+  test('returns 401 when unauthenticated', async () => {
+    const req = { body: {} };
+    const res = mockRes();
+
+    await applyCouponToCart(req, res);
+    expect(res.status).toHaveBeenCalledWith(401);
+  });
+
+  test('returns 400 when cart empty', async () => {
+    const req = { body: { userId: 'u1', couponCode: 'SAVE10' } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue({ userId: 'u1', items: [] });
+
+    await applyCouponToCart(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
+
+  test('returns 400 for invalid/expired coupon', async () => {
+    const req = { body: { userId: 'u1', couponCode: 'BADCODE' } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue(cartWithItems);
+    jest.spyOn(DiscountService, 'validate').mockResolvedValue({ isActive: false });
+
+    await applyCouponToCart(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
+
+  test('applies percentage discount correctly', async () => {
+    const req = { body: { userId: 'u1', couponCode: 'SAVE10' } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue({ ...cartWithItems });
+    jest.spyOn(DiscountService, 'validate').mockResolvedValue({
+      code: 'SAVE10',
+      type: 'percentage',
+      value: 10,
+      isActive: true
+    });
+    jest.spyOn(CartModel, 'save').mockImplementation(async (c) => ({ ...c, updatedAt: new Date() }));
+
+    await applyCouponToCart(req, res);
+
+    const savedCart = CartModel.save.mock.calls[0][0];
+    expect(savedCart.discount).toMatchObject({ code: 'SAVE10', type: 'percentage', value: 10 });
+    expect(savedCart.discountAmount).toBe(5); // 10% of 50
+    expect(savedCart.total).toBe(45);
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  test('applies fixed discount and caps at subtotal', async () => {
+    const req = { body: { userId: 'u1', couponCode: 'BIGSAVE' } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValue({ ...cartWithItems });
+    jest.spyOn(DiscountService, 'validate').mockResolvedValue({
+      code: 'BIGSAVE',
+      type: 'fixed',
+      value: 100,
+      isActive: true
+    });
+    jest.spyOn(CartModel, 'save').mockImplementation(async (c) => ({ ...c, updatedAt: new Date() }));
+
+    await applyCouponToCart(req, res);
+
+    const savedCart = CartModel.save.mock.calls[0][0];
+    expect(savedCart.discountAmount).toBe(50); // capped at subtotal
+    expect(savedCart.total).toBe(0);
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+});

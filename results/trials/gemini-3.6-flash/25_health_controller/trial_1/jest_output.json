@@ -1,0 +1,902 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 11,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 11,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1790959192073,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "SystemHealth"
+          ],
+          "duration": 8,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller SystemHealth pingDatabase returns status UP and latency",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "pingDatabase returns status UP and latency",
+          "startAt": 1790959193207
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "SystemHealth"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller SystemHealth pingRedis returns status UP and latency",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "pingRedis returns status UP and latency",
+          "startAt": 1790959193216
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getLiveness"
+          ],
+          "duration": 6,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getLiveness returns 200 and UP status with metadata",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 200 and UP status with metadata",
+          "startAt": 1790959193218
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getLiveness"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getLiveness returns 500 when an error is thrown",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 500 when an error is thrown",
+          "startAt": 1790959193224
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getReadiness"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getReadiness returns 200 and status UP when all health checks pass",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 200 and status UP when all health checks pass",
+          "startAt": 1790959193227
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getReadiness"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getReadiness returns 503 if database check returns a non-UP status",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 503 if database check returns a non-UP status",
+          "startAt": 1790959193231
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getReadiness"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getReadiness returns 503 if database check throws an exception",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 503 if database check throws an exception",
+          "startAt": 1790959193232
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getReadiness"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getReadiness returns 503 if redis check returns a non-UP status",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 503 if redis check returns a non-UP status",
+          "startAt": 1790959193234
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getReadiness"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getReadiness returns 503 if redis check throws an exception",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 503 if redis check throws an exception",
+          "startAt": 1790959193235
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getReadiness"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getReadiness flags memory check status as WARN when heapUsed exceeds 1500MB",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "flags memory check status as WARN when heapUsed exceeds 1500MB",
+          "startAt": 1790959193237
+        },
+        {
+          "ancestorTitles": [
+            "25_health_controller",
+            "getReadiness"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "25_health_controller getReadiness returns 500 when an unhandled error occurs during execution",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 500 when an unhandled error occurs during execution",
+          "startAt": 1790959193239
+        }
+      ],
+      "endTime": 1790959193242,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\25_health_controller_gemini-3.6-flash_trial1.test.js",
+      "startTime": 1790959192210,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\25_health_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\25_health_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 28
+          },
+          "end": {
+            "line": 7,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 29
+          },
+          "end": {
+            "line": 5,
+            "column": 59
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 26
+          },
+          "end": {
+            "line": 6,
+            "column": 56
+          }
+        },
+        "3": {
+          "start": {
+            "line": 9,
+            "column": 27
+          },
+          "end": {
+            "line": 22,
+            "column": 1
+          }
+        },
+        "4": {
+          "start": {
+            "line": 10,
+            "column": 2
+          },
+          "end": {
+            "line": 21,
+            "column": 3
+          }
+        },
+        "5": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 15,
+            "column": 7
+          }
+        },
+        "6": {
+          "start": {
+            "line": 17,
+            "column": 4
+          },
+          "end": {
+            "line": 20,
+            "column": 7
+          }
+        },
+        "7": {
+          "start": {
+            "line": 24,
+            "column": 28
+          },
+          "end": {
+            "line": 72,
+            "column": 1
+          }
+        },
+        "8": {
+          "start": {
+            "line": 25,
+            "column": 2
+          },
+          "end": {
+            "line": 71,
+            "column": 3
+          }
+        },
+        "9": {
+          "start": {
+            "line": 26,
+            "column": 19
+          },
+          "end": {
+            "line": 26,
+            "column": 21
+          }
+        },
+        "10": {
+          "start": {
+            "line": 27,
+            "column": 20
+          },
+          "end": {
+            "line": 27,
+            "column": 24
+          }
+        },
+        "11": {
+          "start": {
+            "line": 30,
+            "column": 4
+          },
+          "end": {
+            "line": 37,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 31,
+            "column": 23
+          },
+          "end": {
+            "line": 31,
+            "column": 56
+          }
+        },
+        "13": {
+          "start": {
+            "line": 32,
+            "column": 6
+          },
+          "end": {
+            "line": 32,
+            "column": 33
+          }
+        },
+        "14": {
+          "start": {
+            "line": 33,
+            "column": 6
+          },
+          "end": {
+            "line": 33,
+            "column": 54
+          }
+        },
+        "15": {
+          "start": {
+            "line": 33,
+            "column": 36
+          },
+          "end": {
+            "line": 33,
+            "column": 54
+          }
+        },
+        "16": {
+          "start": {
+            "line": 35,
+            "column": 6
+          },
+          "end": {
+            "line": 35,
+            "column": 63
+          }
+        },
+        "17": {
+          "start": {
+            "line": 36,
+            "column": 6
+          },
+          "end": {
+            "line": 36,
+            "column": 24
+          }
+        },
+        "18": {
+          "start": {
+            "line": 40,
+            "column": 4
+          },
+          "end": {
+            "line": 47,
+            "column": 5
+          }
+        },
+        "19": {
+          "start": {
+            "line": 41,
+            "column": 26
+          },
+          "end": {
+            "line": 41,
+            "column": 56
+          }
+        },
+        "20": {
+          "start": {
+            "line": 42,
+            "column": 6
+          },
+          "end": {
+            "line": 42,
+            "column": 33
+          }
+        },
+        "21": {
+          "start": {
+            "line": 43,
+            "column": 6
+          },
+          "end": {
+            "line": 43,
+            "column": 57
+          }
+        },
+        "22": {
+          "start": {
+            "line": 43,
+            "column": 39
+          },
+          "end": {
+            "line": 43,
+            "column": 57
+          }
+        },
+        "23": {
+          "start": {
+            "line": 45,
+            "column": 6
+          },
+          "end": {
+            "line": 45,
+            "column": 60
+          }
+        },
+        "24": {
+          "start": {
+            "line": 46,
+            "column": 6
+          },
+          "end": {
+            "line": 46,
+            "column": 24
+          }
+        },
+        "25": {
+          "start": {
+            "line": 50,
+            "column": 16
+          },
+          "end": {
+            "line": 50,
+            "column": 37
+          }
+        },
+        "26": {
+          "start": {
+            "line": 51,
+            "column": 23
+          },
+          "end": {
+            "line": 51,
+            "column": 61
+          }
+        },
+        "27": {
+          "start": {
+            "line": 52,
+            "column": 4
+          },
+          "end": {
+            "line": 56,
+            "column": 6
+          }
+        },
+        "28": {
+          "start": {
+            "line": 58,
+            "column": 23
+          },
+          "end": {
+            "line": 58,
+            "column": 44
+          }
+        },
+        "29": {
+          "start": {
+            "line": 60,
+            "column": 4
+          },
+          "end": {
+            "line": 64,
+            "column": 7
+          }
+        },
+        "30": {
+          "start": {
+            "line": 66,
+            "column": 4
+          },
+          "end": {
+            "line": 70,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 16
+            },
+            "end": {
+              "line": 5,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 29
+            },
+            "end": {
+              "line": 5,
+              "column": 59
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 13
+            },
+            "end": {
+              "line": 6,
+              "column": 14
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 26
+            },
+            "end": {
+              "line": 6,
+              "column": 56
+            }
+          },
+          "line": 6
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 9,
+              "column": 27
+            },
+            "end": {
+              "line": 9,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 47
+            },
+            "end": {
+              "line": 22,
+              "column": 1
+            }
+          },
+          "line": 9
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 24,
+              "column": 28
+            },
+            "end": {
+              "line": 24,
+              "column": 29
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 24,
+              "column": 48
+            },
+            "end": {
+              "line": 72,
+              "column": 1
+            }
+          },
+          "line": 24
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 33,
+              "column": 6
+            },
+            "end": {
+              "line": 33,
+              "column": 54
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 33,
+                "column": 6
+              },
+              "end": {
+                "line": 33,
+                "column": 54
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 33
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 6
+            },
+            "end": {
+              "line": 43,
+              "column": 57
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 6
+              },
+              "end": {
+                "line": 43,
+                "column": 57
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 43
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 53,
+              "column": 14
+            },
+            "end": {
+              "line": 53,
+              "column": 47
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 53,
+                "column": 34
+              },
+              "end": {
+                "line": 53,
+                "column": 40
+              }
+            },
+            {
+              "start": {
+                "line": 53,
+                "column": 43
+              },
+              "end": {
+                "line": 53,
+                "column": 47
+              }
+            }
+          ],
+          "line": 53
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 58,
+              "column": 23
+            },
+            "end": {
+              "line": 58,
+              "column": 44
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 58,
+                "column": 35
+              },
+              "end": {
+                "line": 58,
+                "column": 38
+              }
+            },
+            {
+              "start": {
+                "line": 58,
+                "column": 41
+              },
+              "end": {
+                "line": 58,
+                "column": 44
+              }
+            }
+          ],
+          "line": 58
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 61,
+              "column": 14
+            },
+            "end": {
+              "line": 61,
+              "column": 39
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 61,
+                "column": 26
+              },
+              "end": {
+                "line": 61,
+                "column": 30
+              }
+            },
+            {
+              "start": {
+                "line": 61,
+                "column": 33
+              },
+              "end": {
+                "line": 61,
+                "column": 39
+              }
+            }
+          ],
+          "line": 61
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 2,
+        "2": 2,
+        "3": 1,
+        "4": 2,
+        "5": 2,
+        "6": 1,
+        "7": 1,
+        "8": 7,
+        "9": 7,
+        "10": 7,
+        "11": 7,
+        "12": 7,
+        "13": 6,
+        "14": 6,
+        "15": 1,
+        "16": 1,
+        "17": 1,
+        "18": 7,
+        "19": 7,
+        "20": 6,
+        "21": 6,
+        "22": 1,
+        "23": 1,
+        "24": 1,
+        "25": 7,
+        "26": 6,
+        "27": 6,
+        "28": 6,
+        "29": 6,
+        "30": 1
+      },
+      "f": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 7
+      },
+      "b": {
+        "0": [
+          1,
+          5
+        ],
+        "1": [
+          1,
+          5
+        ],
+        "2": [
+          1,
+          5
+        ],
+        "3": [
+          2,
+          4
+        ],
+        "4": [
+          2,
+          4
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "04222ad21eea8d6cec733b32e7acb35c3edb2b46"
+    }
+  }
+}

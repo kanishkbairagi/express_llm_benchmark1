@@ -1,0 +1,236 @@
+import { jest } from '@jest/globals';
+import { searchProducts, getSearchSuggestions, SearchIndex } from '../dataset/13_search_controller.js';
+
+describe('Search Controller', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = { query: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.clearAllMocks();
+  });
+
+  describe('searchProducts', () => {
+    test('should return 400 if search query "q" is missing or empty', async () => {
+      await searchProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Search query parameter "q" is required'
+      });
+    });
+
+    test('should return 400 if "q" is not a string', async () => {
+      req.query = { q: 12345 };
+
+      await searchProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Search query parameter "q" is required'
+      });
+    });
+
+    test('should return 400 if sanitized query length is less than 2 characters', async () => {
+      req.query = { q: 'a!' };
+
+      await searchProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Search query must be at least 2 alphanumeric characters'
+      });
+    });
+
+    test('should return 400 if pagination parameters are invalid', async () => {
+      req.query = { q: 'laptop', page: '0', limit: '20' };
+
+      await searchProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Pagination parameters invalid: page >= 1, 1 <= limit <= 100'
+      });
+
+      req.query = { q: 'laptop', page: '1', limit: '101' };
+
+      await searchProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      req.query = { q: 'laptop', page: 'invalid', limit: '20' };
+
+      await searchProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should search products with default pagination and sanitized query', async () => {
+      req.query = { q: 'phone + smart' };
+
+      const searchSpy = jest.spyOn(SearchIndex, 'search').mockResolvedValueOnce({
+        totalHits: 2,
+        tookMs: 15,
+        hits: [{ id: 1, name: 'Smart Phone' }, { id: 2, name: 'Phone Pro' }],
+        facets: { categories: { Electronics: 2 }, priceRanges: {} }
+      });
+
+      await searchProducts(req, res);
+
+      expect(searchSpy).toHaveBeenCalledWith({
+        query: 'phone   smart',
+        filters: {},
+        page: 1,
+        limit: 20
+      });
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        query: 'phone   smart',
+        data: {
+          total: 2,
+          tookMs: 15,
+          page: 1,
+          limit: 20,
+          items: [{ id: 1, name: 'Smart Phone' }, { id: 2, name: 'Phone Pro' }],
+          facets: { categories: { Electronics: 2 }, priceRanges: {} }
+        }
+      });
+    });
+
+    test('should correctly apply category and price filters', async () => {
+      req.query = {
+        q: 'laptop',
+        category: ' Electronics ',
+        minPrice: '500.50',
+        maxPrice: '1500.00',
+        page: '2',
+        limit: '10'
+      };
+
+      const searchSpy = jest.spyOn(SearchIndex, 'search').mockResolvedValueOnce({
+        totalHits: 1,
+        tookMs: 8,
+        hits: [{ id: 10, name: 'Pro Laptop' }],
+        facets: {}
+      });
+
+      await searchProducts(req, res);
+
+      expect(searchSpy).toHaveBeenCalledWith({
+        query: 'laptop',
+        filters: {
+          category: 'Electronics',
+          minPrice: 500.50,
+          maxPrice: 1500.00
+        },
+        page: 2,
+        limit: 10
+      });
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        query: 'laptop',
+        data: {
+          total: 1,
+          tookMs: 8,
+          page: 2,
+          limit: 10,
+          items: [{ id: 10, name: 'Pro Laptop' }],
+          facets: {}
+        }
+      });
+    });
+
+    test('should return 500 error if SearchIndex.search throws an exception', async () => {
+      req.query = { q: 'error' };
+
+      jest.spyOn(SearchIndex, 'search').mockRejectedValueOnce(new Error('Database connection failed'));
+
+      await searchProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'An error occurred while executing search query',
+        details: 'Database connection failed'
+      });
+    });
+  });
+
+  describe('getSearchSuggestions', () => {
+    test('should return 400 if query prefix "q" is missing or empty', async () => {
+      await getSearchSuggestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Query prefix is required'
+      });
+    });
+
+    test('should return 400 if "q" is not a string', async () => {
+      req.query = { q: null };
+
+      await getSearchSuggestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Query prefix is required'
+      });
+    });
+
+    test('should return 200 with empty array if sanitized query prefix length is 0', async () => {
+      req.query = { q: '!!!' };
+
+      await getSearchSuggestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: []
+      });
+    });
+
+    test('should return search suggestions successfully', async () => {
+      req.query = { q: 'lap*' };
+
+      const suggestSpy = jest.spyOn(SearchIndex, 'suggest').mockResolvedValueOnce(['laptop', 'laptop bag']);
+
+      await getSearchSuggestions(req, res);
+
+      expect(suggestSpy).toHaveBeenCalledWith('lap');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: ['laptop', 'laptop bag']
+      });
+    });
+
+    test('should return 500 if SearchIndex.suggest throws an exception', async () => {
+      req.query = { q: 'phone' };
+
+      jest.spyOn(SearchIndex, 'suggest').mockRejectedValueOnce(new Error('Index unavailable'));
+
+      await getSearchSuggestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve search suggestions',
+        details: 'Index unavailable'
+      });
+    });
+  });
+});

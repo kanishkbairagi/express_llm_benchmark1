@@ -1,0 +1,368 @@
+import { jest } from '@jest/globals';
+import { createOrder, cancelOrder, Inventory, OrderModel } from '../dataset/05_order_controller.js';
+
+describe('Order Controller', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      body: {},
+      params: {},
+      user: null
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('createOrder', () => {
+    test('should return 401 if user is not authenticated', async () => {
+      req.body = { items: [{ productId: 'p1', quantity: 1 }] };
+
+      await createOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User authentication required'
+      });
+    });
+
+    test('should authenticate using req.user.id if available', async () => {
+      req.user = { id: 'usr_123' };
+      req.body = { items: [] };
+
+      await createOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Order must contain at least one item'
+      });
+    });
+
+    test('should authenticate using req.body.userId if req.user is absent', async () => {
+      req.body = { userId: 'usr_456', items: [] };
+
+      await createOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Order must contain at least one item'
+      });
+    });
+
+    test('should return 400 if items array is invalid or empty', async () => {
+      req.user = { id: 'usr_123' };
+
+      req.body = { items: 'not-an-array' };
+      await createOrder(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      req.body = { items: [] };
+      await createOrder(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should return 400 if shippingAddress is missing or incomplete', async () => {
+      req.user = { id: 'usr_123' };
+      req.body = {
+        items: [{ productId: 'prod_1', quantity: 2 }]
+      };
+
+      await createOrder(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Complete shipping address is required (street, city, postalCode)'
+      });
+
+      req.body.shippingAddress = { street: '123 St', city: 'City' }; // missing postalCode
+      await createOrder(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should return 400 for invalid item attributes (productId or quantity)', async () => {
+      req.user = { id: 'usr_123' };
+      const validAddress = { street: '123 Main St', city: 'Metropolis', postalCode: '12345' };
+
+      // Invalid quantity (floating point)
+      req.body = { items: [{ productId: 'p1', quantity: 2.5 }], shippingAddress: validAddress };
+      await createOrder(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      // Invalid quantity (negative)
+      req.body = { items: [{ productId: 'p1', quantity: -1 }], shippingAddress: validAddress };
+      await createOrder(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      // Missing productId
+      req.body = { items: [{ quantity: 1 }], shippingAddress: validAddress };
+      await createOrder(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should return 404 if a product is not found in inventory', async () => {
+      req.user = { id: 'usr_123' };
+      req.body = {
+        items: [{ productId: 'p_nonexistent', quantity: 1 }],
+        shippingAddress: { street: '123 Main St', city: 'Metropolis', postalCode: '12345' }
+      };
+
+      jest.spyOn(Inventory, 'findProduct').mockResolvedValue(null);
+
+      await createOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Product with ID p_nonexistent not found'
+      });
+    });
+
+    test('should return 409 if inventory stock is insufficient', async () => {
+      req.user = { id: 'usr_123' };
+      req.body = {
+        items: [{ productId: 'prod_1', quantity: 10 }],
+        shippingAddress: { street: '123 Main St', city: 'Metropolis', postalCode: '12345' }
+      };
+
+      jest.spyOn(Inventory, 'findProduct').mockResolvedValue({
+        id: 'prod_1',
+        name: 'Super Gadget',
+        stock: 5,
+        price: 100
+      });
+
+      await createOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Insufficient stock for product "Super Gadget". Available: 5, requested: 10'
+      });
+    });
+
+    test('should create order successfully and deduct stock on valid request', async () => {
+      req.user = { id: 'usr_123' };
+      const shippingAddress = { street: '123 Main St', city: 'Metropolis', postalCode: '12345' };
+      req.body = {
+        items: [
+          { productId: 'prod_1', quantity: 2 },
+          { productId: 'prod_2', quantity: 1 }
+        ],
+        shippingAddress
+      };
+
+      jest.spyOn(Inventory, 'findProduct')
+        .mockResolvedValueOnce({ id: 'prod_1', name: 'Item 1', stock: 10, price: 50 })
+        .mockResolvedValueOnce({ id: 'prod_2', name: 'Item 2', stock: 5, price: 100 });
+
+      const decrementSpy = jest.spyOn(Inventory, 'decrementStock').mockResolvedValue(true);
+      const createSpy = jest.spyOn(OrderModel, 'create').mockImplementation(async (data) => ({
+        id: 'ord_1001',
+        ...data
+      }));
+
+      await createOrder(req, res);
+
+      // Subtotal = (50*2) + (100*1) = 200
+      // Tax = 200 * 0.08 = 16
+      // Grand Total = 216
+      expect(decrementSpy).toHaveBeenCalledTimes(2);
+      expect(decrementSpy).toHaveBeenNthCalledWith(1, 'prod_1', 2);
+      expect(decrementSpy).toHaveBeenNthCalledWith(2, 'prod_2', 1);
+
+      expect(createSpy).toHaveBeenCalledWith({
+        userId: 'usr_123',
+        items: [
+          { productId: 'prod_1', name: 'Item 1', unitPrice: 50, quantity: 2, total: 100 },
+          { productId: 'prod_2', name: 'Item 2', unitPrice: 100, quantity: 1, total: 100 }
+        ],
+        subtotal: 200,
+        tax: 16,
+        total: 216,
+        status: 'pending',
+        shippingAddress
+      });
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Order created successfully',
+        data: expect.objectContaining({ id: 'ord_1001', total: 216 })
+      });
+    });
+
+    test('should return 500 if an exception occurs', async () => {
+      req.user = { id: 'usr_123' };
+      req.body = {
+        items: [{ productId: 'prod_1', quantity: 1 }],
+        shippingAddress: { street: '123 Main St', city: 'Metropolis', postalCode: '12345' }
+      };
+
+      jest.spyOn(Inventory, 'findProduct').mockRejectedValue(new Error('Database error'));
+
+      await createOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to process order creation',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('cancelOrder', () => {
+    test('should return 400 if orderId is missing', async () => {
+      req.params = {};
+
+      await cancelOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Order ID is required'
+      });
+    });
+
+    test('should return 404 if order is not found', async () => {
+      req.params = { orderId: 'ord_missing' };
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue(null);
+
+      await cancelOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Order with ID ord_missing not found'
+      });
+    });
+
+    test('should return 403 if user is unauthorized to cancel the order', async () => {
+      req.params = { orderId: 'ord_1' };
+      req.user = { id: 'usr_other', role: 'user' };
+
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue({
+        id: 'ord_1',
+        userId: 'usr_owner',
+        status: 'pending'
+      });
+
+      await cancelOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(403);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Unauthorized to cancel this order'
+      });
+    });
+
+    test('should return 400 if order status is non-cancellable', async () => {
+      req.params = { orderId: 'ord_1' };
+      req.user = { id: 'usr_owner' };
+
+      const nonCancellableStatuses = ['shipped', 'delivered', 'cancelled'];
+
+      for (const status of nonCancellableStatuses) {
+        jest.spyOn(OrderModel, 'findById').mockResolvedValue({
+          id: 'ord_1',
+          userId: 'usr_owner',
+          status
+        });
+
+        await cancelOrder(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({
+          success: false,
+          error: `Cannot cancel an order with status "${status}"`
+        });
+      }
+    });
+
+    test('should successfully cancel order and restore inventory for order owner', async () => {
+      req.params = { orderId: 'ord_1' };
+      req.user = { id: 'usr_owner', role: 'user' };
+
+      const orderData = {
+        id: 'ord_1',
+        userId: 'usr_owner',
+        status: 'pending',
+        items: [
+          { productId: 'prod_1', quantity: 2 },
+          { productId: 'prod_2', quantity: 1 }
+        ]
+      };
+
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue(orderData);
+      const incrementSpy = jest.spyOn(Inventory, 'incrementStock').mockResolvedValue(true);
+      const updateSpy = jest.spyOn(OrderModel, 'update').mockResolvedValue({
+        ...orderData,
+        status: 'cancelled'
+      });
+
+      await cancelOrder(req, res);
+
+      expect(incrementSpy).toHaveBeenCalledTimes(2);
+      expect(incrementSpy).toHaveBeenNthCalledWith(1, 'prod_1', 2);
+      expect(incrementSpy).toHaveBeenNthCalledWith(2, 'prod_2', 1);
+
+      expect(updateSpy).toHaveBeenCalledWith('ord_1', expect.objectContaining({
+        status: 'cancelled',
+        cancelledAt: expect.any(Date)
+      }));
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Order cancelled successfully and stock restored',
+        data: expect.objectContaining({ status: 'cancelled' })
+      });
+    });
+
+    test('should allow admin to cancel an order owned by another user', async () => {
+      req.params = { orderId: 'ord_1' };
+      req.user = { id: 'usr_admin', role: 'admin' };
+
+      const orderData = {
+        id: 'ord_1',
+        userId: 'usr_owner',
+        status: 'pending',
+        items: [{ productId: 'prod_1', quantity: 1 }]
+      };
+
+      jest.spyOn(OrderModel, 'findById').mockResolvedValue(orderData);
+      jest.spyOn(Inventory, 'incrementStock').mockResolvedValue(true);
+      jest.spyOn(OrderModel, 'update').mockResolvedValue({ ...orderData, status: 'cancelled' });
+
+      await cancelOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    test('should return 500 if an exception occurs during cancellation', async () => {
+      req.params = { orderId: 'ord_1' };
+      req.user = { id: 'usr_owner' };
+
+      jest.spyOn(OrderModel, 'findById').mockRejectedValue(new Error('Update failed'));
+
+      await cancelOrder(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to cancel order',
+        details: 'Update failed'
+      });
+    });
+  });
+});

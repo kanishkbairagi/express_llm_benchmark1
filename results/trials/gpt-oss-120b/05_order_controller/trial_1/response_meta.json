@@ -1,0 +1,21 @@
+{
+  "finishReason": "stop",
+  "isTruncated": false,
+  "isEmpty": false,
+  "usage": {
+    "promptTokens": 1314,
+    "completionTokens": 2355,
+    "totalTokens": 3669,
+    "reasoningTokens": 453
+  },
+  "latencyMs": 6337,
+  "effectiveConfig": {
+    "model": "openai/gpt-oss-120b",
+    "maxOutputTokens": 32768,
+    "temperature": "provider default",
+    "top_p": "provider default"
+  },
+  "model": "openai/gpt-oss-120b",
+  "system_fingerprint": "fp_e1a78f200e",
+  "id": "chatcmpl-ac9f4f15-8744-4d3f-9d6b-daca8b001104"
+}

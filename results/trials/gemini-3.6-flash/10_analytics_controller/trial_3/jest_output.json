@@ -1,0 +1,1479 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 1,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 17,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 18,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791051030747,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 11,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 400 if startDate is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if startDate is missing",
+          "startAt": 1791051031266
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 400 if endDate is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if endDate is missing",
+          "startAt": 1791051031279
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 400 if req.query is undefined",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if req.query is undefined",
+          "startAt": 1791051031281
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 400 if startDate is an invalid date string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if startDate is an invalid date string",
+          "startAt": 1791051031284
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 400 if endDate is an invalid date string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if endDate is an invalid date string",
+          "startAt": 1791051031286
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 400 if startDate is later than endDate",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if startDate is later than endDate",
+          "startAt": 1791051031288
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 400 if groupBy is invalid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if groupBy is invalid",
+          "startAt": 1791051031290
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should process default groupBy (day) and return 200 with analytics data",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should process default groupBy (day) and return 200 with analytics data",
+          "startAt": 1791051031292
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should support uppercase and month groupBy parameter",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should support uppercase and month groupBy parameter",
+          "startAt": 1791051031296
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should handle zero results gracefully and return summary with 0 values",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle zero results gracefully and return summary with 0 values",
+          "startAt": 1791051031299
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getRevenueMetrics"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getRevenueMetrics should return 500 if aggregate throws an exception",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 500 if aggregate throws an exception",
+          "startAt": 1791051031301
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getTopSellingProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getTopSellingProducts should return 400 if limit is not a number",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if limit is not a number",
+          "startAt": 1791051031303
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getTopSellingProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getTopSellingProducts should return 400 if limit is less than 1",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if limit is less than 1",
+          "startAt": 1791051031305
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getTopSellingProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getTopSellingProducts should return 400 if limit is greater than 50",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if limit is greater than 50",
+          "startAt": 1791051031306
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getTopSellingProducts"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getTopSellingProducts should use default limit 10 when req.query is missing or empty",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should use default limit 10 when req.query is missing or empty",
+          "startAt": 1791051031308
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getTopSellingProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getTopSellingProducts should parse valid limit parameter correctly",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should parse valid limit parameter correctly",
+          "startAt": 1791051031311
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "getTopSellingProducts"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Analytics Controller getTopSellingProducts should return 500 if OrderAnalytics.aggregate throws an error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 500 if OrderAnalytics.aggregate throws an error",
+          "startAt": 1791051031312
+        },
+        {
+          "ancestorTitles": [
+            "Analytics Controller",
+            "OrderAnalytics default mock behavior"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "Error: Mongo Error\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials\\10_analytics_controller_gemini-3.6-flash_trial3.test.js:329:65)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Analytics Controller OrderAnalytics default mock behavior should return an empty array from default aggregate method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return an empty array from default aggregate method",
+          "startAt": 1791051031314
+        }
+      ],
+      "endTime": 1791051031377,
+      "message": "  ● Analytics Controller › OrderAnalytics default mock behavior › should return an empty array from default aggregate method\n\n    Mongo Error\n\n    \u001b[0m \u001b[90m 327 |\u001b[39m       req\u001b[33m.\u001b[39mquery \u001b[33m=\u001b[39m { limit\u001b[33m:\u001b[39m \u001b[32m'10'\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 328 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 329 |\u001b[39m       jest\u001b[33m.\u001b[39mspyOn(\u001b[33mOrderAnalytics\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'aggregate'\u001b[39m)\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Mongo Error'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 330 |\u001b[39m\n     \u001b[90m 331 |\u001b[39m       \u001b[36mawait\u001b[39m getTopSellingProducts(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 332 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials/10_analytics_controller_gemini-3.6-flash_trial3.test.js:329:65)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\10_analytics_controller_gemini-3.6-flash_trial3.test.js",
+      "startTime": 1791051030992,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\10_analytics_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\10_analytics_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 30
+          },
+          "end": {
+            "line": 6,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 33
+          },
+          "end": {
+            "line": 5,
+            "column": 35
+          }
+        },
+        "2": {
+          "start": {
+            "line": 8,
+            "column": 33
+          },
+          "end": {
+            "line": 107,
+            "column": 1
+          }
+        },
+        "3": {
+          "start": {
+            "line": 9,
+            "column": 2
+          },
+          "end": {
+            "line": 106,
+            "column": 3
+          }
+        },
+        "4": {
+          "start": {
+            "line": 10,
+            "column": 52
+          },
+          "end": {
+            "line": 10,
+            "column": 67
+          }
+        },
+        "5": {
+          "start": {
+            "line": 12,
+            "column": 4
+          },
+          "end": {
+            "line": 17,
+            "column": 5
+          }
+        },
+        "6": {
+          "start": {
+            "line": 13,
+            "column": 6
+          },
+          "end": {
+            "line": 16,
+            "column": 9
+          }
+        },
+        "7": {
+          "start": {
+            "line": 19,
+            "column": 18
+          },
+          "end": {
+            "line": 19,
+            "column": 37
+          }
+        },
+        "8": {
+          "start": {
+            "line": 20,
+            "column": 16
+          },
+          "end": {
+            "line": 20,
+            "column": 33
+          }
+        },
+        "9": {
+          "start": {
+            "line": 22,
+            "column": 4
+          },
+          "end": {
+            "line": 27,
+            "column": 5
+          }
+        },
+        "10": {
+          "start": {
+            "line": 23,
+            "column": 6
+          },
+          "end": {
+            "line": 26,
+            "column": 9
+          }
+        },
+        "11": {
+          "start": {
+            "line": 29,
+            "column": 4
+          },
+          "end": {
+            "line": 34,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 30,
+            "column": 6
+          },
+          "end": {
+            "line": 33,
+            "column": 9
+          }
+        },
+        "13": {
+          "start": {
+            "line": 36,
+            "column": 29
+          },
+          "end": {
+            "line": 36,
+            "column": 53
+          }
+        },
+        "14": {
+          "start": {
+            "line": 37,
+            "column": 4
+          },
+          "end": {
+            "line": 42,
+            "column": 5
+          }
+        },
+        "15": {
+          "start": {
+            "line": 38,
+            "column": 6
+          },
+          "end": {
+            "line": 41,
+            "column": 9
+          }
+        },
+        "16": {
+          "start": {
+            "line": 44,
+            "column": 26
+          },
+          "end": {
+            "line": 48,
+            "column": 5
+          }
+        },
+        "17": {
+          "start": {
+            "line": 50,
+            "column": 21
+          },
+          "end": {
+            "line": 82,
+            "column": 5
+          }
+        },
+        "18": {
+          "start": {
+            "line": 84,
+            "column": 20
+          },
+          "end": {
+            "line": 84,
+            "column": 60
+          }
+        },
+        "19": {
+          "start": {
+            "line": 86,
+            "column": 25
+          },
+          "end": {
+            "line": 86,
+            "column": 89
+          }
+        },
+        "20": {
+          "start": {
+            "line": 86,
+            "column": 55
+          },
+          "end": {
+            "line": 86,
+            "column": 85
+          }
+        },
+        "21": {
+          "start": {
+            "line": 87,
+            "column": 26
+          },
+          "end": {
+            "line": 87,
+            "column": 89
+          }
+        },
+        "22": {
+          "start": {
+            "line": 87,
+            "column": 56
+          },
+          "end": {
+            "line": 87,
+            "column": 85
+          }
+        },
+        "23": {
+          "start": {
+            "line": 89,
+            "column": 4
+          },
+          "end": {
+            "line": 99,
+            "column": 7
+          }
+        },
+        "24": {
+          "start": {
+            "line": 101,
+            "column": 4
+          },
+          "end": {
+            "line": 105,
+            "column": 7
+          }
+        },
+        "25": {
+          "start": {
+            "line": 109,
+            "column": 37
+          },
+          "end": {
+            "line": 161,
+            "column": 1
+          }
+        },
+        "26": {
+          "start": {
+            "line": 110,
+            "column": 2
+          },
+          "end": {
+            "line": 160,
+            "column": 3
+          }
+        },
+        "27": {
+          "start": {
+            "line": 111,
+            "column": 27
+          },
+          "end": {
+            "line": 111,
+            "column": 42
+          }
+        },
+        "28": {
+          "start": {
+            "line": 112,
+            "column": 24
+          },
+          "end": {
+            "line": 112,
+            "column": 43
+          }
+        },
+        "29": {
+          "start": {
+            "line": 114,
+            "column": 4
+          },
+          "end": {
+            "line": 119,
+            "column": 5
+          }
+        },
+        "30": {
+          "start": {
+            "line": 115,
+            "column": 6
+          },
+          "end": {
+            "line": 118,
+            "column": 9
+          }
+        },
+        "31": {
+          "start": {
+            "line": 121,
+            "column": 21
+          },
+          "end": {
+            "line": 143,
+            "column": 5
+          }
+        },
+        "32": {
+          "start": {
+            "line": 145,
+            "column": 24
+          },
+          "end": {
+            "line": 145,
+            "column": 64
+          }
+        },
+        "33": {
+          "start": {
+            "line": 147,
+            "column": 4
+          },
+          "end": {
+            "line": 153,
+            "column": 7
+          }
+        },
+        "34": {
+          "start": {
+            "line": 155,
+            "column": 4
+          },
+          "end": {
+            "line": 159,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 13
+            },
+            "end": {
+              "line": 5,
+              "column": 14
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 33
+            },
+            "end": {
+              "line": 5,
+              "column": 35
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 33
+            },
+            "end": {
+              "line": 8,
+              "column": 34
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 53
+            },
+            "end": {
+              "line": 107,
+              "column": 1
+            }
+          },
+          "line": 8
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 86,
+              "column": 40
+            },
+            "end": {
+              "line": 86,
+              "column": 41
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 86,
+              "column": 55
+            },
+            "end": {
+              "line": 86,
+              "column": 85
+            }
+          },
+          "line": 86
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 87,
+              "column": 41
+            },
+            "end": {
+              "line": 87,
+              "column": 42
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 87,
+              "column": 56
+            },
+            "end": {
+              "line": 87,
+              "column": 85
+            }
+          },
+          "line": 87
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 109,
+              "column": 37
+            },
+            "end": {
+              "line": 109,
+              "column": 38
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 109,
+              "column": 57
+            },
+            "end": {
+              "line": 161,
+              "column": 1
+            }
+          },
+          "line": 109
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 32
+            },
+            "end": {
+              "line": 10,
+              "column": 47
+            }
+          },
+          "type": "default-arg",
+          "locations": [
+            {
+              "start": {
+                "line": 10,
+                "column": 42
+              },
+              "end": {
+                "line": 10,
+                "column": 47
+              }
+            }
+          ],
+          "line": 10
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 52
+            },
+            "end": {
+              "line": 10,
+              "column": 67
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 10,
+                "column": 52
+              },
+              "end": {
+                "line": 10,
+                "column": 61
+              }
+            },
+            {
+              "start": {
+                "line": 10,
+                "column": 65
+              },
+              "end": {
+                "line": 10,
+                "column": 67
+              }
+            }
+          ],
+          "line": 10
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 4
+            },
+            "end": {
+              "line": 17,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 12,
+                "column": 4
+              },
+              "end": {
+                "line": 17,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 12
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 8
+            },
+            "end": {
+              "line": 12,
+              "column": 30
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 12,
+                "column": 8
+              },
+              "end": {
+                "line": 12,
+                "column": 18
+              }
+            },
+            {
+              "start": {
+                "line": 12,
+                "column": 22
+              },
+              "end": {
+                "line": 12,
+                "column": 30
+              }
+            }
+          ],
+          "line": 12
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 4
+            },
+            "end": {
+              "line": 27,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 22,
+                "column": 4
+              },
+              "end": {
+                "line": 27,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 22
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 8
+            },
+            "end": {
+              "line": 22,
+              "column": 54
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 22,
+                "column": 8
+              },
+              "end": {
+                "line": 22,
+                "column": 30
+              }
+            },
+            {
+              "start": {
+                "line": 22,
+                "column": 34
+              },
+              "end": {
+                "line": 22,
+                "column": 54
+              }
+            }
+          ],
+          "line": 22
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 29,
+              "column": 4
+            },
+            "end": {
+              "line": 34,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 29,
+                "column": 4
+              },
+              "end": {
+                "line": 34,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 29
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 37,
+              "column": 4
+            },
+            "end": {
+              "line": 42,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 37,
+                "column": 4
+              },
+              "end": {
+                "line": 42,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 37
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 86,
+              "column": 62
+            },
+            "end": {
+              "line": 86,
+              "column": 84
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 86,
+                "column": 62
+              },
+              "end": {
+                "line": 86,
+                "column": 79
+              }
+            },
+            {
+              "start": {
+                "line": 86,
+                "column": 83
+              },
+              "end": {
+                "line": 86,
+                "column": 84
+              }
+            }
+          ],
+          "line": 86
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 87,
+              "column": 63
+            },
+            "end": {
+              "line": 87,
+              "column": 84
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 87,
+                "column": 63
+              },
+              "end": {
+                "line": 87,
+                "column": 79
+              }
+            },
+            {
+              "start": {
+                "line": 87,
+                "column": 83
+              },
+              "end": {
+                "line": 87,
+                "column": 84
+              }
+            }
+          ],
+          "line": 87
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 95,
+              "column": 25
+            },
+            "end": {
+              "line": 95,
+              "column": 102
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 95,
+                "column": 45
+              },
+              "end": {
+                "line": 95,
+                "column": 98
+              }
+            },
+            {
+              "start": {
+                "line": 95,
+                "column": 101
+              },
+              "end": {
+                "line": 95,
+                "column": 102
+              }
+            }
+          ],
+          "line": 95
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 111,
+              "column": 12
+            },
+            "end": {
+              "line": 111,
+              "column": 22
+            }
+          },
+          "type": "default-arg",
+          "locations": [
+            {
+              "start": {
+                "line": 111,
+                "column": 20
+              },
+              "end": {
+                "line": 111,
+                "column": 22
+              }
+            }
+          ],
+          "line": 111
+        },
+        "12": {
+          "loc": {
+            "start": {
+              "line": 111,
+              "column": 27
+            },
+            "end": {
+              "line": 111,
+              "column": 42
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 111,
+                "column": 27
+              },
+              "end": {
+                "line": 111,
+                "column": 36
+              }
+            },
+            {
+              "start": {
+                "line": 111,
+                "column": 40
+              },
+              "end": {
+                "line": 111,
+                "column": 42
+              }
+            }
+          ],
+          "line": 111
+        },
+        "13": {
+          "loc": {
+            "start": {
+              "line": 114,
+              "column": 4
+            },
+            "end": {
+              "line": 119,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 114,
+                "column": 4
+              },
+              "end": {
+                "line": 119,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 114
+        },
+        "14": {
+          "loc": {
+            "start": {
+              "line": 114,
+              "column": 8
+            },
+            "end": {
+              "line": 114,
+              "column": 65
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 114,
+                "column": 8
+              },
+              "end": {
+                "line": 114,
+                "column": 26
+              }
+            },
+            {
+              "start": {
+                "line": 114,
+                "column": 30
+              },
+              "end": {
+                "line": 114,
+                "column": 45
+              }
+            },
+            {
+              "start": {
+                "line": 114,
+                "column": 49
+              },
+              "end": {
+                "line": 114,
+                "column": 65
+              }
+            }
+          ],
+          "line": 114
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 1,
+        "3": 11,
+        "4": 11,
+        "5": 11,
+        "6": 3,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 2,
+        "11": 6,
+        "12": 1,
+        "13": 5,
+        "14": 5,
+        "15": 1,
+        "16": 4,
+        "17": 4,
+        "18": 4,
+        "19": 3,
+        "20": 2,
+        "21": 3,
+        "22": 2,
+        "23": 3,
+        "24": 1,
+        "25": 1,
+        "26": 6,
+        "27": 6,
+        "28": 6,
+        "29": 6,
+        "30": 3,
+        "31": 3,
+        "32": 3,
+        "33": 2,
+        "34": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 11,
+        "2": 2,
+        "3": 2,
+        "4": 6
+      },
+      "b": {
+        "0": [
+          8
+        ],
+        "1": [
+          11,
+          1
+        ],
+        "2": [
+          3,
+          8
+        ],
+        "3": [
+          11,
+          9
+        ],
+        "4": [
+          2,
+          6
+        ],
+        "5": [
+          8,
+          7
+        ],
+        "6": [
+          1,
+          5
+        ],
+        "7": [
+          1,
+          4
+        ],
+        "8": [
+          2,
+          0
+        ],
+        "9": [
+          2,
+          0
+        ],
+        "10": [
+          1,
+          2
+        ],
+        "11": [
+          1
+        ],
+        "12": [
+          6,
+          1
+        ],
+        "13": [
+          3,
+          3
+        ],
+        "14": [
+          6,
+          5,
+          4
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "76d150c2a7b454b35d2e78b2995d0f1ec396a5ca"
+    }
+  }
+}

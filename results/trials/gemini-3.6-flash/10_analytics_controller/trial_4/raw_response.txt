@@ -1,0 +1,295 @@
+```javascript
+import { jest } from '@jest/globals';
+import {
+  OrderAnalytics,
+  getRevenueMetrics,
+  getTopSellingProducts
+} from '../dataset/10_analytics_controller.js';
+
+describe('Analytics Controller Tests', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+  });
+
+  describe('OrderAnalytics default mock', () => {
+    it('should return an empty array from aggregate by default', async () => {
+      const result = await OrderAnalytics.aggregate([]);
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getRevenueMetrics', () => {
+    it('should return 400 if req.query is undefined or query params are missing', async () => {
+      req = {};
+      await getRevenueMetrics(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Both startDate and endDate query parameters are required'
+      });
+
+      req = { query: { startDate: '2023-01-01' } };
+      await getRevenueMetrics(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      req = { query: { endDate: '2023-01-10' } };
+      await getRevenueMetrics(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should return 400 if startDate or endDate format is invalid', async () => {
+      req = { query: { startDate: 'invalid-date', endDate: '2023-01-10' } };
+      await getRevenueMetrics(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid date format. Use ISO format (YYYY-MM-DD)'
+      });
+
+      req = { query: { startDate: '2023-01-01', endDate: 'invalid-date' } };
+      await getRevenueMetrics(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should return 400 if startDate is after endDate', async () => {
+      req = { query: { startDate: '2023-01-10', endDate: '2023-01-01' } };
+      await getRevenueMetrics(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'startDate cannot be later than endDate'
+      });
+    });
+
+    it('should return 400 if groupBy parameter is invalid', async () => {
+      req = {
+        query: {
+          startDate: '2023-01-01',
+          endDate: '2023-01-10',
+          groupBy: 'quarter'
+        }
+      };
+      await getRevenueMetrics(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid groupBy parameter. Allowed values: day, month, year'
+      });
+    });
+
+    it('should return 200 with formatted timeSeries and summary when default groupBy (day) is used', async () => {
+      req = {
+        query: {
+          startDate: '2023-01-01',
+          endDate: '2023-01-02'
+        }
+      };
+
+      const mockAggResults = [
+        { period: '2023-01-01', totalRevenue: 150.5, totalOrders: 3, avgOrderValue: 50.17 },
+        { period: '2023-01-02', totalRevenue: 200.0, totalOrders: 2, avgOrderValue: 100.0 }
+      ];
+
+      const aggregateSpy = jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue(mockAggResults);
+
+      await getRevenueMetrics(req, res);
+
+      expect(aggregateSpy).toHaveBeenCalled();
+      const pipeline = aggregateSpy.mock.calls[0][0];
+      expect(pipeline[1].$group._id.$dateToString.format).toBe('%Y-%m-%d');
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          summary: {
+            totalRevenue: 350.5,
+            totalOrders: 5,
+            avgOrderValue: 70.1
+          },
+          timeSeries: mockAggResults
+        }
+      });
+    });
+
+    it('should handle groupBy month and year formats correctly', async () => {
+      const aggregateSpy = jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue([]);
+
+      req = {
+        query: {
+          startDate: '2023-01-01',
+          endDate: '2023-12-31',
+          groupBy: 'MONTH'
+        }
+      };
+      await getRevenueMetrics(req, res);
+      let pipeline = aggregateSpy.mock.calls[0][0];
+      expect(pipeline[1].$group._id.$dateToString.format).toBe('%Y-%m');
+
+      req.query.groupBy = 'year';
+      await getRevenueMetrics(req, res);
+      pipeline = aggregateSpy.mock.calls[1][0];
+      expect(pipeline[1].$group._id.$dateToString.format).toBe('%Y');
+    });
+
+    it('should handle zero order results gracefully', async () => {
+      req = {
+        query: {
+          startDate: '2023-01-01',
+          endDate: '2023-01-02'
+        }
+      };
+
+      jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue([]);
+
+      await getRevenueMetrics(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          summary: {
+            totalRevenue: 0,
+            totalOrders: 0,
+            avgOrderValue: 0
+          },
+          timeSeries: []
+        }
+      });
+    });
+
+    it('should handle missing revenue or orders properties in aggregate result items', async () => {
+      req = {
+        query: {
+          startDate: '2023-01-01',
+          endDate: '2023-01-02'
+        }
+      };
+
+      jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue([
+        { period: '2023-01-01' }
+      ]);
+
+      await getRevenueMetrics(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          summary: {
+            totalRevenue: 0,
+            totalOrders: 0,
+            avgOrderValue: 0
+          },
+          timeSeries: [{ period: '2023-01-01' }]
+        }
+      });
+    });
+
+    it('should return 500 when database operation throws an exception', async () => {
+      req = {
+        query: {
+          startDate: '2023-01-01',
+          endDate: '2023-01-02'
+        }
+      };
+
+      jest.spyOn(OrderAnalytics, 'aggregate').mockRejectedValue(new Error('Database error'));
+
+      await getRevenueMetrics(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to generate revenue analytics',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('getTopSellingProducts', () => {
+    it('should use default limit of 10 if req.query is missing or empty', async () => {
+      req = {};
+
+      const mockProducts = [
+        { productId: 'p1', productName: 'Product 1', totalUnitsSold: 10, totalRevenue: 100 }
+      ];
+      const aggregateSpy = jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue(mockProducts);
+
+      await getTopSellingProducts(req, res);
+
+      expect(aggregateSpy).toHaveBeenCalled();
+      const pipeline = aggregateSpy.mock.calls[0][0];
+      const limitStage = pipeline.find(stage => stage.$limit !== undefined);
+      expect(limitStage.$limit).toBe(10);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          count: 1,
+          items: mockProducts
+        }
+      });
+    });
+
+    it('should return 400 for invalid limit values', async () => {
+      const invalidLimits = ['not-a-number', '0', '-5', '51'];
+
+      for (const limit of invalidLimits) {
+        req = { query: { limit } };
+        await getTopSellingProducts(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({
+          success: false,
+          error: 'Limit must be a number between 1 and 50'
+        });
+      }
+    });
+
+    it('should parse valid limit parameter correctly', async () => {
+      req = { query: { limit: '25' } };
+
+      const aggregateSpy = jest.spyOn(OrderAnalytics, 'aggregate').mockResolvedValue([]);
+
+      await getTopSellingProducts(req, res);
+
+      expect(aggregateSpy).toHaveBeenCalled();
+      const pipeline = aggregateSpy.mock.calls[0][0];
+      const limitStage = pipeline.find(stage => stage.$limit !== undefined);
+      expect(limitStage.$limit).toBe(25);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: {
+          count: 0,
+          items: []
+        }
+      });
+    });
+
+    it('should return 500 when database aggregate throws an exception', async () => {
+      req = { query: { limit: '10' } };
+
+      jest.spyOn(OrderAnalytics, 'aggregate').mockRejectedValue(new Error('Aggregation error'));
+
+      await getTopSellingProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to aggregate top selling products',
+        details: 'Aggregation error'
+      });
+    });
+  });
+});
+```

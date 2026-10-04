@@ -1,0 +1,1058 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 9,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 9,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791052444720,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "uploadImage controller"
+          ],
+          "duration": 14,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "uploadImage controller should upload image successfully",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should upload image successfully",
+          "startAt": 1791052445146
+        },
+        {
+          "ancestorTitles": [
+            "uploadImage controller"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "uploadImage controller should return 400 when no file is provided",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 when no file is provided",
+          "startAt": 1791052445163
+        },
+        {
+          "ancestorTitles": [
+            "uploadImage controller"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "uploadImage controller should return 415 for unsupported mime type",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 415 for unsupported mime type",
+          "startAt": 1791052445166
+        },
+        {
+          "ancestorTitles": [
+            "uploadImage controller"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "uploadImage controller should return 413 when file exceeds max size",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 413 when file exceeds max size",
+          "startAt": 1791052445169
+        },
+        {
+          "ancestorTitles": [
+            "uploadImage controller"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "uploadImage controller should handle internal errors and return 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle internal errors and return 500",
+          "startAt": 1791052445171
+        },
+        {
+          "ancestorTitles": [
+            "deleteImage controller"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "deleteImage controller should delete image successfully",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should delete image successfully",
+          "startAt": 1791052445173
+        },
+        {
+          "ancestorTitles": [
+            "deleteImage controller"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "deleteImage controller should return 400 when fileId param is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 when fileId param is missing",
+          "startAt": 1791052445176
+        },
+        {
+          "ancestorTitles": [
+            "deleteImage controller"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "deleteImage controller should return 404 when file not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 404 when file not found",
+          "startAt": 1791052445178
+        },
+        {
+          "ancestorTitles": [
+            "deleteImage controller"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "deleteImage controller should handle internal errors and return 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle internal errors and return 500",
+          "startAt": 1791052445180
+        }
+      ],
+      "endTime": 1791052445186,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\04_upload_controller_gpt-oss-120b_trial4.test.js",
+      "startTime": 1791052444878,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\04_upload_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\04_upload_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 25
+          },
+          "end": {
+            "line": 14,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 62
+          },
+          "end": {
+            "line": 9,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 10,
+            "column": 26
+          },
+          "end": {
+            "line": 13,
+            "column": 3
+          }
+        },
+        "3": {
+          "start": {
+            "line": 16,
+            "column": 26
+          },
+          "end": {
+            "line": 20,
+            "column": 1
+          }
+        },
+        "4": {
+          "start": {
+            "line": 17,
+            "column": 27
+          },
+          "end": {
+            "line": 17,
+            "column": 81
+          }
+        },
+        "5": {
+          "start": {
+            "line": 18,
+            "column": 26
+          },
+          "end": {
+            "line": 18,
+            "column": 30
+          }
+        },
+        "6": {
+          "start": {
+            "line": 19,
+            "column": 24
+          },
+          "end": {
+            "line": 19,
+            "column": 28
+          }
+        },
+        "7": {
+          "start": {
+            "line": 22,
+            "column": 27
+          },
+          "end": {
+            "line": 22,
+            "column": 68
+          }
+        },
+        "8": {
+          "start": {
+            "line": 23,
+            "column": 22
+          },
+          "end": {
+            "line": 23,
+            "column": 37
+          }
+        },
+        "9": {
+          "start": {
+            "line": 25,
+            "column": 27
+          },
+          "end": {
+            "line": 87,
+            "column": 1
+          }
+        },
+        "10": {
+          "start": {
+            "line": 26,
+            "column": 2
+          },
+          "end": {
+            "line": 86,
+            "column": 3
+          }
+        },
+        "11": {
+          "start": {
+            "line": 27,
+            "column": 17
+          },
+          "end": {
+            "line": 27,
+            "column": 25
+          }
+        },
+        "12": {
+          "start": {
+            "line": 29,
+            "column": 4
+          },
+          "end": {
+            "line": 34,
+            "column": 5
+          }
+        },
+        "13": {
+          "start": {
+            "line": 30,
+            "column": 6
+          },
+          "end": {
+            "line": 33,
+            "column": 9
+          }
+        },
+        "14": {
+          "start": {
+            "line": 36,
+            "column": 4
+          },
+          "end": {
+            "line": 41,
+            "column": 5
+          }
+        },
+        "15": {
+          "start": {
+            "line": 37,
+            "column": 6
+          },
+          "end": {
+            "line": 40,
+            "column": 9
+          }
+        },
+        "16": {
+          "start": {
+            "line": 43,
+            "column": 4
+          },
+          "end": {
+            "line": 48,
+            "column": 5
+          }
+        },
+        "17": {
+          "start": {
+            "line": 44,
+            "column": 6
+          },
+          "end": {
+            "line": 47,
+            "column": 9
+          }
+        },
+        "18": {
+          "start": {
+            "line": 50,
+            "column": 26
+          },
+          "end": {
+            "line": 50,
+            "column": 60
+          }
+        },
+        "19": {
+          "start": {
+            "line": 51,
+            "column": 26
+          },
+          "end": {
+            "line": 51,
+            "column": 75
+          }
+        },
+        "20": {
+          "start": {
+            "line": 52,
+            "column": 18
+          },
+          "end": {
+            "line": 52,
+            "column": 75
+          }
+        },
+        "21": {
+          "start": {
+            "line": 54,
+            "column": 21
+          },
+          "end": {
+            "line": 59,
+            "column": 6
+          }
+        },
+        "22": {
+          "start": {
+            "line": 61,
+            "column": 19
+          },
+          "end": {
+            "line": 68,
+            "column": 6
+          }
+        },
+        "23": {
+          "start": {
+            "line": 70,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 7
+          }
+        },
+        "24": {
+          "start": {
+            "line": 81,
+            "column": 4
+          },
+          "end": {
+            "line": 85,
+            "column": 7
+          }
+        },
+        "25": {
+          "start": {
+            "line": 89,
+            "column": 27
+          },
+          "end": {
+            "line": 123,
+            "column": 1
+          }
+        },
+        "26": {
+          "start": {
+            "line": 90,
+            "column": 2
+          },
+          "end": {
+            "line": 122,
+            "column": 3
+          }
+        },
+        "27": {
+          "start": {
+            "line": 91,
+            "column": 23
+          },
+          "end": {
+            "line": 91,
+            "column": 39
+          }
+        },
+        "28": {
+          "start": {
+            "line": 93,
+            "column": 4
+          },
+          "end": {
+            "line": 98,
+            "column": 5
+          }
+        },
+        "29": {
+          "start": {
+            "line": 94,
+            "column": 6
+          },
+          "end": {
+            "line": 97,
+            "column": 9
+          }
+        },
+        "30": {
+          "start": {
+            "line": 100,
+            "column": 17
+          },
+          "end": {
+            "line": 100,
+            "column": 50
+          }
+        },
+        "31": {
+          "start": {
+            "line": 101,
+            "column": 4
+          },
+          "end": {
+            "line": 106,
+            "column": 5
+          }
+        },
+        "32": {
+          "start": {
+            "line": 102,
+            "column": 6
+          },
+          "end": {
+            "line": 105,
+            "column": 9
+          }
+        },
+        "33": {
+          "start": {
+            "line": 108,
+            "column": 4
+          },
+          "end": {
+            "line": 108,
+            "column": 39
+          }
+        },
+        "34": {
+          "start": {
+            "line": 109,
+            "column": 4
+          },
+          "end": {
+            "line": 109,
+            "column": 36
+          }
+        },
+        "35": {
+          "start": {
+            "line": 111,
+            "column": 4
+          },
+          "end": {
+            "line": 115,
+            "column": 7
+          }
+        },
+        "36": {
+          "start": {
+            "line": 117,
+            "column": 4
+          },
+          "end": {
+            "line": 121,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 10
+            },
+            "end": {
+              "line": 5,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 62
+            },
+            "end": {
+              "line": 9,
+              "column": 3
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 10,
+              "column": 10
+            },
+            "end": {
+              "line": 10,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 26
+            },
+            "end": {
+              "line": 13,
+              "column": 3
+            }
+          },
+          "line": 10
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 17,
+              "column": 10
+            },
+            "end": {
+              "line": 17,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 27
+            },
+            "end": {
+              "line": 17,
+              "column": 81
+            }
+          },
+          "line": 17
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 18,
+              "column": 12
+            },
+            "end": {
+              "line": 18,
+              "column": 13
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 18,
+              "column": 26
+            },
+            "end": {
+              "line": 18,
+              "column": 30
+            }
+          },
+          "line": 18
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 19,
+              "column": 10
+            },
+            "end": {
+              "line": 19,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 19,
+              "column": 24
+            },
+            "end": {
+              "line": 19,
+              "column": 28
+            }
+          },
+          "line": 19
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 25,
+              "column": 27
+            },
+            "end": {
+              "line": 25,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 25,
+              "column": 47
+            },
+            "end": {
+              "line": 87,
+              "column": 1
+            }
+          },
+          "line": 25
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 89,
+              "column": 27
+            },
+            "end": {
+              "line": 89,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 89,
+              "column": 47
+            },
+            "end": {
+              "line": 123,
+              "column": 1
+            }
+          },
+          "line": 89
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 29,
+              "column": 4
+            },
+            "end": {
+              "line": 34,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 29,
+                "column": 4
+              },
+              "end": {
+                "line": 34,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 29
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 36,
+              "column": 4
+            },
+            "end": {
+              "line": 41,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 36,
+                "column": 4
+              },
+              "end": {
+                "line": 41,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 36
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 4
+            },
+            "end": {
+              "line": 48,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 4
+              },
+              "end": {
+                "line": 48,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 43
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 67,
+              "column": 18
+            },
+            "end": {
+              "line": 67,
+              "column": 45
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 67,
+                "column": 18
+              },
+              "end": {
+                "line": 67,
+                "column": 30
+              }
+            },
+            {
+              "start": {
+                "line": 67,
+                "column": 34
+              },
+              "end": {
+                "line": 67,
+                "column": 45
+              }
+            }
+          ],
+          "line": 67
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 91,
+              "column": 23
+            },
+            "end": {
+              "line": 91,
+              "column": 39
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 91,
+                "column": 23
+              },
+              "end": {
+                "line": 91,
+                "column": 33
+              }
+            },
+            {
+              "start": {
+                "line": 91,
+                "column": 37
+              },
+              "end": {
+                "line": 91,
+                "column": 39
+              }
+            }
+          ],
+          "line": 91
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 93,
+              "column": 4
+            },
+            "end": {
+              "line": 98,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 93,
+                "column": 4
+              },
+              "end": {
+                "line": 98,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 93
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 101,
+              "column": 4
+            },
+            "end": {
+              "line": 106,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 101,
+                "column": 4
+              },
+              "end": {
+                "line": 106,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 101
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 5,
+        "11": 5,
+        "12": 5,
+        "13": 1,
+        "14": 4,
+        "15": 1,
+        "16": 3,
+        "17": 1,
+        "18": 2,
+        "19": 2,
+        "20": 2,
+        "21": 2,
+        "22": 1,
+        "23": 1,
+        "24": 1,
+        "25": 1,
+        "26": 4,
+        "27": 4,
+        "28": 4,
+        "29": 1,
+        "30": 3,
+        "31": 3,
+        "32": 1,
+        "33": 2,
+        "34": 1,
+        "35": 1,
+        "36": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 5,
+        "6": 4
+      },
+      "b": {
+        "0": [
+          1,
+          4
+        ],
+        "1": [
+          1,
+          3
+        ],
+        "2": [
+          1,
+          2
+        ],
+        "3": [
+          1,
+          0
+        ],
+        "4": [
+          4,
+          0
+        ],
+        "5": [
+          1,
+          3
+        ],
+        "6": [
+          1,
+          2
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "231b807a46334233f8c18af51510024bf638b848"
+    }
+  }
+}

@@ -1,0 +1,272 @@
+import { jest } from '@jest/globals';
+import {
+  handleStripeWebhook,
+  Order,
+  Subscription,
+  WebhookLog,
+  StripeService
+} from '../dataset/03_payment_controller.js';
+
+describe('handleStripeWebhook', () => {
+  const mockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    jest.spyOn(WebhookLog, 'findOne').mockResolvedValue(null);
+    jest.spyOn(WebhookLog, 'create').mockResolvedValue({ id: 'log-123' });
+
+    jest.spyOn(Order, 'findById').mockResolvedValue({ id: 'order-1' });
+    jest.spyOn(Order, 'updateStatus').mockResolvedValue({});
+
+    jest.spyOn(Subscription, 'updateStatus').mockResolvedValue({});
+
+    jest.spyOn(StripeService, 'constructEvent').mockImplementation((payload) =>
+      typeof payload === 'string' ? JSON.parse(payload) : payload
+    );
+  });
+
+  test('returns 400 when stripe-signature header is missing', async () => {
+    const req = { headers: {}, body: {} };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Missing stripe-signature header'
+      })
+    );
+  });
+
+  test('returns 400 on invalid signature', async () => {
+    const req = { headers: { 'stripe-signature': 'invalid_signature' }, body: {} };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: expect.stringContaining('Webhook signature verification failed')
+      })
+    );
+  });
+
+  test('returns 400 for malformed event object', async () => {
+    const req = { headers: { 'stripe-signature': 'valid' }, body: {} };
+    const res = mockRes();
+
+    jest.spyOn(StripeService, 'constructEvent').mockReturnValue({});
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Malformed event object'
+      })
+    );
+  });
+
+  test('acknowledges already processed event', async () => {
+    const event = { id: 'evt_1', type: 'payment_intent.succeeded', data: { object: {} } };
+    const req = { headers: { 'stripe-signature': 'valid' }, body: JSON.stringify(event) };
+    const res = mockRes();
+
+    jest.spyOn(WebhookLog, 'findOne').mockResolvedValue({ id: 'log-123' });
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        received: true,
+        message: 'Event already processed'
+      })
+    );
+  });
+
+  test('processes payment_intent.succeeded and updates order', async () => {
+    const event = {
+      id: 'evt_success',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_123',
+          amount_received: 2000,
+          metadata: { orderId: 'order-42' }
+        }
+      }
+    };
+    const req = { headers: { 'stripe-signature': 'valid' }, body: JSON.stringify(event) };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Order.findById).toHaveBeenCalledWith('order-42');
+    expect(Order.updateStatus).toHaveBeenCalledWith('order-42', 'paid', {
+      transactionId: 'pi_123',
+      amountPaid: 2000
+    });
+    expect(WebhookLog.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        eventId: 'evt_success',
+        eventType: 'payment_intent.succeeded',
+        status: 'processed'
+      })
+    );
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        received: true,
+        eventType: 'payment_intent.succeeded'
+      })
+    );
+  });
+
+  test('returns 404 when order not found for succeeded payment', async () => {
+    const event = {
+      id: 'evt_missing_order',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_456',
+          amount_received: 1500,
+          metadata: { orderId: 'order-missing' }
+        }
+      }
+    };
+    const req = { headers: { 'stripe-signature': 'valid' }, body: JSON.stringify(event) };
+    const res = mockRes();
+
+    jest.spyOn(Order, 'findById').mockResolvedValue(null);
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Order order-missing not found'
+      })
+    );
+  });
+
+  test('processes payment_intent.payment_failed and updates order status if orderId present', async () => {
+    const event = {
+      id: 'evt_failed',
+      type: 'payment_intent.payment_failed',
+      data: {
+        object: {
+          id: 'pi_fail',
+          metadata: { orderId: 'order-99' },
+          last_payment_error: { message: 'Card declined' }
+        }
+      }
+    };
+    const req = { headers: { 'stripe-signature': 'valid' }, body: JSON.stringify(event) };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Order.updateStatus).toHaveBeenCalledWith('order-99', 'payment_failed', {
+      failureMessage: 'Card declined'
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        received: true,
+        eventType: 'payment_intent.payment_failed'
+      })
+    );
+  });
+
+  test('processes customer.subscription.deleted and cancels subscription', async () => {
+    const event = {
+      id: 'evt_sub_del',
+      type: 'customer.subscription.deleted',
+      data: {
+        object: { id: 'sub_123' }
+      }
+    };
+    const req = { headers: { 'stripe-signature': 'valid' }, body: JSON.stringify(event) };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(Subscription.updateStatus).toHaveBeenCalledWith('sub_123', 'canceled');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        received: true,
+        eventType: 'customer.subscription.deleted'
+      })
+    );
+  });
+
+  test('ignores unknown event types but still acknowledges', async () => {
+    const event = {
+      id: 'evt_unknown',
+      type: 'some.other.event',
+      data: { object: {} }
+    };
+    const req = { headers: { 'stripe-signature': 'valid' }, body: JSON.stringify(event) };
+    const res = mockRes();
+
+    await handleStripeWebhook(req, res);
+
+    expect(WebhookLog.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        eventId: 'evt_unknown',
+        eventType: 'some.other.event',
+        status: 'processed'
+      })
+    );
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        received: true,
+        eventType: 'some.other.event'
+      })
+    );
+  });
+
+  test('returns 500 when internal processing throws', async () => {
+    const event = {
+      id: 'evt_error',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_err',
+          amount_received: 1000,
+          metadata: { orderId: 'order-err' }
+        }
+      }
+    };
+    const req = { headers: { 'stripe-signature': 'valid' }, body: JSON.stringify(event) };
+    const res = mockRes();
+
+    jest.spyOn(Order, 'findById').mockRejectedValue(new Error('DB failure'));
+
+    await handleStripeWebhook(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: 'Error processing webhook event',
+        details: 'DB failure'
+      })
+    );
+  });
+});

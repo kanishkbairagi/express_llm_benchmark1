@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "20_chat_controller.js",
+  "trial": 2,
+  "startedAt": "2026-10-03T17:45:15.422Z",
+  "finishedAt": "2026-10-03T17:45:25.066Z",
+  "suiteOk": true,
+  "testsPassed": 18,
+  "testsFailed": 0,
+  "testsTotal": 18,
+  "errorCategory": "none",
+  "statementCoverage": 91.67,
+  "branchCoverage": 87.5,
+  "functionCoverage": 28.57,
+  "lineCoverage": 91.67,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1242,
+    "completionTokens": 2971,
+    "totalTokens": 4213,
+    "reasoningTokens": 381
+  },
+  "latencyMs": 7063
+}

@@ -1,0 +1,24 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "17_coupon_controller.js",
+  "trial": 3,
+  "startedAt": "2026-10-03T18:19:05.668Z",
+  "finishedAt": "2026-10-03T18:19:17.654Z",
+  "suiteOk": true,
+  "testsPassed": 19,
+  "testsFailed": 0,
+  "testsTotal": 19,
+  "errorCategory": "none",
+  "statementCoverage": 92.19,
+  "branchCoverage": 90.24,
+  "functionCoverage": 40,
+  "lineCoverage": 92.19,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1602,
+    "completionTokens": 3552,
+    "totalTokens": 5154,
+    "reasoningTokens": 402
+  },
+  "latencyMs": 10209
+}

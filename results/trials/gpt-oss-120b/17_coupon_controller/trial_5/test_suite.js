@@ -1,0 +1,416 @@
+import { jest } from '@jest/globals';
+import {
+  CouponModel,
+  validateCoupon,
+  createCoupon
+} from '../dataset/17_coupon_controller.js';
+
+const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('validateCoupon', () => {
+  const originalDateNow = Date.now;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Reset any overrides on CouponModel
+    CouponModel.findByCode = jest.fn();
+    CouponModel.getUserUsageCount = jest.fn();
+  });
+
+  afterAll(() => {
+    Date.now = originalDateNow;
+  });
+
+  test('returns 400 when code is missing', async () => {
+    const req = { body: {} };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Coupon code is required'
+    });
+  });
+
+  test('returns 400 when cartTotal is negative', async () => {
+    const req = { body: { code: 'SAVE10', cartTotal: -5 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'cartTotal must be a non-negative number'
+    });
+  });
+
+  test('returns 404 when coupon not found', async () => {
+    CouponModel.findByCode.mockResolvedValue(null);
+    const req = { body: { code: 'UNKNOWN', cartTotal: 100 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(CouponModel.findByCode).toHaveBeenCalledWith('UNKNOWN');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Coupon code not found'
+    });
+  });
+
+  test('returns 400 when coupon is inactive', async () => {
+    CouponModel.findByCode.mockResolvedValue({ isActive: false });
+    const req = { body: { code: 'INACTIVE', cartTotal: 100 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'This coupon code is currently disabled'
+    });
+  });
+
+  test('returns 400 when promotion has not started yet', async () => {
+    const future = new Date(Date.now() + 86400000); // +1 day
+    CouponModel.findByCode.mockResolvedValue({
+      isActive: true,
+      validFrom: future.toISOString()
+    });
+    const req = { body: { code: 'FUTURE', cartTotal: 100 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'This coupon promotion has not started yet'
+    });
+  });
+
+  test('returns 400 when coupon has expired', async () => {
+    const past = new Date(Date.now() - 86400000); // -1 day
+    CouponModel.findByCode.mockResolvedValue({
+      isActive: true,
+      validUntil: past.toISOString()
+    });
+    const req = { body: { code: 'EXPIRED', cartTotal: 100 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'This coupon has expired'
+    });
+  });
+
+  test('returns 400 when global usage limit reached', async () => {
+    CouponModel.findByCode.mockResolvedValue({
+      isActive: true,
+      maxUsageLimit: 5,
+      currentUsage: 5
+    });
+    const req = { body: { code: 'LIMITED', cartTotal: 100 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'This coupon has reached its maximum global usage limit'
+    });
+  });
+
+  test('returns 400 when order amount below minimum', async () => {
+    CouponModel.findByCode.mockResolvedValue({
+      isActive: true,
+      minOrderAmount: 200
+    });
+    const req = { body: { code: 'MINORD', cartTotal: 150 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Minimum order amount of $200.00 required to use this coupon'
+    });
+  });
+
+  test('returns 400 when per-user limit exceeded', async () => {
+    CouponModel.findByCode.mockResolvedValue({
+      id: 'c1',
+      isActive: true,
+      perUserLimit: 2
+    });
+    CouponModel.getUserUsageCount.mockResolvedValue(2);
+    const req = {
+      body: { code: 'PERUSER', cartTotal: 100, userId: 'u123' },
+      user: { id: 'u123' }
+    };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    expect(CouponModel.getUserUsageCount).toHaveBeenCalledWith('c1', 'u123');
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'You have exceeded the maximum redemptions for this coupon'
+    });
+  });
+
+  test('applies percent discount with cap correctly', async () => {
+    CouponModel.findByCode.mockResolvedValue({
+      id: 'c2',
+      code: 'PERCENT10',
+      isActive: true,
+      discountType: 'percent',
+      discountValue: 10,
+      maxDiscountCap: 15,
+      currentUsage: 0
+    });
+    const req = { body: { code: 'PERCENT10', cartTotal: 200 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    // 10% of 200 = 20 > cap 15 => discountAmount = 15
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        code: 'PERCENT10',
+        discountType: 'percent',
+        discountValue: 10,
+        discountAmount: 15.0,
+        originalTotal: 200,
+        discountedTotal: 185.0
+      }
+    });
+  });
+
+  test('applies amount discount correctly', async () => {
+    CouponModel.findByCode.mockResolvedValue({
+      id: 'c3',
+      code: 'AMOUNT30',
+      isActive: true,
+      discountType: 'amount',
+      discountValue: 30,
+      currentUsage: 0
+    });
+    const req = { body: { code: 'AMOUNT30', cartTotal: 50 } };
+    const res = mockResponse();
+
+    await validateCoupon(req, res);
+
+    // discount = min(total, discountValue) => 30
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        code: 'AMOUNT30',
+        discountType: 'amount',
+        discountValue: 30,
+        discountAmount: 30.0,
+        originalTotal: 50,
+        discountedTotal: 20.0
+      }
+    });
+  });
+});
+
+describe('createCoupon', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    CouponModel.findByCode = jest.fn();
+    CouponModel.create = jest.fn();
+  });
+
+  test('returns 400 when code is missing', async () => {
+    const req = { body: {} };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Coupon code is required'
+    });
+  });
+
+  test('returns 400 when code format invalid', async () => {
+    const req = { body: { code: 'ab', discountType: 'percent', discountValue: 10, validUntil: '2099-01-01' } };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Coupon code must be 3-20 uppercase alphanumeric characters'
+    });
+  });
+
+  test('returns 400 when discountType invalid', async () => {
+    const req = {
+      body: {
+        code: 'VALIDCODE',
+        discountType: 'invalid',
+        discountValue: 10,
+        validUntil: '2099-01-01'
+      }
+    };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'discountType must be either "percent" or "amount"'
+    });
+  });
+
+  test('returns 400 when discountValue non‑positive', async () => {
+    const req = {
+      body: {
+        code: 'VALIDCODE',
+        discountType: 'amount',
+        discountValue: -5,
+        validUntil: '2099-01-01'
+      }
+    };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'discountValue must be a positive number'
+    });
+  });
+
+  test('returns 400 when percent discount exceeds 100', async () => {
+    const req = {
+      body: {
+        code: 'BIGDISCOUNT',
+        discountType: 'percent',
+        discountValue: 150,
+        validUntil: '2099-01-01'
+      }
+    };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Percentage discount cannot exceed 100%'
+    });
+  });
+
+  test('returns 400 when validUntil missing', async () => {
+    const req = {
+      body: {
+        code: 'NOVALID',
+        discountType: 'amount',
+        discountValue: 10
+      }
+    };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'A valid validUntil expiration date is required'
+    });
+  });
+
+  test('returns 409 when coupon code already exists', async () => {
+    CouponModel.findByCode.mockResolvedValue({ id: 'existing' });
+    const req = {
+      body: {
+        code: 'DUPLICATE',
+        discountType: 'amount',
+        discountValue: 10,
+        validUntil: '2099-01-01'
+      }
+    };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(CouponModel.findByCode).toHaveBeenCalledWith('DUPLICATE');
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Coupon with code "DUPLICATE" already exists'
+    });
+  });
+
+  test('creates a coupon successfully', async () => {
+    CouponModel.findByCode.mockResolvedValue(null);
+    const fakeCreated = {
+      id: 'cpn_123',
+      code: 'NEWCODE',
+      discountType: 'percent',
+      discountValue: 20,
+      validFrom: new Date(),
+      validUntil: new Date('2099-12-31'),
+      minOrderAmount: 0,
+      maxUsageLimit: 100,
+      perUserLimit: 1,
+      currentUsage: 0,
+      isActive: true,
+      createdAt: new Date()
+    };
+    CouponModel.create.mockResolvedValue(fakeCreated);
+
+    const req = {
+      body: {
+        code: 'newcode',
+        discountType: 'percent',
+        discountValue: 20,
+        validUntil: '2099-12-31'
+      }
+    };
+    const res = mockResponse();
+
+    await createCoupon(req, res);
+
+    expect(CouponModel.findByCode).toHaveBeenCalledWith('NEWCODE');
+    expect(CouponModel.create).toHaveBeenCalledWith(expect.objectContaining({
+      code: 'NEWCODE',
+      discountType: 'percent',
+      discountValue: 20,
+      validUntil: expect.any(Date)
+    }));
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Coupon created successfully',
+      data: fakeCreated
+    });
+  });
+});

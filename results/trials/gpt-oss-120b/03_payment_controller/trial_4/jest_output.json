@@ -1,0 +1,1561 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 11,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 11,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791052299024,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 8,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook returns 400 when stripe-signature header is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 400 when stripe-signature header is missing",
+          "startAt": 1791052299375
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook returns 400 when signature verification fails",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 400 when signature verification fails",
+          "startAt": 1791052299384
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook returns 400 for malformed event object",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "returns 400 for malformed event object",
+          "startAt": 1791052299387
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook acknowledges already processed event",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "acknowledges already processed event",
+          "startAt": 1791052299391
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook payment_intent.succeeded missing orderId returns 422",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "payment_intent.succeeded missing orderId returns 422",
+          "startAt": 1791052299393
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook payment_intent.succeeded order not found returns 404",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "payment_intent.succeeded order not found returns 404",
+          "startAt": 1791052299394
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook successful payment_intent.succeeded processes order and logs event",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "successful payment_intent.succeeded processes order and logs event",
+          "startAt": 1791052299396
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook payment_intent.payment_failed updates order status if orderId present",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "payment_intent.payment_failed updates order status if orderId present",
+          "startAt": 1791052299398
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook customer.subscription.deleted updates subscription status",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "customer.subscription.deleted updates subscription status",
+          "startAt": 1791052299400
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook unhandled event type is acknowledged without side‑effects",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "unhandled event type is acknowledged without side‑effects",
+          "startAt": 1791052299401
+        },
+        {
+          "ancestorTitles": [
+            "handleStripeWebhook"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "handleStripeWebhook internal error returns 500 with details",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "internal error returns 500 with details",
+          "startAt": 1791052299404
+        }
+      ],
+      "endTime": 1791052299410,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\03_payment_controller_gpt-oss-120b_trial4.test.js",
+      "startTime": 1791052299154,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\03_payment_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\03_payment_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 21
+          },
+          "end": {
+            "line": 7,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 26
+          },
+          "end": {
+            "line": 5,
+            "column": 30
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 49
+          },
+          "end": {
+            "line": 6,
+            "column": 76
+          }
+        },
+        "3": {
+          "start": {
+            "line": 9,
+            "column": 28
+          },
+          "end": {
+            "line": 11,
+            "column": 1
+          }
+        },
+        "4": {
+          "start": {
+            "line": 10,
+            "column": 42
+          },
+          "end": {
+            "line": 10,
+            "column": 59
+          }
+        },
+        "5": {
+          "start": {
+            "line": 13,
+            "column": 26
+          },
+          "end": {
+            "line": 16,
+            "column": 1
+          }
+        },
+        "6": {
+          "start": {
+            "line": 14,
+            "column": 28
+          },
+          "end": {
+            "line": 14,
+            "column": 32
+          }
+        },
+        "7": {
+          "start": {
+            "line": 15,
+            "column": 27
+          },
+          "end": {
+            "line": 15,
+            "column": 53
+          }
+        },
+        "8": {
+          "start": {
+            "line": 18,
+            "column": 29
+          },
+          "end": {
+            "line": 25,
+            "column": 1
+          }
+        },
+        "9": {
+          "start": {
+            "line": 20,
+            "column": 4
+          },
+          "end": {
+            "line": 22,
+            "column": 5
+          }
+        },
+        "10": {
+          "start": {
+            "line": 21,
+            "column": 6
+          },
+          "end": {
+            "line": 21,
+            "column": 63
+          }
+        },
+        "11": {
+          "start": {
+            "line": 23,
+            "column": 4
+          },
+          "end": {
+            "line": 23,
+            "column": 71
+          }
+        },
+        "12": {
+          "start": {
+            "line": 27,
+            "column": 35
+          },
+          "end": {
+            "line": 131,
+            "column": 1
+          }
+        },
+        "13": {
+          "start": {
+            "line": 28,
+            "column": 14
+          },
+          "end": {
+            "line": 28,
+            "column": 71
+          }
+        },
+        "14": {
+          "start": {
+            "line": 29,
+            "column": 24
+          },
+          "end": {
+            "line": 29,
+            "column": 80
+          }
+        },
+        "15": {
+          "start": {
+            "line": 31,
+            "column": 2
+          },
+          "end": {
+            "line": 36,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 32,
+            "column": 4
+          },
+          "end": {
+            "line": 35,
+            "column": 7
+          }
+        },
+        "17": {
+          "start": {
+            "line": 39,
+            "column": 2
+          },
+          "end": {
+            "line": 46,
+            "column": 3
+          }
+        },
+        "18": {
+          "start": {
+            "line": 40,
+            "column": 4
+          },
+          "end": {
+            "line": 40,
+            "column": 71
+          }
+        },
+        "19": {
+          "start": {
+            "line": 42,
+            "column": 4
+          },
+          "end": {
+            "line": 45,
+            "column": 7
+          }
+        },
+        "20": {
+          "start": {
+            "line": 48,
+            "column": 2
+          },
+          "end": {
+            "line": 53,
+            "column": 3
+          }
+        },
+        "21": {
+          "start": {
+            "line": 49,
+            "column": 4
+          },
+          "end": {
+            "line": 52,
+            "column": 7
+          }
+        },
+        "22": {
+          "start": {
+            "line": 55,
+            "column": 2
+          },
+          "end": {
+            "line": 130,
+            "column": 3
+          }
+        },
+        "23": {
+          "start": {
+            "line": 56,
+            "column": 24
+          },
+          "end": {
+            "line": 56,
+            "column": 71
+          }
+        },
+        "24": {
+          "start": {
+            "line": 57,
+            "column": 4
+          },
+          "end": {
+            "line": 62,
+            "column": 5
+          }
+        },
+        "25": {
+          "start": {
+            "line": 58,
+            "column": 6
+          },
+          "end": {
+            "line": 61,
+            "column": 9
+          }
+        },
+        "26": {
+          "start": {
+            "line": 64,
+            "column": 27
+          },
+          "end": {
+            "line": 64,
+            "column": 32
+          }
+        },
+        "27": {
+          "start": {
+            "line": 65,
+            "column": 24
+          },
+          "end": {
+            "line": 65,
+            "column": 36
+          }
+        },
+        "28": {
+          "start": {
+            "line": 67,
+            "column": 4
+          },
+          "end": {
+            "line": 111,
+            "column": 5
+          }
+        },
+        "29": {
+          "start": {
+            "line": 69,
+            "column": 24
+          },
+          "end": {
+            "line": 69,
+            "column": 54
+          }
+        },
+        "30": {
+          "start": {
+            "line": 70,
+            "column": 8
+          },
+          "end": {
+            "line": 75,
+            "column": 9
+          }
+        },
+        "31": {
+          "start": {
+            "line": 71,
+            "column": 10
+          },
+          "end": {
+            "line": 74,
+            "column": 13
+          }
+        },
+        "32": {
+          "start": {
+            "line": 76,
+            "column": 22
+          },
+          "end": {
+            "line": 76,
+            "column": 51
+          }
+        },
+        "33": {
+          "start": {
+            "line": 77,
+            "column": 8
+          },
+          "end": {
+            "line": 82,
+            "column": 9
+          }
+        },
+        "34": {
+          "start": {
+            "line": 78,
+            "column": 10
+          },
+          "end": {
+            "line": 81,
+            "column": 13
+          }
+        },
+        "35": {
+          "start": {
+            "line": 83,
+            "column": 8
+          },
+          "end": {
+            "line": 86,
+            "column": 11
+          }
+        },
+        "36": {
+          "start": {
+            "line": 87,
+            "column": 8
+          },
+          "end": {
+            "line": 87,
+            "column": 14
+          }
+        },
+        "37": {
+          "start": {
+            "line": 91,
+            "column": 24
+          },
+          "end": {
+            "line": 91,
+            "column": 54
+          }
+        },
+        "38": {
+          "start": {
+            "line": 92,
+            "column": 8
+          },
+          "end": {
+            "line": 96,
+            "column": 9
+          }
+        },
+        "39": {
+          "start": {
+            "line": 93,
+            "column": 10
+          },
+          "end": {
+            "line": 95,
+            "column": 13
+          }
+        },
+        "40": {
+          "start": {
+            "line": 97,
+            "column": 8
+          },
+          "end": {
+            "line": 97,
+            "column": 14
+          }
+        },
+        "41": {
+          "start": {
+            "line": 101,
+            "column": 22
+          },
+          "end": {
+            "line": 101,
+            "column": 37
+          }
+        },
+        "42": {
+          "start": {
+            "line": 102,
+            "column": 8
+          },
+          "end": {
+            "line": 104,
+            "column": 9
+          }
+        },
+        "43": {
+          "start": {
+            "line": 103,
+            "column": 10
+          },
+          "end": {
+            "line": 103,
+            "column": 61
+          }
+        },
+        "44": {
+          "start": {
+            "line": 105,
+            "column": 8
+          },
+          "end": {
+            "line": 105,
+            "column": 14
+          }
+        },
+        "45": {
+          "start": {
+            "line": 110,
+            "column": 8
+          },
+          "end": {
+            "line": 110,
+            "column": 14
+          }
+        },
+        "46": {
+          "start": {
+            "line": 113,
+            "column": 4
+          },
+          "end": {
+            "line": 118,
+            "column": 7
+          }
+        },
+        "47": {
+          "start": {
+            "line": 120,
+            "column": 4
+          },
+          "end": {
+            "line": 123,
+            "column": 7
+          }
+        },
+        "48": {
+          "start": {
+            "line": 125,
+            "column": 4
+          },
+          "end": {
+            "line": 129,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 12
+            },
+            "end": {
+              "line": 5,
+              "column": 13
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 26
+            },
+            "end": {
+              "line": 5,
+              "column": 30
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 16
+            },
+            "end": {
+              "line": 6,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 49
+            },
+            "end": {
+              "line": 6,
+              "column": 76
+            }
+          },
+          "line": 6
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 10,
+              "column": 16
+            },
+            "end": {
+              "line": 10,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 42
+            },
+            "end": {
+              "line": 10,
+              "column": 59
+            }
+          },
+          "line": 10
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 14,
+              "column": 11
+            },
+            "end": {
+              "line": 14,
+              "column": 12
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 14,
+              "column": 28
+            },
+            "end": {
+              "line": 14,
+              "column": 32
+            }
+          },
+          "line": 14
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 15,
+              "column": 10
+            },
+            "end": {
+              "line": 15,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 27
+            },
+            "end": {
+              "line": 15,
+              "column": 53
+            }
+          },
+          "line": 15
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 19,
+              "column": 18
+            },
+            "end": {
+              "line": 19,
+              "column": 19
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 19,
+              "column": 50
+            },
+            "end": {
+              "line": 24,
+              "column": 3
+            }
+          },
+          "line": 19
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 27,
+              "column": 35
+            },
+            "end": {
+              "line": 27,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 55
+            },
+            "end": {
+              "line": 131,
+              "column": 1
+            }
+          },
+          "line": 27
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 4
+            },
+            "end": {
+              "line": 22,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 20,
+                "column": 4
+              },
+              "end": {
+                "line": 22,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 20
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 8
+            },
+            "end": {
+              "line": 20,
+              "column": 55
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 20,
+                "column": 8
+              },
+              "end": {
+                "line": 20,
+                "column": 18
+              }
+            },
+            {
+              "start": {
+                "line": 20,
+                "column": 22
+              },
+              "end": {
+                "line": 20,
+                "column": 55
+              }
+            }
+          ],
+          "line": 20
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 11
+            },
+            "end": {
+              "line": 23,
+              "column": 70
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 41
+              },
+              "end": {
+                "line": 23,
+                "column": 60
+              }
+            },
+            {
+              "start": {
+                "line": 23,
+                "column": 63
+              },
+              "end": {
+                "line": 23,
+                "column": 70
+              }
+            }
+          ],
+          "line": 23
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 28,
+              "column": 14
+            },
+            "end": {
+              "line": 28,
+              "column": 71
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 28,
+                "column": 28
+              },
+              "end": {
+                "line": 28,
+                "column": 59
+              }
+            },
+            {
+              "start": {
+                "line": 28,
+                "column": 62
+              },
+              "end": {
+                "line": 28,
+                "column": 71
+              }
+            }
+          ],
+          "line": 28
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 29,
+              "column": 24
+            },
+            "end": {
+              "line": 29,
+              "column": 80
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 29,
+                "column": 24
+              },
+              "end": {
+                "line": 29,
+                "column": 57
+              }
+            },
+            {
+              "start": {
+                "line": 29,
+                "column": 61
+              },
+              "end": {
+                "line": 29,
+                "column": 80
+              }
+            }
+          ],
+          "line": 29
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 31,
+              "column": 2
+            },
+            "end": {
+              "line": 36,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 31,
+                "column": 2
+              },
+              "end": {
+                "line": 36,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 31
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 48,
+              "column": 2
+            },
+            "end": {
+              "line": 53,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 48,
+                "column": 2
+              },
+              "end": {
+                "line": 53,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 48
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 48,
+              "column": 6
+            },
+            "end": {
+              "line": 48,
+              "column": 40
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 48,
+                "column": 6
+              },
+              "end": {
+                "line": 48,
+                "column": 12
+              }
+            },
+            {
+              "start": {
+                "line": 48,
+                "column": 16
+              },
+              "end": {
+                "line": 48,
+                "column": 25
+              }
+            },
+            {
+              "start": {
+                "line": 48,
+                "column": 29
+              },
+              "end": {
+                "line": 48,
+                "column": 40
+              }
+            }
+          ],
+          "line": 48
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 57,
+              "column": 4
+            },
+            "end": {
+              "line": 62,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 57,
+                "column": 4
+              },
+              "end": {
+                "line": 62,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 57
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 67,
+              "column": 4
+            },
+            "end": {
+              "line": 111,
+              "column": 5
+            }
+          },
+          "type": "switch",
+          "locations": [
+            {
+              "start": {
+                "line": 68,
+                "column": 6
+              },
+              "end": {
+                "line": 88,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 90,
+                "column": 6
+              },
+              "end": {
+                "line": 98,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 100,
+                "column": 6
+              },
+              "end": {
+                "line": 106,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 108,
+                "column": 6
+              },
+              "end": {
+                "line": 110,
+                "column": 14
+              }
+            }
+          ],
+          "line": 67
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 70,
+              "column": 8
+            },
+            "end": {
+              "line": 75,
+              "column": 9
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 70,
+                "column": 8
+              },
+              "end": {
+                "line": 75,
+                "column": 9
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 70
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 77,
+              "column": 8
+            },
+            "end": {
+              "line": 82,
+              "column": 9
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 77,
+                "column": 8
+              },
+              "end": {
+                "line": 82,
+                "column": 9
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 77
+        },
+        "12": {
+          "loc": {
+            "start": {
+              "line": 92,
+              "column": 8
+            },
+            "end": {
+              "line": 96,
+              "column": 9
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 92,
+                "column": 8
+              },
+              "end": {
+                "line": 96,
+                "column": 9
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 92
+        },
+        "13": {
+          "loc": {
+            "start": {
+              "line": 94,
+              "column": 28
+            },
+            "end": {
+              "line": 94,
+              "column": 94
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 94,
+                "column": 28
+              },
+              "end": {
+                "line": 94,
+                "column": 67
+              }
+            },
+            {
+              "start": {
+                "line": 94,
+                "column": 71
+              },
+              "end": {
+                "line": 94,
+                "column": 94
+              }
+            }
+          ],
+          "line": 94
+        },
+        "14": {
+          "loc": {
+            "start": {
+              "line": 102,
+              "column": 8
+            },
+            "end": {
+              "line": 104,
+              "column": 9
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 102,
+                "column": 8
+              },
+              "end": {
+                "line": 104,
+                "column": 9
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 102
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 1,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 1,
+        "13": 11,
+        "14": 11,
+        "15": 11,
+        "16": 1,
+        "17": 10,
+        "18": 10,
+        "19": 1,
+        "20": 9,
+        "21": 1,
+        "22": 8,
+        "23": 8,
+        "24": 8,
+        "25": 1,
+        "26": 7,
+        "27": 7,
+        "28": 7,
+        "29": 4,
+        "30": 4,
+        "31": 1,
+        "32": 3,
+        "33": 3,
+        "34": 1,
+        "35": 2,
+        "36": 1,
+        "37": 1,
+        "38": 1,
+        "39": 1,
+        "40": 1,
+        "41": 1,
+        "42": 1,
+        "43": 1,
+        "44": 1,
+        "45": 1,
+        "46": 4,
+        "47": 4,
+        "48": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 11
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ],
+        "3": [
+          11,
+          0
+        ],
+        "4": [
+          11,
+          11
+        ],
+        "5": [
+          1,
+          10
+        ],
+        "6": [
+          1,
+          8
+        ],
+        "7": [
+          9,
+          9,
+          9
+        ],
+        "8": [
+          1,
+          7
+        ],
+        "9": [
+          4,
+          1,
+          1,
+          1
+        ],
+        "10": [
+          1,
+          3
+        ],
+        "11": [
+          1,
+          2
+        ],
+        "12": [
+          1,
+          0
+        ],
+        "13": [
+          1,
+          0
+        ],
+        "14": [
+          1,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "8194c3d1404d9765424885f5db1a0937dfc6d163"
+    }
+  }
+}

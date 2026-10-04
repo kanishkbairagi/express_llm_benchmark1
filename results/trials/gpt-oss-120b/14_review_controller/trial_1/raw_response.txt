@@ -1,0 +1,301 @@
+```javascript
+import {
+  addReview,
+  getProductReviews,
+  ProductCatalog,
+  ReviewModel
+} from '../dataset/14_review_controller.js';
+
+describe('addReview controller', () => {
+  const makeRes = () => ({
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn()
+  });
+
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('returns 401 when user is not authenticated', async () => {
+    const req = { params: { productId: 'p1' }, body: {} };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  test('returns 400 when productId is missing', async () => {
+    const req = { params: {}, body: { rating: 5, title: 'Good', comment: 'Nice product', userId: 'u1' } };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Product ID is required'
+    });
+  });
+
+  test('returns 400 for invalid rating', async () => {
+    const req = {
+      params: { productId: 'p1' },
+      body: { rating: 6, title: 'Good', comment: 'Very nice product', userId: 'u1' }
+    };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Rating must be an integer between 1 and 5'
+    });
+  });
+
+  test('returns 400 when title is missing or empty', async () => {
+    const req = {
+      params: { productId: 'p1' },
+      body: { rating: 4, title: '   ', comment: 'Valid comment length', userId: 'u1' }
+    };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Review title is required'
+    });
+  });
+
+  test('returns 400 when comment is too short', async () => {
+    const req = {
+      params: { productId: 'p1' },
+      body: { rating: 4, title: 'Nice', comment: 'short', userId: 'u1' }
+    };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Review comment must be at least 10 characters long'
+    });
+  });
+
+  test('returns 404 when product does not exist', async () => {
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValue(null);
+    const req = {
+      params: { productId: 'nonexistent' },
+      body: { rating: 5, title: 'Great', comment: 'Excellent product', userId: 'u1' }
+    };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(ProductCatalog.findById).toHaveBeenCalledWith('nonexistent');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Product not found'
+    });
+  });
+
+  test('returns 409 when user already reviewed the product', async () => {
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValue({ id: 'p1' });
+    jest.spyOn(ReviewModel, 'findOne').mockResolvedValue({ id: 'rev123' });
+
+    const req = {
+      params: { productId: 'p1' },
+      body: { rating: 4, title: 'Nice', comment: 'Very good product', userId: 'u1' }
+    };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(ReviewModel.findOne).toHaveBeenCalledWith({ productId: 'p1', userId: 'u1' });
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'You have already submitted a review for this product'
+    });
+  });
+
+  test('successful review creation returns 201 with review and stats', async () => {
+    const fakeProduct = { id: 'p1' };
+    const fakeReview = {
+      id: 'rev_123',
+      productId: 'p1',
+      userId: 'u1',
+      rating: 5,
+      title: 'Awesome',
+      comment: 'I love this product a lot',
+      createdAt: new Date()
+    };
+    const fakeStats = {
+      averageRating: 4.5,
+      totalReviews: 10,
+      distribution: { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4 }
+    };
+
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValue(fakeProduct);
+    jest.spyOn(ReviewModel, 'findOne').mockResolvedValue(null);
+    jest.spyOn(ReviewModel, 'create').mockResolvedValue(fakeReview);
+    jest.spyOn(ReviewModel, 'calculateRatingStats').mockResolvedValue(fakeStats);
+    const updateStatsSpy = jest.spyOn(ProductCatalog, 'updateStats').mockResolvedValue({
+      id: 'p1',
+      averageRating: fakeStats.averageRating,
+      totalReviews: fakeStats.totalReviews
+    });
+
+    const req = {
+      params: { productId: 'p1' },
+      body: {
+        rating: 5,
+        title: '   Awesome   ',
+        comment: '   I love this product a lot   ',
+        userId: 'u1'
+      }
+    };
+    const res = makeRes();
+
+    await addReview(req, res);
+
+    expect(ProductCatalog.findById).toHaveBeenCalledWith('p1');
+    expect(ReviewModel.findOne).toHaveBeenCalledWith({ productId: 'p1', userId: 'u1' });
+    expect(ReviewModel.create).toHaveBeenCalledWith({
+      productId: 'p1',
+      userId: 'u1',
+      rating: 5,
+      title: 'Awesome',
+      comment: 'I love this product a lot'
+    });
+    expect(ReviewModel.calculateRatingStats).toHaveBeenCalledWith('p1');
+    expect(updateStatsSpy).toHaveBeenCalledWith('p1', {
+      averageRating: fakeStats.averageRating,
+      totalReviews: fakeStats.totalReviews
+    });
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Review submitted successfully',
+      data: {
+        review: fakeReview,
+        productStats: fakeStats
+      }
+    });
+  });
+});
+
+describe('getProductReviews controller', () => {
+  const makeRes = () => ({
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn()
+  });
+
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('returns 400 when productId is missing', async () => {
+    const req = { params: {}, query: {} };
+    const res = makeRes();
+
+    await getProductReviews(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Product ID is required'
+    });
+  });
+
+  test('returns 400 for invalid pagination parameters', async () => {
+    const req = {
+      params: { productId: 'p1' },
+      query: { page: '0', limit: '100' }
+    };
+    const res = makeRes();
+
+    await getProductReviews(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid pagination parameters: page >= 1, 1 <= limit <= 50'
+    });
+  });
+
+  test('returns 400 when minRating is invalid', async () => {
+    const req = {
+      params: { productId: 'p1' },
+      query: { minRating: '6' }
+    };
+    const res = makeRes();
+
+    await getProductReviews(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'minRating must be an integer between 1 and 5'
+    });
+  });
+
+  test('successful retrieval returns 200 with stats, pagination and reviews', async () => {
+    const fakeStats = {
+      averageRating: 4.2,
+      totalReviews: 25,
+      distribution: { 1: 1, 2: 2, 3: 5, 4: 7, 5: 10 }
+    };
+    const fakeReviews = [
+      { id: 'rev1', rating: 5, title: 'Great', comment: 'Loved it' },
+      { id: 'rev2', rating: 4, title: 'Good', comment: 'Pretty good' }
+    ];
+    const totalReviews = 2;
+
+    jest.spyOn(ReviewModel, 'calculateRatingStats').mockResolvedValue(fakeStats);
+    jest.spyOn(ReviewModel, 'findByProductId').mockResolvedValue({
+      reviews: fakeReviews,
+      total: totalReviews
+    });
+
+    const req = {
+      params: { productId: 'p1' },
+      query: { page: '2', limit: '1', minRating: '3' }
+    };
+    const res = makeRes();
+
+    await getProductReviews(req, res);
+
+    expect(ReviewModel.calculateRatingStats).toHaveBeenCalledWith('p1');
+    expect(ReviewModel.findByProductId).toHaveBeenCalledWith('p1', {
+      page: 2,
+      limit: 1,
+      filters: { minRating: 3 }
+    });
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        stats: fakeStats,
+        pagination: {
+          totalReviews: totalReviews,
+          currentPage: 2,
+          totalPages: Math.ceil(totalReviews / 1)
+        },
+        reviews: fakeReviews
+      }
+    });
+  });
+});
+```

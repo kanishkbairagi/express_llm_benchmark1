@@ -1,0 +1,284 @@
+```javascript
+import {
+  getNotifications,
+  markAsRead,
+  markAllAsRead,
+  NotificationModel
+} from '../dataset/09_notification_controller.js';
+
+const createRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('getNotifications controller', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 401 when user is not authenticated', async () => {
+    const req = { query: {} };
+    const res = createRes();
+
+    await getNotifications(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  it('returns 400 for invalid limit', async () => {
+    const req = {
+      user: { id: 'u1' },
+      query: { limit: 'abc' }
+    };
+    const res = createRes();
+
+    await getNotifications(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Limit must be an integer between 1 and 50'
+    });
+  });
+
+  it('passes correct parameters to NotificationModel.findByUser', async () => {
+    const mockResult = {
+      unreadCount: 5,
+      notifications: [{ id: 'n1' }]
+    };
+    NotificationModel.findByUser = jest.fn().mockResolvedValue(mockResult);
+
+    const req = {
+      user: { id: 'user123' },
+      query: { unreadOnly: 'true', limit: '10' }
+    };
+    const res = createRes();
+
+    await getNotifications(req, res);
+
+    expect(NotificationModel.findByUser).toHaveBeenCalledWith('user123', {
+      unreadOnly: true,
+      limit: 10
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        unreadCount: 5,
+        notifications: [{ id: 'n1' }]
+      }
+    });
+  });
+
+  it('handles unexpected errors with 500', async () => {
+    NotificationModel.findByUser = jest.fn().mockRejectedValue(new Error('DB fail'));
+
+    const req = {
+      user: { id: 'u2' },
+      query: {}
+    };
+    const res = createRes();
+
+    await getNotifications(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Failed to fetch notifications',
+      details: 'DB fail'
+    });
+  });
+});
+
+describe('markAsRead controller', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const baseReq = {
+    params: { notificationId: 'notif1' },
+    user: { id: 'ownerId' }
+  };
+
+  it('returns 401 when authentication missing', async () => {
+    const req = { params: { notificationId: 'n1' } };
+    const res = createRes();
+
+    await markAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  it('returns 400 when notificationId missing', async () => {
+    const req = { user: { id: 'u' } };
+    const res = createRes();
+
+    await markAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Notification ID is required'
+    });
+  });
+
+  it('returns 404 when notification not found', async () => {
+    NotificationModel.findById = jest.fn().mockResolvedValue(null);
+    const req = { ...baseReq };
+    const res = createRes();
+
+    await markAsRead(req, res);
+
+    expect(NotificationModel.findById).toHaveBeenCalledWith('notif1');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Notification not found'
+    });
+  });
+
+  it('returns 403 when user does not own notification', async () => {
+    NotificationModel.findById = jest.fn().mockResolvedValue({
+      id: 'notif1',
+      userId: 'otherUser',
+      isRead: false
+    });
+    const req = { ...baseReq };
+    const res = createRes();
+
+    await markAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Access denied: You can only update your own notifications'
+    });
+  });
+
+  it('returns 200 with message when already read', async () => {
+    const existing = {
+      id: 'notif1',
+      userId: 'ownerId',
+      isRead: true,
+      readAt: new Date()
+    };
+    NotificationModel.findById = jest.fn().mockResolvedValue(existing);
+    const req = { ...baseReq };
+    const res = createRes();
+
+    await markAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Notification is already marked as read',
+      data: existing
+    });
+  });
+
+  it('updates and returns notification when unread', async () => {
+    const existing = {
+      id: 'notif1',
+      userId: 'ownerId',
+      isRead: false
+    };
+    const updated = {
+      id: 'notif1',
+      isRead: true,
+      readAt: expect.any(Date)
+    };
+    NotificationModel.findById = jest.fn().mockResolvedValue(existing);
+    NotificationModel.update = jest.fn().mockResolvedValue(updated);
+    const req = { ...baseReq };
+    const res = createRes();
+
+    await markAsRead(req, res);
+
+    expect(NotificationModel.update).toHaveBeenCalledWith('notif1', {
+      isRead: true,
+      readAt: expect.any(Date)
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Notification marked as read',
+      data: updated
+    });
+  });
+
+  it('handles unexpected errors with 500', async () => {
+    NotificationModel.findById = jest.fn().mockRejectedValue(new Error('DB error'));
+    const req = { ...baseReq };
+    const res = createRes();
+
+    await markAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Failed to update notification',
+      details: 'DB error'
+    });
+  });
+});
+
+describe('markAllAsRead controller', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 401 when authentication missing', async () => {
+    const req = {};
+    const res = createRes();
+
+    await markAllAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  it('marks all notifications as read and returns count', async () => {
+    NotificationModel.markAllReadForUser = jest.fn().mockResolvedValue({ count: 7 });
+    const req = { user: { id: 'userX' } };
+    const res = createRes();
+
+    await markAllAsRead(req, res);
+
+    expect(NotificationModel.markAllReadForUser).toHaveBeenCalledWith('userX');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'All notifications marked as read',
+      data: { updatedCount: 7 }
+    });
+  });
+
+  it('handles unexpected errors with 500', async () => {
+    NotificationModel.markAllReadForUser = jest.fn().mockRejectedValue(new Error('Oops'));
+    const req = { user: { id: 'userY' } };
+    const res = createRes();
+
+    await markAllAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Failed to mark notifications as read',
+      details: 'Oops'
+    });
+  });
+});
+```

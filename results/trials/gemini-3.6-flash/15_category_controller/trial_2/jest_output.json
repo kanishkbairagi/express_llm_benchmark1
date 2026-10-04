@@ -1,0 +1,1853 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 17,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 17,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791048875975,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryTree"
+          ],
+          "duration": 27,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryTree should return an empty tree when no categories exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return an empty tree when no categories exist",
+          "startAt": 1791048876404
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryTree"
+          ],
+          "duration": 5,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryTree should build a nested tree structure from flat category list",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should build a nested tree structure from flat category list",
+          "startAt": 1791048876435
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryTree"
+          ],
+          "duration": 9,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryTree should treat categories with non-existent parentId as root categories",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should treat categories with non-existent parentId as root categories",
+          "startAt": 1791048876443
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryTree"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryTree should handle database errors and return 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle database errors and return 500",
+          "startAt": 1791048876453
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should return 400 if name is missing or invalid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if name is missing or invalid",
+          "startAt": 1791048876457
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should return 400 if name is not a string",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if name is not a string",
+          "startAt": 1791048876460
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should return 400 if slug is invalid or missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if slug is invalid or missing",
+          "startAt": 1791048876463
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 5,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should return 409 if category slug already exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 409 if category slug already exists",
+          "startAt": 1791048876466
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 19,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should return 404 if parentId is provided but parent does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 404 if parentId is provided but parent does not exist",
+          "startAt": 1791048876473
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 81,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should successfully create a new root category",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should successfully create a new root category",
+          "startAt": 1791048876493
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should successfully create a category with a valid parentId and null description",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should successfully create a category with a valid parentId and null description",
+          "startAt": 1791048876574
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "createCategory"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests createCategory should handle exceptions during category creation and return 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle exceptions during category creation and return 500",
+          "startAt": 1791048876577
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryPath"
+          ],
+          "duration": 5,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryPath should return 400 if categoryId parameter is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if categoryId parameter is missing",
+          "startAt": 1791048876581
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryPath"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryPath should return 404 if starting category is not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 404 if starting category is not found",
+          "startAt": 1791048876586
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryPath"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryPath should return breadcrumb path from root to current category",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return breadcrumb path from root to current category",
+          "startAt": 1791048876589
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryPath"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryPath should handle circular parent references without infinite loop",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle circular parent references without infinite loop",
+          "startAt": 1791048876591
+        },
+        {
+          "ancestorTitles": [
+            "15_category_controller unit tests",
+            "getCategoryPath"
+          ],
+          "duration": 6,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "15_category_controller unit tests getCategoryPath should return 500 when an exception is thrown",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 500 when an exception is thrown",
+          "startAt": 1791048876594
+        }
+      ],
+      "endTime": 1791048876622,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\15_category_controller_gemini-3.6-flash_trial2.test.js",
+      "startTime": 1791048876108,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\15_category_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\15_category_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 29
+          },
+          "end": {
+            "line": 9,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 23
+          },
+          "end": {
+            "line": 5,
+            "column": 25
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 26
+          },
+          "end": {
+            "line": 6,
+            "column": 30
+          }
+        },
+        "3": {
+          "start": {
+            "line": 7,
+            "column": 30
+          },
+          "end": {
+            "line": 7,
+            "column": 34
+          }
+        },
+        "4": {
+          "start": {
+            "line": 8,
+            "column": 27
+          },
+          "end": {
+            "line": 8,
+            "column": 86
+          }
+        },
+        "5": {
+          "start": {
+            "line": 11,
+            "column": 31
+          },
+          "end": {
+            "line": 41,
+            "column": 1
+          }
+        },
+        "6": {
+          "start": {
+            "line": 12,
+            "column": 2
+          },
+          "end": {
+            "line": 40,
+            "column": 3
+          }
+        },
+        "7": {
+          "start": {
+            "line": 13,
+            "column": 27
+          },
+          "end": {
+            "line": 13,
+            "column": 56
+          }
+        },
+        "8": {
+          "start": {
+            "line": 15,
+            "column": 24
+          },
+          "end": {
+            "line": 15,
+            "column": 33
+          }
+        },
+        "9": {
+          "start": {
+            "line": 16,
+            "column": 4
+          },
+          "end": {
+            "line": 18,
+            "column": 7
+          }
+        },
+        "10": {
+          "start": {
+            "line": 17,
+            "column": 6
+          },
+          "end": {
+            "line": 17,
+            "column": 56
+          }
+        },
+        "11": {
+          "start": {
+            "line": 20,
+            "column": 27
+          },
+          "end": {
+            "line": 20,
+            "column": 29
+          }
+        },
+        "12": {
+          "start": {
+            "line": 22,
+            "column": 4
+          },
+          "end": {
+            "line": 28,
+            "column": 7
+          }
+        },
+        "13": {
+          "start": {
+            "line": 23,
+            "column": 6
+          },
+          "end": {
+            "line": 27,
+            "column": 7
+          }
+        },
+        "14": {
+          "start": {
+            "line": 24,
+            "column": 8
+          },
+          "end": {
+            "line": 24,
+            "column": 67
+          }
+        },
+        "15": {
+          "start": {
+            "line": 26,
+            "column": 8
+          },
+          "end": {
+            "line": 26,
+            "column": 38
+          }
+        },
+        "16": {
+          "start": {
+            "line": 30,
+            "column": 4
+          },
+          "end": {
+            "line": 33,
+            "column": 7
+          }
+        },
+        "17": {
+          "start": {
+            "line": 35,
+            "column": 4
+          },
+          "end": {
+            "line": 39,
+            "column": 7
+          }
+        },
+        "18": {
+          "start": {
+            "line": 43,
+            "column": 30
+          },
+          "end": {
+            "line": 100,
+            "column": 1
+          }
+        },
+        "19": {
+          "start": {
+            "line": 44,
+            "column": 2
+          },
+          "end": {
+            "line": 99,
+            "column": 3
+          }
+        },
+        "20": {
+          "start": {
+            "line": 45,
+            "column": 50
+          },
+          "end": {
+            "line": 45,
+            "column": 64
+          }
+        },
+        "21": {
+          "start": {
+            "line": 47,
+            "column": 4
+          },
+          "end": {
+            "line": 52,
+            "column": 5
+          }
+        },
+        "22": {
+          "start": {
+            "line": 48,
+            "column": 6
+          },
+          "end": {
+            "line": 51,
+            "column": 9
+          }
+        },
+        "23": {
+          "start": {
+            "line": 54,
+            "column": 4
+          },
+          "end": {
+            "line": 59,
+            "column": 5
+          }
+        },
+        "24": {
+          "start": {
+            "line": 55,
+            "column": 6
+          },
+          "end": {
+            "line": 58,
+            "column": 9
+          }
+        },
+        "25": {
+          "start": {
+            "line": 61,
+            "column": 25
+          },
+          "end": {
+            "line": 61,
+            "column": 61
+          }
+        },
+        "26": {
+          "start": {
+            "line": 62,
+            "column": 4
+          },
+          "end": {
+            "line": 67,
+            "column": 5
+          }
+        },
+        "27": {
+          "start": {
+            "line": 63,
+            "column": 6
+          },
+          "end": {
+            "line": 66,
+            "column": 9
+          }
+        },
+        "28": {
+          "start": {
+            "line": 69,
+            "column": 27
+          },
+          "end": {
+            "line": 69,
+            "column": 31
+          }
+        },
+        "29": {
+          "start": {
+            "line": 70,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 5
+          }
+        },
+        "30": {
+          "start": {
+            "line": 71,
+            "column": 29
+          },
+          "end": {
+            "line": 71,
+            "column": 67
+          }
+        },
+        "31": {
+          "start": {
+            "line": 72,
+            "column": 6
+          },
+          "end": {
+            "line": 77,
+            "column": 7
+          }
+        },
+        "32": {
+          "start": {
+            "line": 73,
+            "column": 8
+          },
+          "end": {
+            "line": 76,
+            "column": 11
+          }
+        },
+        "33": {
+          "start": {
+            "line": 78,
+            "column": 6
+          },
+          "end": {
+            "line": 78,
+            "column": 34
+          }
+        },
+        "34": {
+          "start": {
+            "line": 81,
+            "column": 24
+          },
+          "end": {
+            "line": 86,
+            "column": 6
+          }
+        },
+        "35": {
+          "start": {
+            "line": 88,
+            "column": 4
+          },
+          "end": {
+            "line": 92,
+            "column": 7
+          }
+        },
+        "36": {
+          "start": {
+            "line": 94,
+            "column": 4
+          },
+          "end": {
+            "line": 98,
+            "column": 7
+          }
+        },
+        "37": {
+          "start": {
+            "line": 102,
+            "column": 31
+          },
+          "end": {
+            "line": 154,
+            "column": 1
+          }
+        },
+        "38": {
+          "start": {
+            "line": 103,
+            "column": 2
+          },
+          "end": {
+            "line": 153,
+            "column": 3
+          }
+        },
+        "39": {
+          "start": {
+            "line": 104,
+            "column": 27
+          },
+          "end": {
+            "line": 104,
+            "column": 43
+          }
+        },
+        "40": {
+          "start": {
+            "line": 106,
+            "column": 4
+          },
+          "end": {
+            "line": 111,
+            "column": 5
+          }
+        },
+        "41": {
+          "start": {
+            "line": 107,
+            "column": 6
+          },
+          "end": {
+            "line": 110,
+            "column": 9
+          }
+        },
+        "42": {
+          "start": {
+            "line": 113,
+            "column": 18
+          },
+          "end": {
+            "line": 113,
+            "column": 58
+          }
+        },
+        "43": {
+          "start": {
+            "line": 114,
+            "column": 4
+          },
+          "end": {
+            "line": 119,
+            "column": 5
+          }
+        },
+        "44": {
+          "start": {
+            "line": 115,
+            "column": 6
+          },
+          "end": {
+            "line": 118,
+            "column": 9
+          }
+        },
+        "45": {
+          "start": {
+            "line": 121,
+            "column": 24
+          },
+          "end": {
+            "line": 121,
+            "column": 26
+          }
+        },
+        "46": {
+          "start": {
+            "line": 122,
+            "column": 20
+          },
+          "end": {
+            "line": 122,
+            "column": 29
+          }
+        },
+        "47": {
+          "start": {
+            "line": 124,
+            "column": 4
+          },
+          "end": {
+            "line": 141,
+            "column": 5
+          }
+        },
+        "48": {
+          "start": {
+            "line": 125,
+            "column": 6
+          },
+          "end": {
+            "line": 128,
+            "column": 7
+          }
+        },
+        "49": {
+          "start": {
+            "line": 127,
+            "column": 8
+          },
+          "end": {
+            "line": 127,
+            "column": 14
+          }
+        },
+        "50": {
+          "start": {
+            "line": 129,
+            "column": 6
+          },
+          "end": {
+            "line": 129,
+            "column": 30
+          }
+        },
+        "51": {
+          "start": {
+            "line": 130,
+            "column": 6
+          },
+          "end": {
+            "line": 134,
+            "column": 9
+          }
+        },
+        "52": {
+          "start": {
+            "line": 136,
+            "column": 6
+          },
+          "end": {
+            "line": 140,
+            "column": 7
+          }
+        },
+        "53": {
+          "start": {
+            "line": 137,
+            "column": 8
+          },
+          "end": {
+            "line": 137,
+            "column": 65
+          }
+        },
+        "54": {
+          "start": {
+            "line": 139,
+            "column": 8
+          },
+          "end": {
+            "line": 139,
+            "column": 23
+          }
+        },
+        "55": {
+          "start": {
+            "line": 143,
+            "column": 4
+          },
+          "end": {
+            "line": 146,
+            "column": 7
+          }
+        },
+        "56": {
+          "start": {
+            "line": 148,
+            "column": 4
+          },
+          "end": {
+            "line": 152,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 11
+            },
+            "end": {
+              "line": 5,
+              "column": 12
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 23
+            },
+            "end": {
+              "line": 5,
+              "column": 25
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 12
+            },
+            "end": {
+              "line": 6,
+              "column": 13
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 26
+            },
+            "end": {
+              "line": 6,
+              "column": 30
+            }
+          },
+          "line": 6
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 7,
+              "column": 14
+            },
+            "end": {
+              "line": 7,
+              "column": 15
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 30
+            },
+            "end": {
+              "line": 7,
+              "column": 34
+            }
+          },
+          "line": 7
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 10
+            },
+            "end": {
+              "line": 8,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 27
+            },
+            "end": {
+              "line": 8,
+              "column": 86
+            }
+          },
+          "line": 8
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 11,
+              "column": 31
+            },
+            "end": {
+              "line": 11,
+              "column": 32
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 51
+            },
+            "end": {
+              "line": 41,
+              "column": 1
+            }
+          },
+          "line": 11
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 16,
+              "column": 27
+            },
+            "end": {
+              "line": 16,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 16,
+              "column": 36
+            },
+            "end": {
+              "line": 18,
+              "column": 5
+            }
+          },
+          "line": 16
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 22,
+              "column": 24
+            },
+            "end": {
+              "line": 22,
+              "column": 25
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 38
+            },
+            "end": {
+              "line": 28,
+              "column": 5
+            }
+          },
+          "line": 22
+        },
+        "7": {
+          "name": "(anonymous_7)",
+          "decl": {
+            "start": {
+              "line": 43,
+              "column": 30
+            },
+            "end": {
+              "line": 43,
+              "column": 31
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 50
+            },
+            "end": {
+              "line": 100,
+              "column": 1
+            }
+          },
+          "line": 43
+        },
+        "8": {
+          "name": "(anonymous_8)",
+          "decl": {
+            "start": {
+              "line": 102,
+              "column": 31
+            },
+            "end": {
+              "line": 102,
+              "column": 32
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 102,
+              "column": 51
+            },
+            "end": {
+              "line": 154,
+              "column": 1
+            }
+          },
+          "line": 102
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 6
+            },
+            "end": {
+              "line": 27,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 6
+              },
+              "end": {
+                "line": 27,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 25,
+                "column": 13
+              },
+              "end": {
+                "line": 27,
+                "column": 7
+              }
+            }
+          ],
+          "line": 23
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 10
+            },
+            "end": {
+              "line": 23,
+              "column": 65
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 10
+              },
+              "end": {
+                "line": 23,
+                "column": 27
+              }
+            },
+            {
+              "start": {
+                "line": 23,
+                "column": 31
+              },
+              "end": {
+                "line": 23,
+                "column": 65
+              }
+            }
+          ],
+          "line": 23
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 45,
+              "column": 50
+            },
+            "end": {
+              "line": 45,
+              "column": 64
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 45,
+                "column": 50
+              },
+              "end": {
+                "line": 45,
+                "column": 58
+              }
+            },
+            {
+              "start": {
+                "line": 45,
+                "column": 62
+              },
+              "end": {
+                "line": 45,
+                "column": 64
+              }
+            }
+          ],
+          "line": 45
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 47,
+              "column": 4
+            },
+            "end": {
+              "line": 52,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 47,
+                "column": 4
+              },
+              "end": {
+                "line": 52,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 47
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 47,
+              "column": 8
+            },
+            "end": {
+              "line": 47,
+              "column": 69
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 47,
+                "column": 8
+              },
+              "end": {
+                "line": 47,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 47,
+                "column": 17
+              },
+              "end": {
+                "line": 47,
+                "column": 41
+              }
+            },
+            {
+              "start": {
+                "line": 47,
+                "column": 45
+              },
+              "end": {
+                "line": 47,
+                "column": 69
+              }
+            }
+          ],
+          "line": 47
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 54,
+              "column": 4
+            },
+            "end": {
+              "line": 59,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 54,
+                "column": 4
+              },
+              "end": {
+                "line": 59,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 54
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 54,
+              "column": 8
+            },
+            "end": {
+              "line": 54,
+              "column": 71
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 54,
+                "column": 8
+              },
+              "end": {
+                "line": 54,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 54,
+                "column": 17
+              },
+              "end": {
+                "line": 54,
+                "column": 41
+              }
+            },
+            {
+              "start": {
+                "line": 54,
+                "column": 45
+              },
+              "end": {
+                "line": 54,
+                "column": 71
+              }
+            }
+          ],
+          "line": 54
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 62,
+              "column": 4
+            },
+            "end": {
+              "line": 67,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 62,
+                "column": 4
+              },
+              "end": {
+                "line": 67,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 62
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 70,
+              "column": 4
+            },
+            "end": {
+              "line": 79,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 70,
+                "column": 4
+              },
+              "end": {
+                "line": 79,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 70
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 72,
+              "column": 6
+            },
+            "end": {
+              "line": 77,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 72,
+                "column": 6
+              },
+              "end": {
+                "line": 77,
+                "column": 7
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 72
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 85,
+              "column": 19
+            },
+            "end": {
+              "line": 85,
+              "column": 58
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 85,
+                "column": 33
+              },
+              "end": {
+                "line": 85,
+                "column": 51
+              }
+            },
+            {
+              "start": {
+                "line": 85,
+                "column": 54
+              },
+              "end": {
+                "line": 85,
+                "column": 58
+              }
+            }
+          ],
+          "line": 85
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 104,
+              "column": 27
+            },
+            "end": {
+              "line": 104,
+              "column": 43
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 104,
+                "column": 27
+              },
+              "end": {
+                "line": 104,
+                "column": 37
+              }
+            },
+            {
+              "start": {
+                "line": 104,
+                "column": 41
+              },
+              "end": {
+                "line": 104,
+                "column": 43
+              }
+            }
+          ],
+          "line": 104
+        },
+        "12": {
+          "loc": {
+            "start": {
+              "line": 106,
+              "column": 4
+            },
+            "end": {
+              "line": 111,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 106,
+                "column": 4
+              },
+              "end": {
+                "line": 111,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 106
+        },
+        "13": {
+          "loc": {
+            "start": {
+              "line": 114,
+              "column": 4
+            },
+            "end": {
+              "line": 119,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 114,
+                "column": 4
+              },
+              "end": {
+                "line": 119,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 114
+        },
+        "14": {
+          "loc": {
+            "start": {
+              "line": 125,
+              "column": 6
+            },
+            "end": {
+              "line": 128,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 125,
+                "column": 6
+              },
+              "end": {
+                "line": 128,
+                "column": 7
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 125
+        },
+        "15": {
+          "loc": {
+            "start": {
+              "line": 136,
+              "column": 6
+            },
+            "end": {
+              "line": 140,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 136,
+                "column": 6
+              },
+              "end": {
+                "line": 140,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 138,
+                "column": 13
+              },
+              "end": {
+                "line": 140,
+                "column": 7
+              }
+            }
+          ],
+          "line": 136
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 4,
+        "7": 4,
+        "8": 3,
+        "9": 3,
+        "10": 5,
+        "11": 3,
+        "12": 3,
+        "13": 5,
+        "14": 2,
+        "15": 3,
+        "16": 3,
+        "17": 1,
+        "18": 1,
+        "19": 8,
+        "20": 8,
+        "21": 8,
+        "22": 2,
+        "23": 6,
+        "24": 1,
+        "25": 5,
+        "26": 4,
+        "27": 1,
+        "28": 3,
+        "29": 3,
+        "30": 2,
+        "31": 2,
+        "32": 1,
+        "33": 1,
+        "34": 2,
+        "35": 2,
+        "36": 1,
+        "37": 1,
+        "38": 5,
+        "39": 5,
+        "40": 5,
+        "41": 1,
+        "42": 4,
+        "43": 3,
+        "44": 1,
+        "45": 2,
+        "46": 2,
+        "47": 2,
+        "48": 6,
+        "49": 1,
+        "50": 5,
+        "51": 5,
+        "52": 5,
+        "53": 4,
+        "54": 1,
+        "55": 2,
+        "56": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 4,
+        "5": 5,
+        "6": 5,
+        "7": 8,
+        "8": 5
+      },
+      "b": {
+        "0": [
+          2,
+          3
+        ],
+        "1": [
+          5,
+          3
+        ],
+        "2": [
+          8,
+          0
+        ],
+        "3": [
+          2,
+          6
+        ],
+        "4": [
+          8,
+          8,
+          7
+        ],
+        "5": [
+          1,
+          5
+        ],
+        "6": [
+          6,
+          6,
+          6
+        ],
+        "7": [
+          1,
+          3
+        ],
+        "8": [
+          2,
+          1
+        ],
+        "9": [
+          1,
+          1
+        ],
+        "10": [
+          1,
+          1
+        ],
+        "11": [
+          5,
+          0
+        ],
+        "12": [
+          1,
+          4
+        ],
+        "13": [
+          1,
+          2
+        ],
+        "14": [
+          1,
+          5
+        ],
+        "15": [
+          4,
+          1
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "bf55941a7ae855a4d5cf9881c24f99964f755a5f"
+    }
+  }
+}

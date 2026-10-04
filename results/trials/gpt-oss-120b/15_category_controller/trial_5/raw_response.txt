@@ -1,0 +1,224 @@
+```javascript
+import {
+  getCategoryTree,
+  createCategory,
+  getCategoryPath,
+  CategoryModel
+} from '../dataset/15_category_controller.js';
+
+describe('Category Controller', () => {
+  const makeRes = () => ({
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn()
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Restore original implementations in case they were mocked
+    CategoryModel.findAll = jest.fn().mockResolvedValue([]);
+    CategoryModel.findById = jest.fn().mockResolvedValue(null);
+    CategoryModel.findBySlug = jest.fn().mockResolvedValue(null);
+    CategoryModel.create = jest.fn().mockImplementation(async (data) => ({
+      id: `cat_${Date.now()}`,
+      ...data,
+      createdAt: new Date()
+    }));
+  });
+
+  // ---------- getCategoryTree ----------
+  describe('getCategoryTree', () => {
+    it('should build a hierarchical tree from flat categories', async () => {
+      const flat = [
+        { id: '1', name: 'Root', parentId: null },
+        { id: '2', name: 'Child A', parentId: '1' },
+        { id: '3', name: 'Child B', parentId: '1' },
+        { id: '4', name: 'Grandchild', parentId: '2' }
+      ];
+      CategoryModel.findAll.mockResolvedValue(flat);
+
+      const res = makeRes();
+      await getCategoryTree({}, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.success).toBe(true);
+      // root array should contain only the root category
+      expect(payload.data).toHaveLength(1);
+      const root = payload.data[0];
+      expect(root.id).toBe('1');
+      expect(root.children).toHaveLength(2);
+      const childA = root.children.find((c) => c.id === '2');
+      expect(childA.children).toHaveLength(1);
+      expect(childA.children[0].id).toBe('4');
+    });
+
+    it('should respond with 500 when an unexpected error occurs', async () => {
+      CategoryModel.findAll.mockRejectedValue(new Error('DB failure'));
+
+      const res = makeRes();
+      await getCategoryTree({}, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.success).toBe(false);
+      expect(payload.error).toBe('Failed to construct category tree');
+    });
+  });
+
+  // ---------- createCategory ----------
+  describe('createCategory', () => {
+    const baseReq = (body) => ({ body });
+
+    it('returns 400 when name is missing or empty', async () => {
+      const res = makeRes();
+      await createCategory(baseReq({ slug: 'valid-slug' }), res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json.mock.calls[0][0].error).toBe('Category name is required');
+    });
+
+    it('returns 400 when slug is invalid', async () => {
+      const res = makeRes();
+      await createCategory(
+        baseReq({ name: 'Test', slug: 'Invalid Slug!' }),
+        res
+      );
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json.mock.calls[0][0].error).toContain('Valid URL-friendly slug');
+    });
+
+    it('returns 409 when slug already exists', async () => {
+      CategoryModel.findBySlug.mockResolvedValue({ id: 'existing' });
+      const res = makeRes();
+      await createCategory(
+        baseReq({ name: 'Test', slug: 'duplicate' }),
+        res
+      );
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json.mock.calls[0][0].error).toContain('already exists');
+    });
+
+    it('returns 404 when provided parentId does not exist', async () => {
+      CategoryModel.findBySlug.mockResolvedValue(null);
+      CategoryModel.findById.mockResolvedValue(null); // parent not found
+      const res = makeRes();
+      await createCategory(
+        baseReq({ name: 'Child', slug: 'child', parentId: 'nonexistent' }),
+        res
+      );
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json.mock.calls[0][0].error).toContain('does not exist');
+    });
+
+    it('creates category successfully with valid data', async () => {
+      CategoryModel.findBySlug.mockResolvedValue(null);
+      CategoryModel.findById.mockResolvedValue({ id: 'parent', name: 'Parent' });
+      const res = makeRes();
+      await createCategory(
+        baseReq({
+          name: ' New Category ',
+          slug: 'new-category',
+          parentId: 'parent',
+          description: '  Some description '
+        }),
+        res
+      );
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.success).toBe(true);
+      expect(payload.message).toBe('Category created successfully');
+      expect(payload.data).toMatchObject({
+        name: 'New Category',
+        slug: 'new-category',
+        parentId: 'parent',
+        description: 'Some description'
+      });
+      expect(CategoryModel.create).toHaveBeenCalled();
+    });
+
+    it('returns 500 on unexpected exception', async () => {
+      CategoryModel.findBySlug.mockRejectedValue(new Error('boom'));
+      const res = makeRes();
+      await createCategory(baseReq({ name: 'Test', slug: 'test' }), res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json.mock.calls[0][0].error).toBe('Failed to create category');
+    });
+  });
+
+  // ---------- getCategoryPath ----------
+  describe('getCategoryPath', () => {
+    const makeReq = (params) => ({ params });
+
+    it('returns 400 when categoryId param is missing', async () => {
+      const res = makeRes();
+      await getCategoryPath(makeReq({}), res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json.mock.calls[0][0].error).toBe('Category ID is required');
+    });
+
+    it('returns 404 when category does not exist', async () => {
+      CategoryModel.findById.mockResolvedValue(null);
+      const res = makeRes();
+      await getCategoryPath(makeReq({ categoryId: 'unknown' }), res);
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json.mock.calls[0][0].error).toContain('not found');
+    });
+
+    it('returns correct breadcrumb trail for a nested category', async () => {
+      const catA = { id: 'a', name: 'A', slug: 'a', parentId: null };
+      const catB = { id: 'b', name: 'B', slug: 'b', parentId: 'a' };
+      const catC = { id: 'c', name: 'C', slug: 'c', parentId: 'b' };
+
+      CategoryModel.findById
+        .mockImplementation(async (id) => {
+          if (id === 'c') return catC;
+          if (id === 'b') return catB;
+          if (id === 'a') return catA;
+          return null;
+        });
+
+      const res = makeRes();
+      await getCategoryPath(makeReq({ categoryId: 'c' }), res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.success).toBe(true);
+      expect(payload.data).toEqual([
+        { id: 'a', name: 'A', slug: 'a' },
+        { id: 'b', name: 'B', slug: 'b' },
+        { id: 'c', name: 'C', slug: 'c' }
+      ]);
+    });
+
+    it('breaks a cyclic parent relationship gracefully', async () => {
+      const catX = { id: 'x', name: 'X', slug: 'x', parentId: 'y' };
+      const catY = { id: 'y', name: 'Y', slug: 'y', parentId: 'x' };
+
+      CategoryModel.findById.mockImplementation(async (id) => {
+        if (id === 'x') return catX;
+        if (id === 'y') return catY;
+        return null;
+      });
+
+      const res = makeRes();
+      await getCategoryPath(makeReq({ categoryId: 'x' }), res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      const payload = res.json.mock.calls[0][0];
+      // Should contain both nodes once before detection stops
+      expect(payload.data).toEqual([
+        { id: 'y', name: 'Y', slug: 'y' },
+        { id: 'x', name: 'X', slug: 'x' }
+      ]);
+    });
+
+    it('returns 500 on unexpected error', async () => {
+      CategoryModel.findById.mockRejectedValue(new Error('DB error'));
+      const res = makeRes();
+      await getCategoryPath(makeReq({ categoryId: 'any' }), res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json.mock.calls[0][0].error).toBe('Failed to retrieve category hierarchy path');
+    });
+  });
+});
+```

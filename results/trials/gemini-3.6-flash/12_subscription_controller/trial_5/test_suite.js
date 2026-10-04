@@ -1,0 +1,368 @@
+import { jest } from '@jest/globals';
+import {
+  upgradeSubscription,
+  cancelSubscription,
+  UserSubscription,
+  BillingGateway
+} from '../dataset/12_subscription_controller.js';
+
+describe('Subscription Controller', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      body: {}
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.restoreAllMocks();
+  });
+
+  describe('upgradeSubscription', () => {
+    test('should return 401 if userId is missing', async () => {
+      req.body = { targetTier: 'pro' };
+
+      await upgradeSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 400 for missing or invalid target tier', async () => {
+      req.user = { id: 'user_1' };
+      req.body = { targetTier: 'invalid_tier' };
+
+      await upgradeSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: expect.stringContaining('Invalid tier')
+      });
+    });
+
+    test('should return 400 if billingCycle is invalid', async () => {
+      req.user = { id: 'user_1' };
+      req.body = { targetTier: 'pro', billingCycle: 'weekly' };
+
+      await upgradeSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'billingCycle must be either "monthly" or "annual"'
+      });
+    });
+
+    test('should return 400 if user is already on target tier', async () => {
+      req.user = { id: 'user_1' };
+      req.body = { targetTier: 'pro', paymentMethodId: 'pm_123' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'pro'
+      });
+
+      await upgradeSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'User is already on the "pro" tier'
+      });
+    });
+
+    test('should return 400 if trying to downgrade tier', async () => {
+      req.user = { id: 'user_1' };
+      req.body = { targetTier: 'starter', paymentMethodId: 'pm_123' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'enterprise'
+      });
+
+      await upgradeSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Downgrades must be processed through the tier change request workflow'
+      });
+    });
+
+    test('should return 400 if paid tier requested without paymentMethodId', async () => {
+      req.user = { id: 'user_1' };
+      req.body = { targetTier: 'pro' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'free'
+      });
+
+      await upgradeSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Payment method is required for paid tiers'
+      });
+    });
+
+    test('should successfully upgrade tier and use req.user customerId', async () => {
+      req.user = { id: 'user_1', customerId: 'cust_stripe_123' };
+      req.body = {
+        targetTier: 'pro',
+        billingCycle: 'annual',
+        paymentMethodId: 'pm_123'
+      };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue(null);
+      const gatewaySpy = jest.spyOn(BillingGateway, 'createOrUpdateSubscription').mockResolvedValue({
+        subscriptionId: 'sub_123',
+        status: 'active',
+        currentPeriodEnd: new Date('2025-12-31')
+      });
+      const updateSpy = jest.spyOn(UserSubscription, 'update').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'pro',
+        billingCycle: 'annual',
+        status: 'active',
+        gatewaySubscriptionId: 'sub_123',
+        currentPeriodEnd: new Date('2025-12-31'),
+        cancelAtPeriodEnd: false
+      });
+
+      await upgradeSubscription(req, res);
+
+      expect(gatewaySpy).toHaveBeenCalledWith({
+        customerId: 'cust_stripe_123',
+        planId: 'pro_annual',
+        paymentMethodId: 'pm_123'
+      });
+
+      expect(updateSpy).toHaveBeenCalledWith('user_1', {
+        tier: 'pro',
+        billingCycle: 'annual',
+        status: 'active',
+        gatewaySubscriptionId: 'sub_123',
+        currentPeriodEnd: expect.any(Date),
+        cancelAtPeriodEnd: false
+      });
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Successfully upgraded subscription to pro',
+        data: expect.objectContaining({ tier: 'pro' })
+      });
+    });
+
+    test('should fallback to body.userId and default customerId if user not on req', async () => {
+      req.body = {
+        userId: 'user_2',
+        targetTier: 'starter',
+        paymentMethodId: 'pm_456'
+      };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_2',
+        tier: 'free'
+      });
+
+      const gatewaySpy = jest.spyOn(BillingGateway, 'createOrUpdateSubscription').mockResolvedValue({
+        subscriptionId: 'sub_456',
+        status: 'active',
+        currentPeriodEnd: new Date('2025-06-30')
+      });
+
+      await upgradeSubscription(req, res);
+
+      expect(gatewaySpy).toHaveBeenCalledWith({
+        customerId: 'cust_user_2',
+        planId: 'starter_monthly',
+        paymentMethodId: 'pm_456'
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    test('should return 500 when an exception is thrown', async () => {
+      req.user = { id: 'user_1' };
+      req.body = { targetTier: 'pro', paymentMethodId: 'pm_123' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockRejectedValue(new Error('Database error'));
+
+      await upgradeSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to process subscription upgrade',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('cancelSubscription', () => {
+    test('should return 401 if userId is missing', async () => {
+      await cancelSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Authentication required'
+      });
+    });
+
+    test('should return 404 if active subscription is not found or is free tier', async () => {
+      req.user = { id: 'user_1' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue(null);
+
+      await cancelSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'No active paid subscription found to cancel'
+      });
+    });
+
+    test('should return 404 if current tier is free', async () => {
+      req.user = { id: 'user_1' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'free'
+      });
+
+      await cancelSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'No active paid subscription found to cancel'
+      });
+    });
+
+    test('should return 400 if subscription is already scheduled for cancellation', async () => {
+      req.user = { id: 'user_1' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'pro',
+        cancelAtPeriodEnd: true
+      });
+
+      await cancelSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Subscription is already scheduled for cancellation at the end of the billing period'
+      });
+    });
+
+    test('should successfully cancel subscription with custom reason', async () => {
+      req.user = { id: 'user_1' };
+      req.body = { reason: '  Too expensive  ' };
+
+      const periodEnd = new Date('2025-10-31');
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'pro',
+        gatewaySubscriptionId: 'sub_pro_123',
+        cancelAtPeriodEnd: false
+      });
+
+      const gatewaySpy = jest.spyOn(BillingGateway, 'cancelAtPeriodEnd').mockResolvedValue({
+        subscriptionId: 'sub_pro_123',
+        cancelAtPeriodEnd: true
+      });
+
+      const updateSpy = jest.spyOn(UserSubscription, 'update').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'pro',
+        currentPeriodEnd: periodEnd,
+        cancelAtPeriodEnd: true,
+        cancellationReason: 'Too expensive'
+      });
+
+      await cancelSubscription(req, res);
+
+      expect(gatewaySpy).toHaveBeenCalledWith('sub_pro_123');
+      expect(updateSpy).toHaveBeenCalledWith('user_1', {
+        cancelAtPeriodEnd: true,
+        cancellationReason: 'Too expensive',
+        cancelledAt: expect.any(Date)
+      });
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Subscription will be cancelled at the end of current billing cycle',
+        data: {
+          tier: 'pro',
+          accessUntil: periodEnd,
+          cancelAtPeriodEnd: true
+        }
+      });
+    });
+
+    test('should cancel subscription with default reason when no reason provided', async () => {
+      req.body = { userId: 'user_2' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_2',
+        tier: 'starter',
+        gatewaySubscriptionId: 'sub_starter_456',
+        cancelAtPeriodEnd: false
+      });
+
+      jest.spyOn(BillingGateway, 'cancelAtPeriodEnd').mockResolvedValue({
+        subscriptionId: 'sub_starter_456',
+        cancelAtPeriodEnd: true
+      });
+
+      const updateSpy = jest.spyOn(UserSubscription, 'update').mockResolvedValue({
+        userId: 'user_2',
+        tier: 'starter',
+        cancelAtPeriodEnd: true
+      });
+
+      await cancelSubscription(req, res);
+
+      expect(updateSpy).toHaveBeenCalledWith('user_2', expect.objectContaining({
+        cancellationReason: 'User requested cancellation'
+      }));
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    test('should return 500 if an error occurs during cancellation', async () => {
+      req.user = { id: 'user_1' };
+
+      jest.spyOn(UserSubscription, 'findByUserId').mockResolvedValue({
+        userId: 'user_1',
+        tier: 'pro',
+        gatewaySubscriptionId: 'sub_123'
+      });
+
+      jest.spyOn(BillingGateway, 'cancelAtPeriodEnd').mockRejectedValue(new Error('Gateway error'));
+
+      await cancelSubscription(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to cancel subscription',
+        details: 'Gateway error'
+      });
+    });
+  });
+});

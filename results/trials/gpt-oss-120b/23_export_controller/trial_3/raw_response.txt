@@ -1,0 +1,211 @@
+```javascript
+import { jest } from '@jest/globals';
+import { ExportDataService, exportOrdersCsv } from '../dataset/23_export_controller.js';
+
+describe('exportOrdersCsv controller', () => {
+  const createRes = () => {
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+    return res;
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('returns 400 when startDate or endDate is missing', async () => {
+    const req = { query: { startDate: '2023-01-01' } };
+    const res = createRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Both startDate and endDate query parameters are required',
+    });
+  });
+
+  test('returns 400 for invalid ISO date strings', async () => {
+    const req = { query: { startDate: 'invalid', endDate: '2023-01-10' } };
+    const res = createRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Invalid date format. Expected ISO-8601 string',
+    });
+  });
+
+  test('returns 400 when startDate is after endDate', async () => {
+    const req = {
+      query: { startDate: '2023-02-01', endDate: '2023-01-01' },
+    };
+    const res = createRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'startDate cannot be later than endDate',
+    });
+  });
+
+  test('returns 400 for unsupported status filter', async () => {
+    const req = {
+      query: {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+        status: 'unknown',
+      },
+    };
+    const res = createRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error:
+        'Invalid status filter. Allowed values: pending, paid, shipped, cancelled',
+    });
+  });
+
+  test('returns 200 with empty result when no records found', async () => {
+    jest.spyOn(ExportDataService, 'fetchOrdersForExport').mockResolvedValue([]);
+
+    const req = {
+      query: { startDate: '2023-01-01', endDate: '2023-01-31' },
+    };
+    const res = createRes();
+
+    await exportOrdersCsv(req, res);
+
+    expect(ExportDataService.fetchOrdersForExport).toHaveBeenCalledWith({
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-31'),
+    });
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    const jsonArg = res.json.mock.calls[0][0];
+    expect(jsonArg).toMatchObject({
+      success: true,
+      message: 'No records found for the specified period',
+      data: {
+        rowCount: 0,
+        csvContent: '',
+      },
+    });
+    expect(typeof jsonArg.data.exportedAt).toBe('string');
+  });
+
+  test('returns 200 with CSV content for valid records, including escaped fields', async () => {
+    const mockRecords = [
+      {
+        id: 1,
+        userId: 100,
+        total: 123.45,
+        status: 'paid',
+        createdAt: '2023-01-15T12:34:56Z',
+      },
+      {
+        id: 2,
+        customerId: 200,
+        total: 67.89,
+        status: 'shipped',
+        // field containing commas, quotes and newline to test escaping
+        createdAt: '2023-01-20T08:00:00Z',
+      },
+      {
+        id: 3,
+        userId: 300,
+        total: 0,
+        status: 'pending',
+        createdAt: '2023-01-25T00:00:00Z',
+        // include a field with special characters
+        // We'll inject via total's toFixed later (no special chars there), so add a custom field via userId
+        // but escapeCsv only touches known fields; we test quote handling via status
+        // We'll set status to a string containing commas and quotes
+        status: 'cancelled, "refunded"',
+      },
+    ];
+
+    // Adjust the third record's status after definition to include commas/quotes
+    mockRecords[2].status = 'cancelled, "refunded"';
+
+    jest
+      .spyOn(ExportDataService, 'fetchOrdersForExport')
+      .mockResolvedValue(mockRecords);
+
+    const req = {
+      query: {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+        status: 'shipped', // should be lower‑cased and passed through
+      },
+    };
+    const res = createRes();
+
+    await exportOrdersCsv(req, res);
+
+    // Verify service called with correct filters
+    expect(ExportDataService.fetchOrdersForExport).toHaveBeenCalledWith({
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-31'),
+      status: 'shipped',
+    });
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    const jsonArg = res.json.mock.calls[0][0];
+    expect(jsonArg.success).toBe(true);
+    expect(jsonArg.message).toBe('Export generated successfully');
+    expect(jsonArg.data.rowCount).toBe(mockRecords.length);
+    expect(jsonArg.data.fileName).toBe(
+      'orders_export_2023-01-01_to_2023-01-31.csv'
+    );
+    expect(jsonArg.data.mimeType).toBe('text/csv');
+    expect(typeof jsonArg.data.exportedAt).toBe('string');
+
+    // Build expected CSV manually
+    const expectedHeaders = [
+      'Order ID',
+      'Customer ID',
+      'Total Amount',
+      'Status',
+      'Date',
+    ].join(',');
+
+    const expectedRows = mockRecords.map((order) => {
+      const id = String(order.id);
+      const custId = String(order.userId ?? order.customerId ?? '');
+      const total = (order.total ?? 0).toFixed(2);
+      const status = String(order.status);
+      const date = new Date(order.createdAt).toISOString();
+
+      // apply same escaping logic as controller
+      const esc = (field) => {
+        if (field === null || field === undefined) return '';
+        const s = String(field);
+        return /[,"\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+      };
+
+      return [
+        esc(id),
+        esc(custId),
+        esc(total),
+        esc(status),
+        esc(date),
+      ].join(',');
+    });
+
+    const expectedCsv = [expectedHeaders, ...expectedRows].join('\r\n');
+
+    expect(jsonArg.data.csvContent).toBe(expectedCsv);
+  });
+});
+```

@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "25_health_controller.js",
+  "trial": 4,
+  "startedAt": "2026-10-04T10:57:16.866Z",
+  "finishedAt": "2026-10-04T10:58:03.279Z",
+  "suiteOk": true,
+  "testsPassed": 11,
+  "testsFailed": 0,
+  "testsTotal": 11,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 100,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 709,
+    "completionTokens": 1996,
+    "totalTokens": 3910,
+    "thinkingTokens": 1205
+  },
+  "latencyMs": 13701
+}

@@ -1,0 +1,235 @@
+```javascript
+import { jest } from '@jest/globals';
+import {
+  signup,
+  login,
+  User,
+  PasswordHelper,
+  TokenService
+} from '../dataset/01_auth_controller.js';
+
+const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockImplementation(code => {
+    res.statusCode = code;
+    return res;
+  });
+  res.json = jest.fn().mockImplementation(data => {
+    res.body = data;
+    return res;
+  });
+  return res;
+};
+
+describe('Auth Controller - signup', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = { body: {} };
+    res = mockResponse();
+
+    jest.spyOn(User, 'findOne').mockResolvedValue(null);
+    jest.spyOn(User, 'create').mockImplementation(async data => ({
+      id: 'mock-user-id',
+      ...data,
+      createdAt: new Date()
+    }));
+    jest.spyOn(PasswordHelper, 'hash').mockImplementation(async p => `hashed_${p}`);
+    jest.spyOn(TokenService, 'generateToken').mockImplementation(payload => `mock_jwt_token_${payload.id}`);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('should register a new user successfully', async () => {
+    req.body = {
+      email: 'test@example.com',
+      password: 'strongPass123',
+      name: 'John Doe'
+    };
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.user).toMatchObject({
+      id: 'mock-user-id',
+      name: 'John Doe',
+      email: 'test@example.com',
+      role: 'user'
+    });
+    expect(res.body.data.token).toBe('mock_jwt_token_mock-user-id');
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
+    expect(PasswordHelper.hash).toHaveBeenCalledWith('strongPass123');
+    expect(User.create).toHaveBeenCalled();
+  });
+
+  test('should fail when required fields are missing', async () => {
+    req.body = { email: 'test@example.com', password: 'strongPass123' }; // missing name
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.body.success).toBe(false);
+    expect(res.body.error).toMatch(/Missing required fields/);
+  });
+
+  test('should fail with invalid email format', async () => {
+    req.body = {
+      email: 'invalid-email',
+      password: 'strongPass123',
+      name: 'Jane'
+    };
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.body.error).toBe('Invalid email format');
+  });
+
+  test('should fail when password is too short', async () => {
+    req.body = {
+      email: 'test@example.com',
+      password: 'short',
+      name: 'Jane'
+    };
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.body.error).toBe('Password must be at least 8 characters long');
+  });
+
+  test('should detect existing user and return conflict', async () => {
+    User.findOne.mockResolvedValue({ id: 'existing-id' });
+
+    req.body = {
+      email: 'existing@example.com',
+      password: 'strongPass123',
+      name: 'Existing User'
+    };
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.body.error).toBe('An account with this email already exists');
+  });
+
+  test('should handle internal errors gracefully', async () => {
+    User.create.mockRejectedValue(new Error('DB failure'));
+
+    req.body = {
+      email: 'test@example.com',
+      password: 'strongPass123',
+      name: 'John Doe'
+    };
+
+    await signup(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.body.error).toBe('Internal server error during registration');
+    expect(res.body.details).toBe('DB failure');
+  });
+});
+
+describe('Auth Controller - login', () => {
+  let req;
+  let res;
+  const mockUser = {
+    id: 'user-123',
+    name: 'Alice',
+    email: 'alice@example.com',
+    password: 'hashed_correctPass',
+    role: 'user',
+    isBlocked: false
+  };
+
+  beforeEach(() => {
+    req = { body: {} };
+    res = mockResponse();
+
+    jest.spyOn(User, 'findOne').mockResolvedValue(null);
+    jest.spyOn(PasswordHelper, 'compare').mockResolvedValue(false);
+    jest.spyOn(TokenService, 'generateToken').mockImplementation(payload => `mock_jwt_token_${payload.id}`);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('should login successfully with correct credentials', async () => {
+    User.findOne.mockResolvedValue(mockUser);
+    PasswordHelper.compare.mockResolvedValue(true);
+
+    req.body = { email: 'alice@example.com', password: 'correctPass' };
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.user).toMatchObject({
+      id: 'user-123',
+      name: 'Alice',
+      email: 'alice@example.com',
+      role: 'user'
+    });
+    expect(res.body.data.token).toBe('mock_jwt_token_user-123');
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'alice@example.com' });
+    expect(PasswordHelper.compare).toHaveBeenCalledWith('correctPass', mockUser.password);
+  });
+
+  test('should reject when required fields are missing', async () => {
+    req.body = { email: 'alice@example.com' }; // missing password
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.body.error).toBe('Email and password are required');
+  });
+
+  test('should return unauthorized when user does not exist', async () => {
+    User.findOne.mockResolvedValue(null);
+    req.body = { email: 'nonexistent@example.com', password: 'any' };
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.body.error).toBe('Invalid email or password');
+  });
+
+  test('should block login for suspended accounts', async () => {
+    const blockedUser = { ...mockUser, isBlocked: true };
+    User.findOne.mockResolvedValue(blockedUser);
+    req.body = { email: 'alice@example.com', password: 'any' };
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.body.error).toBe('Account has been suspended');
+  });
+
+  test('should reject when password does not match', async () => {
+    User.findOne.mockResolvedValue(mockUser);
+    PasswordHelper.compare.mockResolvedValue(false);
+    req.body = { email: 'alice@example.com', password: 'wrongPass' };
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.body.error).toBe('Invalid email or password');
+  });
+
+  test('should handle internal errors during login', async () => {
+    User.findOne.mockRejectedValue(new Error('DB outage'));
+    req.body = { email: 'alice@example.com', password: 'any' };
+
+    await login(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.body.error).toBe('Internal server error during login');
+    expect(res.body.details).toBe('DB outage');
+  });
+});
+```

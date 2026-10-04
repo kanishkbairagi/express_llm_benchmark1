@@ -1,0 +1,858 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 2,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 6,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 8,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1790959199315,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getLiveness"
+          ],
+          "duration": 12,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Health Controller getLiveness should respond with 200 and proper payload",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should respond with 200 and proper payload",
+          "startAt": 1790959199664
+        },
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getLiveness"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "Error: boom\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials\\25_health_controller_gpt-oss-120b_trial1.test.js:36:15)\n    at D:\\express-llm-benchmark\\node_modules\\jest-mock\\build\\index.js:374:39\n    at Object.<anonymous> (D:\\express-llm-benchmark\\node_modules\\jest-mock\\build\\index.js:381:13)\n    at Object.mockConstructor [as status] (D:\\express-llm-benchmark\\node_modules\\jest-mock\\build\\index.js:116:19)\n    at status (D:\\express-llm-benchmark\\dataset\\25_health_controller.js:17:16)\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials\\25_health_controller_gpt-oss-120b_trial1.test.js:38:13)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Health Controller getLiveness should handle unexpected errors and return 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle unexpected errors and return 500",
+          "startAt": 1790959199678
+        },
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getReadiness"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Health Controller getReadiness should return 200 when all checks are healthy",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 200 when all checks are healthy",
+          "startAt": 1790959199696
+        },
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getReadiness"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Health Controller getReadiness should return 503 when database check reports DOWN",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 503 when database check reports DOWN",
+          "startAt": 1790959199700
+        },
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getReadiness"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Health Controller getReadiness should handle exception from pingDatabase and mark it DOWN",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle exception from pingDatabase and mark it DOWN",
+          "startAt": 1790959199703
+        },
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getReadiness"
+          ],
+          "duration": 6,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Health Controller getReadiness should handle exception from pingRedis and mark it DOWN",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle exception from pingRedis and mark it DOWN",
+          "startAt": 1790959199705
+        },
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getReadiness"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Health Controller getReadiness should return WARN for memory when heapUsed exceeds 1.5GB",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return WARN for memory when heapUsed exceeds 1.5GB",
+          "startAt": 1790959199711
+        },
+        {
+          "ancestorTitles": [
+            "Health Controller",
+            "getReadiness"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: 500\nReceived: 503\n\nNumber of calls: 1",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: 500\nReceived: 503\n\nNumber of calls: 1\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials\\25_health_controller_gpt-oss-120b_trial1.test.js:146:30)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Health Controller getReadiness should return 500 if an unexpected error occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 if an unexpected error occurs",
+          "startAt": 1790959199713
+        }
+      ],
+      "endTime": 1790959199758,
+      "message": "  ● Health Controller › getLiveness › should handle unexpected errors and return 500\n\n    boom\n\n    \u001b[0m \u001b[90m 34 |\u001b[39m       \u001b[90m// Force an error by making res.status throw\u001b[39m\n     \u001b[90m 35 |\u001b[39m       mockRes\u001b[33m.\u001b[39mstatus\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 36 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'boom'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 37 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 38 |\u001b[39m       \u001b[36mawait\u001b[39m getLiveness({}\u001b[33m,\u001b[39m mockRes)\u001b[33m;\u001b[39m\n     \u001b[90m 39 |\u001b[39m       expect(mockRes\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials/25_health_controller_gpt-oss-120b_trial1.test.js:36:15)\n      at status (dataset/25_health_controller.js:17:16)\n      at Object.<anonymous> (tests_trials/25_health_controller_gpt-oss-120b_trial1.test.js:38:13)\n\n  ● Health Controller › getReadiness › should return 500 if an unexpected error occurs\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    Expected: 500\n    Received: 503\n\n    Number of calls: 1\n\n    \u001b[0m \u001b[90m 144 |\u001b[39m       \u001b[90m// Ensure getReadiness catches and responds with 500\u001b[39m\n     \u001b[90m 145 |\u001b[39m       \u001b[36mawait\u001b[39m getReadiness({}\u001b[33m,\u001b[39m mockRes)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 146 |\u001b[39m       expect(mockRes\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 147 |\u001b[39m       \u001b[36mconst\u001b[39m payload \u001b[33m=\u001b[39m mockRes\u001b[33m.\u001b[39mjson\u001b[33m.\u001b[39mmock\u001b[33m.\u001b[39mcalls[\u001b[35m0\u001b[39m][\u001b[35m0\u001b[39m]\u001b[33m;\u001b[39m\n     \u001b[90m 148 |\u001b[39m       expect(payload)\u001b[33m.\u001b[39mtoMatchObject({\n     \u001b[90m 149 |\u001b[39m         status\u001b[33m:\u001b[39m \u001b[32m'DOWN'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials/25_health_controller_gpt-oss-120b_trial1.test.js:146:30)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\25_health_controller_gpt-oss-120b_trial1.test.js",
+      "startTime": 1790959199450,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\25_health_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\25_health_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 28
+          },
+          "end": {
+            "line": 7,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 29
+          },
+          "end": {
+            "line": 5,
+            "column": 59
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 26
+          },
+          "end": {
+            "line": 6,
+            "column": 56
+          }
+        },
+        "3": {
+          "start": {
+            "line": 9,
+            "column": 27
+          },
+          "end": {
+            "line": 22,
+            "column": 1
+          }
+        },
+        "4": {
+          "start": {
+            "line": 10,
+            "column": 2
+          },
+          "end": {
+            "line": 21,
+            "column": 3
+          }
+        },
+        "5": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 15,
+            "column": 7
+          }
+        },
+        "6": {
+          "start": {
+            "line": 17,
+            "column": 4
+          },
+          "end": {
+            "line": 20,
+            "column": 7
+          }
+        },
+        "7": {
+          "start": {
+            "line": 24,
+            "column": 28
+          },
+          "end": {
+            "line": 72,
+            "column": 1
+          }
+        },
+        "8": {
+          "start": {
+            "line": 25,
+            "column": 2
+          },
+          "end": {
+            "line": 71,
+            "column": 3
+          }
+        },
+        "9": {
+          "start": {
+            "line": 26,
+            "column": 19
+          },
+          "end": {
+            "line": 26,
+            "column": 21
+          }
+        },
+        "10": {
+          "start": {
+            "line": 27,
+            "column": 20
+          },
+          "end": {
+            "line": 27,
+            "column": 24
+          }
+        },
+        "11": {
+          "start": {
+            "line": 30,
+            "column": 4
+          },
+          "end": {
+            "line": 37,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 31,
+            "column": 23
+          },
+          "end": {
+            "line": 31,
+            "column": 56
+          }
+        },
+        "13": {
+          "start": {
+            "line": 32,
+            "column": 6
+          },
+          "end": {
+            "line": 32,
+            "column": 33
+          }
+        },
+        "14": {
+          "start": {
+            "line": 33,
+            "column": 6
+          },
+          "end": {
+            "line": 33,
+            "column": 54
+          }
+        },
+        "15": {
+          "start": {
+            "line": 33,
+            "column": 36
+          },
+          "end": {
+            "line": 33,
+            "column": 54
+          }
+        },
+        "16": {
+          "start": {
+            "line": 35,
+            "column": 6
+          },
+          "end": {
+            "line": 35,
+            "column": 63
+          }
+        },
+        "17": {
+          "start": {
+            "line": 36,
+            "column": 6
+          },
+          "end": {
+            "line": 36,
+            "column": 24
+          }
+        },
+        "18": {
+          "start": {
+            "line": 40,
+            "column": 4
+          },
+          "end": {
+            "line": 47,
+            "column": 5
+          }
+        },
+        "19": {
+          "start": {
+            "line": 41,
+            "column": 26
+          },
+          "end": {
+            "line": 41,
+            "column": 56
+          }
+        },
+        "20": {
+          "start": {
+            "line": 42,
+            "column": 6
+          },
+          "end": {
+            "line": 42,
+            "column": 33
+          }
+        },
+        "21": {
+          "start": {
+            "line": 43,
+            "column": 6
+          },
+          "end": {
+            "line": 43,
+            "column": 57
+          }
+        },
+        "22": {
+          "start": {
+            "line": 43,
+            "column": 39
+          },
+          "end": {
+            "line": 43,
+            "column": 57
+          }
+        },
+        "23": {
+          "start": {
+            "line": 45,
+            "column": 6
+          },
+          "end": {
+            "line": 45,
+            "column": 60
+          }
+        },
+        "24": {
+          "start": {
+            "line": 46,
+            "column": 6
+          },
+          "end": {
+            "line": 46,
+            "column": 24
+          }
+        },
+        "25": {
+          "start": {
+            "line": 50,
+            "column": 16
+          },
+          "end": {
+            "line": 50,
+            "column": 37
+          }
+        },
+        "26": {
+          "start": {
+            "line": 51,
+            "column": 23
+          },
+          "end": {
+            "line": 51,
+            "column": 61
+          }
+        },
+        "27": {
+          "start": {
+            "line": 52,
+            "column": 4
+          },
+          "end": {
+            "line": 56,
+            "column": 6
+          }
+        },
+        "28": {
+          "start": {
+            "line": 58,
+            "column": 23
+          },
+          "end": {
+            "line": 58,
+            "column": 44
+          }
+        },
+        "29": {
+          "start": {
+            "line": 60,
+            "column": 4
+          },
+          "end": {
+            "line": 64,
+            "column": 7
+          }
+        },
+        "30": {
+          "start": {
+            "line": 66,
+            "column": 4
+          },
+          "end": {
+            "line": 70,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 16
+            },
+            "end": {
+              "line": 5,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 29
+            },
+            "end": {
+              "line": 5,
+              "column": 59
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 13
+            },
+            "end": {
+              "line": 6,
+              "column": 14
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 26
+            },
+            "end": {
+              "line": 6,
+              "column": 56
+            }
+          },
+          "line": 6
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 9,
+              "column": 27
+            },
+            "end": {
+              "line": 9,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 47
+            },
+            "end": {
+              "line": 22,
+              "column": 1
+            }
+          },
+          "line": 9
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 24,
+              "column": 28
+            },
+            "end": {
+              "line": 24,
+              "column": 29
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 24,
+              "column": 48
+            },
+            "end": {
+              "line": 72,
+              "column": 1
+            }
+          },
+          "line": 24
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 33,
+              "column": 6
+            },
+            "end": {
+              "line": 33,
+              "column": 54
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 33,
+                "column": 6
+              },
+              "end": {
+                "line": 33,
+                "column": 54
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 33
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 6
+            },
+            "end": {
+              "line": 43,
+              "column": 57
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 6
+              },
+              "end": {
+                "line": 43,
+                "column": 57
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 43
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 53,
+              "column": 14
+            },
+            "end": {
+              "line": 53,
+              "column": 47
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 53,
+                "column": 34
+              },
+              "end": {
+                "line": 53,
+                "column": 40
+              }
+            },
+            {
+              "start": {
+                "line": 53,
+                "column": 43
+              },
+              "end": {
+                "line": 53,
+                "column": 47
+              }
+            }
+          ],
+          "line": 53
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 58,
+              "column": 23
+            },
+            "end": {
+              "line": 58,
+              "column": 44
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 58,
+                "column": 35
+              },
+              "end": {
+                "line": 58,
+                "column": 38
+              }
+            },
+            {
+              "start": {
+                "line": 58,
+                "column": 41
+              },
+              "end": {
+                "line": 58,
+                "column": 44
+              }
+            }
+          ],
+          "line": 58
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 61,
+              "column": 14
+            },
+            "end": {
+              "line": 61,
+              "column": 39
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 61,
+                "column": 26
+              },
+              "end": {
+                "line": 61,
+                "column": 30
+              }
+            },
+            {
+              "start": {
+                "line": 61,
+                "column": 33
+              },
+              "end": {
+                "line": 61,
+                "column": 39
+              }
+            }
+          ],
+          "line": 61
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 1,
+        "3": 1,
+        "4": 2,
+        "5": 2,
+        "6": 1,
+        "7": 1,
+        "8": 6,
+        "9": 6,
+        "10": 6,
+        "11": 6,
+        "12": 6,
+        "13": 4,
+        "14": 4,
+        "15": 1,
+        "16": 2,
+        "17": 2,
+        "18": 6,
+        "19": 6,
+        "20": 5,
+        "21": 5,
+        "22": 0,
+        "23": 1,
+        "24": 1,
+        "25": 6,
+        "26": 6,
+        "27": 6,
+        "28": 6,
+        "29": 6,
+        "30": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 1,
+        "2": 2,
+        "3": 6
+      },
+      "b": {
+        "0": [
+          1,
+          3
+        ],
+        "1": [
+          0,
+          5
+        ],
+        "2": [
+          1,
+          5
+        ],
+        "3": [
+          2,
+          4
+        ],
+        "4": [
+          2,
+          4
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "04222ad21eea8d6cec733b32e7acb35c3edb2b46"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "23_export_controller.js",
+  "trial": 2,
+  "startedAt": "2026-10-03T17:51:17.011Z",
+  "finishedAt": "2026-10-03T17:51:30.108Z",
+  "suiteOk": true,
+  "testsPassed": 10,
+  "testsFailed": 0,
+  "testsTotal": 10,
+  "errorCategory": "none",
+  "statementCoverage": 94.74,
+  "branchCoverage": 96.77,
+  "functionCoverage": 80,
+  "lineCoverage": 97.14,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 981,
+    "completionTokens": 2018,
+    "totalTokens": 3779,
+    "thinkingTokens": 780
+  },
+  "latencyMs": 11306
+}

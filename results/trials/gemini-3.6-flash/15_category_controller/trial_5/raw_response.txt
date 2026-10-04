@@ -1,0 +1,317 @@
+```javascript
+import {
+  CategoryModel,
+  getCategoryTree,
+  createCategory,
+  getCategoryPath
+} from '../dataset/15_category_controller.js';
+
+describe('15_category_controller Unit Tests', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {};
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+    jest.restoreAllMocks();
+  });
+
+  describe('getCategoryTree', () => {
+    test('should construct a category tree with root and nested child categories', async () => {
+      const flatCategories = [
+        { id: 'cat_1', name: 'Electronics', parentId: null },
+        { id: 'cat_2', name: 'Laptops', parentId: 'cat_1' },
+        { id: 'cat_3', name: 'Gaming Laptops', parentId: 'cat_2' },
+        { id: 'cat_4', name: 'Clothing', parentId: null }
+      ];
+
+      jest.spyOn(CategoryModel, 'findAll').mockResolvedValue(flatCategories);
+
+      await getCategoryTree(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: [
+          {
+            id: 'cat_1',
+            name: 'Electronics',
+            parentId: null,
+            children: [
+              {
+                id: 'cat_2',
+                name: 'Laptops',
+                parentId: 'cat_1',
+                children: [
+                  {
+                    id: 'cat_3',
+                    name: 'Gaming Laptops',
+                    parentId: 'cat_2',
+                    children: []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'cat_4',
+            name: 'Clothing',
+            parentId: null,
+            children: []
+          }
+        ]
+      });
+    });
+
+    test('should handle categories referencing a non-existent parent by putting them in root', async () => {
+      const flatCategories = [
+        { id: 'cat_2', name: 'Orphan', parentId: 'non_existent_id' }
+      ];
+
+      jest.spyOn(CategoryModel, 'findAll').mockResolvedValue(flatCategories);
+
+      await getCategoryTree(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: [
+          { id: 'cat_2', name: 'Orphan', parentId: 'non_existent_id', children: [] }
+        ]
+      });
+    });
+
+    test('should return 500 when CategoryModel.findAll throws an error', async () => {
+      jest.spyOn(CategoryModel, 'findAll').mockRejectedValue(new Error('Database error'));
+
+      await getCategoryTree(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to construct category tree',
+        details: 'Database error'
+      });
+    });
+  });
+
+  describe('createCategory', () => {
+    test('should return 400 if category name is missing or invalid', async () => {
+      req.body = { name: '   ', slug: 'electronics' };
+
+      await createCategory(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Category name is required'
+      });
+    });
+
+    test('should return 400 if slug is missing or invalid format', async () => {
+      req.body = { name: 'Electronics', slug: 'Invalid Slug!' };
+
+      await createCategory(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Valid URL-friendly slug (lowercase letters, numbers, hyphens) is required'
+      });
+    });
+
+    test('should return 409 if category slug already exists', async () => {
+      req.body = { name: 'Electronics', slug: 'electronics' };
+      jest.spyOn(CategoryModel, 'findBySlug').mockResolvedValue({ id: 'existing_1', slug: 'electronics' });
+
+      await createCategory(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Category with slug "electronics" already exists'
+      });
+    });
+
+    test('should return 404 if specified parentId does not exist', async () => {
+      req.body = { name: 'Laptops', slug: 'laptops', parentId: 'non_existent_parent' };
+      jest.spyOn(CategoryModel, 'findBySlug').mockResolvedValue(null);
+      jest.spyOn(CategoryModel, 'findById').mockResolvedValue(null);
+
+      await createCategory(req, res);
+
+      expect(CategoryModel.findById).toHaveBeenCalledWith('non_existent_parent');
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Parent category with ID non_existent_parent does not exist'
+      });
+    });
+
+    test('should create category successfully without parentId and with description', async () => {
+      req.body = { name: ' Electronics ', slug: 'electronics', description: ' Tech items ' };
+      const createdCategory = {
+        id: 'cat_123',
+        name: 'Electronics',
+        slug: 'electronics',
+        parentId: null,
+        description: 'Tech items'
+      };
+
+      jest.spyOn(CategoryModel, 'findBySlug').mockResolvedValue(null);
+      jest.spyOn(CategoryModel, 'create').mockResolvedValue(createdCategory);
+
+      await createCategory(req, res);
+
+      expect(CategoryModel.create).toHaveBeenCalledWith({
+        name: 'Electronics',
+        slug: 'electronics',
+        parentId: null,
+        description: 'Tech items'
+      });
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Category created successfully',
+        data: createdCategory
+      });
+    });
+
+    test('should create category successfully with a valid parentId', async () => {
+      req.body = { name: 'Laptops', slug: 'laptops', parentId: 'parent_1' };
+      const createdCategory = {
+        id: 'cat_456',
+        name: 'Laptops',
+        slug: 'laptops',
+        parentId: 'parent_1',
+        description: null
+      };
+
+      jest.spyOn(CategoryModel, 'findBySlug').mockResolvedValue(null);
+      jest.spyOn(CategoryModel, 'findById').mockResolvedValue({ id: 'parent_1', name: 'Electronics' });
+      jest.spyOn(CategoryModel, 'create').mockResolvedValue(createdCategory);
+
+      await createCategory(req, res);
+
+      expect(CategoryModel.create).toHaveBeenCalledWith({
+        name: 'Laptops',
+        slug: 'laptops',
+        parentId: 'parent_1',
+        description: null
+      });
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Category created successfully',
+        data: createdCategory
+      });
+    });
+
+    test('should return 500 if an error occurs during category creation', async () => {
+      req.body = { name: 'Electronics', slug: 'electronics' };
+      jest.spyOn(CategoryModel, 'findBySlug').mockRejectedValue(new Error('DB Fail'));
+
+      await createCategory(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to create category',
+        details: 'DB Fail'
+      });
+    });
+  });
+
+  describe('getCategoryPath', () => {
+    test('should return 400 if categoryId parameter is missing', async () => {
+      req.params = {};
+
+      await getCategoryPath(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Category ID is required'
+      });
+    });
+
+    test('should return 404 if category is not found', async () => {
+      req.params = { categoryId: 'cat_999' };
+      jest.spyOn(CategoryModel, 'findById').mockResolvedValue(null);
+
+      await getCategoryPath(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Category with ID cat_999 not found'
+      });
+    });
+
+    test('should return correct breadcrumb trail from root to requested child category', async () => {
+      req.params = { categoryId: 'cat_3' };
+
+      const cat3 = { id: 'cat_3', name: 'Gaming Laptops', slug: 'gaming-laptops', parentId: 'cat_2' };
+      const cat2 = { id: 'cat_2', name: 'Laptops', slug: 'laptops', parentId: 'cat_1' };
+      const cat1 = { id: 'cat_1', name: 'Electronics', slug: 'electronics', parentId: null };
+
+      jest.spyOn(CategoryModel, 'findById')
+        .mockResolvedValueOnce(cat3)
+        .mockResolvedValueOnce(cat2)
+        .mockResolvedValueOnce(cat1);
+
+      await getCategoryPath(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: [
+          { id: 'cat_1', name: 'Electronics', slug: 'electronics' },
+          { id: 'cat_2', name: 'Laptops', slug: 'laptops' },
+          { id: 'cat_3', name: 'Gaming Laptops', slug: 'gaming-laptops' }
+        ]
+      });
+    });
+
+    test('should prevent infinite loops if circular reference exists in category data', async () => {
+      req.params = { categoryId: 'cat_A' };
+
+      const catA = { id: 'cat_A', name: 'Category A', slug: 'cat-a', parentId: 'cat_B' };
+      const catB = { id: 'cat_B', name: 'Category B', slug: 'cat-b', parentId: 'cat_A' };
+
+      jest.spyOn(CategoryModel, 'findById')
+        .mockResolvedValueOnce(catA)
+        .mockResolvedValueOnce(catB)
+        .mockResolvedValueOnce(catA);
+
+      await getCategoryPath(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: [
+          { id: 'cat_B', name: 'Category B', slug: 'cat-b' },
+          { id: 'cat_A', name: 'Category A', slug: 'cat-a' }
+        ]
+      });
+    });
+
+    test('should return 500 when an error occurs during retrieval', async () => {
+      req.params = { categoryId: 'cat_1' };
+      jest.spyOn(CategoryModel, 'findById').mockRejectedValue(new Error('Internal error'));
+
+      await getCategoryPath(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to retrieve category hierarchy path',
+        details: 'Internal error'
+      });
+    });
+  });
+});
+```

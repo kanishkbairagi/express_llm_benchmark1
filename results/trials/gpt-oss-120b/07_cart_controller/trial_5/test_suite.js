@@ -1,0 +1,305 @@
+import { jest } from '@jest/globals';
+import {
+  getCart,
+  addToCart,
+  updateCartItemQuantity,
+  applyCouponToCart,
+  ProductCatalog,
+  CartModel,
+  DiscountService
+} from '../dataset/07_cart_controller.js';
+
+describe('Cart Controller', () => {
+  const mockRes = () => ({
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn()
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // ---------- getCart ----------
+  test('getCart returns 401 when user not provided', async () => {
+    const req = { query: {} };
+    const res = mockRes();
+
+    await getCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Authentication required'
+    });
+  });
+
+  test('getCart returns empty cart when none exists', async () => {
+    const userId = 'u1';
+    const req = { user: { id: userId } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(null);
+
+    await getCart(req, res);
+
+    expect(CartModel.findByUserId).toHaveBeenCalledWith(userId);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      data: {
+        userId,
+        items: [],
+        subtotal: 0,
+        discount: null,
+        discountAmount: 0,
+        total: 0
+      }
+    });
+  });
+
+  // ---------- addToCart ----------
+  test('addToCart returns 401 when user not provided', async () => {
+    const req = { body: { productId: 'p1' } };
+    const res = mockRes();
+
+    await addToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Authentication required' });
+  });
+
+  test('addToCart returns 400 when productId missing', async () => {
+    const req = { body: { userId: 'u1' } };
+    const res = mockRes();
+
+    await addToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Product ID is required' });
+  });
+
+  test('addToCart returns 400 for invalid quantity', async () => {
+    const req = { body: { userId: 'u1', productId: 'p1', quantity: 0 } };
+    const res = mockRes();
+
+    await addToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Quantity must be a positive integer' });
+  });
+
+  test('addToCart returns 404 when product not found', async () => {
+    const req = { body: { userId: 'u1', productId: 'pX' } };
+    const res = mockRes();
+
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValueOnce(null);
+
+    await addToCart(req, res);
+
+    expect(ProductCatalog.findById).toHaveBeenCalledWith('pX');
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Product not found' });
+  });
+
+  test('addToCart creates new cart and adds item with correct totals', async () => {
+    const userId = 'u1';
+    const product = { id: 'p1', name: 'Widget', price: 15 };
+    const req = { body: { userId, productId: product.id, quantity: 2 } };
+    const res = mockRes();
+
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValueOnce(product);
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(null);
+    const saveSpy = jest.spyOn(CartModel, 'save').mockImplementation(async (cart) => ({
+      ...cart,
+      updatedAt: new Date()
+    }));
+
+    await addToCart(req, res);
+
+    expect(saveSpy).toHaveBeenCalled();
+    const savedCart = saveSpy.mock.results[0].value;
+    expect(savedCart.items).toEqual([
+      {
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 2
+      }
+    ]);
+    expect(savedCart.subtotal).toBe(30);
+    expect(savedCart.discountAmount).toBe(0);
+    expect(savedCart.total).toBe(30);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: 'Item added to cart',
+      data: expect.objectContaining({ items: expect.any(Array), total: 30 })
+    });
+  });
+
+  test('addToCart increments quantity when item already exists', async () => {
+    const userId = 'u1';
+    const product = { id: 'p2', name: 'Gadget', price: 5 };
+    const existingCart = {
+      userId,
+      items: [{ productId: product.id, name: product.name, price: product.price, quantity: 3 }],
+      discount: null
+    };
+    const req = { body: { userId, productId: product.id, quantity: 4 } };
+    const res = mockRes();
+
+    jest.spyOn(ProductCatalog, 'findById').mockResolvedValueOnce(product);
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(existingCart);
+    const saveSpy = jest.spyOn(CartModel, 'save').mockImplementation(async (c) => c);
+
+    await addToCart(req, res);
+
+    const updatedCart = saveSpy.mock.results[0].value;
+    expect(updatedCart.items[0].quantity).toBe(7);
+    expect(updatedCart.subtotal).toBe(35);
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  // ---------- updateCartItemQuantity ----------
+  test('updateCartItemQuantity returns 401 when user missing', async () => {
+    const req = { body: { productId: 'p1', quantity: 2 } };
+    const res = mockRes();
+
+    await updateCartItemQuantity(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Authentication required' });
+  });
+
+  test('updateCartItemQuantity returns 404 when cart not found', async () => {
+    const req = { body: { userId: 'u2', productId: 'p1', quantity: 2 } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(null);
+
+    await updateCartItemQuantity(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Cart not found' });
+  });
+
+  test('updateCartItemQuantity returns 404 when item not in cart', async () => {
+    const req = { body: { userId: 'u1', productId: 'pX', quantity: 1 } };
+    const res = mockRes();
+
+    const cart = { userId: 'u1', items: [], discount: null };
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(cart);
+
+    await updateCartItemQuantity(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Item not in cart' });
+  });
+
+  test('updateCartItemQuantity removes item when quantity set to 0', async () => {
+    const userId = 'u1';
+    const product = { id: 'p3', name: 'Thing', price: 8 };
+    const cart = {
+      userId,
+      items: [{ productId: product.id, name: product.name, price: product.price, quantity: 5 }],
+      discount: null
+    };
+    const req = { body: { userId, productId: product.id, quantity: 0 } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(cart);
+    const saveSpy = jest.spyOn(CartModel, 'save').mockImplementation(async (c) => c);
+
+    await updateCartItemQuantity(req, res);
+
+    const savedCart = saveSpy.mock.results[0].value;
+    expect(savedCart.items).toHaveLength(0);
+    expect(savedCart.subtotal).toBe(0);
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  // ---------- applyCouponToCart ----------
+  test('applyCouponToCart returns 401 when user missing', async () => {
+    const req = { body: { couponCode: 'SAVE10' } };
+    const res = mockRes();
+
+    await applyCouponToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ success: false, error: 'Authentication required' });
+  });
+
+  test('applyCouponToCart returns 400 when cart empty', async () => {
+    const userId = 'u1';
+    const req = { body: { userId, couponCode: 'SAVE10' } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce({ userId, items: [], discount: null });
+
+    await applyCouponToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Cart is empty. Add items before applying coupon.'
+    });
+  });
+
+  test('applyCouponToCart returns 400 for invalid coupon', async () => {
+    const userId = 'u1';
+    const cart = {
+      userId,
+      items: [{ productId: 'p1', quantity: 1, price: 20 }],
+      discount: null
+    };
+    const req = { body: { userId, couponCode: 'BADCODE' } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(cart);
+    jest.spyOn(DiscountService, 'validate').mockResolvedValueOnce({ isActive: false });
+
+    await applyCouponToCart(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      error: 'Coupon code is invalid or has expired'
+    });
+  });
+
+  test('applyCouponToCart applies percentage discount correctly', async () => {
+    const userId = 'u1';
+    const product = { id: 'p4', name: 'Book', price: 25 };
+    const cart = {
+      userId,
+      items: [{ productId: product.id, name: product.name, price: product.price, quantity: 2 }],
+      discount: null
+    };
+    const discount = { code: 'SAVE10', type: 'percentage', value: 10, isActive: true };
+    const req = { body: { userId, couponCode: 'save10' } };
+    const res = mockRes();
+
+    jest.spyOn(CartModel, 'findByUserId').mockResolvedValueOnce(cart);
+    jest.spyOn(DiscountService, 'validate').mockResolvedValueOnce(discount);
+    const saveSpy = jest.spyOn(CartModel, 'save').mockImplementation(async (c) => c);
+
+    await applyCouponToCart(req, res);
+
+    const savedCart = saveSpy.mock.results[0].value;
+    expect(savedCart.discount).toEqual({
+      code: discount.code,
+      type: discount.type,
+      value: discount.value
+    });
+    // subtotal = 50, 10% discount = 5, total = 45
+    expect(savedCart.subtotal).toBe(50);
+    expect(savedCart.discountAmount).toBe(5);
+    expect(savedCart.total).toBe(45);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      success: true,
+      message: `Coupon "${discount.code}" applied successfully`,
+      data: expect.objectContaining({ total: 45 })
+    });
+  });
+});

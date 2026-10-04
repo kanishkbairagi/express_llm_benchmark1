@@ -1,0 +1,1532 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 2,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 12,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 14,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791110615594,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGoogleCallback"
+          ],
+          "duration": 9,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGoogleCallback should return 400 if authorization code is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if authorization code is missing",
+          "startAt": 1791110616004
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGoogleCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGoogleCallback should handle missing req.query gracefully and return 400",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle missing req.query gracefully and return 400",
+          "startAt": 1791110616016
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGoogleCallback"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGoogleCallback should return 401 if exchangeGoogleCode fails",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 401 if exchangeGoogleCode fails",
+          "startAt": 1791110616018
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGoogleCallback"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGoogleCallback should authenticate existing user found by provider ID",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should authenticate existing user found by provider ID",
+          "startAt": 1791110616020
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGoogleCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGoogleCallback should link Google provider if user exists by email but not by provider ID",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should link Google provider if user exists by email but not by provider ID",
+          "startAt": 1791110616023
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGoogleCallback"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGoogleCallback should create new user if user does not exist by provider ID or email",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should create new user if user does not exist by provider ID or email",
+          "startAt": 1791110616024
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGoogleCallback"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: 500\nReceived: 401\n\nNumber of calls: 1",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: 500\nReceived: 401\n\nNumber of calls: 1\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials\\11_oauth_controller_gemini-3.6-flash_trial4.test.js:168:30)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "OAuth Controller Unit Tests handleGoogleCallback should return 500 when an unexpected internal error occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 when an unexpected internal error occurs",
+          "startAt": 1791110616026
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGithubCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGithubCallback should return 400 if authorization code is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if authorization code is missing",
+          "startAt": 1791110616040
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGithubCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGithubCallback should return 401 if exchangeGithubCode fails",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 401 if exchangeGithubCode fails",
+          "startAt": 1791110616041
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGithubCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGithubCallback should return 422 if email is missing from GitHub profile",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 422 if email is missing from GitHub profile",
+          "startAt": 1791110616043
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGithubCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGithubCallback should authenticate existing user found by provider ID",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should authenticate existing user found by provider ID",
+          "startAt": 1791110616044
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGithubCallback"
+          ],
+          "duration": 7,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGithubCallback should link GitHub provider if user exists by email",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should link GitHub provider if user exists by email",
+          "startAt": 1791110616046
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGithubCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "OAuth Controller Unit Tests handleGithubCallback should create a new user if not found by provider or email",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should create a new user if not found by provider or email",
+          "startAt": 1791110616054
+        },
+        {
+          "ancestorTitles": [
+            "OAuth Controller Unit Tests",
+            "handleGithubCallback"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: 500\nReceived: 401\n\nNumber of calls: 1",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: 500\nReceived: 401\n\nNumber of calls: 1\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials\\11_oauth_controller_gemini-3.6-flash_trial4.test.js:330:30)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "OAuth Controller Unit Tests handleGithubCallback should return 500 when an unexpected internal error occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 when an unexpected internal error occurs",
+          "startAt": 1791110616055
+        }
+      ],
+      "endTime": 1791110616097,
+      "message": "  ● OAuth Controller Unit Tests › handleGoogleCallback › should return 500 when an unexpected internal error occurs\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    Expected: 500\n    Received: 401\n\n    Number of calls: 1\n\n    \u001b[0m \u001b[90m 166 |\u001b[39m       \u001b[36mawait\u001b[39m handleGoogleCallback(mockReq\u001b[33m,\u001b[39m mockRes)\u001b[33m;\u001b[39m\n     \u001b[90m 167 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 168 |\u001b[39m       expect(mockRes\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 169 |\u001b[39m       expect(mockRes\u001b[33m.\u001b[39mjson)\u001b[33m.\u001b[39mtoHaveBeenCalledWith({\n     \u001b[90m 170 |\u001b[39m         success\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\n     \u001b[90m 171 |\u001b[39m         error\u001b[33m:\u001b[39m \u001b[32m'Google OAuth callback processing error'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials/11_oauth_controller_gemini-3.6-flash_trial4.test.js:168:30)\n\n  ● OAuth Controller Unit Tests › handleGithubCallback › should return 500 when an unexpected internal error occurs\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    Expected: 500\n    Received: 401\n\n    Number of calls: 1\n\n    \u001b[0m \u001b[90m 328 |\u001b[39m       \u001b[36mawait\u001b[39m handleGithubCallback(mockReq\u001b[33m,\u001b[39m mockRes)\u001b[33m;\u001b[39m\n     \u001b[90m 329 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 330 |\u001b[39m       expect(mockRes\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 331 |\u001b[39m       expect(mockRes\u001b[33m.\u001b[39mjson)\u001b[33m.\u001b[39mtoHaveBeenCalledWith({\n     \u001b[90m 332 |\u001b[39m         success\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\n     \u001b[90m 333 |\u001b[39m         error\u001b[33m:\u001b[39m \u001b[32m'GitHub OAuth callback processing error'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials/11_oauth_controller_gemini-3.6-flash_trial4.test.js:330:30)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials\\11_oauth_controller_gemini-3.6-flash_trial4.test.js",
+      "startTime": 1791110615760,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\11_oauth_controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\11_oauth_controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 25
+          },
+          "end": {
+            "line": 9,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 52
+          },
+          "end": {
+            "line": 5,
+            "column": 56
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 32
+          },
+          "end": {
+            "line": 6,
+            "column": 36
+          }
+        },
+        "3": {
+          "start": {
+            "line": 7,
+            "column": 27
+          },
+          "end": {
+            "line": 7,
+            "column": 86
+          }
+        },
+        "4": {
+          "start": {
+            "line": 8,
+            "column": 56
+          },
+          "end": {
+            "line": 8,
+            "column": 60
+          }
+        },
+        "5": {
+          "start": {
+            "line": 11,
+            "column": 28
+          },
+          "end": {
+            "line": 31,
+            "column": 1
+          }
+        },
+        "6": {
+          "start": {
+            "line": 13,
+            "column": 4
+          },
+          "end": {
+            "line": 13,
+            "column": 74
+          }
+        },
+        "7": {
+          "start": {
+            "line": 13,
+            "column": 33
+          },
+          "end": {
+            "line": 13,
+            "column": 74
+          }
+        },
+        "8": {
+          "start": {
+            "line": 14,
+            "column": 4
+          },
+          "end": {
+            "line": 19,
+            "column": 6
+          }
+        },
+        "9": {
+          "start": {
+            "line": 22,
+            "column": 4
+          },
+          "end": {
+            "line": 22,
+            "column": 74
+          }
+        },
+        "10": {
+          "start": {
+            "line": 22,
+            "column": 33
+          },
+          "end": {
+            "line": 22,
+            "column": 74
+          }
+        },
+        "11": {
+          "start": {
+            "line": 23,
+            "column": 4
+          },
+          "end": {
+            "line": 28,
+            "column": 6
+          }
+        },
+        "12": {
+          "start": {
+            "line": 30,
+            "column": 28
+          },
+          "end": {
+            "line": 30,
+            "column": 58
+          }
+        },
+        "13": {
+          "start": {
+            "line": 33,
+            "column": 36
+          },
+          "end": {
+            "line": 94,
+            "column": 1
+          }
+        },
+        "14": {
+          "start": {
+            "line": 34,
+            "column": 2
+          },
+          "end": {
+            "line": 93,
+            "column": 3
+          }
+        },
+        "15": {
+          "start": {
+            "line": 35,
+            "column": 28
+          },
+          "end": {
+            "line": 35,
+            "column": 43
+          }
+        },
+        "16": {
+          "start": {
+            "line": 37,
+            "column": 4
+          },
+          "end": {
+            "line": 42,
+            "column": 5
+          }
+        },
+        "17": {
+          "start": {
+            "line": 38,
+            "column": 6
+          },
+          "end": {
+            "line": 41,
+            "column": 9
+          }
+        },
+        "18": {
+          "start": {
+            "line": 45,
+            "column": 4
+          },
+          "end": {
+            "line": 52,
+            "column": 5
+          }
+        },
+        "19": {
+          "start": {
+            "line": 46,
+            "column": 6
+          },
+          "end": {
+            "line": 46,
+            "column": 66
+          }
+        },
+        "20": {
+          "start": {
+            "line": 48,
+            "column": 6
+          },
+          "end": {
+            "line": 51,
+            "column": 9
+          }
+        },
+        "21": {
+          "start": {
+            "line": 54,
+            "column": 46
+          },
+          "end": {
+            "line": 54,
+            "column": 59
+          }
+        },
+        "22": {
+          "start": {
+            "line": 55,
+            "column": 15
+          },
+          "end": {
+            "line": 55,
+            "column": 67
+          }
+        },
+        "23": {
+          "start": {
+            "line": 57,
+            "column": 4
+          },
+          "end": {
+            "line": 70,
+            "column": 5
+          }
+        },
+        "24": {
+          "start": {
+            "line": 58,
+            "column": 6
+          },
+          "end": {
+            "line": 58,
+            "column": 48
+          }
+        },
+        "25": {
+          "start": {
+            "line": 59,
+            "column": 6
+          },
+          "end": {
+            "line": 69,
+            "column": 7
+          }
+        },
+        "26": {
+          "start": {
+            "line": 60,
+            "column": 8
+          },
+          "end": {
+            "line": 60,
+            "column": 66
+          }
+        },
+        "27": {
+          "start": {
+            "line": 62,
+            "column": 8
+          },
+          "end": {
+            "line": 68,
+            "column": 11
+          }
+        },
+        "28": {
+          "start": {
+            "line": 72,
+            "column": 18
+          },
+          "end": {
+            "line": 72,
+            "column": 78
+          }
+        },
+        "29": {
+          "start": {
+            "line": 74,
+            "column": 4
+          },
+          "end": {
+            "line": 86,
+            "column": 7
+          }
+        },
+        "30": {
+          "start": {
+            "line": 88,
+            "column": 4
+          },
+          "end": {
+            "line": 92,
+            "column": 7
+          }
+        },
+        "31": {
+          "start": {
+            "line": 96,
+            "column": 36
+          },
+          "end": {
+            "line": 165,
+            "column": 1
+          }
+        },
+        "32": {
+          "start": {
+            "line": 97,
+            "column": 2
+          },
+          "end": {
+            "line": 164,
+            "column": 3
+          }
+        },
+        "33": {
+          "start": {
+            "line": 98,
+            "column": 21
+          },
+          "end": {
+            "line": 98,
+            "column": 36
+          }
+        },
+        "34": {
+          "start": {
+            "line": 100,
+            "column": 4
+          },
+          "end": {
+            "line": 105,
+            "column": 5
+          }
+        },
+        "35": {
+          "start": {
+            "line": 101,
+            "column": 6
+          },
+          "end": {
+            "line": 104,
+            "column": 9
+          }
+        },
+        "36": {
+          "start": {
+            "line": 108,
+            "column": 4
+          },
+          "end": {
+            "line": 115,
+            "column": 5
+          }
+        },
+        "37": {
+          "start": {
+            "line": 109,
+            "column": 6
+          },
+          "end": {
+            "line": 109,
+            "column": 66
+          }
+        },
+        "38": {
+          "start": {
+            "line": 111,
+            "column": 6
+          },
+          "end": {
+            "line": 114,
+            "column": 9
+          }
+        },
+        "39": {
+          "start": {
+            "line": 117,
+            "column": 50
+          },
+          "end": {
+            "line": 117,
+            "column": 63
+          }
+        },
+        "40": {
+          "start": {
+            "line": 119,
+            "column": 4
+          },
+          "end": {
+            "line": 124,
+            "column": 5
+          }
+        },
+        "41": {
+          "start": {
+            "line": 120,
+            "column": 6
+          },
+          "end": {
+            "line": 123,
+            "column": 9
+          }
+        },
+        "42": {
+          "start": {
+            "line": 126,
+            "column": 15
+          },
+          "end": {
+            "line": 126,
+            "column": 67
+          }
+        },
+        "43": {
+          "start": {
+            "line": 128,
+            "column": 4
+          },
+          "end": {
+            "line": 141,
+            "column": 5
+          }
+        },
+        "44": {
+          "start": {
+            "line": 129,
+            "column": 6
+          },
+          "end": {
+            "line": 129,
+            "column": 48
+          }
+        },
+        "45": {
+          "start": {
+            "line": 130,
+            "column": 6
+          },
+          "end": {
+            "line": 140,
+            "column": 7
+          }
+        },
+        "46": {
+          "start": {
+            "line": 131,
+            "column": 8
+          },
+          "end": {
+            "line": 131,
+            "column": 66
+          }
+        },
+        "47": {
+          "start": {
+            "line": 133,
+            "column": 8
+          },
+          "end": {
+            "line": 139,
+            "column": 11
+          }
+        },
+        "48": {
+          "start": {
+            "line": 143,
+            "column": 18
+          },
+          "end": {
+            "line": 143,
+            "column": 78
+          }
+        },
+        "49": {
+          "start": {
+            "line": 145,
+            "column": 4
+          },
+          "end": {
+            "line": 157,
+            "column": 7
+          }
+        },
+        "50": {
+          "start": {
+            "line": 159,
+            "column": 4
+          },
+          "end": {
+            "line": 163,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 20
+            },
+            "end": {
+              "line": 5,
+              "column": 21
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 52
+            },
+            "end": {
+              "line": 5,
+              "column": 56
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 15
+            },
+            "end": {
+              "line": 6,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 32
+            },
+            "end": {
+              "line": 6,
+              "column": 36
+            }
+          },
+          "line": 6
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 7,
+              "column": 10
+            },
+            "end": {
+              "line": 7,
+              "column": 11
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 27
+            },
+            "end": {
+              "line": 7,
+              "column": 86
+            }
+          },
+          "line": 7
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 16
+            },
+            "end": {
+              "line": 8,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 56
+            },
+            "end": {
+              "line": 8,
+              "column": 60
+            }
+          },
+          "line": 8
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 12,
+              "column": 22
+            },
+            "end": {
+              "line": 12,
+              "column": 23
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 38
+            },
+            "end": {
+              "line": 20,
+              "column": 3
+            }
+          },
+          "line": 12
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 21,
+              "column": 22
+            },
+            "end": {
+              "line": 21,
+              "column": 23
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 21,
+              "column": 38
+            },
+            "end": {
+              "line": 29,
+              "column": 3
+            }
+          },
+          "line": 21
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 30,
+              "column": 15
+            },
+            "end": {
+              "line": 30,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 30,
+              "column": 28
+            },
+            "end": {
+              "line": 30,
+              "column": 58
+            }
+          },
+          "line": 30
+        },
+        "7": {
+          "name": "(anonymous_7)",
+          "decl": {
+            "start": {
+              "line": 33,
+              "column": 36
+            },
+            "end": {
+              "line": 33,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 33,
+              "column": 56
+            },
+            "end": {
+              "line": 94,
+              "column": 1
+            }
+          },
+          "line": 33
+        },
+        "8": {
+          "name": "(anonymous_8)",
+          "decl": {
+            "start": {
+              "line": 96,
+              "column": 36
+            },
+            "end": {
+              "line": 96,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 96,
+              "column": 56
+            },
+            "end": {
+              "line": 165,
+              "column": 1
+            }
+          },
+          "line": 96
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 4
+            },
+            "end": {
+              "line": 13,
+              "column": 74
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 13,
+                "column": 4
+              },
+              "end": {
+                "line": 13,
+                "column": 74
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 13
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 4
+            },
+            "end": {
+              "line": 22,
+              "column": 74
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 22,
+                "column": 4
+              },
+              "end": {
+                "line": 22,
+                "column": 74
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 22
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 35,
+              "column": 28
+            },
+            "end": {
+              "line": 35,
+              "column": 43
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 35,
+                "column": 28
+              },
+              "end": {
+                "line": 35,
+                "column": 37
+              }
+            },
+            {
+              "start": {
+                "line": 35,
+                "column": 41
+              },
+              "end": {
+                "line": 35,
+                "column": 43
+              }
+            }
+          ],
+          "line": 35
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 37,
+              "column": 4
+            },
+            "end": {
+              "line": 42,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 37,
+                "column": 4
+              },
+              "end": {
+                "line": 42,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 37
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 57,
+              "column": 4
+            },
+            "end": {
+              "line": 70,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 57,
+                "column": 4
+              },
+              "end": {
+                "line": 70,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 57
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 59,
+              "column": 6
+            },
+            "end": {
+              "line": 69,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 59,
+                "column": 6
+              },
+              "end": {
+                "line": 69,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 61,
+                "column": 13
+              },
+              "end": {
+                "line": 69,
+                "column": 7
+              }
+            }
+          ],
+          "line": 59
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 98,
+              "column": 21
+            },
+            "end": {
+              "line": 98,
+              "column": 36
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 98,
+                "column": 21
+              },
+              "end": {
+                "line": 98,
+                "column": 30
+              }
+            },
+            {
+              "start": {
+                "line": 98,
+                "column": 34
+              },
+              "end": {
+                "line": 98,
+                "column": 36
+              }
+            }
+          ],
+          "line": 98
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 100,
+              "column": 4
+            },
+            "end": {
+              "line": 105,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 100,
+                "column": 4
+              },
+              "end": {
+                "line": 105,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 100
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 119,
+              "column": 4
+            },
+            "end": {
+              "line": 124,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 119,
+                "column": 4
+              },
+              "end": {
+                "line": 124,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 119
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 128,
+              "column": 4
+            },
+            "end": {
+              "line": 141,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 128,
+                "column": 4
+              },
+              "end": {
+                "line": 141,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 128
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 130,
+              "column": 6
+            },
+            "end": {
+              "line": 140,
+              "column": 7
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 130,
+                "column": 6
+              },
+              "end": {
+                "line": 140,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 132,
+                "column": 13
+              },
+              "end": {
+                "line": 140,
+                "column": 7
+              }
+            }
+          ],
+          "line": 130
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 1,
+        "14": 7,
+        "15": 7,
+        "16": 7,
+        "17": 2,
+        "18": 5,
+        "19": 5,
+        "20": 2,
+        "21": 3,
+        "22": 3,
+        "23": 3,
+        "24": 2,
+        "25": 2,
+        "26": 1,
+        "27": 1,
+        "28": 3,
+        "29": 3,
+        "30": 0,
+        "31": 1,
+        "32": 7,
+        "33": 7,
+        "34": 7,
+        "35": 1,
+        "36": 6,
+        "37": 6,
+        "38": 2,
+        "39": 4,
+        "40": 4,
+        "41": 1,
+        "42": 3,
+        "43": 3,
+        "44": 2,
+        "45": 2,
+        "46": 1,
+        "47": 1,
+        "48": 3,
+        "49": 3,
+        "50": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 7,
+        "8": 7
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          7,
+          1
+        ],
+        "3": [
+          2,
+          5
+        ],
+        "4": [
+          2,
+          1
+        ],
+        "5": [
+          1,
+          1
+        ],
+        "6": [
+          7,
+          0
+        ],
+        "7": [
+          1,
+          6
+        ],
+        "8": [
+          1,
+          3
+        ],
+        "9": [
+          2,
+          1
+        ],
+        "10": [
+          1,
+          1
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "ec0b289273a9ca96a1938a5d839d47cb69f60d72"
+    }
+  }
+}

@@ -1,0 +1,182 @@
+import { jest } from '@jest/globals';
+import { exportOrdersCsv, ExportDataService } from '../dataset/23_export_controller.js';
+
+describe('23_export_controller - exportOrdersCsv', () => {
+  let mockReq;
+  let mockRes;
+
+  beforeEach(() => {
+    mockReq = {
+      query: {}
+    };
+
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+
+    jest.restoreAllMocks();
+  });
+
+  describe('Validation', () => {
+    test('should return 400 if req.query is missing or missing startDate/endDate', async () => {
+      mockReq.query = { startDate: '2023-01-01' };
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Both startDate and endDate query parameters are required'
+      });
+    });
+
+    test('should return 400 if req.query is undefined', async () => {
+      delete mockReq.query;
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Both startDate and endDate query parameters are required'
+      });
+    });
+
+    test('should return 400 if startDate or endDate are invalid dates', async () => {
+      mockReq.query = { startDate: 'invalid-date', endDate: '2023-01-31' };
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid date format. Expected ISO-8601 string'
+      });
+    });
+
+    test('should return 400 if startDate is after endDate', async () => {
+      mockReq.query = { startDate: '2023-02-01', endDate: '2023-01-01' };
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'startDate cannot be later than endDate'
+      });
+    });
+
+    test('should return 400 if status is invalid', async () => {
+      mockReq.query = {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+        status: 'invalid_status'
+      };
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Invalid status filter. Allowed values: pending, paid, shipped, cancelled'
+      });
+    });
+  });
+
+  describe('Successful Export Handling', () => {
+    test('should return empty export response when no records are found', async () => {
+      mockReq.query = {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31',
+        status: 'PAID'
+      };
+
+      jest.spyOn(ExportDataService, 'fetchOrdersForExport').mockResolvedValue([]);
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(ExportDataService.fetchOrdersForExport).toHaveBeenCalledWith({
+        startDate: new Date('2023-01-01'),
+        endDate: new Date('2023-01-31'),
+        status: 'paid'
+      });
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'No records found for the specified period',
+        data: {
+          rowCount: 0,
+          csvContent: '',
+          exportedAt: expect.any(String)
+        }
+      });
+    });
+
+    test('should generate CSV export correctly with records and escaping', async () => {
+      mockReq.query = {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31'
+      };
+
+      const mockRecords = [
+        {
+          id: 101,
+          userId: 'user_1',
+          total: 49.9,
+          status: 'paid',
+          createdAt: '2023-01-05T10:00:00.000Z'
+        },
+        {
+          id: '102,special',
+          customerId: 'cust"quote"',
+          total: null,
+          status: 'shipped\nwith newline',
+          createdAt: '2023-01-06T12:00:00.000Z'
+        }
+      ];
+
+      jest.spyOn(ExportDataService, 'fetchOrdersForExport').mockResolvedValue(mockRecords);
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      
+      const responseData = mockRes.json.mock.calls[0][0];
+      expect(responseData.success).toBe(true);
+      expect(responseData.message).toBe('Export generated successfully');
+      expect(responseData.data.fileName).toBe('orders_export_2023-01-01_to_2023-01-31.csv');
+      expect(responseData.data.mimeType).toBe('text/csv');
+      expect(responseData.data.rowCount).toBe(2);
+
+      const expectedCsvLines = [
+        'Order ID,Customer ID,Total Amount,Status,Date',
+        '101,user_1,49.90,paid,2023-01-05T10:00:00.000Z',
+        '"102,special","cust""quote""",0.00,"shipped\nwith newline",2023-01-06T12:00:00.000Z'
+      ].join('\r\n');
+
+      expect(responseData.data.csvContent).toBe(expectedCsvLines);
+    });
+  });
+
+  describe('Error Handling', () => {
+    test('should handle service exceptions and return 500', async () => {
+      mockReq.query = {
+        startDate: '2023-01-01',
+        endDate: '2023-01-31'
+      };
+
+      jest.spyOn(ExportDataService, 'fetchOrdersForExport').mockRejectedValue(new Error('Database connection failed'));
+
+      await exportOrdersCsv(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to generate CSV export',
+        details: 'Database connection failed'
+      });
+    });
+  });
+});

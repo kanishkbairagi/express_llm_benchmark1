@@ -1,0 +1,24 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "01_auth_controller.js",
+  "trial": 4,
+  "startedAt": "2026-10-03T18:28:19.956Z",
+  "finishedAt": "2026-10-03T18:29:12.185Z",
+  "suiteOk": true,
+  "testsPassed": 14,
+  "testsFailed": 0,
+  "testsTotal": 14,
+  "errorCategory": "none",
+  "statementCoverage": 86.05,
+  "branchCoverage": 96.3,
+  "functionCoverage": 25,
+  "lineCoverage": 86.05,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1146,
+    "completionTokens": 2456,
+    "totalTokens": 6423,
+    "thinkingTokens": 2821
+  },
+  "latencyMs": 22087
+}
