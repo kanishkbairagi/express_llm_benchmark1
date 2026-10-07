@@ -1,0 +1,41 @@
+% SRC: results\analysis_external\primary_controller_comparison.csv, results\analysis_external\sensitivity_a_trial_matched.csv, results\analysis_external\sensitivity_b_all25_zeros_SECONDARY.csv, results\analysis_external\sensitivity_c_matched_tests_gt_0.csv
+\begin{table}[htbp]
+\centering
+\caption{Set B External Evaluation: Primary Analysis, Sensitivity Analyses A and B, and Post-Hoc Sensitivity C}
+\label{tab:setb_comparison}
+\begin{tabular}{lcccccccc}
+\toprule
+\textbf{Outcome} & \textbf{$n$} & \textbf{Pairs} & \textbf{Gemini Mean} & \textbf{Groq Mean} & \textbf{Diff (Gemini$-$Groq)} & \textbf{95\% Cluster CI} & \textbf{Wilcoxon $W$} & \textbf{Holm $p$} \\
+\midrule
+\multicolumn{9}{l}{\textbf{Panel A: Primary Comparison ($n=21$ controllers with 3/3 executed suites, 63 pairs)}} \\
+\midrule
+Line Coverage (\%) & 21 & 63 & 24.03\% & 30.18\% & -6.16\% & [-14.84, 4.61] & 50.0 & 0.3642 \\
+Branch Coverage (\%) & 21 & 63 & 16.91\% & 18.85\% & -1.95\% & [-10.24, 8.58] & 23.0 & 1.0000 \\
+Function Coverage (\%) & 21 & 63 & 24.34\% & 29.10\% & -4.76\% & [-12.57, 5.51] & 40.0 & 1.0000 \\
+Strict Mutation Score & 1 & --- & 1.000 & 0.900 & +0.100 & [0.100, 0.100] & 0.0 & 1.0000 \\
+Stryker Mutation Score & 1 & --- & 1.000 & 0.900 & +0.100 & [0.100, 0.100] & 0.0 & 1.0000 \\
+\midrule
+\multicolumn{9}{l}{\textbf{Panel B: Sensitivity A (Trial-Matched, $n=25$ controllers, 68 pairs)}} \\
+\midrule
+Line Coverage (\%) & 25 & 68 & 26.77\% & 29.16\% & -2.39\% & [-14.27, 13.11] & 98.0 & 1.0000 \\
+Branch Coverage (\%) & 25 & 68 & 20.51\% & 16.40\% & +4.11\% & [-6.77, 17.47] & 35.5 & 1.0000 \\
+Function Coverage (\%) & 25 & 68 & 27.02\% & 25.65\% & +1.36\% & [-9.81, 15.64] & 74.0 & 1.0000 \\
+Strict Mutation Score & 1 & --- & 1.000 & 0.900 & +0.100 & [0.100, 0.100] & 0.0 & 1.0000 \\
+Stryker Mutation Score & 1 & --- & 1.000 & 0.900 & +0.100 & [0.100, 0.100] & 0.0 & 1.0000 \\
+\midrule
+\multicolumn{9}{l}{\textbf{Panel C: Sensitivity B (All 25 Controllers with Zeros for Crashes, 75 pairs)}} \\
+\midrule
+Line Coverage (\%) & 25 & 75 & 24.57\% & 27.89\% & -3.32\% & [-13.60, 9.79] & 98.0 & 1.0000 \\
+Branch Coverage (\%) & 25 & 75 & 18.41\% & 16.21\% & +2.20\% & [-7.34, 13.68] & 38.0 & 1.0000 \\
+Function Coverage (\%) & 25 & 75 & 24.83\% & 25.25\% & -0.42\% & [-10.11, 11.57] & 75.5 & 1.0000 \\
+Strict Mutation Score & 3 & --- & 0.789 & 0.300 & +0.489 & [0.100, 0.983] & 0.0 & 1.0000 \\
+Stryker Mutation Score & 3 & --- & 0.790 & 0.300 & +0.490 & [0.100, 0.983] & 0.0 & 1.0000 \\
+\midrule
+\multicolumn{9}{l}{\textbf{Panel D: Sensitivity C (POST HOC, exploratory: matched suites with $\text{testsTotal} > 0$, $n=19$ controllers, 31 pairs)}} \\
+\midrule
+Line Coverage (\%) & 19 & 31 & 50.75\% & 33.26\% & +17.49\% & [3.18, 31.44] & 11.0 & 0.0403 \\
+Branch Coverage (\%) & 19 & 31 & 41.43\% & 17.08\% & +24.35\% & [7.29, 41.48] & 6.0 & 0.0403 \\
+Function Coverage (\%) & 19 & 31 & 50.33\% & 30.16\% & +20.17\% & [4.17, 36.25] & 12.0 & 0.0403 \\
+\bottomrule
+\end{tabular}
+\end{table}

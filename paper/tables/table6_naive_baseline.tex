@@ -1,0 +1,23 @@
+% SRC: results\baseline_naive\baseline_setA.csv, results\baseline_naive\baseline_setB.csv, results\analysis\primary_controller_comparison.csv, results\analysis_external\sensitivity_c_matched_tests_gt_0.csv
+\begin{table}[htbp]
+\centering
+\caption{Deterministic Naive Baseline vs.\ Model-Generated Test Coverage (DESCRIPTIVE)}
+\label{tab:naive_baseline}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Dataset / Outcome} & \textbf{Controllers ($n$)} & \textbf{Naive Baseline Mean} & \textbf{gemini-3.6-flash Mean} & \textbf{gpt-oss-120b Mean} \\
+\midrule
+\multicolumn{5}{l}{\textbf{Set A (Same 22 Matched Controllers as Primary Analysis)}} \\
+\midrule
+Line Coverage (\%) & 22 & 37.76\% & 94.10\% & 87.47\% \\
+Branch Coverage (\%) & 22 & 33.86\% & 94.62\% & 86.75\% \\
+Function Coverage (\%) & 22 & 39.51\% & 61.42\% & 42.98\% \\
+\midrule
+\multicolumn{5}{l}{\textbf{Set B (Same 19-Controller Subset as Sensitivity C, with zeros for crashed suites)}} \\
+\midrule
+Line Coverage (\%) & 19 & 34.29\% & 50.75\% & 33.26\% \\
+Branch Coverage (\%) & 19 & 10.50\% & 41.43\% & 17.08\% \\
+Function Coverage (\%) & 19 & 57.00\% & 50.33\% & 30.16\% \\
+\bottomrule
+\end{tabular}
+\end{table}

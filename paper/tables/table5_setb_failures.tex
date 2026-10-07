@@ -1,0 +1,20 @@
+% SRC: results\analysis_external\post_hoc_failure_classification.csv
+\begin{table}[htbp]
+\centering
+\caption{Set B Post-Hoc Failure Classification Across 137 Non-Passing Trials (POST HOC, exploratory)}
+\label{tab:setb_failures}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Failure Category} & \textbf{gemini-3.6-flash} & \textbf{gpt-oss-120b} & \textbf{Total} \\
+\midrule
+missing npm package (for example supertest) & 17 & 10 & 27 \\
+controller-relative path not found & 24 & 4 & 28 \\
+invented path under ../dataset/external that does not exist & 0 & 1 & 1 \\
+SyntaxError & 1 & 4 & 5 \\
+assertion failure & 25 & 50 & 75 \\
+other & 0 & 1 & 1 \\
+\midrule
+\textbf{Total} & \textbf{67} & \textbf{70} & \textbf{137} \\
+\bottomrule
+\end{tabular}
+\end{table}

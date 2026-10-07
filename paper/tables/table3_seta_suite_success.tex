@@ -1,0 +1,14 @@
+% SRC: results\analysis\suite_success_summary.csv, results\analysis\error_category_breakdown.csv
+\begin{table}[htbp]
+\centering
+\caption{Set A Suite Success Rates, Controller Flip Shares, and Failure Breakdown ($k=5$, 125 Trials per Model)}
+\label{tab:seta_suite_success}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Model} & \textbf{Trials Passed / Total} & \textbf{Success Rate (95\% CI)} & \textbf{Flipping Controllers (Share)} & \textbf{SyntaxError} & \textbf{AssertionFailure} \\
+\midrule
+gemini-3.6-flash & 111 / 125 & 88.8\% [81.6, 95.2] & 9/25 (36.0\%) & 2 & 12 \\
+gpt-oss-120b & 99 / 125 & 79.2\% [69.6, 87.2] & 15/25 (60.0\%) & 1 & 25 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,21 @@
+% SRC: results\analysis\token_usage_summary.csv, results\analysis_external\token_usage_summary.csv
+\begin{table}[htbp]
+\centering
+\caption{Measured Token Usage Statistics per Model Across Repeated Trials}
+\label{tab:token_usage}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Dataset} & \textbf{Model} & \textbf{Prompt Tokens} & \textbf{Completion Tokens} & \textbf{Thinking/Reasoning} & \textbf{Total Tokens} \\
+\midrule
+\multicolumn{6}{l}{\textbf{Set A ($k=5$, 125 trials/model; Mean $\pm$ SD)}} \\
+\midrule
+Set A & gemini-3.6-flash & 1305 $\pm$ 272 & 3044 $\pm$ 690 & 1682 $\pm$ 1039 & 6031 $\pm$ 1332 \\
+Set A & gpt-oss-120b & 1184 $\pm$ 235 & 2463 $\pm$ 509 & 418 $\pm$ 180 & 3647 $\pm$ 692 \\
+\midrule
+\multicolumn{6}{l}{\textbf{Set B ($k=3$, 75 trials/model; Mean [Median])}} \\
+\midrule
+Set B & gemini-3.6-flash & 1036 [1003] & 2178 [2149] & 2875 [2692] & 6090 [6208] \\
+Set B & gpt-oss-120b & 935 [907] & 2666 [2549] & 904 [644] & 3601 [3457] \\
+\bottomrule
+\end{tabular}
+\end{table}
