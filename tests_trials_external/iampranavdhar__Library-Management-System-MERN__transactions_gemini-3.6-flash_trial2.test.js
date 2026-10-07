@@ -1,0 +1,177 @@
+import { jest } from '@jest/globals';
+import express from 'express';
+import request from 'supertest';
+
+const mockBook = {
+    findById: jest.fn()
+};
+
+const mockSave = jest.fn();
+const mockBookTransaction = jest.fn().mockImplementation((data) => {
+    return {
+        ...data,
+        _id: 'trans123',
+        save: mockSave
+    };
+});
+mockBookTransaction.find = jest.fn();
+mockBookTransaction.findByIdAndUpdate = jest.fn();
+mockBookTransaction.findByIdAndDelete = jest.fn();
+
+jest.unstable_mockModule('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/Book.js', () => ({
+    default: mockBook
+}));
+
+jest.unstable_mockModule('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/BookTransaction.js', () => ({
+    default: mockBookTransaction
+}));
+
+const { default: router } = await import('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/routes/transactions.js');
+
+const app = express();
+app.use(express.json());
+app.use('/', router);
+
+describe('Transactions Router Unit Tests', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    describe('POST /add-transaction', () => {
+        it('should add a transaction successfully if user is admin', async () => {
+            const transactionData = {
+                isAdmin: true,
+                bookId: 'book123',
+                borrowerId: 'user123',
+                bookName: 'Test Book',
+                borrowerName: 'John Doe',
+                transactionType: 'Issue',
+                fromDate: '2023-01-01',
+                toDate: '2023-01-10'
+            };
+
+            const savedTransaction = { _id: 'trans123', ...transactionData };
+            mockSave.mockResolvedValue(savedTransaction);
+
+            const mockUpdateOne = jest.fn().mockResolvedValue({});
+            mockBook.findById.mockReturnValue({ updateOne: mockUpdateOne });
+
+            const response = await request(app)
+                .post('/add-transaction')
+                .send(transactionData);
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual(savedTransaction);
+            expect(mockBook.findById).toHaveBeenCalledWith('book123');
+            expect(mockUpdateOne).toHaveBeenCalledWith({ $push: { transactions: 'trans123' } });
+        });
+
+        it('should return status 500 if user is not admin', async () => {
+            const response = await request(app)
+                .post('/add-transaction')
+                .send({ isAdmin: false });
+
+            expect(response.status).toBe(500);
+            expect(response.body).toBe('You are not allowed to add a Transaction');
+        });
+
+        it('should return status 504 on error', async () => {
+            mockSave.mockRejectedValue(new Error('Database Error'));
+
+            const response = await request(app)
+                .post('/add-transaction')
+                .send({ isAdmin: true, bookId: 'book123' });
+
+            expect(response.status).toBe(504);
+        });
+    });
+
+    describe('GET /all-transactions', () => {
+        it('should fetch all transactions sorted by _id descending', async () => {
+            const mockTransactions = [{ _id: 'trans1' }, { _id: 'trans2' }];
+            const mockSort = jest.fn().mockResolvedValue(mockTransactions);
+            mockBookTransaction.find.mockReturnValue({ sort: mockSort });
+
+            const response = await request(app).get('/all-transactions');
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual(mockTransactions);
+            expect(mockBookTransaction.find).toHaveBeenCalledWith({});
+            expect(mockSort).toHaveBeenCalledWith({ _id: -1 });
+        });
+
+        it('should return status 504 on fetch failure', async () => {
+            const mockSort = jest.fn().mockRejectedValue(new Error('Fetch Failed'));
+            mockBookTransaction.find.mockReturnValue({ sort: mockSort });
+
+            const response = await request(app).get('/all-transactions');
+
+            expect(response.status).toBe(504);
+        });
+    });
+
+    describe('PUT /update-transaction/:id', () => {
+        it('should update transaction details successfully if admin', async () => {
+            mockBookTransaction.findByIdAndUpdate.mockResolvedValue({});
+
+            const response = await request(app)
+                .put('/update-transaction/trans123')
+                .send({ isAdmin: true, transactionType: 'Return' });
+
+            expect(response.status).toBe(200);
+            expect(response.body).toBe('Transaction details updated successfully');
+            expect(mockBookTransaction.findByIdAndUpdate).toHaveBeenCalledWith('trans123', {
+                $set: { isAdmin: true, transactionType: 'Return' }
+            });
+        });
+
+        it('should return status 504 when update operation throws error', async () => {
+            mockBookTransaction.findByIdAndUpdate.mockRejectedValue(new Error('Update failed'));
+
+            const response = await request(app)
+                .put('/update-transaction/trans123')
+                .send({ isAdmin: true });
+
+            expect(response.status).toBe(504);
+        });
+    });
+
+    describe('DELETE /remove-transaction/:id', () => {
+        it('should remove transaction and update corresponding book if user is admin', async () => {
+            const mockDeletedTransaction = { _id: 'trans123', bookId: 'book123' };
+            mockBookTransaction.findByIdAndDelete.mockResolvedValue(mockDeletedTransaction);
+
+            const mockUpdateOne = jest.fn().mockResolvedValue({});
+            mockBook.findById.mockReturnValue({ updateOne: mockUpdateOne });
+
+            const response = await request(app)
+                .delete('/remove-transaction/trans123')
+                .send({ isAdmin: true });
+
+            expect(response.status).toBe(200);
+            expect(response.body).toBe('Transaction deleted successfully');
+            expect(mockBookTransaction.findByIdAndDelete).toHaveBeenCalledWith('trans123');
+            expect(mockBook.findById).toHaveBeenCalledWith('book123');
+            expect(mockUpdateOne).toHaveBeenCalledWith({ $pull: { transactions: 'trans123' } });
+        });
+
+        it('should return status 403 if non-admin user attempts deletion', async () => {
+            const response = await request(app)
+                .delete('/remove-transaction/trans123')
+                .send({ isAdmin: false });
+
+            expect(response.status).toBe(403);
+            expect(response.body).toBe('You dont have permission to delete a book!');
+        });
+
+        it('should return status 504 on deletion error', async () => {
+            mockBookTransaction.findByIdAndDelete.mockRejectedValue(new Error('Delete error'));
+
+            const response = await request(app)
+                .delete('/remove-transaction/trans123')
+                .send({ isAdmin: true });
+
+            expect(response.status).toBe(504);
+        });
+    });
+});

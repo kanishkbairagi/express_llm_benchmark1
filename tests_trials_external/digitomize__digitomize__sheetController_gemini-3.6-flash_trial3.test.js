@@ -1,0 +1,396 @@
+import { jest } from '@jest/globals';
+
+jest.mock(
+  '../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/sheetModel.js',
+  () => {
+    const MockSheetModel = jest.fn().mockImplementation(function (data) {
+      this.name = data.name;
+      this.s_id = data.s_id;
+      this.desc = data.desc;
+      this.questions = data.questions;
+      this.save = jest.fn().mockResolvedValue({ _id: 'sheet123', ...data });
+    });
+
+    MockSheetModel.findOne = jest.fn();
+    MockSheetModel.deleteOne = jest.fn();
+    MockSheetModel.find = jest.fn();
+
+    return {
+      __esModule: true,
+      default: MockSheetModel,
+    };
+  }
+);
+
+jest.mock(
+  '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js',
+  () => ({
+    getQuestionByQId: jest.fn(),
+  })
+);
+
+import SheetModel from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/sheetModel.js';
+import { getQuestionByQId } from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js';
+import {
+  createSheet,
+  removeSheet,
+  getSheets,
+  addQuestions,
+  removeQuestion,
+} from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/sheetController.js';
+
+describe('sheetController unit tests', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    req = {
+      body: {},
+      params: {},
+    };
+
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+  });
+
+  afterEach(() => {
+    console.error.mockRestore && console.error.mockRestore();
+  });
+
+  describe('createSheet', () => {
+    it('should return 400 if required fields are missing', async () => {
+      req.body = { name: 'Sheet 1', s_id: 's1' }; // missing desc and questions
+
+      await createSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message:
+          'Missing required fields. Please provide name, s_id, desc, and questions.',
+      });
+    });
+
+    it('should create and save a new sheet successfully returning 201', async () => {
+      req.body = {
+        name: 'Sheet 1',
+        s_id: 's1',
+        desc: 'Description',
+        questions: ['q1', 'q2'],
+      };
+
+      await createSheet(req, res);
+
+      expect(SheetModel).toHaveBeenCalledWith({
+        name: 'Sheet 1',
+        s_id: 's1',
+        desc: 'Description',
+        questions: ['q1', 'q2'],
+      });
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        _id: 'sheet123',
+        name: 'Sheet 1',
+        s_id: 's1',
+        desc: 'Description',
+        questions: ['q1', 'q2'],
+      });
+    });
+
+    it('should return 500 when an error occurs during sheet creation', async () => {
+      req.body = {
+        name: 'Sheet 1',
+        s_id: 's1',
+        desc: 'Description',
+        questions: ['q1'],
+      };
+
+      SheetModel.mockImplementationOnce(() => {
+        throw new Error('Database save failed');
+      });
+
+      await createSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+
+  describe('removeSheet', () => {
+    it('should return 400 if s_id is missing', async () => {
+      req.body = {};
+
+      await removeSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'Missing required fields. Please provide s_id.',
+      });
+    });
+
+    it('should return 404 if sheet is not found', async () => {
+      req.body = { s_id: 's1' };
+      SheetModel.findOne.mockResolvedValue(null);
+
+      await removeSheet(req, res);
+
+      expect(SheetModel.findOne).toHaveBeenCalledWith({ s_id: 's1' });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Sheet not found.',
+      });
+    });
+
+    it('should delete sheet and return 200 if found', async () => {
+      req.body = { s_id: 's1' };
+      SheetModel.findOne.mockResolvedValue({ s_id: 's1', name: 'Sheet 1' });
+      SheetModel.deleteOne.mockResolvedValue({ acknowledged: true, deletedCount: 1 });
+
+      await removeSheet(req, res);
+
+      expect(SheetModel.deleteOne).toHaveBeenCalledWith({ s_id: 's1' });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'success',
+        message: 'Sheet removed successfully.',
+      });
+    });
+
+    it('should return 500 on database failure', async () => {
+      req.body = { s_id: 's1' };
+      SheetModel.findOne.mockRejectedValue(new Error('DB Error'));
+
+      await removeSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+
+  describe('getSheets', () => {
+    it('should return 200 with formatted sheets and questions', async () => {
+      const mockSheets = [
+        {
+          s_id: 's1',
+          name: 'Sheet 1',
+          questions: ['q1', 'q2'],
+          toObject: function () {
+            return { s_id: this.s_id, name: this.name };
+          },
+        },
+      ];
+
+      SheetModel.find.mockResolvedValue(mockSheets);
+      getQuestionByQId
+        .mockResolvedValueOnce({ q_id: 'q1', title: 'Question 1' })
+        .mockResolvedValueOnce({ q_id: 'q2', title: 'Question 2' });
+
+      await getSheets(req, res);
+
+      expect(SheetModel.find).toHaveBeenCalled();
+      expect(getQuestionByQId).toHaveBeenNthCalledWith(1, { params: { q_id: 'q1' } });
+      expect(getQuestionByQId).toHaveBeenNthCalledWith(2, { params: { q_id: 'q2' } });
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        count: 1,
+        sheets: [
+          {
+            s_id: 's1',
+            name: 'Sheet 1',
+            questions: [
+              { q_id: 'q1', title: 'Question 1' },
+              { q_id: 'q2', title: 'Question 2' },
+            ],
+          },
+        ],
+      });
+    });
+
+    it('should return 500 if SheetModel.find fails', async () => {
+      SheetModel.find.mockRejectedValue(new Error('Fetch Error'));
+
+      await getSheets(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+
+  describe('addQuestions', () => {
+    it('should return 400 if s_id or q_ids is missing or invalid', async () => {
+      req.body = { s_id: 's1', q_ids: [] };
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message:
+          'Invalid or missing required fields. Please provide s_id and a non-empty array of q_ids.',
+      });
+    });
+
+    it('should return 404 if sheet is not found', async () => {
+      req.body = { s_id: 's1', q_ids: ['q1'] };
+      SheetModel.findOne.mockResolvedValue(null);
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Sheet not found.',
+      });
+    });
+
+    it('should return 409 if any question already exists in sheet', async () => {
+      req.body = { s_id: 's1', q_ids: ['q1', 'q2'] };
+      const mockSheet = {
+        s_id: 's1',
+        questions: ['q1', 'q3'],
+        save: jest.fn(),
+      };
+      SheetModel.findOne.mockResolvedValue(mockSheet);
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Conflict',
+        message:
+          'Questions with the following q_ids already exist in the sheet: q1.',
+      });
+      expect(mockSheet.save).not.toHaveBeenCalled();
+    });
+
+    it('should add questions and return 200 on success', async () => {
+      req.body = { s_id: 's1', q_ids: ['q2', 'q3'] };
+      const mockSheet = {
+        s_id: 's1',
+        questions: ['q1'],
+        save: jest.fn().mockResolvedValue(true),
+      };
+      SheetModel.findOne.mockResolvedValue(mockSheet);
+
+      await addQuestions(req, res);
+
+      expect(mockSheet.questions).toEqual(['q1', 'q2', 'q3']);
+      expect(mockSheet.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'success',
+        message: 'Questions added to the sheet successfully.',
+        sheet: mockSheet,
+      });
+    });
+
+    it('should return 500 on exception', async () => {
+      req.body = { s_id: 's1', q_ids: ['q1'] };
+      SheetModel.findOne.mockRejectedValue(new Error('Server Error'));
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+
+  describe('removeQuestion', () => {
+    it('should return 400 if s_id or q_id is missing', async () => {
+      req.body = { s_id: 's1' }; // missing q_id
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'Missing required fields. Please provide s_id and q_id.',
+      });
+    });
+
+    it('should return 404 if sheet is not found', async () => {
+      req.body = { s_id: 's1', q_id: 'q1' };
+      SheetModel.findOne.mockResolvedValue(null);
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Sheet not found.',
+      });
+    });
+
+    it('should return 404 if question is not in sheet', async () => {
+      req.body = { s_id: 's1', q_id: 'q2' };
+      const mockSheet = {
+        s_id: 's1',
+        questions: ['q1'],
+        save: jest.fn(),
+      };
+      SheetModel.findOne.mockResolvedValue(mockSheet);
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Question not found in the sheet.',
+      });
+    });
+
+    it('should remove question and return 200 on success', async () => {
+      req.body = { s_id: 's1', q_id: 'q2' };
+      const mockSheet = {
+        s_id: 's1',
+        questions: ['q1', 'q2', 'q3'],
+        save: jest.fn().mockResolvedValue(true),
+      };
+      SheetModel.findOne.mockResolvedValue(mockSheet);
+
+      await removeQuestion(req, res);
+
+      expect(mockSheet.questions).toEqual(['q1', 'q3']);
+      expect(mockSheet.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'success',
+        message: 'Question removed from the sheet successfully.',
+        sheet: mockSheet,
+      });
+    });
+
+    it('should return 500 on exception', async () => {
+      req.body = { s_id: 's1', q_id: 'q1' };
+      SheetModel.findOne.mockRejectedValue(new Error('Server Error'));
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+});

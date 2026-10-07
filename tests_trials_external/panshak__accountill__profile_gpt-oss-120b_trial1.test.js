@@ -1,0 +1,293 @@
+import { jest } from '@jest/globals';
+import {
+  getProfiles,
+  getProfile,
+  createProfile,
+  getProfilesByUser,
+  getProfilesBySearch,
+  updateProfile,
+  deleteProfile,
+} from '../dataset/external/panshak__accountill/server/controllers/profile.js';
+import ProfileModel from '../dataset/external/panshak__accountill/server/models/ProfileModel.js';
+import mongoose from 'mongoose';
+
+jest.mock('../dataset/external/panshak__accountill/server/models/ProfileModel.js', () => {
+  const mockSave = jest.fn();
+  const Mock = function (data) {
+    this.save = mockSave;
+    Object.assign(this, data);
+  };
+  Mock.find = jest.fn();
+  Mock.findById = jest.fn();
+  Mock.findOne = jest.fn();
+  Mock.findByIdAndUpdate = jest.fn();
+  Mock.findByIdAndRemove = jest.fn();
+  return { __esModule: true, default: Mock };
+});
+
+jest.mock('mongoose', () => ({
+  __esModule: true,
+  Types: {
+    ObjectId: {
+      isValid: jest.fn(),
+    },
+  },
+}));
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn(() => res);
+  res.json = jest.fn(() => res);
+  res.send = jest.fn(() => res);
+  return res;
+};
+
+describe('Profile Controllers', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('getProfiles', () => {
+    it('should return 200 with profiles on success', async () => {
+      const profiles = [{ _id: '1' }, { _id: '2' }];
+      ProfileModel.find.mockResolvedValueOnce(profiles);
+      ProfileModel.find.mockReturnValueOnce({ sort: jest.fn().mockResolvedValue(profiles) });
+
+      const req = {};
+      const res = mockRes();
+
+      await getProfiles(req, res);
+
+      expect(ProfileModel.find).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(profiles);
+    });
+
+    it('should return 404 with error message on failure', async () => {
+      const error = new Error('db error');
+      ProfileModel.find.mockImplementationOnce(() => {
+        throw error;
+      });
+
+      const req = {};
+      const res = mockRes();
+
+      await getProfiles(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: error.message });
+    });
+  });
+
+  describe('getProfile', () => {
+    it('should return 200 with a profile', async () => {
+      const profile = { _id: 'abc' };
+      ProfileModel.findById.mockResolvedValueOnce(profile);
+
+      const req = { params: { id: 'abc' } };
+      const res = mockRes();
+
+      await getProfile(req, res);
+
+      expect(ProfileModel.findById).toHaveBeenCalledWith('abc');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(profile);
+    });
+
+    it('should handle errors with 404', async () => {
+      const error = new Error('not found');
+      ProfileModel.findById.mockImplementationOnce(() => {
+        throw error;
+      });
+
+      const req = { params: { id: 'xyz' } };
+      const res = mockRes();
+
+      await getProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: error.message });
+    });
+  });
+
+  describe('createProfile', () => {
+    const baseReq = {
+      body: {
+        name: 'Test',
+        email: 'test@example.com',
+        phoneNumber: '12345',
+        businessName: 'Biz',
+        contactAddress: 'Addr',
+        logo: 'logo.png',
+        website: 'https://example.com',
+        userId: 'user123',
+      },
+    };
+
+    it('should reject creation if profile with email exists', async () => {
+      ProfileModel.findOne.mockResolvedValueOnce({ _id: 'dup' });
+
+      const req = { ...baseReq };
+      const res = mockRes();
+
+      await createProfile(req, res);
+
+      expect(ProfileModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Profile already exist' });
+    });
+
+    it('should create and return 201 on success', async () => {
+      ProfileModel.findOne.mockResolvedValueOnce(null);
+      const saveMock = jest.fn().mockResolvedValueOnce();
+      ProfileModel.prototype.save = saveMock;
+
+      const req = { ...baseReq };
+      const res = mockRes();
+
+      await createProfile(req, res);
+
+      expect(ProfileModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
+      expect(saveMock).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+        name: 'Test',
+        email: 'test@example.com',
+        userId: 'user123',
+      }));
+    });
+
+    it('should return 409 on unexpected error', async () => {
+      const error = new Error('save fail');
+      ProfileModel.findOne.mockResolvedValueOnce(null);
+      ProfileModel.prototype.save = jest.fn().mockRejectedValueOnce(error);
+
+      const req = { ...baseReq };
+      const res = mockRes();
+
+      await createProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({ message: error.message });
+    });
+  });
+
+  describe('getProfilesByUser', () => {
+    it('should return profile wrapped in data key', async () => {
+      const profile = { _id: 'u1' };
+      ProfileModel.findOne.mockResolvedValueOnce(profile);
+
+      const req = { query: { searchQuery: 'user123' } };
+      const res = mockRes();
+
+      await getProfilesByUser(req, res);
+
+      expect(ProfileModel.findOne).toHaveBeenCalledWith({ userId: 'user123' });
+      expect(res.json).toHaveBeenCalledWith({ data: profile });
+    });
+
+    it('should handle errors with 404', async () => {
+      const error = new Error('db fail');
+      ProfileModel.findOne.mockImplementationOnce(() => {
+        throw error;
+      });
+
+      const req = { query: { searchQuery: 'any' } };
+      const res = mockRes();
+
+      await getProfilesByUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: error.message });
+    });
+  });
+
+  describe('getProfilesBySearch', () => {
+    it('should return matching profiles', async () => {
+      const profiles = [{ name: 'Alice' }, { email: 'bob@example.com' }];
+      ProfileModel.find.mockResolvedValueOnce(profiles);
+
+      const req = { query: { searchQuery: 'a' } };
+      const res = mockRes();
+
+      await getProfilesBySearch(req, res);
+
+      expect(ProfileModel.find).toHaveBeenCalledWith(
+        expect.objectContaining({ $or: expect.any(Array) })
+      );
+      expect(res.json).toHaveBeenCalledWith({ data: profiles });
+    });
+
+    it('should return 404 on error', async () => {
+      const error = new Error('search error');
+      ProfileModel.find.mockImplementationOnce(() => {
+        throw error;
+      });
+
+      const req = { query: { searchQuery: 'x' } };
+      const res = mockRes();
+
+      await getProfilesBySearch(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: error.message });
+    });
+  });
+
+  describe('updateProfile', () => {
+    it('should reject invalid ObjectId', async () => {
+      mongoose.Types.ObjectId.isValid.mockReturnValueOnce(false);
+      const req = { params: { id: 'invalid' }, body: { name: 'New' } };
+      const res = mockRes();
+
+      await updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.send).toHaveBeenCalledWith('No client with that id');
+    });
+
+    it('should update and return the updated profile', async () => {
+      mongoose.Types.ObjectId.isValid.mockReturnValueOnce(true);
+      const updated = { _id: 'valid', name: 'Updated' };
+      ProfileModel.findByIdAndUpdate.mockResolvedValueOnce(updated);
+
+      const req = { params: { id: 'valid' }, body: { name: 'Updated' } };
+      const res = mockRes();
+
+      await updateProfile(req, res);
+
+      expect(ProfileModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        'valid',
+        { name: 'Updated', _id: 'valid' },
+        { new: true }
+      );
+      expect(res.json).toHaveBeenCalledWith(updated);
+    });
+  });
+
+  describe('deleteProfile', () => {
+    it('should reject invalid ObjectId', async () => {
+      mongoose.Types.ObjectId.isValid.mockReturnValueOnce(false);
+      const req = { params: { id: 'bad' } };
+      const res = mockRes();
+
+      await deleteProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.send).toHaveBeenCalledWith('No profile with id: bad');
+    });
+
+    it('should delete and confirm deletion', async () => {
+      mongoose.Types.ObjectId.isValid.mockReturnValueOnce(true);
+      ProfileModel.findByIdAndRemove.mockResolvedValueOnce({});
+
+      const req = { params: { id: 'good' } };
+      const res = mockRes();
+
+      await deleteProfile(req, res);
+
+      expect(ProfileModel.findByIdAndRemove).toHaveBeenCalledWith('good');
+      expect(res.json).toHaveBeenCalledWith({ message: 'Profile deleted successfully.' });
+    });
+  });
+});

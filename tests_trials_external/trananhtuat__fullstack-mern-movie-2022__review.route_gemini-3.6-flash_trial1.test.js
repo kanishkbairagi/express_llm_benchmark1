@@ -1,0 +1,122 @@
+import { jest } from '@jest/globals';
+import express from 'express';
+import request from 'supertest';
+
+jest.unstable_mockModule('../controllers/review.controller.js', () => ({
+  default: {
+    getReviewsOfUser: jest.fn((req, res) => res.status(200).json({ status: 'getReviewsOfUser' })),
+    create: jest.fn((req, res) => res.status(201).json({ status: 'create' })),
+    remove: jest.fn((req, res) => res.status(200).json({ status: 'remove' }))
+  }
+}));
+
+jest.unstable_mockModule('../middlewares/token.middleware.js', () => ({
+  default: {
+    auth: jest.fn((req, res, next) => next())
+  }
+}));
+
+jest.unstable_mockModule('../handlers/request.handler.js', () => ({
+  default: {
+    validate: jest.fn((req, res, next) => next())
+  }
+}));
+
+const reviewController = (await import('../controllers/review.controller.js')).default;
+const tokenMiddleware = (await import('../middlewares/token.middleware.js')).default;
+const requestHandler = (await import('../handlers/request.handler.js')).default;
+const reviewRouter = (await import('../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/routes/review.route.js')).default;
+
+describe('Review Route', () => {
+  let app;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    app = express();
+    app.use(express.json());
+    app.use('/reviews', reviewRouter);
+  });
+
+  describe('GET /reviews', () => {
+    it('should invoke tokenMiddleware.auth and reviewController.getReviewsOfUser', async () => {
+      const response = await request(app).get('/reviews');
+
+      expect(tokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(reviewController.getReviewsOfUser).toHaveBeenCalledTimes(1);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ status: 'getReviewsOfUser' });
+    });
+
+    it('should not call reviewController.getReviewsOfUser if auth fails', async () => {
+      tokenMiddleware.auth.mockImplementationOnce((req, res) => {
+        res.status(401).json({ message: 'Unauthorized' });
+      });
+
+      const response = await request(app).get('/reviews');
+
+      expect(tokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(reviewController.getReviewsOfUser).not.toHaveBeenCalled();
+      expect(response.status).toBe(401);
+    });
+  });
+
+  describe('POST /reviews', () => {
+    const validBody = {
+      mediaId: '12345',
+      content: 'Great movie!',
+      mediaType: 'movie',
+      mediaTitle: 'Test Movie',
+      mediaPoster: 'http://example.com/poster.jpg'
+    };
+
+    it('should pass through auth, validate, and invoke reviewController.create', async () => {
+      const response = await request(app)
+        .post('/reviews')
+        .send(validBody);
+
+      expect(tokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(requestHandler.validate).toHaveBeenCalledTimes(1);
+      expect(reviewController.create).toHaveBeenCalledTimes(1);
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual({ status: 'create' });
+    });
+
+    it('should stop execution if validate handler halts request', async () => {
+      requestHandler.validate.mockImplementationOnce((req, res) => {
+        res.status(400).json({ message: 'Validation Error' });
+      });
+
+      const response = await request(app)
+        .post('/reviews')
+        .send(validBody);
+
+      expect(tokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(requestHandler.validate).toHaveBeenCalledTimes(1);
+      expect(reviewController.create).not.toHaveBeenCalled();
+      expect(response.status).toBe(400);
+    });
+  });
+
+  describe('DELETE /reviews/:reviewId', () => {
+    it('should invoke tokenMiddleware.auth and reviewController.remove', async () => {
+      const response = await request(app).delete('/reviews/review123');
+
+      expect(tokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(reviewController.remove).toHaveBeenCalledTimes(1);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ status: 'remove' });
+    });
+
+    it('should pass reviewId parameter to request handler', async () => {
+      let capturedReviewId;
+      reviewController.remove.mockImplementationOnce((req, res) => {
+        capturedReviewId = req.params.reviewId;
+        res.status(200).json({ status: 'remove' });
+      });
+
+      await request(app).delete('/reviews/targetReviewId');
+
+      expect(capturedReviewId).toBe('targetReviewId');
+    });
+  });
+});

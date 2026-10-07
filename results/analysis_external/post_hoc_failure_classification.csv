@@ -1,0 +1,8 @@
+category,gemini-3.6-flash,gpt-oss-120b,total
+missing npm package (for example supertest),17,10,27
+controller-relative path not found,24,4,28
+invented path under ../dataset/external that does not exist,0,1,1
+SyntaxError,1,4,5
+assertion failure,25,50,75
+other,0,1,1
+Total,67,70,137

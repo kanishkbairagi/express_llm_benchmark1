@@ -1,0 +1,252 @@
+import { jest } from '@jest/globals';
+import {
+  getClient,
+  getClients,
+  createClient,
+  updateClient,
+  deleteClient,
+  getClientsByUser,
+} from '../dataset/external/panshak__accountill/server/controllers/clients.js';
+
+// Mock mongoose
+jest.mock('mongoose', () => ({
+  Types: {
+    ObjectId: {
+      isValid: jest.fn(),
+    },
+  },
+}));
+
+// Mock ClientModel and its static methods
+const mockFindById = jest.fn();
+const mockFind = jest.fn();
+const mockCountDocuments = jest.fn();
+const mockFindByIdAndUpdate = jest.fn();
+const mockFindByIdAndRemove = jest.fn();
+
+jest.mock('../models/ClientModel.js', () => {
+  const constructorMock = jest.fn().mockImplementation((data) => ({
+    ...data,
+    save: jest.fn(),
+  }));
+  constructorMock.findById = mockFindById;
+  constructorMock.find = mockFind;
+  constructorMock.countDocuments = mockCountDocuments;
+  constructorMock.findByIdAndUpdate = mockFindByIdAndUpdate;
+  constructorMock.findByIdAndRemove = mockFindByIdAndRemove;
+  return constructorMock;
+});
+
+const createRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  res.send = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('clients controller', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('getClient', () => {
+    it('should return client with status 200 on success', async () => {
+      const fakeClient = { _id: '123', name: 'Test' };
+      mockFindById.mockResolvedValue(fakeClient);
+      const req = { params: { id: '123' } };
+      const res = createRes();
+
+      await getClient(req, res);
+
+      expect(mockFindById).toHaveBeenCalledWith('123');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(fakeClient);
+    });
+
+    it('should respond with 404 and error message on failure', async () => {
+      mockFindById.mockRejectedValue(new Error('not found'));
+      const req = { params: { id: 'bad' } };
+      const res = createRes();
+
+      await getClient(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'not found' });
+    });
+  });
+
+  describe('getClients', () => {
+    it('should return paginated clients data', async () => {
+      const page = '2';
+      const total = 20;
+      const clients = [{ _id: 'a' }, { _id: 'b' }];
+      mockCountDocuments.mockResolvedValue(total);
+      const chain = {
+        sort: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockResolvedValue(clients),
+      };
+      mockFind.mockReturnValue(chain);
+
+      const req = { query: { page } };
+      const res = createRes();
+
+      await getClients(req, res);
+
+      const LIMIT = 8;
+      const startIndex = (Number(page) - 1) * LIMIT;
+      expect(mockCountDocuments).toHaveBeenCalledWith({});
+      expect(mockFind).toHaveBeenCalled();
+      expect(chain.sort).toHaveBeenCalledWith({ _id: -1 });
+      expect(chain.limit).toHaveBeenCalledWith(LIMIT);
+      expect(chain.skip).toHaveBeenCalledWith(startIndex);
+      expect(res.json).toHaveBeenCalledWith({
+        data: clients,
+        currentPage: Number(page),
+        numberOfPages: Math.ceil(total / LIMIT),
+      });
+    });
+
+    it('should respond with 404 on error', async () => {
+      mockCountDocuments.mockRejectedValue(new Error('db error'));
+      const req = { query: { page: '1' } };
+      const res = createRes();
+
+      await getClients(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'db error' });
+    });
+  });
+
+  describe('createClient', () => {
+    it('should save new client and respond with 201', async () => {
+      const body = { name: 'New' };
+      const fakeSaved = { ...body, createdAt: expect.any(String) };
+      const saveMock = jest.fn().mockResolvedValue();
+      const ClientModelMock = (await import('../models/ClientModel.js')).default;
+      ClientModelMock.mockImplementation((data) => ({
+        ...data,
+        save: saveMock,
+      }));
+
+      const req = { body };
+      const res = createRes();
+
+      await createClient(req, res);
+
+      expect(saveMock).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(expect.objectContaining(fakeSaved));
+    });
+
+    it('should respond with 409 on save error', async () => {
+      const body = { name: 'Fail' };
+      const saveMock = jest.fn().mockRejectedValue(new Error('save error'));
+      const ClientModelMock = (await import('../models/ClientModel.js')).default;
+      ClientModelMock.mockImplementation((data) => ({
+        ...data,
+        save: saveMock,
+      }));
+
+      const req = { body };
+      const res = createRes();
+
+      await createClient(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith('save error');
+    });
+  });
+
+  describe('updateClient', () => {
+    it('should return 404 when id is invalid', async () => {
+      const { Types } = await import('mongoose');
+      Types.ObjectId.isValid.mockReturnValue(false);
+
+      const req = { params: { id: 'invalid' }, body: { name: 'X' } };
+      const res = createRes();
+
+      await updateClient(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.send).toHaveBeenCalledWith('No client with that id');
+    });
+
+    it('should update and return updated client', async () => {
+      const { Types } = await import('mongoose');
+      Types.ObjectId.isValid.mockReturnValue(true);
+      const updated = { _id: '123', name: 'Updated' };
+      mockFindByIdAndUpdate.mockResolvedValue(updated);
+
+      const req = { params: { id: '123' }, body: { name: 'Updated' } };
+      const res = createRes();
+
+      await updateClient(req, res);
+
+      expect(mockFindByIdAndUpdate).toHaveBeenCalledWith(
+        '123',
+        { name: 'Updated', _id: '123' },
+        { new: true }
+      );
+      expect(res.json).toHaveBeenCalledWith(updated);
+    });
+  });
+
+  describe('deleteClient', () => {
+    it('should return 404 when id is invalid', async () => {
+      const { Types } = await import('mongoose');
+      Types.ObjectId.isValid.mockReturnValue(false);
+
+      const req = { params: { id: 'bad' } };
+      const res = createRes();
+
+      await deleteClient(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.send).toHaveBeenCalledWith('No Client with that id');
+    });
+
+    it('should remove client and respond with success message', async () => {
+      const { Types } = await import('mongoose');
+      Types.ObjectId.isValid.mockReturnValue(true);
+      mockFindByIdAndRemove.mockResolvedValue();
+
+      const req = { params: { id: '123' } };
+      const res = createRes();
+
+      await deleteClient(req, res);
+
+      expect(mockFindByIdAndRemove).toHaveBeenCalledWith('123');
+      expect(res.json).toHaveBeenCalledWith({ message: 'Client deleted successfully' });
+    });
+  });
+
+  describe('getClientsByUser', () => {
+    it('should return clients filtered by userId', async () => {
+      const clients = [{ _id: 'c1' }, { _id: 'c2' }];
+      mockFind.mockResolvedValue(clients);
+
+      const req = { query: { searchQuery: 'user123' } };
+      const res = createRes();
+
+      await getClientsByUser(req, res);
+
+      expect(mockFind).toHaveBeenCalledWith({ userId: 'user123' });
+      expect(res.json).toHaveBeenCalledWith({ data: clients });
+    });
+
+    it('should respond with 404 on error', async () => {
+      mockFind.mockRejectedValue(new Error('lookup fail'));
+
+      const req = { query: { searchQuery: 'user123' } };
+      const res = createRes();
+
+      await getClientsByUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'lookup fail' });
+    });
+  });
+});

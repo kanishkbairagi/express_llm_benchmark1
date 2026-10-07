@@ -1,0 +1,218 @@
+import { jest } from '@jest/globals';
+import InvoiceModel from '../dataset/external/panshak__accountill/server/models/InvoiceModel.js';
+import {
+    getInvoicesByUser,
+    getTotalCount,
+    getInvoices,
+    createInvoice,
+    getInvoice,
+    updateInvoice,
+    deleteInvoice
+} from '../dataset/external/panshak__accountill/server/controllers/invoices.js';
+
+jest.mock('../dataset/external/panshak__accountill/server/models/InvoiceModel.js');
+
+describe('Invoices Controller', () => {
+    let req, res;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        req = {
+            query: {},
+            params: {},
+            body: {}
+        };
+        res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn().mockReturnThis(),
+            send: jest.fn().mockReturnThis()
+        };
+    });
+
+    describe('getInvoicesByUser', () => {
+        it('should fetch invoices by searchQuery successfully', async () => {
+            req.query = { searchQuery: 'creator123' };
+            const mockInvoices = [{ id: '1', creator: 'creator123' }];
+            InvoiceModel.find.mockResolvedValue(mockInvoices);
+
+            await getInvoicesByUser(req, res);
+
+            expect(InvoiceModel.find).toHaveBeenCalledWith({ creator: 'creator123' });
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({ data: mockInvoices });
+        });
+
+        it('should handle errors when fetching invoices by user fails', async () => {
+            req.query = { searchQuery: 'creator123' };
+            const errorMessage = 'Database error';
+            InvoiceModel.find.mockRejectedValue(new Error(errorMessage));
+
+            await getInvoicesByUser(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(404);
+            expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
+        });
+    });
+
+    describe('getTotalCount', () => {
+        it('should return total count of invoices for user', async () => {
+            req.query = { searchQuery: 'creator123' };
+            InvoiceModel.countDocuments.mockResolvedValue(5);
+
+            await getTotalCount(req, res);
+
+            expect(InvoiceModel.countDocuments).toHaveBeenCalledWith({ creator: 'creator123' });
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith(5);
+        });
+
+        it('should handle errors when counting invoices fails', async () => {
+            req.query = { searchQuery: 'creator123' };
+            const errorMessage = 'Count error';
+            InvoiceModel.countDocuments.mockRejectedValue(new Error(errorMessage));
+
+            await getTotalCount(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(404);
+            expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
+        });
+    });
+
+    describe('getInvoices', () => {
+        it('should return all invoices sorted by _id descending', async () => {
+            const mockInvoices = [{ _id: '2' }, { _id: '1' }];
+            const mockSort = jest.fn().mockResolvedValue(mockInvoices);
+            InvoiceModel.find.mockReturnValue({ sort: mockSort });
+
+            await getInvoices(req, res);
+
+            expect(InvoiceModel.find).toHaveBeenCalledWith({});
+            expect(mockSort).toHaveBeenCalledWith({ _id: -1 });
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith(mockInvoices);
+        });
+
+        it('should handle errors when getInvoices fails', async () => {
+            const errorMessage = 'Fetch error';
+            InvoiceModel.find.mockImplementation(() => {
+                throw new Error(errorMessage);
+            });
+
+            await getInvoices(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(409);
+            expect(res.json).toHaveBeenCalledWith(errorMessage);
+        });
+    });
+
+    describe('createInvoice', () => {
+        it('should create and save a new invoice', async () => {
+            const invoiceData = { amount: 100, creator: 'creator123' };
+            req.body = invoiceData;
+
+            const saveMock = jest.fn().mockResolvedValue(true);
+            InvoiceModel.mockImplementation(() => ({
+                ...invoiceData,
+                save: saveMock
+            }));
+
+            await createInvoice(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(201);
+            expect(res.json).toHaveBeenCalled();
+        });
+
+        it('should handle error when saving invoice fails', async () => {
+            const invoiceData = { amount: 100 };
+            req.body = invoiceData;
+            const errorMessage = 'Save error';
+
+            const saveMock = jest.fn().mockRejectedValue(new Error(errorMessage));
+            InvoiceModel.mockImplementation(() => ({
+                save: saveMock
+            }));
+
+            await createInvoice(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(409);
+            expect(res.json).toHaveBeenCalledWith(errorMessage);
+        });
+    });
+
+    describe('getInvoice', () => {
+        it('should return an invoice by id', async () => {
+            const mockInvoice = { _id: '507f1f77bcf86cd799439011', amount: 200 };
+            req.params = { id: '507f1f77bcf86cd799439011' };
+            InvoiceModel.findById.mockResolvedValue(mockInvoice);
+
+            await getInvoice(req, res);
+
+            expect(InvoiceModel.findById).toHaveBeenCalledWith('507f1f77bcf86cd799439011');
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith(mockInvoice);
+        });
+
+        it('should handle error when getInvoice fails', async () => {
+            req.params = { id: '507f1f77bcf86cd799439011' };
+            const errorMessage = 'Find error';
+            InvoiceModel.findById.mockRejectedValue(new Error(errorMessage));
+
+            await getInvoice(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(409);
+            expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
+        });
+    });
+
+    describe('updateInvoice', () => {
+        it('should return 404 if id is invalid', async () => {
+            req.params = { id: 'invalid-id' };
+            req.body = { amount: 300 };
+
+            await updateInvoice(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(404);
+            expect(res.send).toHaveBeenCalledWith('No invoice with that id');
+        });
+
+        it('should update invoice if id is valid', async () => {
+            const validId = '507f1f77bcf86cd799439011';
+            req.params = { id: validId };
+            req.body = { amount: 300 };
+            const mockUpdated = { _id: validId, amount: 300 };
+
+            InvoiceModel.findByIdAndUpdate.mockResolvedValue(mockUpdated);
+
+            await updateInvoice(req, res);
+
+            expect(InvoiceModel.findByIdAndUpdate).toHaveBeenCalledWith(
+                validId,
+                { amount: 300, _id: validId },
+                { new: true }
+            );
+            expect(res.json).toHaveBeenCalledWith(mockUpdated);
+        });
+    });
+
+    describe('deleteInvoice', () => {
+        it('should return 404 if id is invalid', async () => {
+            req.params = { id: 'invalid-id' };
+
+            await deleteInvoice(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(404);
+            expect(res.send).toHaveBeenCalledWith('No invoice with that id');
+        });
+
+        it('should delete invoice if id is valid', async () => {
+            const validId = '507f1f77bcf86cd799439011';
+            req.params = { id: validId };
+            InvoiceModel.findByIdAndRemove.mockResolvedValue(true);
+
+            await deleteInvoice(req, res);
+
+            expect(InvoiceModel.findByIdAndRemove).toHaveBeenCalledWith(validId);
+            expect(res.json).toHaveBeenCalledWith({ message: 'Invoice deleted successfully' });
+        });
+    });
+});

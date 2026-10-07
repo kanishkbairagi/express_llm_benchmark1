@@ -1,0 +1,269 @@
+import { jest } from '@jest/globals';
+import {
+  getAllProducts,
+  getProductById,
+  deleteProduct,
+  createProduct,
+  updateProduct,
+  createProductReview,
+  getTopProducts,
+} from '../dataset/external/Rajatm544__MERN-Ecommerce/backend/controllers/productControllers.js';
+import Product from '../dataset/external/Rajatm544__MERN-Ecommerce/backend/models/productModel.js';
+
+jest.mock('../dataset/external/Rajatm544__MERN-Ecommerce/backend/models/productModel.js');
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('productControllers', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('getAllProducts', () => {
+    it('should return paginated products with correct meta', async () => {
+      const req = {
+        query: { pageNumber: '2', pageSize: '5', keyword: 'phone' },
+      };
+      const res = mockRes();
+
+      const mockCount = 12;
+      const mockProducts = [{ name: 'Phone 1' }, { name: 'Phone 2' }];
+
+      Product.countDocuments.mockResolvedValue(mockCount);
+      const findMock = {
+        limit: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockResolvedValue(mockProducts),
+      };
+      Product.find.mockReturnValue(findMock);
+
+      await getAllProducts(req, res);
+
+      expect(Product.countDocuments).toHaveBeenCalledWith({
+        name: { $regex: 'phone', $options: 'si' },
+      });
+      expect(Product.find).toHaveBeenCalledWith({
+        name: { $regex: 'phone', $options: 'si' },
+      });
+      expect(findMock.limit).toHaveBeenCalledWith(5);
+      expect(findMock.skip).toHaveBeenCalledWith(5); // pageSize * (page-1) => 5 * (2-1)
+
+      expect(res.json).toHaveBeenCalledWith({
+        products: mockProducts,
+        page: 2,
+        pages: Math.ceil(mockCount / 5),
+      });
+    });
+
+    it('should use defaults when query params are missing', async () => {
+      const req = { query: {} };
+      const res = mockRes();
+
+      Product.countDocuments.mockResolvedValue(0);
+      const findMock = {
+        limit: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockResolvedValue([]),
+      };
+      Product.find.mockReturnValue(findMock);
+
+      await getAllProducts(req, res);
+
+      expect(Product.countDocuments).toHaveBeenCalledWith({});
+      expect(Product.find).toHaveBeenCalledWith({});
+      expect(findMock.limit).toHaveBeenCalledWith(10);
+      expect(findMock.skip).toHaveBeenCalledWith(0);
+      expect(res.json).toHaveBeenCalledWith({
+        products: [],
+        page: 1,
+        pages: 0,
+      });
+    });
+  });
+
+  describe('getProductById', () => {
+    it('should return product when found', async () => {
+      const req = { params: { id: '123' } };
+      const res = mockRes();
+      const product = { _id: '123', name: 'Test' };
+      Product.findById.mockResolvedValue(product);
+
+      await getProductById(req, res);
+
+      expect(Product.findById).toHaveBeenCalledWith('123');
+      expect(res.json).toHaveBeenCalledWith(product);
+    });
+
+    it('should throw 404 error when not found', async () => {
+      const req = { params: { id: '123' } };
+      const res = mockRes();
+      Product.findById.mockResolvedValue(null);
+
+      await expect(getProductById(req, res)).rejects.toThrow('Product not found');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('deleteProduct', () => {
+    it('should delete product and respond with message', async () => {
+      const req = { params: { id: 'abc' } };
+      const res = mockRes();
+      const removeMock = jest.fn().mockResolvedValue();
+      const product = { remove: removeMock };
+      Product.findById.mockResolvedValue(product);
+
+      await deleteProduct(req, res);
+
+      expect(Product.findById).toHaveBeenCalledWith('abc');
+      expect(removeMock).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith({ message: 'Product removed from DB' });
+    });
+
+    it('should throw 404 error when product does not exist', async () => {
+      const req = { params: { id: 'abc' } };
+      const res = mockRes();
+      Product.findById.mockResolvedValue(null);
+
+      await expect(deleteProduct(req, res)).rejects.toThrow('Product not found');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('createProduct', () => {
+    it('should create a new product and return it with status 201', async () => {
+      const req = { user: { _id: 'user1' } };
+      const res = mockRes();
+
+      const saveMock = jest.fn().mockResolvedValue({ _id: 'newId', name: 'Sample' });
+      // Mock the Product constructor to return an object with save()
+      Product.mockImplementation(() => ({ save: saveMock }));
+
+      await createProduct(req, res);
+
+      expect(Product).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'Sample',
+          user: 'user1',
+        })
+      );
+      expect(saveMock).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ _id: 'newId', name: 'Sample' });
+    });
+  });
+
+  describe('updateProduct', () => {
+    it('should update fields and return updated product', async () => {
+      const req = {
+        params: { id: 'p1' },
+        body: { name: 'New Name', price: 99 },
+      };
+      const res = mockRes();
+
+      const saveMock = jest.fn().mockResolvedValue({ _id: 'p1', name: 'New Name', price: 99 });
+      const product = { save: saveMock };
+      Product.findById.mockResolvedValue(product);
+
+      await updateProduct(req, res);
+
+      expect(Product.findById).toHaveBeenCalledWith('p1');
+      expect(product.name).toBe('New Name');
+      expect(product.price).toBe(99);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ _id: 'p1', name: 'New Name', price: 99 });
+    });
+
+    it('should throw 404 when product not found', async () => {
+      const req = { params: { id: 'missing' }, body: {} };
+      const res = mockRes();
+      Product.findById.mockResolvedValue(null);
+
+      await expect(updateProduct(req, res)).rejects.toThrow('Product not available');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('createProductReview', () => {
+    const baseProduct = {
+      _id: 'prod1',
+      reviews: [],
+      rating: 0,
+      numReviews: 0,
+      save: jest.fn(),
+    };
+
+    it('should add a new review and respond with success', async () => {
+      const req = {
+        params: { id: 'prod1' },
+        body: { rating: '4', review: 'Great' },
+        user: { _id: 'u1', name: 'Tester', avatar: 'avatar.png' },
+      };
+      const res = mockRes();
+
+      const productCopy = { ...baseProduct, reviews: [] };
+      Product.findById.mockResolvedValue(productCopy);
+      productCopy.save.mockResolvedValue(productCopy);
+
+      await createProductReview(req, res);
+
+      expect(Product.findById).toHaveBeenCalledWith('prod1');
+      expect(productCopy.reviews).toHaveLength(1);
+      expect(productCopy.numReviews).toBe(1);
+      expect(productCopy.rating).toBe(4);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Review Added' });
+    });
+
+    it('should not allow duplicate reviews', async () => {
+      const req = {
+        params: { id: 'prod1' },
+        body: { rating: '5', review: 'Awesome' },
+        user: { _id: 'u1', name: 'Tester', avatar: 'avatar.png' },
+      };
+      const res = mockRes();
+
+      const productWithReview = {
+        ...baseProduct,
+        reviews: [{ user: 'u1', rating: 3 }],
+        save: jest.fn(),
+      };
+      Product.findById.mockResolvedValue(productWithReview);
+
+      await expect(createProductReview(req, res)).rejects.toThrow('Product Already Reviewed');
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should throw 404 when product not found', async () => {
+      const req = { params: { id: 'none' }, body: {}, user: {} };
+      const res = mockRes();
+      Product.findById.mockResolvedValue(null);
+
+      await expect(createProductReview(req, res)).rejects.toThrow('Product not available');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('getTopProducts', () => {
+    it('should return top 4 products sorted by rating', async () => {
+      const req = {};
+      const res = mockRes();
+
+      const topProducts = [{ rating: 5 }, { rating: 4 }];
+      const findMock = {
+        sort: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockResolvedValue(topProducts),
+      };
+      Product.find.mockReturnValue(findMock);
+
+      await getTopProducts(req, res);
+
+      expect(Product.find).toHaveBeenCalledWith({});
+      expect(findMock.sort).toHaveBeenCalledWith({ rating: -1 });
+      expect(findMock.limit).toHaveBeenCalledWith(4);
+      expect(res.json).toHaveBeenCalledWith(topProducts);
+    });
+  });
+});

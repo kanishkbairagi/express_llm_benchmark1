@@ -1,0 +1,243 @@
+import { jest } from '@jest/globals';
+import routes from '../dataset/external/mongo-express__mongo-express/lib/routes/database.js';
+
+describe('database routes', () => {
+  let req;
+  let res;
+  let config;
+  let dbRoutes;
+
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    config = {
+      site: {
+        baseUrl: '/mongo/',
+      },
+      mongodb: {
+        admin: true,
+      },
+    };
+
+    dbRoutes = routes(config);
+
+    req = {
+      dbConnection: {},
+      dbName: 'testdb',
+      databases: ['testdb'],
+      collections: { testdb: ['col1'] },
+      gridFSBuckets: { testdb: [] },
+      session: {},
+      csrfToken: jest.fn().mockReturnValue('token123'),
+      get: jest.fn(),
+      updateCollections: jest.fn().mockResolvedValue(),
+      updateDatabases: jest.fn().mockResolvedValue(),
+      db: {
+        stats: jest.fn(),
+        dropDatabase: jest.fn(),
+      },
+      mainClient: {
+        client: {
+          db: jest.fn(),
+        },
+      },
+      body: {},
+    };
+
+    res = {
+      render: jest.fn(),
+      redirect: jest.fn(),
+    };
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('viewDatabase', () => {
+    it('should render database view with stats when admin is true', async () => {
+      req.db.stats.mockResolvedValue({
+        avgObjSize: 100,
+        collections: 2,
+        dataFileVersion: { major: 1, minor: 0 },
+        dataSize: 1024,
+        extentFreeList: { num: 0 },
+        fileSize: 2048,
+        indexes: 1,
+        indexSize: 512,
+        numExtents: 10,
+        objects: 5,
+        storageSize: 4096,
+      });
+
+      await dbRoutes.viewDatabase(req, res);
+
+      expect(req.updateCollections).toHaveBeenCalledWith(req.dbConnection);
+      expect(req.db.stats).toHaveBeenCalled();
+      expect(res.render).toHaveBeenCalledWith('database', expect.objectContaining({
+        title: 'Viewing Database: testdb',
+        databases: ['testdb'],
+        colls: ['col1'],
+        grids: [],
+        csrfToken: 'token123',
+        stats: expect.objectContaining({
+          dataFileVersion: '1.0',
+          extentFreeListNum: 0,
+          numExtents: '10',
+        }),
+      }));
+    });
+
+    it('should handle stats with missing optional properties', async () => {
+      req.db.stats.mockResolvedValue({
+        avgObjSize: 0,
+        collections: 0,
+        dataSize: 0,
+        indexes: 0,
+        indexSize: 0,
+        objects: 0,
+        storageSize: 0,
+      });
+
+      await dbRoutes.viewDatabase(req, res);
+
+      expect(res.render).toHaveBeenCalledWith('database', expect.objectContaining({
+        stats: expect.objectContaining({
+          dataFileVersion: null,
+          extentFreeListNum: null,
+          fileSize: null,
+          numExtents: null,
+        }),
+      }));
+    });
+
+    it('should render database view without fetching stats when admin is false', async () => {
+      config.mongodb.admin = false;
+
+      await dbRoutes.viewDatabase(req, res);
+
+      expect(req.updateCollections).toHaveBeenCalledWith(req.dbConnection);
+      expect(req.db.stats).not.toHaveBeenCalled();
+      expect(res.render).toHaveBeenCalledWith('database', expect.objectContaining({
+        stats: false,
+      }));
+    });
+
+    it('should handle error when db.stats fails', async () => {
+      const error = new Error('Stats error');
+      req.db.stats.mockRejectedValue(error);
+      req.get.mockReturnValue('http://referrer.com');
+
+      await dbRoutes.viewDatabase(req, res);
+
+      expect(req.session.error).toContain('Could not get stats.');
+      expect(res.redirect).toHaveBeenCalledWith('http://referrer.com');
+    });
+
+    it('should redirect to / if db.stats fails and no referrer is set', async () => {
+      const error = new Error('Stats error');
+      req.db.stats.mockRejectedValue(error);
+      req.get.mockReturnValue(null);
+
+      await dbRoutes.viewDatabase(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should handle error when updateCollections fails', async () => {
+      const error = new Error('Update error');
+      req.updateCollections.mockRejectedValue(error);
+      req.get.mockReturnValue('http://referrer.com');
+
+      await dbRoutes.viewDatabase(req, res);
+
+      expect(req.session.error).toContain('Could not refresh collections.');
+      expect(res.redirect).toHaveBeenCalledWith('http://referrer.com');
+    });
+  });
+
+  describe('addDatabase', () => {
+    it('should reject invalid database name', async () => {
+      req.body.database = '';
+      req.get.mockReturnValue('http://referrer.com');
+
+      await dbRoutes.addDatabase(req, res);
+
+      expect(req.session.error).toBe('That database name is invalid.');
+      expect(res.redirect).toHaveBeenCalledWith('http://referrer.com');
+    });
+
+    it('should create database and redirect to baseHref when valid name is provided', async () => {
+      req.body.database = 'newdb';
+      const mockCreateCollection = jest.fn().mockResolvedValue();
+      req.mainClient.client.db.mockReturnValue({
+        createCollection: mockCreateCollection,
+      });
+
+      await dbRoutes.addDatabase(req, res);
+
+      expect(req.mainClient.client.db).toHaveBeenCalledWith('newdb');
+      expect(mockCreateCollection).toHaveBeenCalledWith('delete_me');
+      expect(req.updateDatabases).toHaveBeenCalled();
+      expect(res.redirect).toHaveBeenCalledWith('/mongo/');
+    });
+
+    it('should default baseHref to / if config.site.baseUrl is not specified', async () => {
+      const customRoutes = routes({ site: {}, mongodb: {} });
+      req.body.database = 'newdb';
+      const mockCreateCollection = jest.fn().mockResolvedValue();
+      req.mainClient.client.db.mockReturnValue({
+        createCollection: mockCreateCollection,
+      });
+
+      await customRoutes.addDatabase(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should handle error when createCollection fails', async () => {
+      req.body.database = 'newdb';
+      const mockCreateCollection = jest.fn().mockRejectedValue(new Error('Create error'));
+      req.mainClient.client.db.mockReturnValue({
+        createCollection: mockCreateCollection,
+      });
+      req.get.mockReturnValue('http://referrer.com');
+
+      await dbRoutes.addDatabase(req, res);
+
+      expect(req.session.error).toContain('Could not create collection.');
+      expect(res.redirect).toHaveBeenCalledWith('http://referrer.com');
+    });
+  });
+
+  describe('deleteDatabase', () => {
+    it('should drop database and redirect to baseHref', async () => {
+      req.db.dropDatabase.mockResolvedValue();
+
+      await dbRoutes.deleteDatabase(req, res);
+
+      expect(req.db.dropDatabase).toHaveBeenCalled();
+      expect(req.updateDatabases).toHaveBeenCalled();
+      expect(res.redirect).toHaveBeenCalledWith('/mongo/');
+    });
+
+    it('should handle error when dropDatabase fails', async () => {
+      req.db.dropDatabase.mockRejectedValue(new Error('Drop error'));
+      req.get.mockReturnValue('http://referrer.com');
+
+      await dbRoutes.deleteDatabase(req, res);
+
+      expect(req.session.error).toContain('Failed to delete database.');
+      expect(res.redirect).toHaveBeenCalledWith('http://referrer.com');
+    });
+
+    it('should redirect to / on error if referrer is missing', async () => {
+      req.db.dropDatabase.mockRejectedValue(new Error('Drop error'));
+      req.get.mockReturnValue(null);
+
+      await dbRoutes.deleteDatabase(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+  });
+});

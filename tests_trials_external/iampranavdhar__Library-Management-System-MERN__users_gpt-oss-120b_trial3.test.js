@@ -1,0 +1,183 @@
+import { jest } from '@jest/globals';
+import router from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/routes/users.js';
+import User from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/User.js';
+
+// Mock the User model
+jest.mock('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/User.js');
+
+const getHandler = (path, method) => {
+  const layer = router.stack.find(
+    (l) => l.route && l.route.path === path && l.route.methods[method]
+  );
+  return layer.route.stack[0].handle;
+};
+
+describe('User routes handlers', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = { params: {}, body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+    jest.clearAllMocks();
+  });
+
+  /** GET /getuser/:id **/
+  test('GET /getuser/:id - success returns user without password/updatedAt', async () => {
+    const mockUser = {
+      _doc: {
+        _id: '123',
+        name: 'John',
+        email: 'john@example.com',
+        password: 'hashed',
+        updatedAt: '2024-01-01',
+        otherField: 'value',
+      },
+      populate: jest.fn().mockResolvedThis(),
+    };
+    User.findById.mockReturnValue({
+      populate: jest.fn().mockResolvedValue(mockUser),
+    });
+
+    req.params.id = '123';
+    const handler = getHandler('/getuser/:id', 'get');
+    await handler(req, res);
+
+    expect(User.findById).toHaveBeenCalledWith('123');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      _id: '123',
+      name: 'John',
+      email: 'john@example.com',
+      otherField: 'value',
+    });
+  });
+
+  test('GET /getuser/:id - error returns 500', async () => {
+    const error = new Error('db error');
+    User.findById.mockReturnValue({
+      populate: jest.fn().mockRejectedValue(error),
+    });
+
+    req.params.id = '123';
+    const handler = getHandler('/getuser/:id', 'get');
+    await handler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(error);
+  });
+
+  /** GET /allmembers **/
+  test('GET /allmembers - success returns all users', async () => {
+    const mockUsers = [{ _id: '1' }, { _id: '2' }];
+    const chainMock = {
+      populate: jest.fn().mockReturnThis(),
+      sort: jest.fn().mockResolvedValue(mockUsers),
+    };
+    User.find.mockReturnValue(chainMock);
+
+    const handler = getHandler('/allmembers', 'get');
+    await handler(req, res);
+
+    expect(User.find).toHaveBeenCalledWith({});
+    expect(chainMock.populate).toHaveBeenCalledTimes(2);
+    expect(chainMock.sort).toHaveBeenCalledWith({ _id: -1 });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockUsers);
+  });
+
+  test('GET /allmembers - error returns 500', async () => {
+    const error = new Error('db fail');
+    const chainMock = {
+      populate: jest.fn().mockReturnThis(),
+      sort: jest.fn().mockRejectedValue(error),
+    };
+    User.find.mockReturnValue(chainMock);
+
+    const handler = getHandler('/allmembers', 'get');
+    await handler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(error);
+  });
+
+  /** DELETE /deleteuser/:id **/
+  test('DELETE /deleteuser/:id - authorized deletion returns 200', async () => {
+    User.findByIdAndDelete.mockResolvedValue();
+
+    req.params.id = '123';
+    req.body.userId = '123';
+    const handler = getHandler('/deleteuser/:id', 'delete');
+    await handler(req, res);
+
+    expect(User.findByIdAndDelete).toHaveBeenCalledWith('123');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith('Account has been deleted');
+  });
+
+  test('DELETE /deleteuser/:id - unauthorized returns 403', async () => {
+    req.params.id = '123';
+    req.body.userId = '999';
+    const handler = getHandler('/deleteuser/:id', 'delete');
+    await handler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith('You can delete only your account!');
+  });
+
+  /** PUT /:id/move-to-activetransactions **/
+  test('PUT move-to-activetransactions - admin success', async () => {
+    const mockUpdateOne = jest.fn().mockResolvedValue();
+    User.findById.mockResolvedValue({ updateOne: mockUpdateOne });
+
+    req.params.id = 'txn123';
+    req.body = { isAdmin: true, userId: 'user456' };
+    const handler = getHandler('/:id/move-to-activetransactions', 'put');
+    await handler(req, res);
+
+    expect(User.findById).toHaveBeenCalledWith('user456');
+    expect(mockUpdateOne).toHaveBeenCalledWith({ $push: { activeTransactions: 'txn123' } });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith('Added to Active Transaction');
+  });
+
+  test('PUT move-to-activetransactions - non‑admin returns 403', async () => {
+    req.params.id = 'txn123';
+    req.body = { isAdmin: false };
+    const handler = getHandler('/:id/move-to-activetransactions', 'put');
+    await handler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith('Only Admin can add a transaction');
+  });
+
+  /** PUT /:id/move-to-prevtransactions **/
+  test('PUT move-to-prevtransactions - admin moves transaction', async () => {
+    const mockUpdateOne = jest.fn().mockResolvedValue();
+    User.findById.mockResolvedValue({ updateOne: mockUpdateOne });
+
+    req.params.id = 'txn789';
+    req.body = { isAdmin: true, userId: 'user456' };
+    const handler = getHandler('/:id/move-to-prevtransactions', 'put');
+    await handler(req, res);
+
+    expect(User.findById).toHaveBeenCalledWith('user456');
+    expect(mockUpdateOne).toHaveBeenNthCalledWith(1, { $pull: { activeTransactions: 'txn789' } });
+    expect(mockUpdateOne).toHaveBeenNthCalledWith(2, { $push: { prevTransactions: 'txn789' } });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith('Added to Prev transaction Transaction');
+  });
+
+  test('PUT move-to-prevtransactions - non‑admin returns 403', async () => {
+    req.params.id = 'txn789';
+    req.body = { isAdmin: false };
+    const handler = getHandler('/:id/move-to-prevtransactions', 'put');
+    await handler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith('Only Admin can do this');
+  });
+});

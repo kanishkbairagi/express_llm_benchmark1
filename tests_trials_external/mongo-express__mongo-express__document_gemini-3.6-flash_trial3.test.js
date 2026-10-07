@@ -1,0 +1,280 @@
+import { jest } from '@jest/globals';
+
+jest.unstable_mockModule('../bson.js', () => ({
+  toString: jest.fn((doc) => (doc ? JSON.stringify(doc, null, 2) : '')),
+  toBSON: jest.fn((doc) => {
+    if (doc === 'INVALID') {
+      throw new Error('Invalid BSON');
+    }
+    return typeof doc === 'string' ? JSON.parse(doc) : doc;
+  }),
+}));
+
+jest.unstable_mockModule('../filters.js', () => ({
+  stringDocIDs: jest.fn((id) => String(id)),
+}));
+
+jest.unstable_mockModule('../utils.js', () => ({
+  buildCollectionURL: jest.fn((base, db, coll, params) => `/db/${db}/${coll}`),
+  buildDocumentURL: jest.fn((base, db, coll, id, params) => `/db/${db}/${coll}/${id}`),
+}));
+
+const { default: routes } = await import('../dataset/external/mongo-express__mongo-express/lib/routes/document.js');
+
+describe('Document Routes', () => {
+  let consoleErrorSpy;
+
+  beforeEach(() => {
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
+    jest.clearAllMocks();
+  });
+
+  const createReq = (overrides = {}) => ({
+    query: {},
+    body: {},
+    session: {},
+    document: { _id: 'doc123', name: 'test' },
+    dbName: 'testdb',
+    collectionName: 'testcoll',
+    collection: {
+      insertOne: jest.fn(),
+      replaceOne: jest.fn(),
+      deleteOne: jest.fn(),
+    },
+    get: jest.fn().mockReturnValue(''),
+    csrfToken: jest.fn().mockReturnValue('csrf-token-123'),
+    ...overrides,
+  });
+
+  const createRes = (overrides = {}) => ({
+    locals: { baseHref: '/express/' },
+    send: jest.fn(),
+    render: jest.fn(),
+    redirect: jest.fn(),
+    ...overrides,
+  });
+
+  describe('getProperty', () => {
+    it('should send req.prop property', () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ prop: 'test-property-value' });
+      const res = createRes();
+
+      controller.getProperty(req, res);
+
+      expect(res.send).toHaveBeenCalledWith('test-property-value');
+    });
+  });
+
+  describe('viewDocument', () => {
+    it('should render document view for editing when readOnly is false', () => {
+      const config = { options: { readOnly: false } };
+      const controller = routes(config);
+      const req = createReq({ query: { skip: 5 } });
+      const res = createRes();
+
+      controller.viewDocument(req, res);
+
+      expect(res.render).toHaveBeenCalledWith('document', {
+        title: 'Editing Document: doc123',
+        docLength: expect.any(Number),
+        docString: expect.any(String),
+        skip: 5,
+        csrfToken: 'csrf-token-123',
+      });
+    });
+
+    it('should render document view for viewing when readOnly is true', () => {
+      const config = { options: { readOnly: true } };
+      const controller = routes(config);
+      const req = createReq();
+      const res = createRes();
+
+      controller.viewDocument(req, res);
+
+      expect(res.render).toHaveBeenCalledWith('document', expect.objectContaining({
+        title: 'Viewing Document: doc123',
+        skip: 0,
+      }));
+    });
+  });
+
+  describe('checkValid', () => {
+    it('should send Valid for valid BSON input', () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: '{"a": 1}' } });
+      const res = createRes();
+
+      controller.checkValid(req, res);
+
+      expect(res.send).toHaveBeenCalledWith('Valid');
+    });
+
+    it('should send Invalid and log error for invalid BSON input', () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: 'INVALID' } });
+      const res = createRes();
+
+      controller.checkValid(req, res);
+
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      expect(res.send).toHaveBeenCalledWith('Invalid');
+    });
+  });
+
+  describe('addDocument', () => {
+    it('should redirect with error if document is missing or empty', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: '' } });
+      const res = createRes();
+
+      await controller.addDocument(req, res);
+
+      expect(req.session.error).toBe('You forgot to enter a document!');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should redirect with referrer if document is empty and referrer exists', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: {} });
+      req.get.mockReturnValue('/previous-page');
+      const res = createRes();
+
+      await controller.addDocument(req, res);
+
+      expect(req.session.error).toBe('You forgot to enter a document!');
+      expect(res.redirect).toHaveBeenCalledWith('/previous-page');
+    });
+
+    it('should redirect with error if document is invalid BSON', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: 'INVALID' } });
+      const res = createRes();
+
+      await controller.addDocument(req, res);
+
+      expect(req.session.error).toBe('That document is not valid!');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should add document and redirect to collection URL on success', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: '{"a": 1}' } });
+      req.collection.insertOne.mockResolvedValueOnce({});
+      const res = createRes();
+
+      await controller.addDocument(req, res);
+
+      expect(req.collection.insertOne).toHaveBeenCalledWith({ a: 1 });
+      expect(req.session.success).toBe('Document added!');
+      expect(res.redirect).toHaveBeenCalledWith('/db/testdb/testcoll');
+    });
+
+    it('should redirect with error when insertOne fails', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: '{"a": 1}' } });
+      req.collection.insertOne.mockRejectedValueOnce(new Error('Insert failed'));
+      const res = createRes();
+
+      await controller.addDocument(req, res);
+
+      expect(req.session.error).toBe('Something went wrong: Error: Insert failed');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+  });
+
+  describe('updateDocument', () => {
+    it('should redirect with error if document is missing or empty', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: '' } });
+      const res = createRes();
+
+      await controller.updateDocument(req, res);
+
+      expect(req.session.error).toBe('You forgot to enter a document!');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should redirect with error if document is invalid BSON', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: 'INVALID' } });
+      const res = createRes();
+
+      await controller.updateDocument(req, res);
+
+      expect(req.session.error).toBe('That document is not valid!');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should update document and redirect to collection URL when persistEditMode is false', async () => {
+      const controller = routes({ options: { persistEditMode: false } });
+      const req = createReq({ body: { document: '{"name": "updated"}' } });
+      req.collection.replaceOne.mockResolvedValueOnce({});
+      const res = createRes();
+
+      await controller.updateDocument(req, res);
+
+      expect(req.collection.replaceOne).toHaveBeenCalledWith(req.document, {
+        name: 'updated',
+        _id: 'doc123',
+      });
+      expect(req.session.success).toBe('Document updated!');
+      expect(res.redirect).toHaveBeenCalledWith('/db/testdb/testcoll');
+    });
+
+    it('should update document and redirect to document URL when persistEditMode is true', async () => {
+      const controller = routes({ options: { persistEditMode: true } });
+      const req = createReq({ body: { document: '{"name": "updated"}' } });
+      req.collection.replaceOne.mockResolvedValueOnce({});
+      const res = createRes();
+
+      await controller.updateDocument(req, res);
+
+      expect(req.session.success).toBe('Document updated!');
+      expect(res.redirect).toHaveBeenCalledWith('/db/testdb/testcoll/doc123');
+    });
+
+    it('should redirect with error when replaceOne rejects', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq({ body: { document: '{"name": "updated"}' } });
+      req.collection.replaceOne.mockRejectedValueOnce(new Error('Update failed'));
+      const res = createRes();
+
+      await controller.updateDocument(req, res);
+
+      expect(req.session.error).toBe('Something went wrong: Error: Update failed');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+  });
+
+  describe('deleteDocument', () => {
+    it('should delete document and redirect to collection URL on success', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq();
+      req.collection.deleteOne.mockResolvedValueOnce({});
+      const res = createRes();
+
+      await controller.deleteDocument(req, res);
+
+      expect(req.collection.deleteOne).toHaveBeenCalledWith(req.document);
+      expect(req.session.success).toBe('Document deleted! _id: doc123');
+      expect(res.redirect).toHaveBeenCalledWith('/db/testdb/testcoll');
+    });
+
+    it('should redirect with error when deleteOne fails', async () => {
+      const controller = routes({ options: {} });
+      const req = createReq();
+      req.collection.deleteOne.mockRejectedValueOnce(new Error('Delete error'));
+      const res = createRes();
+
+      await controller.deleteDocument(req, res);
+
+      expect(req.session.error).toBe('Something went wrong! Error: Delete error');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+  });
+});

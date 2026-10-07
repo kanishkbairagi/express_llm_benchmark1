@@ -1,0 +1,124 @@
+import { jest } from '@jest/globals';
+import express from 'express';
+
+// ----- Mock dependencies -----
+jest.mock('../controllers/review.controller.js', () => ({
+  default: {
+    getReviewsOfUser: jest.fn(),
+    create: jest.fn(),
+    remove: jest.fn(),
+  },
+}));
+
+jest.mock('../middlewares/token.middleware.js', () => ({
+  default: {
+    auth: jest.fn(),
+  },
+}));
+
+jest.mock('../handlers/request.handler.js', () => ({
+  default: {
+    validate: jest.fn(),
+  },
+}));
+
+// Mock express-validator `body` to return a chainable middleware stub
+jest.mock('express-validator', () => ({
+  body: jest.fn(() => {
+    const middleware = jest.fn();
+    // chainable methods
+    middleware.exists = () => middleware;
+    middleware.isLength = () => middleware;
+    middleware.custom = () => middleware;
+    middleware.withMessage = () => middleware;
+    return middleware;
+  }),
+}));
+
+// ----- Import the router after mocks are in place -----
+import router from '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/routes/review.route.js';
+
+describe('review.route.js router configuration', () => {
+  test('GET / route has correct middlewares', () => {
+    const routeLayer = router.stack.find(
+      (layer) => layer.route && layer.route.path === '/' && layer.route.methods.get
+    );
+    expect(routeLayer).toBeDefined();
+
+    const middlewares = routeLayer.route.stack.map((s) => s.handle);
+    // tokenMiddleware.auth then reviewController.getReviewsOfUser
+    expect(middlewares).toHaveLength(2);
+    const tokenAuth = (await import('../middlewares/token.middleware.js')).default.auth;
+    const getReviews = (await import('../controllers/review.controller.js')).default.getReviewsOfUser;
+    expect(middlewares[0]).toBe(tokenAuth);
+    expect(middlewares[1]).toBe(getReviews);
+  });
+
+  test('POST / route has correct middleware chain', () => {
+    const routeLayer = router.stack.find(
+      (layer) => layer.route && layer.route.path === '/' && layer.route.methods.post
+    );
+    expect(routeLayer).toBeDefined();
+
+    const middlewares = routeLayer.route.stack.map((s) => s.handle);
+
+    // Expected order:
+    // 1. tokenMiddleware.auth
+    // 2-6. five `body` validators (mediaId, content, mediaType, mediaTitle, mediaPoster)
+    // 7. requestHandler.validate
+    // 8. reviewController.create
+    expect(middlewares).toHaveLength(8);
+
+    const {
+      default: tokenMiddleware,
+    } = await import('../middlewares/token.middleware.js');
+    const {
+      default: requestHandler,
+    } = await import('../handlers/request.handler.js');
+    const {
+      default: reviewController,
+    } = await import('../controllers/review.controller.js');
+    const { body } = await import('express-validator');
+
+    // 1. auth
+    expect(middlewares[0]).toBe(tokenMiddleware.auth);
+
+    // 2-6. body validators – each should be the middleware returned by our mock `body`
+    const bodyCalls = body.mock.calls;
+    expect(bodyCalls).toHaveLength(5);
+    // verify that the middleware functions placed in the stack are exactly those returned by the mock
+    for (let i = 0; i < 5; i++) {
+      const expectedMiddleware = bodyCalls[i][0]; // the field name argument
+      const returnedMiddleware = bodyCalls[i][1]; // not used, but our mock returns the same fn each call
+    }
+    // The router stores the middleware functions (the ones returned by `body`)
+    for (let i = 1; i <= 5; i++) {
+      const mockBodyFn = body.mock.results[i - 1].value;
+      expect(middlewares[i]).toBe(mockBodyFn);
+    }
+
+    // 7. requestHandler.validate
+    expect(middlewares[6]).toBe(requestHandler.validate);
+
+    // 8. reviewController.create
+    expect(middlewares[7]).toBe(reviewController.create);
+  });
+
+  test('DELETE /:reviewId route has correct middlewares', () => {
+    const routeLayer = router.stack.find(
+      (layer) =>
+        layer.route &&
+        layer.route.path === '/:reviewId' &&
+        layer.route.methods.delete
+    );
+    expect(routeLayer).toBeDefined();
+
+    const middlewares = routeLayer.route.stack.map((s) => s.handle);
+    expect(middlewares).toHaveLength(2);
+
+    const tokenAuth = (await import('../middlewares/token.middleware.js')).default.auth;
+    const remove = (await import('../controllers/review.controller.js')).default.remove;
+    expect(middlewares[0]).toBe(tokenAuth);
+    expect(middlewares[1]).toBe(remove);
+  });
+});
