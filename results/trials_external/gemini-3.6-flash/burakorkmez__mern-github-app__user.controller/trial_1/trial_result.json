@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "burakorkmez__mern-github-app__user.controller",
+  "targetFilename": "external/burakorkmez__mern-github-app/backend/controllers/user.controller.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T04:57:48.745Z",
+  "finishedAt": "2026-10-05T04:58:12.530Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 772,
+    "completionTokens": 1761,
+    "totalTokens": 5717,
+    "thinkingTokens": 3184
+  },
+  "latencyMs": 21332
+}

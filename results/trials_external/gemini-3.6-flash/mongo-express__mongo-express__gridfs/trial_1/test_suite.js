@@ -1,0 +1,291 @@
+import { jest } from '@jest/globals';
+import { PassThrough, EventEmitter } from 'node:stream';
+
+const mockUploadStream = new PassThrough();
+const mockDownloadStream = new EventEmitter();
+mockDownloadStream.pipe = jest.fn().mockReturnValue(mockDownloadStream);
+
+const mockGridFSBucketInstance = {
+  openUploadStream: jest.fn(() => mockUploadStream),
+  find: jest.fn(() => ({
+    limit: jest.fn().mockReturnThis(),
+    toArray: jest.fn().mockResolvedValue([]),
+  })),
+  openDownloadStream: jest.fn(() => mockDownloadStream),
+  delete: jest.fn().mockResolvedValue(true),
+};
+
+const mockGridFSBucket = jest.fn(() => mockGridFSBucketInstance);
+
+jest.unstable_mockModule('mongodb', () => ({
+  default: {
+    GridFSBucket: mockGridFSBucket,
+    ObjectId: {
+      createFromHexString: jest.fn((id) => `ObjectId(${id})`),
+    },
+  },
+}));
+
+const { default: routes } = await import('../dataset/external/mongo-express__mongo-express/lib/routes/gridfs.js');
+
+describe('GridFS Routes', () => {
+  let gridfsRoutes;
+  let req;
+  let res;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    gridfsRoutes = routes();
+
+    req = {
+      bucketName: 'testBucket',
+      dbName: 'testDb',
+      db: {},
+      fileID: '507f1f77bcf86cd799439011',
+      connFiles: [],
+      files: null,
+      session: {},
+      csrfToken: jest.fn().mockReturnValue('csrf-token-xyz'),
+      get: jest.fn().mockReturnValue('http://localhost/referrer'),
+    };
+
+    res = {
+      locals: {
+        gridFSBuckets: {
+          testDb: ['testBucket'],
+        },
+      },
+      render: jest.fn(),
+      redirect: jest.fn(),
+      set: jest.fn(),
+      end: jest.fn(),
+      on: jest.fn(),
+      emit: jest.fn(),
+    };
+  });
+
+  describe('viewBucket', () => {
+    test('renders gridfs view with processed files and columns', () => {
+      req.connFiles = [
+        {
+          _id: '1',
+          filename: 'file1.png',
+          length: 1024,
+          chunkSize: 256,
+          metadata: { contentType: 'image/png' },
+        },
+        {
+          _id: '2',
+          filename: 'file2.txt',
+          length: 2048,
+          chunkSize: 512,
+          contentType: 'text/plain',
+          metadata: { customField: 'value', contentType: 'text/plain' },
+        },
+      ];
+
+      gridfsRoutes.viewBucket(req, res);
+
+      expect(res.render).toHaveBeenCalledWith('gridfs', expect.objectContaining({
+        buckets: ['testBucket'],
+        title: 'Viewing Bucket: testBucket',
+        csrfToken: 'csrf-token-xyz',
+        files: expect.any(Array),
+        columns: expect.not.arrayContaining(['_id', 'chunkSize']),
+      }));
+
+      expect(req.connFiles[0].contentType).toBe('image/png');
+      expect(req.connFiles[0].metadata).toBeUndefined();
+      expect(req.connFiles[1].metadata.customField).toBe('value');
+    });
+
+    test('handles empty connFiles list', () => {
+      req.connFiles = [];
+      gridfsRoutes.viewBucket(req, res);
+
+      expect(res.render).toHaveBeenCalledWith('gridfs', expect.objectContaining({
+        files: [],
+      }));
+    });
+  });
+
+  describe('addFile', () => {
+    test('redirects with error if no file uploaded', async () => {
+      req.files = null;
+
+      await gridfsRoutes.addFile(req, res);
+
+      expect(req.session.error).toBe('No file uploaded!');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+
+    test('redirects to default / if referrer header missing when file is missing', async () => {
+      req.files = null;
+      req.get.mockReturnValue(undefined);
+
+      await gridfsRoutes.addFile(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    test('uploads file successfully', async () => {
+      const stream = new PassThrough();
+      mockGridFSBucketInstance.openUploadStream.mockReturnValueOnce(stream);
+
+      req.files = {
+        filefield: {
+          data: Buffer.from('hello world'),
+          name: 'hello.txt',
+          mimetype: 'text/plain',
+        },
+      };
+
+      const uploadPromise = gridfsRoutes.addFile(req, res);
+      setImmediate(() => stream.emit('finish'));
+      await uploadPromise;
+
+      expect(mockGridFSBucketInstance.openUploadStream).toHaveBeenCalledWith('hello.txt', {
+        metadata: { contentType: 'text/plain' },
+      });
+      expect(req.session.success).toBe('File uploaded!');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+
+    test('handles upload stream error', async () => {
+      const stream = new PassThrough();
+      mockGridFSBucketInstance.openUploadStream.mockReturnValueOnce(stream);
+
+      req.files = {
+        filefield: {
+          data: Buffer.from('error data'),
+          name: 'error.txt',
+          mimetype: 'text/plain',
+        },
+      };
+
+      const uploadPromise = gridfsRoutes.addFile(req, res);
+      setImmediate(() => stream.emit('error', new Error('Write failure')));
+      await uploadPromise;
+
+      expect(req.session.error).toContain('Could not upload the file!');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+  });
+
+  describe('getFile', () => {
+    test('redirects if file is not found', async () => {
+      mockGridFSBucketInstance.find.mockReturnValueOnce({
+        limit: jest.fn().mockReturnThis(),
+        toArray: jest.fn().mockResolvedValue([]),
+      });
+
+      await gridfsRoutes.getFile(req, res);
+
+      expect(req.session.error).toBe('File not found!');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+
+    test('streams file with metadata content type', async () => {
+      const mockFile = {
+        _id: '507f1f77bcf86cd799439011',
+        filename: 'my image.png',
+        metadata: { contentType: 'image/png' },
+      };
+
+      mockGridFSBucketInstance.find.mockReturnValueOnce({
+        limit: jest.fn().mockReturnThis(),
+        toArray: jest.fn().mockResolvedValue([mockFile]),
+      });
+
+      await gridfsRoutes.getFile(req, res);
+
+      expect(res.set).toHaveBeenCalledWith('Content-Type', 'image/png');
+      expect(res.set).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename="my%20image.png"');
+      expect(mockGridFSBucketInstance.openDownloadStream).toHaveBeenCalledWith('ObjectId(507f1f77bcf86cd799439011)');
+      expect(mockDownloadStream.pipe).toHaveBeenCalledWith(res);
+    });
+
+    test('streams file falling back to top-level content type or default binary stream', async () => {
+      const mockFile = {
+        _id: '507f1f77bcf86cd799439011',
+        filename: 'file.bin',
+      };
+
+      mockGridFSBucketInstance.find.mockReturnValueOnce({
+        limit: jest.fn().mockReturnThis(),
+        toArray: jest.fn().mockResolvedValue([mockFile]),
+      });
+
+      await gridfsRoutes.getFile(req, res);
+
+      expect(res.set).toHaveBeenCalledWith('Content-Type', 'application/octet-stream');
+    });
+
+    test('handles download stream error', async () => {
+      const mockFile = {
+        _id: '507f1f77bcf86cd799439011',
+        filename: 'data.txt',
+        contentType: 'text/plain',
+      };
+
+      const downloadStream = new EventEmitter();
+      downloadStream.pipe = jest.fn().mockReturnValue(downloadStream);
+      mockGridFSBucketInstance.openDownloadStream.mockReturnValueOnce(downloadStream);
+
+      mockGridFSBucketInstance.find.mockReturnValueOnce({
+        limit: jest.fn().mockReturnThis(),
+        toArray: jest.fn().mockResolvedValue([mockFile]),
+      });
+
+      await gridfsRoutes.getFile(req, res);
+      downloadStream.emit('error', new Error('Download aborted'));
+
+      expect(req.session.error).toContain('Error: Error: Download aborted');
+      expect(res.end).toHaveBeenCalled();
+    });
+  });
+
+  describe('deleteFile', () => {
+    test('deletes file successfully and sets session success', async () => {
+      mockGridFSBucketInstance.delete.mockResolvedValueOnce();
+
+      await gridfsRoutes.deleteFile(req, res);
+
+      expect(mockGridFSBucketInstance.delete).toHaveBeenCalledWith('ObjectId(507f1f77bcf86cd799439011)');
+      expect(req.session.success).toBe('File _id: "507f1f77bcf86cd799439011" deleted! ');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+
+    test('handles error on file deletion failure', async () => {
+      mockGridFSBucketInstance.delete.mockRejectedValueOnce(new Error('Delete error'));
+
+      await gridfsRoutes.deleteFile(req, res);
+
+      expect(req.session.error).toContain('Could not delete the file!');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+  });
+
+  describe('unimplemented routes', () => {
+    test('addBucket sets error and redirects', () => {
+      gridfsRoutes.addBucket(req, res);
+
+      expect(req.session.error).toBe('addBucket not implemented yet');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+
+    test('deleteBucket sets error and redirects', () => {
+      gridfsRoutes.deleteBucket(req, res);
+
+      expect(req.session.error).toBe('deleteBucket not implemented yet');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+
+    test('renameBucket sets error and redirects', () => {
+      gridfsRoutes.renameBucket(req, res);
+
+      expect(req.session.error).toBe('renameBucket not implemented yet');
+      expect(res.redirect).toHaveBeenCalledWith('http://localhost/referrer');
+    });
+  });
+});

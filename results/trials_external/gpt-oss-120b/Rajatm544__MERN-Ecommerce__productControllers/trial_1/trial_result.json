@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "Rajatm544__MERN-Ecommerce__productControllers",
+  "targetFilename": "external/Rajatm544__MERN-Ecommerce/backend/controllers/productControllers.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:12:34.627Z",
+  "finishedAt": "2026-10-05T05:12:48.020Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 12,
+  "testsTotal": 12,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 9.86,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 11.67,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1454,
+    "completionTokens": 4516,
+    "totalTokens": 5970,
+    "reasoningTokens": 2304
+  },
+  "latencyMs": 10236
+}

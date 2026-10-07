@@ -1,0 +1,249 @@
+```javascript
+import { jest } from '@jest/globals';
+import {
+  createQuestions,
+  getQuestionByQId,
+  deleteQuestionByQId,
+} from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js';
+
+// Mock QuestionModel
+jest.mock(
+  '../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/questionModel.js',
+  () => {
+    const mockModel = function (data) {
+      this.save = jest.fn();
+      Object.assign(this, data);
+    };
+    mockModel.find = jest.fn();
+    mockModel.insertMany = jest.fn();
+    mockModel.findOne = jest.fn();
+    mockModel.findOneAndDelete = jest.fn();
+    return mockModel;
+  },
+);
+
+import QuestionModel from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/questionModel.js';
+
+const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('questionController - createQuestions', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('should return 400 when body is not an array or empty', async () => {
+    const req = { body: [] };
+    const res = mockResponse();
+
+    await createQuestions(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Bad Request',
+      message: 'Invalid or empty array of questions provided.',
+    });
+  });
+
+  test('should return 409 when duplicate q_id exists', async () => {
+    const req = {
+      body: [{ q_id: 'Q1', text: 'Question 1' }, { q_id: 'Q2', text: 'Question 2' }],
+    };
+    const res = mockResponse();
+
+    // Mock find to return an existing question with q_id 'Q1'
+    QuestionModel.find.mockResolvedValue([{ q_id: 'Q1' }]);
+
+    await createQuestions(req, res);
+
+    expect(QuestionModel.find).toHaveBeenCalledWith({
+      q_id: { $in: ['Q1', 'Q2'] },
+    });
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Conflict',
+      message: 'Questions with the following q_ids already exist: Q1.',
+    });
+  });
+
+  test('should create and return questions with 201 on success', async () => {
+    const req = {
+      body: [
+        { q_id: 'Q1', text: 'Question 1' },
+        { q_id: 'Q2', text: 'Question 2' },
+      ],
+    };
+    const res = mockResponse();
+
+    // No duplicates
+    QuestionModel.find.mockResolvedValue([]);
+
+    // Mock insertMany to return saved documents
+    const saved = [
+      { _id: 'id1', q_id: 'Q1', text: 'Question 1' },
+      { _id: 'id2', q_id: 'Q2', text: 'Question 2' },
+    ];
+    QuestionModel.insertMany.mockResolvedValue(saved);
+
+    await createQuestions(req, res);
+
+    expect(QuestionModel.find).toHaveBeenCalledWith({
+      q_id: { $in: ['Q1', 'Q2'] },
+    });
+    expect(QuestionModel.insertMany).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(saved);
+  });
+
+  test('should return 500 on unexpected error', async () => {
+    const req = { body: [{ q_id: 'Q1' }] };
+    const res = mockResponse();
+
+    QuestionModel.find.mockRejectedValue(new Error('DB failure'));
+
+    await createQuestions(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Internal Server Error',
+      message: 'An unexpected error occurred. Please try again later.',
+    });
+  });
+});
+
+describe('questionController - getQuestionByQId', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('should return 400 when q_id is missing', async () => {
+    const req = { body: {} };
+    const res = mockResponse();
+
+    await getQuestionByQId(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Bad Request',
+      message: 'q_id is required to get a question.',
+    });
+  });
+
+  test('should return 404 when question not found', async () => {
+    const req = { body: { q_id: 'NON_EXIST' } };
+    const res = mockResponse();
+
+    QuestionModel.findOne.mockResolvedValue(null);
+
+    await getQuestionByQId(req, res);
+
+    expect(QuestionModel.findOne).toHaveBeenCalledWith({ q_id: 'NON_EXIST' });
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Not Found',
+      message: 'Question not found.',
+    });
+  });
+
+  test('should return 200 with the question when found', async () => {
+    const req = { body: { q_id: 'Q1' } };
+    const res = mockResponse();
+
+    const found = { _id: 'id1', q_id: 'Q1', text: 'Sample' };
+    QuestionModel.findOne.mockResolvedValue(found);
+
+    await getQuestionByQId(req, res);
+
+    expect(QuestionModel.findOne).toHaveBeenCalledWith({ q_id: 'Q1' });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(found);
+  });
+
+  test('should return 500 on unexpected error', async () => {
+    const req = { body: { q_id: 'Q1' } };
+    const res = mockResponse();
+
+    QuestionModel.findOne.mockRejectedValue(new Error('DB error'));
+
+    await getQuestionByQId(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Internal Server Error',
+      message: 'An unexpected error occurred. Please try again later.',
+    });
+  });
+});
+
+describe('questionController - deleteQuestionByQId', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('should return 400 when q_id is missing', async () => {
+    const req = { body: {} };
+    const res = mockResponse();
+
+    await deleteQuestionByQId(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Bad Request',
+      message: 'q_id is required for deletion.',
+    });
+  });
+
+  test('should return 404 when question to delete does not exist', async () => {
+    const req = { body: { q_id: 'UNKNOWN' } };
+    const res = mockResponse();
+
+    QuestionModel.findOneAndDelete.mockResolvedValue(null);
+
+    await deleteQuestionByQId(req, res);
+
+    expect(QuestionModel.findOneAndDelete).toHaveBeenCalledWith({ q_id: 'UNKNOWN' });
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Not Found',
+      message: 'Question not found for deletion.',
+    });
+  });
+
+  test('should delete and return success response with 200', async () => {
+    const req = { body: { q_id: 'Q1' } };
+    const res = mockResponse();
+
+    const deleted = { _id: 'id1', q_id: 'Q1', text: 'To be deleted' };
+    QuestionModel.findOneAndDelete.mockResolvedValue(deleted);
+
+    await deleteQuestionByQId(req, res);
+
+    expect(QuestionModel.findOneAndDelete).toHaveBeenCalledWith({ q_id: 'Q1' });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      status: 'success',
+      message: 'Question deleted successfully.',
+      deletedQuestion: deleted,
+    });
+  });
+
+  test('should return 500 on unexpected error', async () => {
+    const req = { body: { q_id: 'Q1' } };
+    const res = mockResponse();
+
+    QuestionModel.findOneAndDelete.mockRejectedValue(new Error('DB fail'));
+
+    await deleteQuestionByQId(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'Internal Server Error',
+      message: 'An unexpected error occurred. Please try again later.',
+    });
+  });
+});
+```

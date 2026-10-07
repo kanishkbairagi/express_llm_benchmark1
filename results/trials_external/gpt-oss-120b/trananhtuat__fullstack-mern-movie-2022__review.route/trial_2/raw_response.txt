@@ -1,0 +1,106 @@
+```javascript
+import express from "express";
+import request from "supertest";
+
+// Mock dependencies before importing the router
+const tokenAuthMock = jest.fn((req, res, next) => next());
+const requestValidateMock = jest.fn((req, res, next) => next());
+
+const getReviewsMock = jest.fn((req, res) => res.sendStatus(200));
+const createMock = jest.fn((req, res) => res.sendStatus(201));
+const removeMock = jest.fn((req, res) => res.sendStatus(204));
+
+jest.mock("../controllers/review.controller.js", () => ({
+  __esModule: true,
+  default: {
+    getReviewsOfUser: getReviewsMock,
+    create: createMock,
+    remove: removeMock,
+  },
+}));
+
+jest.mock("../middlewares/token.middleware.js", () => ({
+  __esModule: true,
+  default: {
+    auth: tokenAuthMock,
+  },
+}));
+
+jest.mock("../handlers/request.handler.js", () => ({
+  __esModule: true,
+  default: {
+    validate: requestValidateMock,
+  },
+}));
+
+// Import the router after mocks are set up
+import router from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/routes/review.route.js";
+
+describe("review.route.js", () => {
+  let app;
+  let callOrder;
+
+  beforeEach(() => {
+    callOrder = [];
+    // Reset mocks and instrument them to record order
+    tokenAuthMock.mockImplementation((req, res, next) => {
+      callOrder.push("auth");
+      next();
+    });
+    requestValidateMock.mockImplementation((req, res, next) => {
+      callOrder.push("validate");
+      next();
+    });
+    getReviewsMock.mockImplementation((req, res) => {
+      callOrder.push("getReviews");
+      res.sendStatus(200);
+    });
+    createMock.mockImplementation((req, res) => {
+      callOrder.push("create");
+      res.sendStatus(201);
+    });
+    removeMock.mockImplementation((req, res) => {
+      callOrder.push("remove");
+      res.sendStatus(204);
+    });
+
+    // Set up a fresh Express app for each test
+    app = express();
+    app.use(express.json());
+    // Mount router at root
+    app.use("/", router);
+  });
+
+  test("GET / should run token auth then getReviewsOfUser", async () => {
+    const response = await request(app).get("/");
+    expect(response.status).toBe(200);
+    expect(callOrder).toEqual(["auth", "getReviews"]);
+    expect(tokenAuthMock).toHaveBeenCalledTimes(1);
+    expect(getReviewsMock).toHaveBeenCalledTimes(1);
+  });
+
+  test("POST / with valid body should run auth, validate, then create", async () => {
+    const payload = {
+      mediaId: "123",
+      content: "Great movie!",
+      mediaType: "movie",
+      mediaTitle: "Inception",
+      mediaPoster: "poster.jpg",
+    };
+    const response = await request(app).post("/").send(payload);
+    expect(response.status).toBe(201);
+    expect(callOrder).toEqual(["auth", "validate", "create"]);
+    expect(tokenAuthMock).toHaveBeenCalledTimes(1);
+    expect(requestValidateMock).toHaveBeenCalledTimes(1);
+    expect(createMock).toHaveBeenCalledTimes(1);
+  });
+
+  test("DELETE /:reviewId should run auth then remove", async () => {
+    const response = await request(app).delete("/abc123");
+    expect(response.status).toBe(204);
+    expect(callOrder).toEqual(["auth", "remove"]);
+    expect(tokenAuthMock).toHaveBeenCalledTimes(1);
+    expect(removeMock).toHaveBeenCalledTimes(1);
+  });
+});
+```

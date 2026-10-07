@@ -1,0 +1,406 @@
+```javascript
+import { jest } from '@jest/globals';
+
+jest.mock('bcryptjs');
+jest.mock('google-auth-library');
+jest.mock('../dataset/external/ShakirFarhan__Realtime-Chat/server/models/userModel.js');
+
+import bcrypt from 'bcryptjs';
+import { OAuth2Client } from 'google-auth-library';
+import userModel from '../dataset/external/ShakirFarhan__Realtime-Chat/server/models/userModel.js';
+import {
+  register,
+  login,
+  validUser,
+  googleAuth,
+  logout,
+  searchUsers,
+  getUserById,
+  updateInfo,
+} from '../dataset/external/ShakirFarhan__Realtime-Chat/server/controllers/user.js';
+
+describe('User Controller Unit Tests', () => {
+  let req;
+  let res;
+  let consoleLogSpy;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    req = {
+      body: {},
+      params: {},
+      query: {},
+      rootUserId: 'user_id_123',
+      token: 'jwt_token_123',
+      rootUser: {
+        tokens: [{ token: 'jwt_token_123' }, { token: 'other_token_456' }],
+      },
+    };
+
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+      cookie: jest.fn().mockReturnThis(),
+    };
+  });
+
+  afterEach(() => {
+    consoleLogSpy.mockRestore();
+  });
+
+  describe('register', () => {
+    it('should return 400 error if user already exists', async () => {
+      req.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        email: 'john@example.com',
+        password: 'password123',
+      };
+      userModel.findOne.mockResolvedValue({ email: 'john@example.com' });
+
+      await register(req, res);
+
+      expect(userModel.findOne).toHaveBeenCalledWith({ email: 'john@example.com' });
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ error: 'User already Exits' });
+    });
+
+    it('should create new user and return token on success', async () => {
+      req.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        email: 'john@example.com',
+        password: 'password123',
+      };
+      userModel.findOne.mockResolvedValue(null);
+
+      const mockGenerateAuthToken = jest.fn().mockResolvedValue('generated_token');
+      const mockSave = jest.fn().mockResolvedValue(true);
+
+      userModel.mockImplementation(function (data) {
+        this.email = data.email;
+        this.password = data.password;
+        this.name = data.name;
+        this.generateAuthToken = mockGenerateAuthToken;
+        this.save = mockSave;
+      });
+
+      await register(req, res);
+
+      expect(mockGenerateAuthToken).toHaveBeenCalled();
+      expect(mockSave).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith({ message: 'success', token: 'generated_token' });
+    });
+
+    it('should handle errors and return status 500', async () => {
+      req.body = { email: 'test@example.com' };
+      const dbError = new Error('DB failure');
+      userModel.findOne.mockRejectedValue(dbError);
+
+      await register(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.send).toHaveBeenCalledWith(dbError);
+    });
+  });
+
+  describe('login', () => {
+    it('should handle invalid password correctly', async () => {
+      req.body = { email: 'john@example.com', password: 'wrongpassword' };
+      const mockUser = {
+        email: 'john@example.com',
+        password: 'hashedpassword',
+      };
+      userModel.findOne.mockResolvedValue(mockUser);
+      bcrypt.compare.mockResolvedValue(false);
+
+      await login(req, res);
+
+      expect(userModel.findOne).toHaveBeenCalledWith({ email: 'john@example.com' });
+      expect(bcrypt.compare).toHaveBeenCalledWith('wrongpassword', 'hashedpassword');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Invalid Credentials' });
+    });
+
+    it('should authenticate user and set cookie on valid credentials', async () => {
+      req.body = { email: 'john@example.com', password: 'correctpassword' };
+      const mockUser = {
+        email: 'john@example.com',
+        password: 'hashedpassword',
+        generateAuthToken: jest.fn().mockResolvedValue('user_login_token'),
+        save: jest.fn().mockResolvedValue(true),
+      };
+      userModel.findOne.mockResolvedValue(mockUser);
+      bcrypt.compare.mockResolvedValue(true);
+
+      await login(req, res);
+
+      expect(mockUser.generateAuthToken).toHaveBeenCalled();
+      expect(mockUser.save).toHaveBeenCalled();
+      expect(res.cookie).toHaveBeenCalledWith('userToken', 'user_login_token', {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ token: 'user_login_token', status: 200 });
+    });
+
+    it('should catch exceptions and return 500 error', async () => {
+      req.body = { email: 'john@example.com', password: 'password' };
+      const error = new Error('Database Error');
+      userModel.findOne.mockRejectedValue(error);
+
+      await login(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error });
+    });
+  });
+
+  describe('validUser', () => {
+    it('should return valid user data and token on success', async () => {
+      const mockValidUser = { _id: 'user_id_123', name: 'John Doe' };
+      const selectMock = jest.fn().mockResolvedValue(mockValidUser);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      await validUser(req, res);
+
+      expect(userModel.findOne).toHaveBeenCalledWith({ _id: 'user_id_123' });
+      expect(selectMock).toHaveBeenCalledWith('-password');
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        user: mockValidUser,
+        token: 'jwt_token_123',
+      });
+    });
+
+    it('should inform if user is not valid when null returned', async () => {
+      const selectMock = jest.fn().mockResolvedValue(null);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      await validUser(req, res);
+
+      expect(res.json).toHaveBeenCalledWith({ message: 'user is not valid' });
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        user: null,
+        token: 'jwt_token_123',
+      });
+    });
+
+    it('should return 500 on error', async () => {
+      const error = new Error('Server Error');
+      userModel.findOne.mockImplementation(() => {
+        throw error;
+      });
+
+      await validUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error });
+    });
+  });
+
+  describe('googleAuth', () => {
+    let mockVerifyIdToken;
+
+    beforeEach(() => {
+      mockVerifyIdToken = jest.fn();
+      OAuth2Client.prototype.verifyIdToken = mockVerifyIdToken;
+    });
+
+    it('should notify if email is not verified', async () => {
+      req.body = { tokenId: 'google_token_123' };
+      mockVerifyIdToken.mockResolvedValue({
+        payload: {
+          email_verified: false,
+          email: 'test@gmail.com',
+          name: 'Google User',
+          picture: 'pic.jpg',
+        },
+      });
+
+      const selectMock = jest.fn().mockResolvedValue(null);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      await googleAuth(req, res);
+
+      expect(res.json).toHaveBeenCalledWith({ message: 'Email Not Verified' });
+    });
+
+    it('should log in existing user via Google', async () => {
+      req.body = { tokenId: 'google_token_123' };
+      mockVerifyIdToken.mockResolvedValue({
+        payload: {
+          email_verified: true,
+          email: 'test@gmail.com',
+          name: 'Google User',
+          picture: 'pic.jpg',
+        },
+      });
+
+      const existingUser = { _id: 'google_1', email: 'test@gmail.com' };
+      const selectMock = jest.fn().mockResolvedValue(existingUser);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      await googleAuth(req, res);
+
+      expect(res.cookie).toHaveBeenCalledWith('userToken', 'google_token_123', {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ token: 'google_token_123', user: existingUser });
+    });
+
+    it('should register new user via Google if user does not exist', async () => {
+      req.body = { tokenId: 'google_token_123' };
+      mockVerifyIdToken.mockResolvedValue({
+        payload: {
+          email_verified: true,
+          email: 'new@gmail.com',
+          name: 'New Google User',
+          picture: 'new_pic.jpg',
+        },
+      });
+
+      const selectMock = jest.fn().mockResolvedValue(null);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      const mockSave = jest.fn().mockResolvedValue(true);
+      userModel.mockImplementation(function (data) {
+        this.name = data.name;
+        this.profilePic = data.profilePic;
+        this.password = data.password;
+        this.email = data.email;
+        this.save = mockSave;
+      });
+
+      await googleAuth(req, res);
+
+      expect(mockSave).toHaveBeenCalled();
+      expect(res.cookie).toHaveBeenCalledWith('userToken', 'google_token_123', {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'User registered Successfully',
+        token: 'google_token_123',
+      });
+    });
+
+    it('should catch error and send 500 status', async () => {
+      req.body = { tokenId: 'invalid_token' };
+      const error = new Error('OAuth failure');
+      mockVerifyIdToken.mockRejectedValue(error);
+
+      await googleAuth(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error });
+    });
+  });
+
+  describe('logout', () => {
+    it('should filter out the matching token from rootUser.tokens', () => {
+      req.token = 'jwt_token_123';
+      req.rootUser = {
+        tokens: [{ token: 'jwt_token_123' }, { token: 'other_token_456' }],
+      };
+
+      logout(req, res);
+
+      expect(req.rootUser.tokens).toEqual([{ token: 'other_token_456' }]);
+    });
+  });
+
+  describe('searchUsers', () => {
+    it('should search users matching search query excluding root user', async () => {
+      req.query = { search: 'john' };
+      const mockUsers = [{ name: 'John Doe' }, { name: 'John Smith' }];
+
+      const innerFindMock = jest.fn().mockResolvedValue(mockUsers);
+      userModel.find.mockReturnValue({ find: innerFindMock });
+
+      await searchUsers(req, res);
+
+      expect(userModel.find).toHaveBeenCalledWith({
+        $or: [
+          { name: { $regex: 'john', $options: 'i' } },
+          { email: { $regex: 'john', $options: 'i' } },
+        ],
+      });
+      expect(innerFindMock).toHaveBeenCalledWith({ _id: { $ne: 'user_id_123' } });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith(mockUsers);
+    });
+
+    it('should search with empty query when search param is missing', async () => {
+      req.query = {};
+      const mockUsers = [{ name: 'User 1' }];
+
+      const innerFindMock = jest.fn().mockResolvedValue(mockUsers);
+      userModel.find.mockReturnValue({ find: innerFindMock });
+
+      await searchUsers(req, res);
+
+      expect(userModel.find).toHaveBeenCalledWith({});
+      expect(innerFindMock).toHaveBeenCalledWith({ _id: { $ne: 'user_id_123' } });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith(mockUsers);
+    });
+  });
+
+  describe('getUserById', () => {
+    it('should return user details excluding password', async () => {
+      req.params = { id: 'user_123' };
+      const mockUser = { _id: 'user_123', name: 'John Doe' };
+
+      const selectMock = jest.fn().mockResolvedValue(mockUser);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      await getUserById(req, res);
+
+      expect(userModel.findOne).toHaveBeenCalledWith({ _id: 'user_123' });
+      expect(selectMock).toHaveBeenCalledWith('-password');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockUser);
+    });
+
+    it('should catch error and return status 500', async () => {
+      req.params = { id: 'invalid_id' };
+      const error = new Error('Find failed');
+
+      const selectMock = jest.fn().mockRejectedValue(error);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      await getUserById(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error });
+    });
+  });
+
+  describe('updateInfo', () => {
+    it('should update and return user info', async () => {
+      req.params = { id: 'user_123' };
+      req.body = { bio: 'Developer', name: 'John Updated' };
+
+      const updatedUserMock = { _id: 'user_123', name: 'John Updated', bio: 'Developer' };
+      userModel.findByIdAndUpdate.mockResolvedValue(updatedUserMock);
+
+      const result = await updateInfo(req, res);
+
+      expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith('user_123', {
+        name: 'John Updated',
+        bio: 'Developer',
+      });
+      expect(result).toBe(updatedUserMock);
+    });
+  });
+});
+```

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "iampranavdhar__Library-Management-System-MERN__users",
+  "targetFilename": "external/iampranavdhar__Library-Management-System-MERN/backend/routes/users.js",
+  "trial": 2,
+  "startedAt": "2026-10-05T12:05:29.396Z",
+  "finishedAt": "2026-10-05T12:05:40.459Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 934,
+    "completionTokens": 3102,
+    "totalTokens": 4036,
+    "reasoningTokens": 1552
+  },
+  "latencyMs": 7739
+}

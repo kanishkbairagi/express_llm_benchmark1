@@ -1,0 +1,313 @@
+```javascript
+// sheetController.test.js
+import {
+  createSheet,
+  removeSheet,
+  getSheets,
+  addQuestions,
+  removeQuestion,
+} from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/sheetController.js';
+import SheetModel from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/sheetModel.js';
+import { getQuestionByQId } from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js';
+
+jest.mock(
+  '../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/sheetModel.js',
+);
+jest.mock(
+  '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js',
+);
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('sheetController', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('createSheet', () => {
+    it('should create and return a sheet on valid input', async () => {
+      const req = {
+        body: { name: 'Test', s_id: '123', desc: 'desc', questions: [] },
+      };
+      const saveMock = jest.fn().mockResolvedValue({ _id: 'abc', ...req.body });
+      SheetModel.mockImplementation(() => ({ save: saveMock }));
+
+      const res = mockRes();
+
+      await createSheet(req, res);
+
+      expect(SheetModel).toHaveBeenCalledWith(req.body);
+      expect(saveMock).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ _id: 'abc', ...req.body });
+    });
+
+    it('should return 400 when required fields are missing', async () => {
+      const req = { body: { name: 'Test' } };
+      const res = mockRes();
+
+      await createSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message:
+          'Missing required fields. Please provide name, s_id, desc, and questions.',
+      });
+    });
+
+    it('should return 500 on unexpected error', async () => {
+      const req = {
+        body: { name: 'Test', s_id: '123', desc: 'desc', questions: [] },
+      };
+      SheetModel.mockImplementation(() => ({
+        save: jest.fn().mockRejectedValue(new Error('boom')),
+      }));
+      const res = mockRes();
+
+      await createSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+
+  describe('removeSheet', () => {
+    it('should remove a sheet and return success', async () => {
+      const req = { body: { s_id: '123' } };
+      const findOneMock = jest
+        .fn()
+        .mockResolvedValue({ s_id: '123', toObject: () => ({}) });
+      const deleteOneMock = jest.fn().mockResolvedValue({});
+      SheetModel.findOne = findOneMock;
+      SheetModel.deleteOne = deleteOneMock;
+
+      const res = mockRes();
+
+      await removeSheet(req, res);
+
+      expect(findOneMock).toHaveBeenCalledWith({ s_id: '123' });
+      expect(deleteOneMock).toHaveBeenCalledWith({ s_id: '123' });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'success',
+        message: 'Sheet removed successfully.',
+      });
+    });
+
+    it('should return 400 when s_id missing', async () => {
+      const req = { body: {} };
+      const res = mockRes();
+
+      await removeSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'Missing required fields. Please provide s_id.',
+      });
+    });
+
+    it('should return 404 when sheet not found', async () => {
+      const req = { body: { s_id: 'notfound' } };
+      SheetModel.findOne = jest.fn().mockResolvedValue(null);
+      const res = mockRes();
+
+      await removeSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Sheet not found.',
+      });
+    });
+  });
+
+  describe('getSheets', () => {
+    it('should return sheets with populated questions', async () => {
+      const mockSheets = [
+        {
+          toObject: () => ({ s_id: '1', questions: ['q1', 'q2'] }),
+        },
+        {
+          toObject: () => ({ s_id: '2', questions: [] }),
+        },
+      ];
+      SheetModel.find = jest.fn().mockResolvedValue(mockSheets);
+      getQuestionByQId.mockImplementation(({ params }) =>
+        Promise.resolve({ q_id: params.q_id, detail: 'info' }),
+      );
+
+      const req = {};
+      const res = mockRes();
+
+      await getSheets(req, res);
+
+      expect(SheetModel.find).toHaveBeenCalled();
+      expect(getQuestionByQId).toHaveBeenCalledTimes(2);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        count: 2,
+        sheets: [
+          {
+            s_id: '1',
+            questions: [
+              { q_id: 'q1', detail: 'info' },
+              { q_id: 'q2', detail: 'info' },
+            ],
+          },
+          { s_id: '2', questions: [] },
+        ],
+      });
+    });
+  });
+
+  describe('addQuestions', () => {
+    const baseSheet = {
+      s_id: '123',
+      questions: ['q1'],
+      save: jest.fn().mockResolvedValue(),
+    };
+
+    it('should add new questions when valid', async () => {
+      const req = { body: { s_id: '123', q_ids: ['q2', 'q3'] } };
+      SheetModel.findOne = jest.fn().mockResolvedValue(baseSheet);
+      const res = mockRes();
+
+      await addQuestions(req, res);
+
+      expect(baseSheet.questions).toEqual(['q1', 'q2', 'q3']);
+      expect(baseSheet.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'success',
+        message: 'Questions added to the sheet successfully.',
+        sheet: baseSheet,
+      });
+    });
+
+    it('should return 400 for invalid payload', async () => {
+      const req = { body: { s_id: '123', q_ids: [] } };
+      const res = mockRes();
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message:
+          'Invalid or missing required fields. Please provide s_id and a non-empty array of q_ids.',
+      });
+    });
+
+    it('should return 404 when sheet not found', async () => {
+      const req = { body: { s_id: 'unknown', q_ids: ['q2'] } };
+      SheetModel.findOne = jest.fn().mockResolvedValue(null);
+      const res = mockRes();
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Sheet not found.',
+      });
+    });
+
+    it('should return 409 on conflict with existing questions', async () => {
+      const req = { body: { s_id: '123', q_ids: ['q1', 'q4'] } };
+      SheetModel.findOne = jest.fn().mockResolvedValue({
+        ...baseSheet,
+        questions: ['q1'],
+      });
+      const res = mockRes();
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Conflict',
+        message:
+          'Questions with the following q_ids already exist in the sheet: q1.',
+      });
+    });
+  });
+
+  describe('removeQuestion', () => {
+    const sheetWithQuestions = {
+      s_id: '123',
+      questions: ['q1', 'q2'],
+      save: jest.fn().mockResolvedValue(),
+    };
+
+    it('should remove a question successfully', async () => {
+      const req = { body: { s_id: '123', q_id: 'q1' } };
+      SheetModel.findOne = jest.fn().mockResolvedValue(sheetWithQuestions);
+      const res = mockRes();
+
+      await removeQuestion(req, res);
+
+      expect(sheetWithQuestions.questions).toEqual(['q2']);
+      expect(sheetWithQuestions.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'success',
+        message: 'Question removed from the sheet successfully.',
+        sheet: sheetWithQuestions,
+      });
+    });
+
+    it('should return 400 when missing fields', async () => {
+      const req = { body: { s_id: '123' } };
+      const res = mockRes();
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'Missing required fields. Please provide s_id and q_id.',
+      });
+    });
+
+    it('should return 404 when sheet not found', async () => {
+      const req = { body: { s_id: 'unknown', q_id: 'q1' } };
+      SheetModel.findOne = jest.fn().mockResolvedValue(null);
+      const res = mockRes();
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Sheet not found.',
+      });
+    });
+
+    it('should return 404 when question not present in sheet', async () => {
+      const req = { body: { s_id: '123', q_id: 'q3' } };
+      SheetModel.findOne = jest.fn().mockResolvedValue({
+        ...sheetWithQuestions,
+        questions: ['q1', 'q2'],
+      });
+      const res = mockRes();
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Question not found in the sheet.',
+      });
+    });
+  });
+});
+```

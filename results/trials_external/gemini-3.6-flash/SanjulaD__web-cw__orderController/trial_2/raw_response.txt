@@ -1,0 +1,220 @@
+```javascript
+import { jest } from '@jest/globals';
+
+jest.unstable_mockModule('../models/orderSeedModel.js', () => {
+  const MockOrderSeed = jest.fn().mockImplementation(function (data) {
+    Object.assign(this, data);
+    this.save = jest.fn().mockResolvedValue({ _id: 'order123', ...data });
+  });
+  MockOrderSeed.findById = jest.fn();
+  MockOrderSeed.find = jest.fn();
+  return {
+    default: MockOrderSeed,
+  };
+});
+
+const orderSeed = (await import('../models/orderSeedModel.js')).default;
+const {
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  updateOrderToDelivered,
+  getMyOrders,
+  getOrders,
+} = await import('../dataset/external/SanjulaD__web-cw/backend/controllers/orderController.js');
+
+describe('Order Controller', () => {
+  let req;
+  let res;
+  let next;
+
+  beforeEach(() => {
+    req = {
+      body: {},
+      params: {},
+      user: { _id: 'user123' },
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    next = jest.fn();
+    jest.clearAllMocks();
+  });
+
+  describe('addOrderItems', () => {
+    it('should respond with status 400 and pass error to next when orderItems is empty', async () => {
+      req.body = { orderItems: [] };
+
+      await addOrderItems(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+      expect(next.mock.calls[0][0].message).toBe('No Order Items');
+    });
+
+    it('should create a new order and return status 201 with created order', async () => {
+      const orderData = {
+        orderItems: [{ name: 'Sample Item', qty: 1, price: 10 }],
+        shippingAddress: { address: '123 Main St' },
+        paymentMethod: 'PayPal',
+        itemsPrice: 10,
+        taxPrice: 1,
+        shippingPrice: 2,
+        totalPrice: 13,
+      };
+      req.body = orderData;
+
+      await addOrderItems(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          _id: 'order123',
+          user: 'user123',
+          ...orderData,
+        })
+      );
+    });
+  });
+
+  describe('getOrderById', () => {
+    it('should return order when found', async () => {
+      req.params.id = 'order123';
+      const mockOrder = { _id: 'order123', user: { name: 'John Doe', email: 'john@example.com' } };
+
+      orderSeed.findById.mockReturnValue({
+        populate: jest.fn().mockResolvedValue(mockOrder),
+      });
+
+      await getOrderById(req, res, next);
+
+      expect(orderSeed.findById).toHaveBeenCalledWith('order123');
+      expect(res.json).toHaveBeenCalledWith(mockOrder);
+    });
+
+    it('should set status 404 and call next with error when order not found', async () => {
+      req.params.id = 'invalid_id';
+
+      orderSeed.findById.mockReturnValue({
+        populate: jest.fn().mockResolvedValue(null),
+      });
+
+      await getOrderById(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+      expect(next.mock.calls[0][0].message).toBe('Order not Found');
+    });
+  });
+
+  describe('updateOrderToPaid', () => {
+    it('should update order to paid and return updated order', async () => {
+      req.params.id = 'order123';
+      req.body = {
+        id: 'pay_123',
+        status: 'COMPLETED',
+        update_time: '2023-01-01',
+        payer: { email_address: 'payer@example.com' },
+      };
+
+      const mockOrder = {
+        _id: 'order123',
+        isPaid: false,
+        save: jest.fn().mockImplementation(function () {
+          return Promise.resolve(this);
+        }),
+      };
+
+      orderSeed.findById.mockResolvedValue(mockOrder);
+
+      await updateOrderToPaid(req, res, next);
+
+      expect(orderSeed.findById).toHaveBeenCalledWith('order123');
+      expect(mockOrder.isPaid).toBe(true);
+      expect(mockOrder.paidAt).toBeDefined();
+      expect(mockOrder.paymentResult).toEqual({
+        id: 'pay_123',
+        status: 'COMPLETED',
+        update_time: '2023-01-01',
+        email_address: 'payer@example.com',
+      });
+      expect(mockOrder.save).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith(mockOrder);
+    });
+
+    it('should set status 404 and call next with error when order to pay is not found', async () => {
+      req.params.id = 'invalid_id';
+      orderSeed.findById.mockResolvedValue(null);
+
+      await updateOrderToPaid(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+      expect(next.mock.calls[0][0].message).toBe('Order not Found');
+    });
+  });
+
+  describe('updateOrderToDelivered', () => {
+    it('should update order to delivered and return updated order', async () => {
+      req.params.id = 'order123';
+
+      const mockOrder = {
+        _id: 'order123',
+        isDelivered: false,
+        save: jest.fn().mockImplementation(function () {
+          return Promise.resolve(this);
+        }),
+      };
+
+      orderSeed.findById.mockResolvedValue(mockOrder);
+
+      await updateOrderToDelivered(req, res, next);
+
+      expect(orderSeed.findById).toHaveBeenCalledWith('order123');
+      expect(mockOrder.isDelivered).toBe(true);
+      expect(mockOrder.deliveredAt).toBeDefined();
+      expect(mockOrder.save).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith(mockOrder);
+    });
+
+    it('should set status 404 and call next with error when order to deliver is not found', async () => {
+      req.params.id = 'invalid_id';
+      orderSeed.findById.mockResolvedValue(null);
+
+      await updateOrderToDelivered(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+      expect(next.mock.calls[0][0].message).toBe('Order not Found');
+    });
+  });
+
+  describe('getMyOrders', () => {
+    it('should return list of user orders', async () => {
+      const mockOrders = [{ _id: 'order1' }, { _id: 'order2' }];
+      orderSeed.find.mockResolvedValue(mockOrders);
+
+      await getMyOrders(req, res, next);
+
+      expect(orderSeed.find).toHaveBeenCalledWith({ user: 'user123' });
+      expect(res.json).toHaveBeenCalledWith(mockOrders);
+    });
+  });
+
+  describe('getOrders', () => {
+    it('should return list of all orders with populated user info', async () => {
+      const mockOrders = [{ _id: 'order1', user: { id: 'u1', name: 'User One' } }];
+
+      orderSeed.find.mockReturnValue({
+        populate: jest.fn().mockResolvedValue(mockOrders),
+      });
+
+      await getOrders(req, res, next);
+
+      expect(orderSeed.find).toHaveBeenCalledWith({});
+      expect(res.json).toHaveBeenCalledWith(mockOrders);
+    });
+  });
+});
+```

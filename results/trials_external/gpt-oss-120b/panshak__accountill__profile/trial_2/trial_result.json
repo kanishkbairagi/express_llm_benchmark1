@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "panshak__accountill__profile",
+  "targetFilename": "external/panshak__accountill/server/controllers/profile.js",
+  "trial": 2,
+  "startedAt": "2026-10-05T12:31:45.763Z",
+  "finishedAt": "2026-10-05T12:31:54.803Z",
+  "suiteOk": false,
+  "testsPassed": 2,
+  "testsFailed": 13,
+  "testsTotal": 15,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 32.65,
+  "branchCoverage": 50,
+  "functionCoverage": 28.57,
+  "lineCoverage": 30.43,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 970,
+    "completionTokens": 2549,
+    "totalTokens": 3519,
+    "reasoningTokens": 422
+  },
+  "latencyMs": 6062
+}

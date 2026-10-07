@@ -1,0 +1,220 @@
+import { jest } from '@jest/globals';
+
+jest.mock('../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/questionModel.js');
+
+import QuestionModel from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/questionModel.js';
+import {
+  createQuestions,
+  getQuestionByQId,
+  deleteQuestionByQId,
+} from '../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js';
+
+describe('questionController', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    req = { body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+  });
+
+  afterEach(() => {
+    console.error.mockRestore();
+  });
+
+  describe('createQuestions', () => {
+    it('should return 400 if body is not an array', async () => {
+      req.body = { q_id: 'q1', title: 'Two Sum' };
+
+      await createQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'Invalid or empty array of questions provided.',
+      });
+    });
+
+    it('should return 400 if body is an empty array', async () => {
+      req.body = [];
+
+      await createQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'Invalid or empty array of questions provided.',
+      });
+    });
+
+    it('should return 409 if any question q_id already exists', async () => {
+      const questionsData = [{ q_id: 'q1' }, { q_id: 'q2' }];
+      req.body = questionsData;
+
+      QuestionModel.find.mockResolvedValue([{ q_id: 'q1' }]);
+
+      await createQuestions(req, res);
+
+      expect(QuestionModel.find).toHaveBeenCalledWith({
+        q_id: { $in: ['q1', 'q2'] },
+      });
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Conflict',
+        message: 'Questions with the following q_ids already exist: q1.',
+      });
+    });
+
+    it('should create and return 201 with saved questions on success', async () => {
+      const questionsData = [{ q_id: 'q1' }, { q_id: 'q2' }];
+      req.body = questionsData;
+
+      QuestionModel.find.mockResolvedValue([]);
+      QuestionModel.insertMany.mockResolvedValue(questionsData);
+
+      await createQuestions(req, res);
+
+      expect(QuestionModel.find).toHaveBeenCalledWith({
+        q_id: { $in: ['q1', 'q2'] },
+      });
+      expect(QuestionModel.insertMany).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(questionsData);
+    });
+
+    it('should return 500 when an exception occurs', async () => {
+      req.body = [{ q_id: 'q1' }];
+      QuestionModel.find.mockRejectedValue(new Error('Database error'));
+
+      await createQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+
+  describe('getQuestionByQId', () => {
+    it('should return 400 if q_id is not provided in req.body', async () => {
+      req.body = {};
+
+      await getQuestionByQId(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'q_id is required to get a question.',
+      });
+    });
+
+    it('should return 404 if question is not found', async () => {
+      req.body = { q_id: 'q100' };
+      QuestionModel.findOne.mockResolvedValue(null);
+
+      await getQuestionByQId(req, res);
+
+      expect(QuestionModel.findOne).toHaveBeenCalledWith({ q_id: 'q100' });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Question not found.',
+      });
+    });
+
+    it('should return 200 and the question if found', async () => {
+      const mockQuestion = { q_id: 'q1', title: 'Two Sum' };
+      req.body = { q_id: 'q1' };
+      QuestionModel.findOne.mockResolvedValue(mockQuestion);
+
+      await getQuestionByQId(req, res);
+
+      expect(QuestionModel.findOne).toHaveBeenCalledWith({ q_id: 'q1' });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockQuestion);
+    });
+
+    it('should return 500 when an exception occurs', async () => {
+      req.body = { q_id: 'q1' };
+      QuestionModel.findOne.mockRejectedValue(new Error('Database error'));
+
+      await getQuestionByQId(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+
+  describe('deleteQuestionByQId', () => {
+    it('should return 400 if q_id is not provided in req.body', async () => {
+      req.body = {};
+
+      await deleteQuestionByQId(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Bad Request',
+        message: 'q_id is required for deletion.',
+      });
+    });
+
+    it('should return 404 if question to delete is not found', async () => {
+      req.body = { q_id: 'q100' };
+      QuestionModel.findOneAndDelete.mockResolvedValue(null);
+
+      await deleteQuestionByQId(req, res);
+
+      expect(QuestionModel.findOneAndDelete).toHaveBeenCalledWith({
+        q_id: 'q100',
+      });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Not Found',
+        message: 'Question not found for deletion.',
+      });
+    });
+
+    it('should return 200 and success status with deleted question', async () => {
+      const deletedQuestion = { q_id: 'q1', title: 'Two Sum' };
+      req.body = { q_id: 'q1' };
+      QuestionModel.findOneAndDelete.mockResolvedValue(deletedQuestion);
+
+      await deleteQuestionByQId(req, res);
+
+      expect(QuestionModel.findOneAndDelete).toHaveBeenCalledWith({
+        q_id: 'q1',
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'success',
+        message: 'Question deleted successfully.',
+        deletedQuestion,
+      });
+    });
+
+    it('should return 500 when an exception occurs', async () => {
+      req.body = { q_id: 'q1' };
+      QuestionModel.findOneAndDelete.mockRejectedValue(
+        new Error('Database error'),
+      );
+
+      await deleteQuestionByQId(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred. Please try again later.',
+      });
+    });
+  });
+});

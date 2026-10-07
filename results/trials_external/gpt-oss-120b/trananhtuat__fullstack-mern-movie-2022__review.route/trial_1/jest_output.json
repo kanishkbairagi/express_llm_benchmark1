@@ -1,0 +1,1675 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 3,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 3,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177840361,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "review.route.js router configuration"
+          ],
+          "duration": 6,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "review.route.js router configuration GET '/' route registers auth middleware and getReviewsOfUser controller",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "GET '/' route registers auth middleware and getReviewsOfUser controller",
+          "startAt": 1791177842933
+        },
+        {
+          "ancestorTitles": [
+            "review.route.js router configuration"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "review.route.js router configuration POST '/' route registers middlewares in correct order",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "POST '/' route registers middlewares in correct order",
+          "startAt": 1791177842940
+        },
+        {
+          "ancestorTitles": [
+            "review.route.js router configuration"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "review.route.js router configuration DELETE '/:reviewId' route registers auth middleware and remove controller",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "DELETE '/:reviewId' route registers auth middleware and remove controller",
+          "startAt": 1791177842942
+        }
+      ],
+      "endTime": 1791177842945,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__review.route_gpt-oss-120b_trial1.test.js",
+      "startTime": 1791177840487,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\handlers\\response.handler.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\handlers\\response.handler.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 1,
+            "column": 25
+          },
+          "end": {
+            "line": 1,
+            "column": 85
+          }
+        },
+        "1": {
+          "start": {
+            "line": 1,
+            "column": 52
+          },
+          "end": {
+            "line": 1,
+            "column": 85
+          }
+        },
+        "2": {
+          "start": {
+            "line": 3,
+            "column": 14
+          },
+          "end": {
+            "line": 6,
+            "column": 2
+          }
+        },
+        "3": {
+          "start": {
+            "line": 3,
+            "column": 23
+          },
+          "end": {
+            "line": 6,
+            "column": 2
+          }
+        },
+        "4": {
+          "start": {
+            "line": 8,
+            "column": 19
+          },
+          "end": {
+            "line": 11,
+            "column": 2
+          }
+        },
+        "5": {
+          "start": {
+            "line": 8,
+            "column": 37
+          },
+          "end": {
+            "line": 11,
+            "column": 2
+          }
+        },
+        "6": {
+          "start": {
+            "line": 13,
+            "column": 11
+          },
+          "end": {
+            "line": 13,
+            "column": 58
+          }
+        },
+        "7": {
+          "start": {
+            "line": 13,
+            "column": 26
+          },
+          "end": {
+            "line": 13,
+            "column": 58
+          }
+        },
+        "8": {
+          "start": {
+            "line": 15,
+            "column": 16
+          },
+          "end": {
+            "line": 15,
+            "column": 63
+          }
+        },
+        "9": {
+          "start": {
+            "line": 15,
+            "column": 31
+          },
+          "end": {
+            "line": 15,
+            "column": 63
+          }
+        },
+        "10": {
+          "start": {
+            "line": 17,
+            "column": 20
+          },
+          "end": {
+            "line": 20,
+            "column": 2
+          }
+        },
+        "11": {
+          "start": {
+            "line": 17,
+            "column": 29
+          },
+          "end": {
+            "line": 20,
+            "column": 2
+          }
+        },
+        "12": {
+          "start": {
+            "line": 22,
+            "column": 17
+          },
+          "end": {
+            "line": 25,
+            "column": 2
+          }
+        },
+        "13": {
+          "start": {
+            "line": 22,
+            "column": 26
+          },
+          "end": {
+            "line": 25,
+            "column": 2
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 1,
+              "column": 25
+            },
+            "end": {
+              "line": 1,
+              "column": 26
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 52
+            },
+            "end": {
+              "line": 1,
+              "column": 85
+            }
+          },
+          "line": 1
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 3,
+              "column": 14
+            },
+            "end": {
+              "line": 3,
+              "column": 15
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 23
+            },
+            "end": {
+              "line": 6,
+              "column": 2
+            }
+          },
+          "line": 3
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 19
+            },
+            "end": {
+              "line": 8,
+              "column": 20
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 37
+            },
+            "end": {
+              "line": 11,
+              "column": 2
+            }
+          },
+          "line": 8
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 13,
+              "column": 11
+            },
+            "end": {
+              "line": 13,
+              "column": 12
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 26
+            },
+            "end": {
+              "line": 13,
+              "column": 58
+            }
+          },
+          "line": 13
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 15,
+              "column": 16
+            },
+            "end": {
+              "line": 15,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 31
+            },
+            "end": {
+              "line": 15,
+              "column": 63
+            }
+          },
+          "line": 15
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 17,
+              "column": 20
+            },
+            "end": {
+              "line": 17,
+              "column": 21
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 29
+            },
+            "end": {
+              "line": 20,
+              "column": 2
+            }
+          },
+          "line": 17
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 22,
+              "column": 17
+            },
+            "end": {
+              "line": 22,
+              "column": 18
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 26
+            },
+            "end": {
+              "line": 25,
+              "column": 2
+            }
+          },
+          "line": 22
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 1,
+        "7": 0,
+        "8": 1,
+        "9": 0,
+        "10": 1,
+        "11": 0,
+        "12": 1,
+        "13": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "b1b0811ceddaeb4c1243e90a220c78bd3938e318"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\model.options.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\model.options.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 1,
+            "column": 21
+          },
+          "end": {
+            "line": 18,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 6
+          },
+          "end": {
+            "line": 5,
+            "column": 21
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 6
+          },
+          "end": {
+            "line": 6,
+            "column": 17
+          }
+        },
+        "3": {
+          "start": {
+            "line": 12,
+            "column": 6
+          },
+          "end": {
+            "line": 12,
+            "column": 21
+          }
+        },
+        "4": {
+          "start": {
+            "line": 13,
+            "column": 6
+          },
+          "end": {
+            "line": 13,
+            "column": 17
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 4,
+              "column": 15
+            },
+            "end": {
+              "line": 4,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 27
+            },
+            "end": {
+              "line": 7,
+              "column": 5
+            }
+          },
+          "line": 4
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 11,
+              "column": 15
+            },
+            "end": {
+              "line": 11,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 27
+            },
+            "end": {
+              "line": 14,
+              "column": 5
+            }
+          },
+          "line": 11
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "d8d576bf1ce4a5a011a9628bfb07c9c1cbfbc2d4"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\review.model.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\review.model.js",
+      "statementMap": {},
+      "fnMap": {},
+      "branchMap": {},
+      "s": {},
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "eb4f1091ebac1ca680412b8157afab3bbf65ef8f"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\controllers\\review.controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\controllers\\review.controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 15
+          },
+          "end": {
+            "line": 24,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 2
+          },
+          "end": {
+            "line": 23,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 24
+          },
+          "end": {
+            "line": 6,
+            "column": 34
+          }
+        },
+        "3": {
+          "start": {
+            "line": 8,
+            "column": 19
+          },
+          "end": {
+            "line": 12,
+            "column": 6
+          }
+        },
+        "4": {
+          "start": {
+            "line": 14,
+            "column": 4
+          },
+          "end": {
+            "line": 14,
+            "column": 24
+          }
+        },
+        "5": {
+          "start": {
+            "line": 16,
+            "column": 4
+          },
+          "end": {
+            "line": 20,
+            "column": 7
+          }
+        },
+        "6": {
+          "start": {
+            "line": 22,
+            "column": 4
+          },
+          "end": {
+            "line": 22,
+            "column": 31
+          }
+        },
+        "7": {
+          "start": {
+            "line": 26,
+            "column": 15
+          },
+          "end": {
+            "line": 43,
+            "column": 1
+          }
+        },
+        "8": {
+          "start": {
+            "line": 27,
+            "column": 2
+          },
+          "end": {
+            "line": 42,
+            "column": 3
+          }
+        },
+        "9": {
+          "start": {
+            "line": 28,
+            "column": 25
+          },
+          "end": {
+            "line": 28,
+            "column": 35
+          }
+        },
+        "10": {
+          "start": {
+            "line": 30,
+            "column": 19
+          },
+          "end": {
+            "line": 33,
+            "column": 6
+          }
+        },
+        "11": {
+          "start": {
+            "line": 35,
+            "column": 4
+          },
+          "end": {
+            "line": 35,
+            "column": 54
+          }
+        },
+        "12": {
+          "start": {
+            "line": 35,
+            "column": 17
+          },
+          "end": {
+            "line": 35,
+            "column": 54
+          }
+        },
+        "13": {
+          "start": {
+            "line": 37,
+            "column": 4
+          },
+          "end": {
+            "line": 37,
+            "column": 26
+          }
+        },
+        "14": {
+          "start": {
+            "line": 39,
+            "column": 4
+          },
+          "end": {
+            "line": 39,
+            "column": 28
+          }
+        },
+        "15": {
+          "start": {
+            "line": 41,
+            "column": 4
+          },
+          "end": {
+            "line": 41,
+            "column": 31
+          }
+        },
+        "16": {
+          "start": {
+            "line": 45,
+            "column": 25
+          },
+          "end": {
+            "line": 55,
+            "column": 1
+          }
+        },
+        "17": {
+          "start": {
+            "line": 46,
+            "column": 2
+          },
+          "end": {
+            "line": 54,
+            "column": 3
+          }
+        },
+        "18": {
+          "start": {
+            "line": 47,
+            "column": 20
+          },
+          "end": {
+            "line": 49,
+            "column": 25
+          }
+        },
+        "19": {
+          "start": {
+            "line": 51,
+            "column": 4
+          },
+          "end": {
+            "line": 51,
+            "column": 37
+          }
+        },
+        "20": {
+          "start": {
+            "line": 53,
+            "column": 4
+          },
+          "end": {
+            "line": 53,
+            "column": 31
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 4,
+              "column": 15
+            },
+            "end": {
+              "line": 4,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 35
+            },
+            "end": {
+              "line": 24,
+              "column": 1
+            }
+          },
+          "line": 4
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 26,
+              "column": 15
+            },
+            "end": {
+              "line": 26,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 26,
+              "column": 35
+            },
+            "end": {
+              "line": 43,
+              "column": 1
+            }
+          },
+          "line": 26
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 45,
+              "column": 25
+            },
+            "end": {
+              "line": 45,
+              "column": 26
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 45,
+              "column": 45
+            },
+            "end": {
+              "line": 55,
+              "column": 1
+            }
+          },
+          "line": 45
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 35,
+              "column": 4
+            },
+            "end": {
+              "line": 35,
+              "column": 54
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 35,
+                "column": 4
+              },
+              "end": {
+                "line": 35,
+                "column": 54
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 35
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 1,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "1339a105fe3f6075ed694f70e00d271a91012093"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\user.model.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\user.model.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 5,
+            "column": 19
+          },
+          "end": {
+            "line": 25,
+            "column": 16
+          }
+        },
+        "1": {
+          "start": {
+            "line": 27,
+            "column": 0
+          },
+          "end": {
+            "line": 37,
+            "column": 2
+          }
+        },
+        "2": {
+          "start": {
+            "line": 28,
+            "column": 2
+          },
+          "end": {
+            "line": 28,
+            "column": 53
+          }
+        },
+        "3": {
+          "start": {
+            "line": 30,
+            "column": 2
+          },
+          "end": {
+            "line": 36,
+            "column": 20
+          }
+        },
+        "4": {
+          "start": {
+            "line": 39,
+            "column": 0
+          },
+          "end": {
+            "line": 49,
+            "column": 2
+          }
+        },
+        "5": {
+          "start": {
+            "line": 40,
+            "column": 15
+          },
+          "end": {
+            "line": 46,
+            "column": 19
+          }
+        },
+        "6": {
+          "start": {
+            "line": 48,
+            "column": 2
+          },
+          "end": {
+            "line": 48,
+            "column": 32
+          }
+        },
+        "7": {
+          "start": {
+            "line": 51,
+            "column": 18
+          },
+          "end": {
+            "line": 51,
+            "column": 52
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 27,
+              "column": 33
+            },
+            "end": {
+              "line": 27,
+              "column": 34
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 53
+            },
+            "end": {
+              "line": 37,
+              "column": 1
+            }
+          },
+          "line": 27
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 39,
+              "column": 35
+            },
+            "end": {
+              "line": 39,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 39,
+              "column": 55
+            },
+            "end": {
+              "line": 49,
+              "column": 1
+            }
+          },
+          "line": 39
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "2dfd61a5db5abb04fd2317283471fdfedd12a76a"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\middlewares\\token.middleware.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\middlewares\\token.middleware.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 5,
+            "column": 20
+          },
+          "end": {
+            "line": 22,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 6,
+            "column": 2
+          },
+          "end": {
+            "line": 21,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 7,
+            "column": 25
+          },
+          "end": {
+            "line": 7,
+            "column": 53
+          }
+        },
+        "3": {
+          "start": {
+            "line": 9,
+            "column": 4
+          },
+          "end": {
+            "line": 16,
+            "column": 5
+          }
+        },
+        "4": {
+          "start": {
+            "line": 10,
+            "column": 20
+          },
+          "end": {
+            "line": 10,
+            "column": 46
+          }
+        },
+        "5": {
+          "start": {
+            "line": 12,
+            "column": 6
+          },
+          "end": {
+            "line": 15,
+            "column": 8
+          }
+        },
+        "6": {
+          "start": {
+            "line": 18,
+            "column": 4
+          },
+          "end": {
+            "line": 18,
+            "column": 17
+          }
+        },
+        "7": {
+          "start": {
+            "line": 20,
+            "column": 4
+          },
+          "end": {
+            "line": 20,
+            "column": 17
+          }
+        },
+        "8": {
+          "start": {
+            "line": 24,
+            "column": 13
+          },
+          "end": {
+            "line": 36,
+            "column": 1
+          }
+        },
+        "9": {
+          "start": {
+            "line": 25,
+            "column": 23
+          },
+          "end": {
+            "line": 25,
+            "column": 39
+          }
+        },
+        "10": {
+          "start": {
+            "line": 27,
+            "column": 2
+          },
+          "end": {
+            "line": 27,
+            "column": 61
+          }
+        },
+        "11": {
+          "start": {
+            "line": 27,
+            "column": 21
+          },
+          "end": {
+            "line": 27,
+            "column": 61
+          }
+        },
+        "12": {
+          "start": {
+            "line": 29,
+            "column": 15
+          },
+          "end": {
+            "line": 29,
+            "column": 58
+          }
+        },
+        "13": {
+          "start": {
+            "line": 31,
+            "column": 2
+          },
+          "end": {
+            "line": 31,
+            "column": 53
+          }
+        },
+        "14": {
+          "start": {
+            "line": 31,
+            "column": 13
+          },
+          "end": {
+            "line": 31,
+            "column": 53
+          }
+        },
+        "15": {
+          "start": {
+            "line": 33,
+            "column": 2
+          },
+          "end": {
+            "line": 33,
+            "column": 18
+          }
+        },
+        "16": {
+          "start": {
+            "line": 35,
+            "column": 2
+          },
+          "end": {
+            "line": 35,
+            "column": 9
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 20
+            },
+            "end": {
+              "line": 5,
+              "column": 21
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 29
+            },
+            "end": {
+              "line": 22,
+              "column": 1
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 24,
+              "column": 13
+            },
+            "end": {
+              "line": 24,
+              "column": 14
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 24,
+              "column": 39
+            },
+            "end": {
+              "line": 36,
+              "column": 1
+            }
+          },
+          "line": 24
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 4
+            },
+            "end": {
+              "line": 16,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 9,
+                "column": 4
+              },
+              "end": {
+                "line": 16,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 9
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 2
+            },
+            "end": {
+              "line": 27,
+              "column": 61
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 27,
+                "column": 2
+              },
+              "end": {
+                "line": 27,
+                "column": 61
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 27
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 31,
+              "column": 2
+            },
+            "end": {
+              "line": 31,
+              "column": 53
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 31,
+                "column": 2
+              },
+              "end": {
+                "line": 31,
+                "column": 53
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 31
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 1,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "bdabd1186dcaafceabe046f19586ed6ddf93257f"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\handlers\\request.handler.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\handlers\\request.handler.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 17
+          },
+          "end": {
+            "line": 11,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 4,
+            "column": 17
+          },
+          "end": {
+            "line": 4,
+            "column": 38
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 2
+          },
+          "end": {
+            "line": 8,
+            "column": 5
+          }
+        },
+        "3": {
+          "start": {
+            "line": 6,
+            "column": 25
+          },
+          "end": {
+            "line": 8,
+            "column": 5
+          }
+        },
+        "4": {
+          "start": {
+            "line": 10,
+            "column": 2
+          },
+          "end": {
+            "line": 10,
+            "column": 9
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 3,
+              "column": 17
+            },
+            "end": {
+              "line": 3,
+              "column": 18
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 37
+            },
+            "end": {
+              "line": 11,
+              "column": 1
+            }
+          },
+          "line": 3
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 2
+            },
+            "end": {
+              "line": 8,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 6,
+                "column": 2
+              },
+              "end": {
+                "line": 8,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 6
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "f": {
+        "0": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "d9e92c80f33ea900fd61446d1a746c2c9a483749"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\routes\\review.route.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\routes\\review.route.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 7,
+            "column": 15
+          },
+          "end": {
+            "line": 7,
+            "column": 52
+          }
+        },
+        "1": {
+          "start": {
+            "line": 9,
+            "column": 0
+          },
+          "end": {
+            "line": 13,
+            "column": 2
+          }
+        },
+        "2": {
+          "start": {
+            "line": 15,
+            "column": 0
+          },
+          "end": {
+            "line": 33,
+            "column": 2
+          }
+        },
+        "3": {
+          "start": {
+            "line": 26,
+            "column": 20
+          },
+          "end": {
+            "line": 26,
+            "column": 50
+          }
+        },
+        "4": {
+          "start": {
+            "line": 35,
+            "column": 0
+          },
+          "end": {
+            "line": 39,
+            "column": 2
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 26,
+              "column": 12
+            },
+            "end": {
+              "line": 26,
+              "column": 13
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 26,
+              "column": 20
+            },
+            "end": {
+              "line": 26,
+              "column": 50
+            }
+          },
+          "line": 26
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 0,
+        "4": 1
+      },
+      "f": {
+        "0": 0
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "045f347b2617df3e8cbe0988deec3a9a42027dd2"
+    }
+  }
+}

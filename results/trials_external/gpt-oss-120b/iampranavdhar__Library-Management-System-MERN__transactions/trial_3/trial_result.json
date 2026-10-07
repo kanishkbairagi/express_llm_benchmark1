@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "iampranavdhar__Library-Management-System-MERN__transactions",
+  "targetFilename": "external/iampranavdhar__Library-Management-System-MERN/backend/routes/transactions.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T05:05:20.356Z",
+  "finishedAt": "2026-10-07T05:05:31.671Z",
+  "suiteOk": false,
+  "testsPassed": 2,
+  "testsFailed": 8,
+  "testsTotal": 10,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 33.33,
+  "branchCoverage": 37.5,
+  "functionCoverage": 50,
+  "lineCoverage": 33.33,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 722,
+    "completionTokens": 3275,
+    "totalTokens": 3997,
+    "reasoningTokens": 1453
+  },
+  "latencyMs": 7464
+}

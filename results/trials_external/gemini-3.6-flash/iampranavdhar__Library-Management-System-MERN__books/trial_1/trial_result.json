@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "iampranavdhar__Library-Management-System-MERN__books",
+  "targetFilename": "external/iampranavdhar__Library-Management-System-MERN/backend/routes/books.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:03:10.289Z",
+  "finishedAt": "2026-10-05T05:03:31.986Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1025,
+    "completionTokens": 2269,
+    "totalTokens": 5380,
+    "thinkingTokens": 2086
+  },
+  "latencyMs": 19185
+}

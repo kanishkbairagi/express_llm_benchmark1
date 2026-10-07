@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "trananhtuat__react-openai-chat__user.route",
+  "targetFilename": "external/trananhtuat__react-openai-chat/server/routes/user.route.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:24:03.153Z",
+  "finishedAt": "2026-10-05T05:25:10.704Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 478,
+    "completionTokens": 941,
+    "totalTokens": 5159,
+    "thinkingTokens": 3740
+  },
+  "latencyMs": 21627
+}

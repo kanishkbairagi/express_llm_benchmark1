@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "digitomize__digitomize__questionController",
+  "targetFilename": "external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js",
+  "trial": 2,
+  "startedAt": "2026-10-05T05:26:09.518Z",
+  "finishedAt": "2026-10-05T05:26:17.930Z",
+  "suiteOk": false,
+  "testsPassed": 3,
+  "testsFailed": 9,
+  "testsTotal": 12,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 38.46,
+  "branchCoverage": 35.71,
+  "functionCoverage": 50,
+  "lineCoverage": 39.47,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1018,
+    "completionTokens": 2376,
+    "totalTokens": 3394,
+    "reasoningTokens": 449
+  },
+  "latencyMs": 5544
+}

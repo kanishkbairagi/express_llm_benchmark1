@@ -1,0 +1,270 @@
+```javascript
+import express from 'express';
+import request from 'supertest';
+import router from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/routes/users.js';
+import User from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/User.js';
+
+jest.mock('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/User.js');
+
+const app = express();
+app.use(express.json());
+app.use('/users', router);
+
+const createQueryMock = (resolvedValue) => ({
+  populate: jest.fn().mockReturnThis(),
+  sort: jest.fn().mockReturnThis(),
+  then: (resolve, reject) => Promise.resolve(resolvedValue).then(resolve, reject),
+});
+
+const createErrorQueryMock = (error) => ({
+  populate: jest.fn().mockReturnThis(),
+  sort: jest.fn().mockReturnThis(),
+  then: (resolve, reject) => Promise.reject(error).then(resolve, reject),
+});
+
+describe('Users Router', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('GET /getuser/:id', () => {
+    it('should return user details excluding password and updatedAt', async () => {
+      const mockUserData = {
+        _doc: {
+          _id: 'user123',
+          username: 'john_doe',
+          email: 'john@example.com',
+          password: 'hashedpassword',
+          updatedAt: '2023-01-01',
+          userType: 'Student',
+        },
+      };
+
+      User.findById.mockReturnValue(createQueryMock(mockUserData));
+
+      const res = await request(app).get('/users/getuser/user123');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({
+        _id: 'user123',
+        username: 'john_doe',
+        email: 'john@example.com',
+        userType: 'Student',
+      });
+      expect(res.body.password).toBeUndefined();
+      expect(res.body.updatedAt).toBeUndefined();
+    });
+
+    it('should return 500 when database operation fails', async () => {
+      User.findById.mockReturnValue(createErrorQueryMock(new Error('Database error')));
+
+      const res = await request(app).get('/users/getuser/user123');
+
+      expect(res.status).toBe(500);
+    });
+  });
+
+  describe('GET /allmembers', () => {
+    it('should return all library members sorted by id descending', async () => {
+      const mockMembers = [
+        { _id: '2', username: 'member2' },
+        { _id: '1', username: 'member1' },
+      ];
+
+      User.find.mockReturnValue(createQueryMock(mockMembers));
+
+      const res = await request(app).get('/users/allmembers');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(mockMembers);
+      expect(User.find).toHaveBeenCalledWith({});
+    });
+
+    it('should return 500 when fetching members fails', async () => {
+      User.find.mockReturnValue(createErrorQueryMock(new Error('Fetch error')));
+
+      const res = await request(app).get('/users/allmembers');
+
+      expect(res.status).toBe(500);
+    });
+  });
+
+  describe('PUT /updateuser/:id', () => {
+    it('should update user successfully when requested by account owner', async () => {
+      User.findByIdAndUpdate.mockResolvedValue({});
+
+      const res = await request(app)
+        .put('/users/updateuser/user123')
+        .send({ userId: 'user123', username: 'updated_name' });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Account has been updated');
+      expect(User.findByIdAndUpdate).toHaveBeenCalledWith('user123', {
+        $set: { userId: 'user123', username: 'updated_name' },
+      });
+    });
+
+    it('should update user successfully when requested by admin', async () => {
+      User.findByIdAndUpdate.mockResolvedValue({});
+
+      const res = await request(app)
+        .put('/users/updateuser/user123')
+        .send({ userId: 'admin456', isAdmin: true, username: 'updated_by_admin' });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Account has been updated');
+    });
+
+    it('should return 403 if user is not authorized to update account', async () => {
+      const res = await request(app)
+        .put('/users/updateuser/user123')
+        .send({ userId: 'otherUser', isAdmin: false });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('You can update only your account!');
+    });
+
+    it('should handle error when updating password without imported bcrypt module', async () => {
+      const res = await request(app)
+        .put('/users/updateuser/user123')
+        .send({ userId: 'user123', password: 'newpassword' });
+
+      expect(res.status).toBe(500);
+    });
+
+    it('should return 500 if findByIdAndUpdate throws an error', async () => {
+      User.findByIdAndUpdate.mockRejectedValue(new Error('Update failed'));
+
+      const res = await request(app)
+        .put('/users/updateuser/user123')
+        .send({ userId: 'user123' });
+
+      expect(res.status).toBe(500);
+    });
+  });
+
+  describe('PUT /:id/move-to-activetransactions', () => {
+    it('should add transaction to active transactions when admin', async () => {
+      const mockUserInstance = {
+        updateOne: jest.fn().mockResolvedValue({}),
+      };
+      User.findById.mockReturnValue(createQueryMock(mockUserInstance));
+
+      const res = await request(app)
+        .put('/users/trans123/move-to-activetransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Added to Active Transaction');
+      expect(User.findById).toHaveBeenCalledWith('user123');
+      expect(mockUserInstance.updateOne).toHaveBeenCalledWith({
+        $push: { activeTransactions: 'trans123' },
+      });
+    });
+
+    it('should return 403 if non-admin tries to add active transaction', async () => {
+      const res = await request(app)
+        .put('/users/trans123/move-to-activetransactions')
+        .send({ isAdmin: false, userId: 'user123' });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('Only Admin can add a transaction');
+    });
+
+    it('should return 500 when operation encounters error', async () => {
+      User.findById.mockReturnValue(createErrorQueryMock(new Error('DB Error')));
+
+      const res = await request(app)
+        .put('/users/trans123/move-to-activetransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(res.status).toBe(500);
+    });
+  });
+
+  describe('PUT /:id/move-to-prevtransactions', () => {
+    it('should move transaction from active to previous transactions list when admin', async () => {
+      const mockUserInstance = {
+        updateOne: jest.fn().mockResolvedValue({}),
+      };
+      User.findById.mockReturnValue(createQueryMock(mockUserInstance));
+
+      const res = await request(app)
+        .put('/users/trans123/move-to-prevtransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Added to Prev transaction Transaction');
+      expect(mockUserInstance.updateOne).toHaveBeenNthCalledWith(1, {
+        $pull: { activeTransactions: 'trans123' },
+      });
+      expect(mockUserInstance.updateOne).toHaveBeenNthCalledWith(2, {
+        $push: { prevTransactions: 'trans123' },
+      });
+    });
+
+    it('should return 403 if non-admin attempts to move transaction', async () => {
+      const res = await request(app)
+        .put('/users/trans123/move-to-prevtransactions')
+        .send({ isAdmin: false });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('Only Admin can do this');
+    });
+
+    it('should return 500 on database failure', async () => {
+      User.findById.mockReturnValue(createErrorQueryMock(new Error('User not found')));
+
+      const res = await request(app)
+        .put('/users/trans123/move-to-prevtransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(res.status).toBe(500);
+    });
+  });
+
+  describe('DELETE /deleteuser/:id', () => {
+    it('should delete user if requested by owner', async () => {
+      User.findByIdAndDelete.mockResolvedValue({});
+
+      const res = await request(app)
+        .delete('/users/deleteuser/user123')
+        .send({ userId: 'user123' });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Account has been deleted');
+      expect(User.findByIdAndDelete).toHaveBeenCalledWith('user123');
+    });
+
+    it('should delete user if requested by admin', async () => {
+      User.findByIdAndDelete.mockResolvedValue({});
+
+      const res = await request(app)
+        .delete('/users/deleteuser/user123')
+        .send({ userId: 'admin1', isAdmin: true });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Account has been deleted');
+    });
+
+    it('should return 403 if user is unauthorized to delete', async () => {
+      const res = await request(app)
+        .delete('/users/deleteuser/user123')
+        .send({ userId: 'otherUser', isAdmin: false });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('You can delete only your account!');
+    });
+
+    it('should return 500 when deletion fails', async () => {
+      User.findByIdAndDelete.mockRejectedValue(new Error('Delete error'));
+
+      const res = await request(app)
+        .delete('/users/deleteuser/user123')
+        .send({ userId: 'user123' });
+
+      expect(res.status).toBe(500);
+    });
+  });
+});
+```

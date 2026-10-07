@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "mongo-express__mongo-express__gridfs",
+  "targetFilename": "external/mongo-express__mongo-express/lib/routes/gridfs.js",
+  "trial": 2,
+  "startedAt": "2026-10-05T12:29:16.059Z",
+  "finishedAt": "2026-10-05T12:29:31.285Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1591,
+    "completionTokens": 4925,
+    "totalTokens": 6516,
+    "reasoningTokens": 2456
+  },
+  "latencyMs": 11165
+}

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "SanjulaD__web-cw__consumerProductControlller",
+  "targetFilename": "external/SanjulaD__web-cw/backend/controllers/consumerProductControlller.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:13:39.742Z",
+  "finishedAt": "2026-10-05T05:13:47.156Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 8,
+  "testsTotal": 8,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 14.29,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 14.29,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 834,
+    "completionTokens": 1954,
+    "totalTokens": 2788,
+    "reasoningTokens": 556
+  },
+  "latencyMs": 4723
+}

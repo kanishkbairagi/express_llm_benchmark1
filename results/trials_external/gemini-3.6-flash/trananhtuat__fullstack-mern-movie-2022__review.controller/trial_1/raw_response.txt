@@ -1,0 +1,133 @@
+```javascript
+import reviewController from '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/review.controller.js';
+import responseHandler from '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/response.handler.js';
+import reviewModel from '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/models/review.model.js';
+
+jest.mock('../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/response.handler.js', () => ({
+  created: jest.fn(),
+  ok: jest.fn(),
+  notfound: jest.fn(),
+  error: jest.fn()
+}));
+
+jest.mock('../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/models/review.model.js');
+
+describe('Review Controller', () => {
+  let req, res;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    req = {
+      params: {},
+      user: { id: 'user123', name: 'John Doe' },
+      body: {}
+    };
+    res = {};
+  });
+
+  describe('create', () => {
+    it('should create a review successfully and return 201 response', async () => {
+      req.params = { movieId: 'movie123' };
+      req.body = { content: 'Great movie!', rating: 5 };
+
+      const mockSave = jest.fn().mockResolvedValue({});
+      reviewModel.mockImplementation((data) => ({
+        ...data,
+        _doc: { ...data },
+        id: 'review123',
+        save: mockSave
+      }));
+
+      await reviewController.create(req, res);
+
+      expect(mockSave).toHaveBeenCalledTimes(1);
+      expect(responseHandler.created).toHaveBeenCalledWith(res, {
+        user: req.user,
+        movieId: 'movie123',
+        content: 'Great movie!',
+        rating: 5,
+        id: 'review123'
+      });
+    });
+
+    it('should handle error and call responseHandler.error on exception', async () => {
+      req.params = { movieId: 'movie123' };
+      reviewModel.mockImplementation(() => {
+        throw new Error('Database error');
+      });
+
+      await reviewController.create(req, res);
+
+      expect(responseHandler.error).toHaveBeenCalledWith(res);
+    });
+  });
+
+  describe('remove', () => {
+    it('should remove review successfully if found and belongs to user', async () => {
+      req.params = { reviewId: 'review123' };
+      const mockRemove = jest.fn().mockResolvedValue({});
+      reviewModel.findOne = jest.fn().mockResolvedValue({
+        remove: mockRemove
+      });
+
+      await reviewController.remove(req, res);
+
+      expect(reviewModel.findOne).toHaveBeenCalledWith({
+        _id: 'review123',
+        user: 'user123'
+      });
+      expect(mockRemove).toHaveBeenCalledTimes(1);
+      expect(responseHandler.ok).toHaveBeenCalledWith(res);
+    });
+
+    it('should call responseHandler.notfound if review does not exist', async () => {
+      req.params = { reviewId: 'review123' };
+      reviewModel.findOne = jest.fn().mockResolvedValue(null);
+
+      await reviewController.remove(req, res);
+
+      expect(reviewModel.findOne).toHaveBeenCalledWith({
+        _id: 'review123',
+        user: 'user123'
+      });
+      expect(responseHandler.notfound).toHaveBeenCalledWith(res);
+      expect(responseHandler.ok).not.toHaveBeenCalled();
+    });
+
+    it('should call responseHandler.error if an exception occurs', async () => {
+      req.params = { reviewId: 'review123' };
+      reviewModel.findOne = jest.fn().mockRejectedValue(new Error('Find error'));
+
+      await reviewController.remove(req, res);
+
+      expect(responseHandler.error).toHaveBeenCalledWith(res);
+    });
+  });
+
+  describe('getReviewsOfUser', () => {
+    it('should fetch user reviews sorted by createdAt descending and return ok response', async () => {
+      const mockReviews = [{ id: 'review1' }, { id: 'review2' }];
+      const mockSort = jest.fn().mockResolvedValue(mockReviews);
+      reviewModel.find = jest.fn().mockReturnValue({
+        sort: mockSort
+      });
+
+      await reviewController.getReviewsOfUser(req, res);
+
+      expect(reviewModel.find).toHaveBeenCalledWith({ user: 'user123' });
+      expect(mockSort).toHaveBeenCalledWith('-createdAt');
+      expect(responseHandler.ok).toHaveBeenCalledWith(res, mockReviews);
+    });
+
+    it('should call responseHandler.error if an exception occurs during fetch', async () => {
+      reviewModel.find = jest.fn().mockImplementation(() => {
+        throw new Error('Database error');
+      });
+
+      await reviewController.getReviewsOfUser(req, res);
+
+      expect(responseHandler.error).toHaveBeenCalledWith(res);
+    });
+  });
+});
+```

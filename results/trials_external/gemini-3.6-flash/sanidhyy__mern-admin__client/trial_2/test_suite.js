@@ -1,0 +1,239 @@
+import { jest } from '@jest/globals';
+import getCountryISO3 from 'country-iso-2-to-3';
+
+import Product from '../dataset/external/sanidhyy__mern-admin/server/models/Product.js';
+import ProductStat from '../dataset/external/sanidhyy__mern-admin/server/models/ProductStat.js';
+import User from '../dataset/external/sanidhyy__mern-admin/server/models/User.js';
+import Transaction from '../dataset/external/sanidhyy__mern-admin/server/models/Transaction.js';
+
+import {
+  getProducts,
+  getCustomers,
+  getTransactions,
+  getGeography,
+} from '../dataset/external/sanidhyy__mern-admin/server/controllers/client.js';
+
+jest.mock('country-iso-2-to-3');
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/Product.js');
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/ProductStat.js');
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/User.js');
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/Transaction.js');
+
+describe('Client Controller', () => {
+  let mockRes;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+  });
+
+  describe('getProducts', () => {
+    it('should return 200 with products and their stats', async () => {
+      const mockProducts = [
+        {
+          _id: 'prod1',
+          name: 'Product 1',
+          _doc: { _id: 'prod1', name: 'Product 1' },
+        },
+        {
+          _id: 'prod2',
+          name: 'Product 2',
+          _doc: { _id: 'prod2', name: 'Product 2' },
+        },
+      ];
+
+      const mockStatsProduct1 = [{ productId: 'prod1', yearlySalesTotal: 5000 }];
+      const mockStatsProduct2 = [{ productId: 'prod2', yearlySalesTotal: 3000 }];
+
+      Product.find.mockResolvedValue(mockProducts);
+      ProductStat.find
+        .mockResolvedValueOnce(mockStatsProduct1)
+        .mockResolvedValueOnce(mockStatsProduct2);
+
+      await getProducts({}, mockRes);
+
+      expect(Product.find).toHaveBeenCalledTimes(1);
+      expect(ProductStat.find).toHaveBeenCalledWith({ productId: 'prod1' });
+      expect(ProductStat.find).toHaveBeenCalledWith({ productId: 'prod2' });
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith([
+        { _id: 'prod1', name: 'Product 1', stat: mockStatsProduct1 },
+        { _id: 'prod2', name: 'Product 2', stat: mockStatsProduct2 },
+      ]);
+    });
+
+    it('should return 404 with error message when Product.find fails', async () => {
+      Product.find.mockRejectedValue(new Error('Database error'));
+
+      await getProducts({}, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({ message: 'Database error' });
+    });
+  });
+
+  describe('getCustomers', () => {
+    it('should return 200 with customers omitting passwords', async () => {
+      const mockCustomers = [
+        { _id: 'user1', name: 'Alice', role: 'user' },
+        { _id: 'user2', name: 'Bob', role: 'user' },
+      ];
+
+      const selectMock = jest.fn().mockResolvedValue(mockCustomers);
+      User.find.mockReturnValue({ select: selectMock });
+
+      await getCustomers({}, mockRes);
+
+      expect(User.find).toHaveBeenCalledWith({ role: 'user' });
+      expect(selectMock).toHaveBeenCalledWith('-password');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith(mockCustomers);
+    });
+
+    it('should return 404 with error message on failure', async () => {
+      const selectMock = jest.fn().mockRejectedValue(new Error('User fetch error'));
+      User.find.mockReturnValue({ select: selectMock });
+
+      await getCustomers({}, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({ message: 'User fetch error' });
+    });
+  });
+
+  describe('getTransactions', () => {
+    it('should return 200 with default pagination, empty search, and total count', async () => {
+      const mockTransactions = [{ _id: 'tx1', cost: '100', userId: 'user1' }];
+      const limitMock = jest.fn().mockResolvedValue(mockTransactions);
+      const skipMock = jest.fn().mockReturnValue({ limit: limitMock });
+      const sortMock = jest.fn().mockReturnValue({ skip: skipMock });
+
+      Transaction.find.mockReturnValue({ sort: sortMock });
+      Transaction.countDocuments.mockResolvedValue(1);
+
+      const mockReq = { query: {} };
+
+      await getTransactions(mockReq, mockRes);
+
+      expect(Transaction.find).toHaveBeenCalledWith({
+        $or: [
+          { cost: { $regex: new RegExp('', 'i') } },
+          { userId: { $regex: new RegExp('', 'i') } },
+        ],
+      });
+      expect(sortMock).toHaveBeenCalledWith({});
+      expect(skipMock).toHaveBeenCalledWith(20);
+      expect(limitMock).toHaveBeenCalledWith(20);
+      expect(Transaction.countDocuments).toHaveBeenCalledWith({
+        name: { $regex: '', $options: 'i' },
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        transactions: mockTransactions,
+        total: 1,
+      });
+    });
+
+    it('should format sort correctly for ascending order and apply query parameters', async () => {
+      const mockTransactions = [{ _id: 'tx2', cost: '200', userId: 'user2' }];
+      const limitMock = jest.fn().mockResolvedValue(mockTransactions);
+      const skipMock = jest.fn().mockReturnValue({ limit: limitMock });
+      const sortMock = jest.fn().mockReturnValue({ skip: skipMock });
+
+      Transaction.find.mockReturnValue({ sort: sortMock });
+      Transaction.countDocuments.mockResolvedValue(5);
+
+      const mockReq = {
+        query: {
+          page: 2,
+          pageSize: 10,
+          sort: JSON.stringify({ field: 'userId', sort: 'asc' }),
+          search: 'test',
+        },
+      };
+
+      await getTransactions(mockReq, mockRes);
+
+      expect(sortMock).toHaveBeenCalledWith({ userId: 1 });
+      expect(skipMock).toHaveBeenCalledWith(20);
+      expect(limitMock).toHaveBeenCalledWith(10);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        transactions: mockTransactions,
+        total: 5,
+      });
+    });
+
+    it('should format sort correctly for descending order', async () => {
+      const limitMock = jest.fn().mockResolvedValue([]);
+      const skipMock = jest.fn().mockReturnValue({ limit: limitMock });
+      const sortMock = jest.fn().mockReturnValue({ skip: skipMock });
+
+      Transaction.find.mockReturnValue({ sort: sortMock });
+      Transaction.countDocuments.mockResolvedValue(0);
+
+      const mockReq = {
+        query: {
+          sort: JSON.stringify({ field: 'cost', sort: 'desc' }),
+        },
+      };
+
+      await getTransactions(mockReq, mockRes);
+
+      expect(sortMock).toHaveBeenCalledWith({ cost: -1 });
+    });
+
+    it('should return 404 with error message on failure', async () => {
+      Transaction.find.mockImplementation(() => {
+        throw new Error('Transaction query failed');
+      });
+
+      const mockReq = { query: {} };
+
+      await getTransactions(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({ message: 'Transaction query failed' });
+    });
+  });
+
+  describe('getGeography', () => {
+    it('should return 200 with formatted country counts', async () => {
+      const mockUsers = [
+        { country: 'US' },
+        { country: 'US' },
+        { country: 'CA' },
+      ];
+
+      User.find.mockResolvedValue(mockUsers);
+      getCountryISO3.mockImplementation((country) => {
+        if (country === 'US') return 'USA';
+        if (country === 'CA') return 'CAN';
+        return 'UNKNOWN';
+      });
+
+      await getGeography({}, mockRes);
+
+      expect(User.find).toHaveBeenCalledTimes(1);
+      expect(getCountryISO3).toHaveBeenCalledWith('US');
+      expect(getCountryISO3).toHaveBeenCalledWith('CA');
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith([
+        { id: 'USA', value: 2 },
+        { id: 'CAN', value: 1 },
+      ]);
+    });
+
+    it('should return 404 with error message when User.find fails', async () => {
+      User.find.mockRejectedValue(new Error('Geography error'));
+
+      await getGeography({}, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({ message: 'Geography error' });
+    });
+  });
+});

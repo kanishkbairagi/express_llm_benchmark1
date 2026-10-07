@@ -1,0 +1,235 @@
+```javascript
+import { jest } from '@jest/globals';
+
+jest.mock('../models/ProfileModel.js');
+
+import ProfileModel from '../models/ProfileModel.js';
+import {
+  getProfiles,
+  getProfile,
+  createProfile,
+  getProfilesByUser,
+  getProfilesBySearch,
+  updateProfile,
+  deleteProfile,
+} from '../dataset/external/panshak__accountill/server/controllers/profile.js';
+
+describe('Profile Controller', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      params: {},
+      query: {},
+      body: {},
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    jest.clearAllMocks();
+  });
+
+  describe('getProfiles', () => {
+    test('should fetch all profiles sorted by _id descending', async () => {
+      const mockProfiles = [{ name: 'John Doe' }, { name: 'Jane Doe' }];
+      const sortMock = jest.fn().mockResolvedValue(mockProfiles);
+      ProfileModel.find = jest.fn().mockReturnValue({ sort: sortMock });
+
+      await getProfiles(req, res);
+
+      expect(ProfileModel.find).toHaveBeenCalled();
+      expect(sortMock).toHaveBeenCalledWith({ _id: -1 });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockProfiles);
+    });
+
+    test('should handle errors and return 404 status', async () => {
+      ProfileModel.find = jest.fn().mockImplementation(() => {
+        throw new Error('Database error');
+      });
+
+      await getProfiles(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Database error' });
+    });
+  });
+
+  describe('getProfile', () => {
+    test('should fetch a single profile by id', async () => {
+      req.params = { id: '123' };
+      const mockProfile = { _id: '123', name: 'John Doe' };
+      ProfileModel.findById = jest.fn().mockResolvedValue(mockProfile);
+
+      await getProfile(req, res);
+
+      expect(ProfileModel.findById).toHaveBeenCalledWith('123');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockProfile);
+    });
+
+    test('should handle errors and return 404 status', async () => {
+      req.params = { id: '123' };
+      ProfileModel.findById = jest.fn().mockRejectedValue(new Error('Profile not found'));
+
+      await getProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Profile not found' });
+    });
+  });
+
+  describe('createProfile', () => {
+    test('should return 404 if profile with email already exists', async () => {
+      req.body = { email: 'test@example.com' };
+      ProfileModel.findOne = jest.fn().mockResolvedValue({ email: 'test@example.com' });
+
+      await createProfile(req, res);
+
+      expect(ProfileModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Profile already exist' });
+    });
+
+    test('should save and return new profile if email does not exist', async () => {
+      req.body = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        phoneNumber: '1234567890',
+        businessName: 'Biz Corp',
+        contactAddress: '123 Main St',
+        logo: 'logo.png',
+        website: 'https://example.com',
+        userId: 'user123',
+      };
+
+      ProfileModel.findOne = jest.fn().mockResolvedValue(null);
+      const mockSave = jest.fn().mockResolvedValue({});
+      ProfileModel.mockImplementation(() => ({
+        save: mockSave,
+        name: req.body.name,
+        email: req.body.email,
+      }));
+
+      await createProfile(req, res);
+
+      expect(ProfileModel.findOne).toHaveBeenCalledWith({ email: 'john@example.com' });
+      expect(mockSave).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+    });
+
+    test('should handle errors during creation with status 409', async () => {
+      req.body = { email: 'john@example.com' };
+      ProfileModel.findOne = jest.fn().mockRejectedValue(new Error('Save error'));
+
+      await createProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Save error' });
+    });
+  });
+
+  describe('getProfilesByUser', () => {
+    test('should return profile by userId', async () => {
+      req.query = { searchQuery: 'user123' };
+      const mockProfile = { userId: 'user123', name: 'John Doe' };
+      ProfileModel.findOne = jest.fn().mockResolvedValue(mockProfile);
+
+      await getProfilesByUser(req, res);
+
+      expect(ProfileModel.findOne).toHaveBeenCalledWith({ userId: 'user123' });
+      expect(res.json).toHaveBeenCalledWith({ data: mockProfile });
+    });
+
+    test('should handle errors and return 404 status', async () => {
+      req.query = { searchQuery: 'user123' };
+      ProfileModel.findOne = jest.fn().mockRejectedValue(new Error('User not found'));
+
+      await getProfilesByUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'User not found' });
+    });
+  });
+
+  describe('getProfilesBySearch', () => {
+    test('should search profiles by name or email regex', async () => {
+      req.query = { searchQuery: 'john' };
+      const mockProfiles = [{ name: 'John Doe', email: 'john@example.com' }];
+      ProfileModel.find = jest.fn().mockResolvedValue(mockProfiles);
+
+      await getProfilesBySearch(req, res);
+
+      expect(ProfileModel.find).toHaveBeenCalledWith({
+        $or: [{ name: new RegExp('john', 'i') }, { email: new RegExp('john', 'i') }],
+      });
+      expect(res.json).toHaveBeenCalledWith({ data: mockProfiles });
+    });
+
+    test('should handle search error with 404 status', async () => {
+      req.query = { searchQuery: 'john' };
+      ProfileModel.find = jest.fn().mockRejectedValue(new Error('Search failed'));
+
+      await getProfilesBySearch(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Search failed' });
+    });
+  });
+
+  describe('updateProfile', () => {
+    test('should return 404 if invalid ObjectId is provided', async () => {
+      req.params = { id: 'invalid-id' };
+
+      await updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.send).toHaveBeenCalledWith('No client with that id');
+    });
+
+    test('should update and return profile for valid ObjectId', async () => {
+      const validId = '507f1f77bcf86cd799439011';
+      req.params = { id: validId };
+      req.body = { name: 'Updated Name' };
+      const updatedMock = { _id: validId, name: 'Updated Name' };
+
+      ProfileModel.findByIdAndUpdate = jest.fn().mockResolvedValue(updatedMock);
+
+      await updateProfile(req, res);
+
+      expect(ProfileModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        validId,
+        { name: 'Updated Name', _id: validId },
+        { new: true }
+      );
+      expect(res.json).toHaveBeenCalledWith(updatedMock);
+    });
+  });
+
+  describe('deleteProfile', () => {
+    test('should return 404 if invalid ObjectId is provided', async () => {
+      req.params = { id: 'invalid-id' };
+
+      await deleteProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.send).toHaveBeenCalledWith('No profile with id: invalid-id');
+    });
+
+    test('should remove profile and return success message for valid ObjectId', async () => {
+      const validId = '507f1f77bcf86cd799439011';
+      req.params = { id: validId };
+
+      ProfileModel.findByIdAndRemove = jest.fn().mockResolvedValue(true);
+
+      await deleteProfile(req, res);
+
+      expect(ProfileModel.findByIdAndRemove).toHaveBeenCalledWith(validId);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Profile deleted successfully.' });
+    });
+  });
+});
+```

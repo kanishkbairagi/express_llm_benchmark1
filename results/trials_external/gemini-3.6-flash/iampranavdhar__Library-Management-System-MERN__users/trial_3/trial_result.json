@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "iampranavdhar__Library-Management-System-MERN__users",
+  "targetFilename": "external/iampranavdhar__Library-Management-System-MERN/backend/routes/users.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T05:05:31.674Z",
+  "finishedAt": "2026-10-07T05:07:07.695Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1079,
+    "completionTokens": 2677,
+    "totalTokens": 7083,
+    "thinkingTokens": 3327
+  },
+  "latencyMs": 26737
+}

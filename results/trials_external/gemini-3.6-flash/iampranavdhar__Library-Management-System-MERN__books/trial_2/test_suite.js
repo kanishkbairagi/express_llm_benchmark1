@@ -1,0 +1,261 @@
+import { jest } from '@jest/globals';
+import express from 'express';
+import request from 'supertest';
+
+jest.mock('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/Book.js', () => {
+  const MockBook = jest.fn().mockImplementation((data) => {
+    return {
+      ...data,
+      _id: 'mockBookId',
+      categories: data?.categories || ['cat1'],
+      save: jest.fn().mockResolvedValue({
+        _id: 'mockBookId',
+        ...data
+      })
+    };
+  });
+  MockBook.find = jest.fn();
+  MockBook.findById = jest.fn();
+  MockBook.findOne = jest.fn();
+  MockBook.findByIdAndUpdate = jest.fn();
+  return {
+    __esModule: true,
+    default: MockBook
+  };
+});
+
+jest.mock('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/BookCategory.js', () => {
+  return {
+    __esModule: true,
+    default: {
+      findOne: jest.fn(),
+      updateMany: jest.fn()
+    }
+  };
+});
+
+import router from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/routes/books.js';
+import Book from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/Book.js';
+import BookCategory from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/BookCategory.js';
+
+const app = express();
+app.use(express.json());
+app.use('/books', router);
+
+describe('Books Router Unit Tests', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('GET /books/allbooks', () => {
+    it('should return all books sorted with populated transactions on success', async () => {
+      const mockBooks = [{ _id: '1', bookName: 'Book 1' }, { _id: '2', bookName: 'Book 2' }];
+      const sortMock = jest.fn().mockResolvedValue(mockBooks);
+      const populateMock = jest.fn().mockReturnValue({ sort: sortMock });
+      Book.find.mockReturnValue({ populate: populateMock });
+
+      const res = await request(app).get('/books/allbooks');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(mockBooks);
+      expect(Book.find).toHaveBeenCalledWith({});
+      expect(populateMock).toHaveBeenCalledWith('transactions');
+      expect(sortMock).toHaveBeenCalledWith({ _id: -1 });
+    });
+
+    it('should return 504 status on database error', async () => {
+      Book.find.mockImplementation(() => {
+        throw new Error('Database Error');
+      });
+
+      const res = await request(app).get('/books/allbooks');
+
+      expect(res.status).toBe(504);
+    });
+  });
+
+  describe('GET /books/getbook/:id', () => {
+    it('should return a book by id with populated transactions', async () => {
+      const mockBook = { _id: '123', bookName: 'Single Book' };
+      const populateMock = jest.fn().mockResolvedValue(mockBook);
+      Book.findById.mockReturnValue({ populate: populateMock });
+
+      const res = await request(app).get('/books/getbook/123');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(mockBook);
+      expect(Book.findById).toHaveBeenCalledWith('123');
+      expect(populateMock).toHaveBeenCalledWith('transactions');
+    });
+
+    it('should return 500 status on error', async () => {
+      Book.findById.mockImplementation(() => {
+        throw new Error('Find Error');
+      });
+
+      const res = await request(app).get('/books/getbook/123');
+
+      expect(res.status).toBe(500);
+    });
+  });
+
+  describe('GET /books/', () => {
+    it('should return books filtered by category', async () => {
+      const mockCategoryData = { categoryName: 'Science', books: [{ bookName: 'Sci Book' }] };
+      const populateMock = jest.fn().mockResolvedValue(mockCategoryData);
+      BookCategory.findOne.mockReturnValue({ populate: populateMock });
+
+      const res = await request(app).get('/books/?category=Science');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(mockCategoryData);
+      expect(BookCategory.findOne).toHaveBeenCalledWith({ categoryName: 'Science' });
+      expect(populateMock).toHaveBeenCalledWith('books');
+    });
+
+    it('should return 504 status on error when getting books by category', async () => {
+      BookCategory.findOne.mockImplementation(() => {
+        throw new Error('Category Error');
+      });
+
+      const res = await request(app).get('/books/?category=Science');
+
+      expect(res.status).toBe(504);
+    });
+  });
+
+  describe('POST /books/addbook', () => {
+    it('should deny permission with 403 if user is not admin', async () => {
+      const res = await request(app)
+        .post('/books/addbook')
+        .send({ isAdmin: false, bookName: 'Test Book' });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('You dont have permission to delete a book!');
+    });
+
+    it('should add a book and update BookCategory when user is admin', async () => {
+      BookCategory.updateMany.mockResolvedValue({});
+
+      const bookData = {
+        isAdmin: true,
+        bookName: 'New Book',
+        alternateTitle: 'Alt Title',
+        author: 'Author Name',
+        bookCountAvailable: 5,
+        language: 'English',
+        publisher: 'Publisher Name',
+        bookSatus: 'Available',
+        categories: ['cat1']
+      };
+
+      const res = await request(app)
+        .post('/books/addbook')
+        .send(bookData);
+
+      expect(res.status).toBe(200);
+      expect(res.body.bookName).toBe('New Book');
+      expect(BookCategory.updateMany).toHaveBeenCalledWith(
+        { _id: 'cat1' },
+        { $push: { books: 'mockBookId' } }
+      );
+    });
+
+    it('should return 504 on error during book creation', async () => {
+      Book.mockImplementationOnce(() => {
+        return {
+          save: jest.fn().mockRejectedValue(new Error('Save failed'))
+        };
+      });
+
+      const res = await request(app)
+        .post('/books/addbook')
+        .send({ isAdmin: true, bookName: 'Fail Book' });
+
+      expect(res.status).toBe(504);
+    });
+  });
+
+  describe('PUT /books/updatebook/:id', () => {
+    it('should deny permission with 403 if user is not admin', async () => {
+      const res = await request(app)
+        .put('/books/updatebook/123')
+        .send({ isAdmin: false, bookName: 'Updated Name' });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('You dont have permission to delete a book!');
+    });
+
+    it('should update book details successfully when user is admin', async () => {
+      Book.findByIdAndUpdate.mockResolvedValue({});
+
+      const updateData = { isAdmin: true, bookName: 'Updated Name' };
+
+      const res = await request(app)
+        .put('/books/updatebook/123')
+        .send(updateData);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Book details updated successfully');
+      expect(Book.findByIdAndUpdate).toHaveBeenCalledWith('123', {
+        $set: updateData
+      });
+    });
+
+    it('should return 504 status on error during update', async () => {
+      Book.findByIdAndUpdate.mockRejectedValue(new Error('Update failed'));
+
+      const res = await request(app)
+        .put('/books/updatebook/123')
+        .send({ isAdmin: true, bookName: 'Updated Name' });
+
+      expect(res.status).toBe(504);
+    });
+  });
+
+  describe('DELETE /books/removebook/:id', () => {
+    it('should deny permission with 403 if user is not admin', async () => {
+      const res = await request(app)
+        .delete('/books/removebook/123')
+        .send({ isAdmin: false });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('You dont have permission to delete a book!');
+    });
+
+    it('should remove book and update category when user is admin', async () => {
+      const mockRemove = jest.fn().mockResolvedValue({});
+      const mockBook = {
+        _id: '123',
+        categories: ['cat1'],
+        remove: mockRemove
+      };
+
+      Book.findOne.mockResolvedValue(mockBook);
+      BookCategory.updateMany.mockResolvedValue({});
+
+      const res = await request(app)
+        .delete('/books/removebook/123')
+        .send({ isAdmin: true });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Book has been deleted');
+      expect(Book.findOne).toHaveBeenCalledWith({ _id: '123' });
+      expect(mockRemove).toHaveBeenCalled();
+      expect(BookCategory.updateMany).toHaveBeenCalledWith(
+        { _id: ['cat1'] },
+        { $pull: { books: '123' } }
+      );
+    });
+
+    it('should return 504 status on error during deletion', async () => {
+      Book.findOne.mockRejectedValue(new Error('Delete Error'));
+
+      const res = await request(app)
+        .delete('/books/removebook/123')
+        .send({ isAdmin: true });
+
+      expect(res.status).toBe(504);
+    });
+  });
+});

@@ -1,0 +1,2070 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 13,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 13,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791350192122,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "getAllProducts"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.countDocuments.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:37:30)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers getAllProducts should return paginated products with correct meta",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return paginated products with correct meta",
+          "startAt": 1791350193133
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "getAllProducts"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.countDocuments.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:66:30)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers getAllProducts should use defaults when query params are missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should use defaults when query params are missing",
+          "startAt": 1791350193149
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "getProductById"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:92:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers getProductById should return product when found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return product when found",
+          "startAt": 1791350193152
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "getProductById"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:103:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers getProductById should throw 404 error when not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should throw 404 error when not found",
+          "startAt": 1791350193155
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "deleteProduct"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:116:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers deleteProduct should delete product and respond with message",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should delete product and respond with message",
+          "startAt": 1791350193157
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "deleteProduct"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:128:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers deleteProduct should throw 404 error when product does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should throw 404 error when product does not exist",
+          "startAt": 1791350193159
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "createProduct"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:142:15)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers createProduct should create a new product and return it with status 201",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create a new product and return it with status 201",
+          "startAt": 1791350193160
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "updateProduct"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:168:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers updateProduct should update fields and return updated product",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should update fields and return updated product",
+          "startAt": 1791350193162
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "updateProduct"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:182:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers updateProduct should throw 404 when product not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should throw 404 when product not found",
+          "startAt": 1791350193163
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "createProductReview"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:207:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers createProductReview should add a new review and respond with success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should add a new review and respond with success",
+          "startAt": 1791350193166
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "createProductReview"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:233:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers createProductReview should not allow duplicate reviews",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should not allow duplicate reviews",
+          "startAt": 1791350193167
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "createProductReview"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:242:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers createProductReview should throw 404 when product not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should throw 404 when product not found",
+          "startAt": 1791350193169
+        },
+        {
+          "ancestorTitles": [
+            "productControllers",
+            "getTopProducts"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Product.find.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:259:20)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productControllers getTopProducts should return top 4 products sorted by rating",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return top 4 products sorted by rating",
+          "startAt": 1791350193170
+        }
+      ],
+      "endTime": 1791350193283,
+      "message": "  ● productControllers › getAllProducts › should return paginated products with correct meta\n\n    TypeError: Product.countDocuments.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 35 |\u001b[39m       \u001b[36mconst\u001b[39m mockProducts \u001b[33m=\u001b[39m [{ name\u001b[33m:\u001b[39m \u001b[32m'Phone 1'\u001b[39m }\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'Phone 2'\u001b[39m }]\u001b[33m;\u001b[39m\n     \u001b[90m 36 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 37 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mcountDocuments\u001b[33m.\u001b[39mmockResolvedValue(mockCount)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 38 |\u001b[39m       \u001b[36mconst\u001b[39m findMock \u001b[33m=\u001b[39m {\n     \u001b[90m 39 |\u001b[39m         limit\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnThis()\u001b[33m,\u001b[39m\n     \u001b[90m 40 |\u001b[39m         skip\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(mockProducts)\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:37:30)\n\n  ● productControllers › getAllProducts › should use defaults when query params are missing\n\n    TypeError: Product.countDocuments.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 64 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n     \u001b[90m 65 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 66 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mcountDocuments\u001b[33m.\u001b[39mmockResolvedValue(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 67 |\u001b[39m       \u001b[36mconst\u001b[39m findMock \u001b[33m=\u001b[39m {\n     \u001b[90m 68 |\u001b[39m         limit\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnThis()\u001b[33m,\u001b[39m\n     \u001b[90m 69 |\u001b[39m         skip\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue([])\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:66:30)\n\n  ● productControllers › getProductById › should return product when found\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 90 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n     \u001b[90m 91 |\u001b[39m       \u001b[36mconst\u001b[39m product \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'123'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'Test'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 92 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(product)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 93 |\u001b[39m\n     \u001b[90m 94 |\u001b[39m       \u001b[36mawait\u001b[39m getProductById(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 95 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:92:24)\n\n  ● productControllers › getProductById › should throw 404 error when not found\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 101 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'123'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 102 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 103 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 104 |\u001b[39m\n     \u001b[90m 105 |\u001b[39m       \u001b[36mawait\u001b[39m expect(getProductById(req\u001b[33m,\u001b[39m res))\u001b[33m.\u001b[39mrejects\u001b[33m.\u001b[39mtoThrow(\u001b[32m'Product not found'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 106 |\u001b[39m       expect(res\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:103:24)\n\n  ● productControllers › deleteProduct › should delete product and respond with message\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 114 |\u001b[39m       \u001b[36mconst\u001b[39m removeMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue()\u001b[33m;\u001b[39m\n     \u001b[90m 115 |\u001b[39m       \u001b[36mconst\u001b[39m product \u001b[33m=\u001b[39m { remove\u001b[33m:\u001b[39m removeMock }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 116 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(product)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 117 |\u001b[39m\n     \u001b[90m 118 |\u001b[39m       \u001b[36mawait\u001b[39m deleteProduct(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 119 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:116:24)\n\n  ● productControllers › deleteProduct › should throw 404 error when product does not exist\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 126 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'abc'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 127 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 128 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 129 |\u001b[39m\n     \u001b[90m 130 |\u001b[39m       \u001b[36mawait\u001b[39m expect(deleteProduct(req\u001b[33m,\u001b[39m res))\u001b[33m.\u001b[39mrejects\u001b[33m.\u001b[39mtoThrow(\u001b[32m'Product not found'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 131 |\u001b[39m       expect(res\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:128:24)\n\n  ● productControllers › createProduct › should create a new product and return it with status 201\n\n    TypeError: Product.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 140 |\u001b[39m       \u001b[36mconst\u001b[39m saveMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue({ _id\u001b[33m:\u001b[39m \u001b[32m'newId'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'Sample'\u001b[39m })\u001b[33m;\u001b[39m\n     \u001b[90m 141 |\u001b[39m       \u001b[90m// Mock the Product constructor to return an object with save()\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 142 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m ({ save\u001b[33m:\u001b[39m saveMock }))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 143 |\u001b[39m\n     \u001b[90m 144 |\u001b[39m       \u001b[36mawait\u001b[39m createProduct(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 145 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:142:15)\n\n  ● productControllers › updateProduct › should update fields and return updated product\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 166 |\u001b[39m       \u001b[36mconst\u001b[39m saveMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue({ _id\u001b[33m:\u001b[39m \u001b[32m'p1'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'New Name'\u001b[39m\u001b[33m,\u001b[39m price\u001b[33m:\u001b[39m \u001b[35m99\u001b[39m })\u001b[33m;\u001b[39m\n     \u001b[90m 167 |\u001b[39m       \u001b[36mconst\u001b[39m product \u001b[33m=\u001b[39m { save\u001b[33m:\u001b[39m saveMock }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 168 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(product)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 169 |\u001b[39m\n     \u001b[90m 170 |\u001b[39m       \u001b[36mawait\u001b[39m updateProduct(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 171 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:168:24)\n\n  ● productControllers › updateProduct › should throw 404 when product not found\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 180 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'missing'\u001b[39m }\u001b[33m,\u001b[39m body\u001b[33m:\u001b[39m {} }\u001b[33m;\u001b[39m\n     \u001b[90m 181 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 182 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 183 |\u001b[39m\n     \u001b[90m 184 |\u001b[39m       \u001b[36mawait\u001b[39m expect(updateProduct(req\u001b[33m,\u001b[39m res))\u001b[33m.\u001b[39mrejects\u001b[33m.\u001b[39mtoThrow(\u001b[32m'Product not available'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 185 |\u001b[39m       expect(res\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:182:24)\n\n  ● productControllers › createProductReview › should add a new review and respond with success\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 205 |\u001b[39m\n     \u001b[90m 206 |\u001b[39m       \u001b[36mconst\u001b[39m productCopy \u001b[33m=\u001b[39m { \u001b[33m...\u001b[39mbaseProduct\u001b[33m,\u001b[39m reviews\u001b[33m:\u001b[39m [] }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 207 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(productCopy)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 208 |\u001b[39m       productCopy\u001b[33m.\u001b[39msave\u001b[33m.\u001b[39mmockResolvedValue(productCopy)\u001b[33m;\u001b[39m\n     \u001b[90m 209 |\u001b[39m\n     \u001b[90m 210 |\u001b[39m       \u001b[36mawait\u001b[39m createProductReview(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:207:24)\n\n  ● productControllers › createProductReview › should not allow duplicate reviews\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 231 |\u001b[39m         save\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m,\u001b[39m\n     \u001b[90m 232 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 233 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(productWithReview)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 234 |\u001b[39m\n     \u001b[90m 235 |\u001b[39m       \u001b[36mawait\u001b[39m expect(createProductReview(req\u001b[33m,\u001b[39m res))\u001b[33m.\u001b[39mrejects\u001b[33m.\u001b[39mtoThrow(\u001b[32m'Product Already Reviewed'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 236 |\u001b[39m       expect(res\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:233:24)\n\n  ● productControllers › createProductReview › should throw 404 when product not found\n\n    TypeError: Product.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 240 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'none'\u001b[39m }\u001b[33m,\u001b[39m body\u001b[33m:\u001b[39m {}\u001b[33m,\u001b[39m user\u001b[33m:\u001b[39m {} }\u001b[33m;\u001b[39m\n     \u001b[90m 241 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 242 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 243 |\u001b[39m\n     \u001b[90m 244 |\u001b[39m       \u001b[36mawait\u001b[39m expect(createProductReview(req\u001b[33m,\u001b[39m res))\u001b[33m.\u001b[39mrejects\u001b[33m.\u001b[39mtoThrow(\u001b[32m'Product not available'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 245 |\u001b[39m       expect(res\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:242:24)\n\n  ● productControllers › getTopProducts › should return top 4 products sorted by rating\n\n    TypeError: Product.find.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 257 |\u001b[39m         limit\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(topProducts)\u001b[33m,\u001b[39m\n     \u001b[90m 258 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 259 |\u001b[39m       \u001b[33mProduct\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValue(findMock)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 260 |\u001b[39m\n     \u001b[90m 261 |\u001b[39m       \u001b[36mawait\u001b[39m getTopProducts(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 262 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js:259:20)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\Rajatm544__MERN-Ecommerce__productControllers_gpt-oss-120b_trial3.test.js",
+      "startTime": 1791350192254,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\Rajatm544__MERN-Ecommerce\\backend\\models\\productModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\Rajatm544__MERN-Ecommerce\\backend\\models\\productModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 22
+          },
+          "end": {
+            "line": 17,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 19,
+            "column": 22
+          },
+          "end": {
+            "line": 72,
+            "column": 1
+          }
+        },
+        "2": {
+          "start": {
+            "line": 74,
+            "column": 16
+          },
+          "end": {
+            "line": 74,
+            "column": 56
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "2c5bd389d9bbae0542f135e33566c381cc6c905a"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\Rajatm544__MERN-Ecommerce\\backend\\controllers\\productControllers.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\Rajatm544__MERN-Ecommerce\\backend\\controllers\\productControllers.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 7,
+            "column": 23
+          },
+          "end": {
+            "line": 30,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 8,
+            "column": 14
+          },
+          "end": {
+            "line": 8,
+            "column": 47
+          }
+        },
+        "2": {
+          "start": {
+            "line": 9,
+            "column": 18
+          },
+          "end": {
+            "line": 9,
+            "column": 50
+          }
+        },
+        "3": {
+          "start": {
+            "line": 12,
+            "column": 17
+          },
+          "end": {
+            "line": 19,
+            "column": 6
+          }
+        },
+        "4": {
+          "start": {
+            "line": 20,
+            "column": 15
+          },
+          "end": {
+            "line": 20,
+            "column": 59
+          }
+        },
+        "5": {
+          "start": {
+            "line": 24,
+            "column": 18
+          },
+          "end": {
+            "line": 26,
+            "column": 30
+          }
+        },
+        "6": {
+          "start": {
+            "line": 29,
+            "column": 1
+          },
+          "end": {
+            "line": 29,
+            "column": 66
+          }
+        },
+        "7": {
+          "start": {
+            "line": 35,
+            "column": 23
+          },
+          "end": {
+            "line": 43,
+            "column": 2
+          }
+        },
+        "8": {
+          "start": {
+            "line": 36,
+            "column": 17
+          },
+          "end": {
+            "line": 36,
+            "column": 54
+          }
+        },
+        "9": {
+          "start": {
+            "line": 37,
+            "column": 1
+          },
+          "end": {
+            "line": 42,
+            "column": 2
+          }
+        },
+        "10": {
+          "start": {
+            "line": 37,
+            "column": 14
+          },
+          "end": {
+            "line": 37,
+            "column": 32
+          }
+        },
+        "11": {
+          "start": {
+            "line": 40,
+            "column": 2
+          },
+          "end": {
+            "line": 40,
+            "column": 18
+          }
+        },
+        "12": {
+          "start": {
+            "line": 41,
+            "column": 2
+          },
+          "end": {
+            "line": 41,
+            "column": 39
+          }
+        },
+        "13": {
+          "start": {
+            "line": 48,
+            "column": 22
+          },
+          "end": {
+            "line": 58,
+            "column": 2
+          }
+        },
+        "14": {
+          "start": {
+            "line": 49,
+            "column": 17
+          },
+          "end": {
+            "line": 49,
+            "column": 54
+          }
+        },
+        "15": {
+          "start": {
+            "line": 50,
+            "column": 1
+          },
+          "end": {
+            "line": 57,
+            "column": 2
+          }
+        },
+        "16": {
+          "start": {
+            "line": 51,
+            "column": 2
+          },
+          "end": {
+            "line": 51,
+            "column": 25
+          }
+        },
+        "17": {
+          "start": {
+            "line": 52,
+            "column": 2
+          },
+          "end": {
+            "line": 52,
+            "column": 51
+          }
+        },
+        "18": {
+          "start": {
+            "line": 55,
+            "column": 2
+          },
+          "end": {
+            "line": 55,
+            "column": 18
+          }
+        },
+        "19": {
+          "start": {
+            "line": 56,
+            "column": 2
+          },
+          "end": {
+            "line": 56,
+            "column": 39
+          }
+        },
+        "20": {
+          "start": {
+            "line": 63,
+            "column": 22
+          },
+          "end": {
+            "line": 78,
+            "column": 2
+          }
+        },
+        "21": {
+          "start": {
+            "line": 65,
+            "column": 17
+          },
+          "end": {
+            "line": 75,
+            "column": 3
+          }
+        },
+        "22": {
+          "start": {
+            "line": 76,
+            "column": 24
+          },
+          "end": {
+            "line": 76,
+            "column": 44
+          }
+        },
+        "23": {
+          "start": {
+            "line": 77,
+            "column": 1
+          },
+          "end": {
+            "line": 77,
+            "column": 38
+          }
+        },
+        "24": {
+          "start": {
+            "line": 83,
+            "column": 22
+          },
+          "end": {
+            "line": 113,
+            "column": 2
+          }
+        },
+        "25": {
+          "start": {
+            "line": 93,
+            "column": 5
+          },
+          "end": {
+            "line": 93,
+            "column": 13
+          }
+        },
+        "26": {
+          "start": {
+            "line": 94,
+            "column": 17
+          },
+          "end": {
+            "line": 94,
+            "column": 54
+          }
+        },
+        "27": {
+          "start": {
+            "line": 97,
+            "column": 1
+          },
+          "end": {
+            "line": 112,
+            "column": 2
+          }
+        },
+        "28": {
+          "start": {
+            "line": 98,
+            "column": 2
+          },
+          "end": {
+            "line": 98,
+            "column": 32
+          }
+        },
+        "29": {
+          "start": {
+            "line": 98,
+            "column": 12
+          },
+          "end": {
+            "line": 98,
+            "column": 32
+          }
+        },
+        "30": {
+          "start": {
+            "line": 99,
+            "column": 2
+          },
+          "end": {
+            "line": 99,
+            "column": 35
+          }
+        },
+        "31": {
+          "start": {
+            "line": 99,
+            "column": 13
+          },
+          "end": {
+            "line": 99,
+            "column": 35
+          }
+        },
+        "32": {
+          "start": {
+            "line": 100,
+            "column": 2
+          },
+          "end": {
+            "line": 100,
+            "column": 35
+          }
+        },
+        "33": {
+          "start": {
+            "line": 100,
+            "column": 13
+          },
+          "end": {
+            "line": 100,
+            "column": 35
+          }
+        },
+        "34": {
+          "start": {
+            "line": 101,
+            "column": 2
+          },
+          "end": {
+            "line": 101,
+            "column": 44
+          }
+        },
+        "35": {
+          "start": {
+            "line": 101,
+            "column": 16
+          },
+          "end": {
+            "line": 101,
+            "column": 44
+          }
+        },
+        "36": {
+          "start": {
+            "line": 102,
+            "column": 2
+          },
+          "end": {
+            "line": 102,
+            "column": 50
+          }
+        },
+        "37": {
+          "start": {
+            "line": 102,
+            "column": 18
+          },
+          "end": {
+            "line": 102,
+            "column": 50
+          }
+        },
+        "38": {
+          "start": {
+            "line": 103,
+            "column": 2
+          },
+          "end": {
+            "line": 103,
+            "column": 56
+          }
+        },
+        "39": {
+          "start": {
+            "line": 103,
+            "column": 20
+          },
+          "end": {
+            "line": 103,
+            "column": 56
+          }
+        },
+        "40": {
+          "start": {
+            "line": 104,
+            "column": 2
+          },
+          "end": {
+            "line": 104,
+            "column": 53
+          }
+        },
+        "41": {
+          "start": {
+            "line": 104,
+            "column": 19
+          },
+          "end": {
+            "line": 104,
+            "column": 53
+          }
+        },
+        "42": {
+          "start": {
+            "line": 105,
+            "column": 2
+          },
+          "end": {
+            "line": 105,
+            "column": 35
+          }
+        },
+        "43": {
+          "start": {
+            "line": 105,
+            "column": 13
+          },
+          "end": {
+            "line": 105,
+            "column": 35
+          }
+        },
+        "44": {
+          "start": {
+            "line": 107,
+            "column": 25
+          },
+          "end": {
+            "line": 107,
+            "column": 45
+          }
+        },
+        "45": {
+          "start": {
+            "line": 108,
+            "column": 2
+          },
+          "end": {
+            "line": 108,
+            "column": 59
+          }
+        },
+        "46": {
+          "start": {
+            "line": 108,
+            "column": 22
+          },
+          "end": {
+            "line": 108,
+            "column": 59
+          }
+        },
+        "47": {
+          "start": {
+            "line": 110,
+            "column": 2
+          },
+          "end": {
+            "line": 110,
+            "column": 18
+          }
+        },
+        "48": {
+          "start": {
+            "line": 111,
+            "column": 2
+          },
+          "end": {
+            "line": 111,
+            "column": 43
+          }
+        },
+        "49": {
+          "start": {
+            "line": 118,
+            "column": 28
+          },
+          "end": {
+            "line": 151,
+            "column": 2
+          }
+        },
+        "50": {
+          "start": {
+            "line": 119,
+            "column": 28
+          },
+          "end": {
+            "line": 119,
+            "column": 36
+          }
+        },
+        "51": {
+          "start": {
+            "line": 120,
+            "column": 17
+          },
+          "end": {
+            "line": 120,
+            "column": 54
+          }
+        },
+        "52": {
+          "start": {
+            "line": 121,
+            "column": 1
+          },
+          "end": {
+            "line": 150,
+            "column": 2
+          }
+        },
+        "53": {
+          "start": {
+            "line": 123,
+            "column": 26
+          },
+          "end": {
+            "line": 125,
+            "column": 3
+          }
+        },
+        "54": {
+          "start": {
+            "line": 124,
+            "column": 12
+          },
+          "end": {
+            "line": 124,
+            "column": 59
+          }
+        },
+        "55": {
+          "start": {
+            "line": 126,
+            "column": 2
+          },
+          "end": {
+            "line": 129,
+            "column": 3
+          }
+        },
+        "56": {
+          "start": {
+            "line": 127,
+            "column": 3
+          },
+          "end": {
+            "line": 127,
+            "column": 19
+          }
+        },
+        "57": {
+          "start": {
+            "line": 128,
+            "column": 3
+          },
+          "end": {
+            "line": 128,
+            "column": 47
+          }
+        },
+        "58": {
+          "start": {
+            "line": 131,
+            "column": 20
+          },
+          "end": {
+            "line": 137,
+            "column": 3
+          }
+        },
+        "59": {
+          "start": {
+            "line": 140,
+            "column": 2
+          },
+          "end": {
+            "line": 140,
+            "column": 34
+          }
+        },
+        "60": {
+          "start": {
+            "line": 141,
+            "column": 2
+          },
+          "end": {
+            "line": 141,
+            "column": 46
+          }
+        },
+        "61": {
+          "start": {
+            "line": 142,
+            "column": 2
+          },
+          "end": {
+            "line": 144,
+            "column": 22
+          }
+        },
+        "62": {
+          "start": {
+            "line": 143,
+            "column": 40
+          },
+          "end": {
+            "line": 143,
+            "column": 56
+          }
+        },
+        "63": {
+          "start": {
+            "line": 145,
+            "column": 25
+          },
+          "end": {
+            "line": 145,
+            "column": 45
+          }
+        },
+        "64": {
+          "start": {
+            "line": 146,
+            "column": 2
+          },
+          "end": {
+            "line": 146,
+            "column": 72
+          }
+        },
+        "65": {
+          "start": {
+            "line": 146,
+            "column": 22
+          },
+          "end": {
+            "line": 146,
+            "column": 72
+          }
+        },
+        "66": {
+          "start": {
+            "line": 148,
+            "column": 2
+          },
+          "end": {
+            "line": 148,
+            "column": 18
+          }
+        },
+        "67": {
+          "start": {
+            "line": 149,
+            "column": 2
+          },
+          "end": {
+            "line": 149,
+            "column": 43
+          }
+        },
+        "68": {
+          "start": {
+            "line": 156,
+            "column": 23
+          },
+          "end": {
+            "line": 160,
+            "column": 2
+          }
+        },
+        "69": {
+          "start": {
+            "line": 158,
+            "column": 21
+          },
+          "end": {
+            "line": 158,
+            "column": 73
+          }
+        },
+        "70": {
+          "start": {
+            "line": 159,
+            "column": 1
+          },
+          "end": {
+            "line": 159,
+            "column": 23
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 7,
+              "column": 36
+            },
+            "end": {
+              "line": 7,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 56
+            },
+            "end": {
+              "line": 30,
+              "column": 1
+            }
+          },
+          "line": 7
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 35,
+              "column": 36
+            },
+            "end": {
+              "line": 35,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 35,
+              "column": 56
+            },
+            "end": {
+              "line": 43,
+              "column": 1
+            }
+          },
+          "line": 35
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 48,
+              "column": 35
+            },
+            "end": {
+              "line": 48,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 48,
+              "column": 55
+            },
+            "end": {
+              "line": 58,
+              "column": 1
+            }
+          },
+          "line": 48
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 63,
+              "column": 35
+            },
+            "end": {
+              "line": 63,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 63,
+              "column": 55
+            },
+            "end": {
+              "line": 78,
+              "column": 1
+            }
+          },
+          "line": 63
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 83,
+              "column": 35
+            },
+            "end": {
+              "line": 83,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 83,
+              "column": 55
+            },
+            "end": {
+              "line": 113,
+              "column": 1
+            }
+          },
+          "line": 83
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 118,
+              "column": 41
+            },
+            "end": {
+              "line": 118,
+              "column": 42
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 118,
+              "column": 61
+            },
+            "end": {
+              "line": 151,
+              "column": 1
+            }
+          },
+          "line": 118
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 124,
+              "column": 3
+            },
+            "end": {
+              "line": 124,
+              "column": 4
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 124,
+              "column": 12
+            },
+            "end": {
+              "line": 124,
+              "column": 59
+            }
+          },
+          "line": 124
+        },
+        "7": {
+          "name": "(anonymous_7)",
+          "decl": {
+            "start": {
+              "line": 143,
+              "column": 26
+            },
+            "end": {
+              "line": 143,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 143,
+              "column": 40
+            },
+            "end": {
+              "line": 143,
+              "column": 56
+            }
+          },
+          "line": 143
+        },
+        "8": {
+          "name": "(anonymous_8)",
+          "decl": {
+            "start": {
+              "line": 156,
+              "column": 36
+            },
+            "end": {
+              "line": 156,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 156,
+              "column": 56
+            },
+            "end": {
+              "line": 160,
+              "column": 1
+            }
+          },
+          "line": 156
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 14
+            },
+            "end": {
+              "line": 8,
+              "column": 47
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 8,
+                "column": 14
+              },
+              "end": {
+                "line": 8,
+                "column": 42
+              }
+            },
+            {
+              "start": {
+                "line": 8,
+                "column": 46
+              },
+              "end": {
+                "line": 8,
+                "column": 47
+              }
+            }
+          ],
+          "line": 8
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 18
+            },
+            "end": {
+              "line": 9,
+              "column": 50
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 9,
+                "column": 18
+              },
+              "end": {
+                "line": 9,
+                "column": 44
+              }
+            },
+            {
+              "start": {
+                "line": 9,
+                "column": 48
+              },
+              "end": {
+                "line": 9,
+                "column": 50
+              }
+            }
+          ],
+          "line": 9
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 17
+            },
+            "end": {
+              "line": 19,
+              "column": 6
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 13,
+                "column": 4
+              },
+              "end": {
+                "line": 18,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 19,
+                "column": 4
+              },
+              "end": {
+                "line": 19,
+                "column": 6
+              }
+            }
+          ],
+          "line": 12
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 37,
+              "column": 1
+            },
+            "end": {
+              "line": 42,
+              "column": 2
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 37,
+                "column": 1
+              },
+              "end": {
+                "line": 42,
+                "column": 2
+              }
+            },
+            {
+              "start": {
+                "line": 38,
+                "column": 6
+              },
+              "end": {
+                "line": 42,
+                "column": 2
+              }
+            }
+          ],
+          "line": 37
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 50,
+              "column": 1
+            },
+            "end": {
+              "line": 57,
+              "column": 2
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 50,
+                "column": 1
+              },
+              "end": {
+                "line": 57,
+                "column": 2
+              }
+            },
+            {
+              "start": {
+                "line": 53,
+                "column": 8
+              },
+              "end": {
+                "line": 57,
+                "column": 2
+              }
+            }
+          ],
+          "line": 50
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 97,
+              "column": 1
+            },
+            "end": {
+              "line": 112,
+              "column": 2
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 97,
+                "column": 1
+              },
+              "end": {
+                "line": 112,
+                "column": 2
+              }
+            },
+            {
+              "start": {
+                "line": 109,
+                "column": 8
+              },
+              "end": {
+                "line": 112,
+                "column": 2
+              }
+            }
+          ],
+          "line": 97
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 98,
+              "column": 2
+            },
+            "end": {
+              "line": 98,
+              "column": 32
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 98,
+                "column": 2
+              },
+              "end": {
+                "line": 98,
+                "column": 32
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 98
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 99,
+              "column": 2
+            },
+            "end": {
+              "line": 99,
+              "column": 35
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 99,
+                "column": 2
+              },
+              "end": {
+                "line": 99,
+                "column": 35
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 99
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 100,
+              "column": 2
+            },
+            "end": {
+              "line": 100,
+              "column": 35
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 100,
+                "column": 2
+              },
+              "end": {
+                "line": 100,
+                "column": 35
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 100
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 101,
+              "column": 2
+            },
+            "end": {
+              "line": 101,
+              "column": 44
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 101,
+                "column": 2
+              },
+              "end": {
+                "line": 101,
+                "column": 44
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 101
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 102,
+              "column": 2
+            },
+            "end": {
+              "line": 102,
+              "column": 50
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 102,
+                "column": 2
+              },
+              "end": {
+                "line": 102,
+                "column": 50
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 102
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 103,
+              "column": 2
+            },
+            "end": {
+              "line": 103,
+              "column": 56
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 103,
+                "column": 2
+              },
+              "end": {
+                "line": 103,
+                "column": 56
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 103
+        },
+        "12": {
+          "loc": {
+            "start": {
+              "line": 104,
+              "column": 2
+            },
+            "end": {
+              "line": 104,
+              "column": 53
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 104,
+                "column": 2
+              },
+              "end": {
+                "line": 104,
+                "column": 53
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 104
+        },
+        "13": {
+          "loc": {
+            "start": {
+              "line": 105,
+              "column": 2
+            },
+            "end": {
+              "line": 105,
+              "column": 35
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 105,
+                "column": 2
+              },
+              "end": {
+                "line": 105,
+                "column": 35
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 105
+        },
+        "14": {
+          "loc": {
+            "start": {
+              "line": 108,
+              "column": 2
+            },
+            "end": {
+              "line": 108,
+              "column": 59
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 108,
+                "column": 2
+              },
+              "end": {
+                "line": 108,
+                "column": 59
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 108
+        },
+        "15": {
+          "loc": {
+            "start": {
+              "line": 121,
+              "column": 1
+            },
+            "end": {
+              "line": 150,
+              "column": 2
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 121,
+                "column": 1
+              },
+              "end": {
+                "line": 150,
+                "column": 2
+              }
+            },
+            {
+              "start": {
+                "line": 147,
+                "column": 8
+              },
+              "end": {
+                "line": 150,
+                "column": 2
+              }
+            }
+          ],
+          "line": 121
+        },
+        "16": {
+          "loc": {
+            "start": {
+              "line": 126,
+              "column": 2
+            },
+            "end": {
+              "line": 129,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 126,
+                "column": 2
+              },
+              "end": {
+                "line": 129,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 126
+        },
+        "17": {
+          "loc": {
+            "start": {
+              "line": 146,
+              "column": 2
+            },
+            "end": {
+              "line": 146,
+              "column": 72
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 146,
+                "column": 2
+              },
+              "end": {
+                "line": 146,
+                "column": 72
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 146
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 1,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 1,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 1,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 0,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0,
+        "35": 0,
+        "36": 0,
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0,
+        "43": 0,
+        "44": 0,
+        "45": 0,
+        "46": 0,
+        "47": 0,
+        "48": 0,
+        "49": 1,
+        "50": 0,
+        "51": 0,
+        "52": 0,
+        "53": 0,
+        "54": 0,
+        "55": 0,
+        "56": 0,
+        "57": 0,
+        "58": 0,
+        "59": 0,
+        "60": 0,
+        "61": 0,
+        "62": 0,
+        "63": 0,
+        "64": 0,
+        "65": 0,
+        "66": 0,
+        "67": 0,
+        "68": 1,
+        "69": 0,
+        "70": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ],
+        "3": [
+          0,
+          0
+        ],
+        "4": [
+          0,
+          0
+        ],
+        "5": [
+          0,
+          0
+        ],
+        "6": [
+          0,
+          0
+        ],
+        "7": [
+          0,
+          0
+        ],
+        "8": [
+          0,
+          0
+        ],
+        "9": [
+          0,
+          0
+        ],
+        "10": [
+          0,
+          0
+        ],
+        "11": [
+          0,
+          0
+        ],
+        "12": [
+          0,
+          0
+        ],
+        "13": [
+          0,
+          0
+        ],
+        "14": [
+          0,
+          0
+        ],
+        "15": [
+          0,
+          0
+        ],
+        "16": [
+          0,
+          0
+        ],
+        "17": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "fb457c2a954d9878e3ede29cc4f1f4cea3967e6f"
+    }
+  }
+}

@@ -1,0 +1,1870 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 5,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 10,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 15,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177431983,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "register"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:58:17)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controllers register should register a new user and return token",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should register a new user and return token",
+          "startAt": 1791177433878
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "register"
+          ],
+          "duration": 5,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers register should respond with 400 if user already exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should respond with 400 if user already exists",
+          "startAt": 1791177433888
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "login"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers login should login valid user and set cookie",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should login valid user and set cookie",
+          "startAt": 1791177433893
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "login"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers login should respond with message when user does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should respond with message when user does not exist",
+          "startAt": 1791177433897
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "login"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers login should respond with invalid credentials when password mismatch",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should respond with invalid credentials when password mismatch",
+          "startAt": 1791177433898
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "validUser"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers validUser should return user data when found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return user data when found",
+          "startAt": 1791177433900
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "validUser"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers validUser should respond with message when user not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should respond with message when user not found",
+          "startAt": 1791177433902
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "googleAuth"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: OAuth2Client.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:181:20)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusHook (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1136:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1097:5)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controllers googleAuth should login existing google user",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should login existing google user",
+          "startAt": 1791177433903
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "googleAuth"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: OAuth2Client.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:181:20)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusHook (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1136:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1097:5)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controllers googleAuth should register new google user when not existing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should register new google user when not existing",
+          "startAt": 1791177433905
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "googleAuth"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: OAuth2Client.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:181:20)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusHook (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1136:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1097:5)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controllers googleAuth should respond with message when email not verified",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should respond with message when email not verified",
+          "startAt": 1791177433906
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "logout"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers logout should filter out the current token from user tokens",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should filter out the current token from user tokens",
+          "startAt": 1791177433908
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "searchUsers"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: {\"_id\": {\"$ne\": \"myId\"}}\n\nNumber of calls: 0",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\nExpected: {\"_id\": {\"$ne\": \"myId\"}}\n\nNumber of calls: 0\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:281:25)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "User Controllers searchUsers should return filtered users based on query",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return filtered users based on query",
+          "startAt": 1791177433909
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "searchUsers"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers searchUsers should return all other users when no search query",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return all other users when no search query",
+          "startAt": 1791177433914
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "getUserById"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers getUserById should return user data for given id",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return user data for given id",
+          "startAt": 1791177433915
+        },
+        {
+          "ancestorTitles": [
+            "User Controllers",
+            "updateInfo"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "User Controllers updateInfo should call findByIdAndUpdate and return updated user",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should call findByIdAndUpdate and return updated user",
+          "startAt": 1791177433916
+        }
+      ],
+      "endTime": 1791177433977,
+      "message": "  ● User Controllers › register › should register a new user and return token\n\n    TypeError: userModel.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 56 |\u001b[39m         generateAuthToken\u001b[33m:\u001b[39m generateTokenMock\u001b[33m,\u001b[39m\n     \u001b[90m 57 |\u001b[39m       }))\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 58 |\u001b[39m       userModel\u001b[33m.\u001b[39mmockImplementation(\u001b[33mUserMock\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 59 |\u001b[39m\n     \u001b[90m 60 |\u001b[39m       \u001b[36mawait\u001b[39m register(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 61 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:58:17)\n\n  ● User Controllers › googleAuth › should login existing google user\n\n    TypeError: OAuth2Client.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 179 |\u001b[39m\n     \u001b[90m 180 |\u001b[39m     beforeEach(() \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 181 |\u001b[39m       \u001b[33mOAuth2Client\u001b[39m\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m ({\n     \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 182 |\u001b[39m         verifyIdToken\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue({ payload })\u001b[33m,\u001b[39m\n     \u001b[90m 183 |\u001b[39m       }))\u001b[33m;\u001b[39m\n     \u001b[90m 184 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:181:20)\n\n  ● User Controllers › googleAuth › should register new google user when not existing\n\n    TypeError: OAuth2Client.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 179 |\u001b[39m\n     \u001b[90m 180 |\u001b[39m     beforeEach(() \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 181 |\u001b[39m       \u001b[33mOAuth2Client\u001b[39m\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m ({\n     \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 182 |\u001b[39m         verifyIdToken\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue({ payload })\u001b[33m,\u001b[39m\n     \u001b[90m 183 |\u001b[39m       }))\u001b[33m;\u001b[39m\n     \u001b[90m 184 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:181:20)\n\n  ● User Controllers › googleAuth › should respond with message when email not verified\n\n    TypeError: OAuth2Client.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 179 |\u001b[39m\n     \u001b[90m 180 |\u001b[39m     beforeEach(() \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 181 |\u001b[39m       \u001b[33mOAuth2Client\u001b[39m\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m ({\n     \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 182 |\u001b[39m         verifyIdToken\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue({ payload })\u001b[33m,\u001b[39m\n     \u001b[90m 183 |\u001b[39m       }))\u001b[33m;\u001b[39m\n     \u001b[90m 184 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:181:20)\n\n  ● User Controllers › searchUsers › should return filtered users based on query\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    Expected: {\"_id\": {\"$ne\": \"myId\"}}\n\n    Number of calls: 0\n\n    \u001b[0m \u001b[90m 279 |\u001b[39m         ]\u001b[33m,\u001b[39m\n     \u001b[90m 280 |\u001b[39m       })\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 281 |\u001b[39m       expect(findFinal)\u001b[33m.\u001b[39mtoHaveBeenCalledWith({ _id\u001b[33m:\u001b[39m { $ne\u001b[33m:\u001b[39m \u001b[32m'myId'\u001b[39m } })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 282 |\u001b[39m       expect(res\u001b[33m.\u001b[39mstatus)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[35m200\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 283 |\u001b[39m       expect(res\u001b[33m.\u001b[39msend)\u001b[33m.\u001b[39mtoHaveBeenCalledWith([\u001b[32m'u1'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'u2'\u001b[39m])\u001b[33m;\u001b[39m\n     \u001b[90m 284 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js:281:25)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__user_gpt-oss-120b_trial1.test.js",
+      "startTime": 1791177432108,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\models\\userModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\models\\userModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 19
+          },
+          "end": {
+            "line": 37,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 38,
+            "column": 0
+          },
+          "end": {
+            "line": 43,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 39,
+            "column": 2
+          },
+          "end": {
+            "line": 41,
+            "column": 3
+          }
+        },
+        "3": {
+          "start": {
+            "line": 40,
+            "column": 4
+          },
+          "end": {
+            "line": 40,
+            "column": 57
+          }
+        },
+        "4": {
+          "start": {
+            "line": 42,
+            "column": 2
+          },
+          "end": {
+            "line": 42,
+            "column": 9
+          }
+        },
+        "5": {
+          "start": {
+            "line": 44,
+            "column": 0
+          },
+          "end": {
+            "line": 58,
+            "column": 2
+          }
+        },
+        "6": {
+          "start": {
+            "line": 45,
+            "column": 2
+          },
+          "end": {
+            "line": 57,
+            "column": 3
+          }
+        },
+        "7": {
+          "start": {
+            "line": 46,
+            "column": 16
+          },
+          "end": {
+            "line": 52,
+            "column": 5
+          }
+        },
+        "8": {
+          "start": {
+            "line": 54,
+            "column": 4
+          },
+          "end": {
+            "line": 54,
+            "column": 17
+          }
+        },
+        "9": {
+          "start": {
+            "line": 56,
+            "column": 4
+          },
+          "end": {
+            "line": 56,
+            "column": 48
+          }
+        },
+        "10": {
+          "start": {
+            "line": 60,
+            "column": 18
+          },
+          "end": {
+            "line": 60,
+            "column": 52
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 38,
+              "column": 23
+            },
+            "end": {
+              "line": 38,
+              "column": 24
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 38,
+              "column": 45
+            },
+            "end": {
+              "line": 43,
+              "column": 1
+            }
+          },
+          "line": 38
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 44,
+              "column": 39
+            },
+            "end": {
+              "line": 44,
+              "column": 40
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 44,
+              "column": 57
+            },
+            "end": {
+              "line": 58,
+              "column": 1
+            }
+          },
+          "line": 44
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 39,
+              "column": 2
+            },
+            "end": {
+              "line": 41,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 39,
+                "column": 2
+              },
+              "end": {
+                "line": 41,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 39
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "e689f51dad121915b77be3395547fc8c15bda0e8"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\controllers\\user.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\controllers\\user.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 24
+          },
+          "end": {
+            "line": 19,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 51
+          },
+          "end": {
+            "line": 5,
+            "column": 59
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 2
+          },
+          "end": {
+            "line": 18,
+            "column": 3
+          }
+        },
+        "3": {
+          "start": {
+            "line": 7,
+            "column": 25
+          },
+          "end": {
+            "line": 7,
+            "column": 54
+          }
+        },
+        "4": {
+          "start": {
+            "line": 8,
+            "column": 4
+          },
+          "end": {
+            "line": 9,
+            "column": 67
+          }
+        },
+        "5": {
+          "start": {
+            "line": 9,
+            "column": 6
+          },
+          "end": {
+            "line": 9,
+            "column": 67
+          }
+        },
+        "6": {
+          "start": {
+            "line": 10,
+            "column": 21
+          },
+          "end": {
+            "line": 10,
+            "column": 47
+          }
+        },
+        "7": {
+          "start": {
+            "line": 11,
+            "column": 20
+          },
+          "end": {
+            "line": 11,
+            "column": 65
+          }
+        },
+        "8": {
+          "start": {
+            "line": 12,
+            "column": 18
+          },
+          "end": {
+            "line": 12,
+            "column": 51
+          }
+        },
+        "9": {
+          "start": {
+            "line": 13,
+            "column": 4
+          },
+          "end": {
+            "line": 13,
+            "column": 25
+          }
+        },
+        "10": {
+          "start": {
+            "line": 14,
+            "column": 4
+          },
+          "end": {
+            "line": 14,
+            "column": 51
+          }
+        },
+        "11": {
+          "start": {
+            "line": 16,
+            "column": 4
+          },
+          "end": {
+            "line": 16,
+            "column": 46
+          }
+        },
+        "12": {
+          "start": {
+            "line": 17,
+            "column": 4
+          },
+          "end": {
+            "line": 17,
+            "column": 32
+          }
+        },
+        "13": {
+          "start": {
+            "line": 20,
+            "column": 21
+          },
+          "end": {
+            "line": 40,
+            "column": 1
+          }
+        },
+        "14": {
+          "start": {
+            "line": 21,
+            "column": 30
+          },
+          "end": {
+            "line": 21,
+            "column": 38
+          }
+        },
+        "15": {
+          "start": {
+            "line": 22,
+            "column": 2
+          },
+          "end": {
+            "line": 39,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 23,
+            "column": 18
+          },
+          "end": {
+            "line": 23,
+            "column": 47
+          }
+        },
+        "17": {
+          "start": {
+            "line": 24,
+            "column": 4
+          },
+          "end": {
+            "line": 24,
+            "column": 69
+          }
+        },
+        "18": {
+          "start": {
+            "line": 24,
+            "column": 16
+          },
+          "end": {
+            "line": 24,
+            "column": 69
+          }
+        },
+        "19": {
+          "start": {
+            "line": 25,
+            "column": 26
+          },
+          "end": {
+            "line": 25,
+            "column": 72
+          }
+        },
+        "20": {
+          "start": {
+            "line": 26,
+            "column": 4
+          },
+          "end": {
+            "line": 36,
+            "column": 5
+          }
+        },
+        "21": {
+          "start": {
+            "line": 27,
+            "column": 6
+          },
+          "end": {
+            "line": 27,
+            "column": 63
+          }
+        },
+        "22": {
+          "start": {
+            "line": 29,
+            "column": 20
+          },
+          "end": {
+            "line": 29,
+            "column": 51
+          }
+        },
+        "23": {
+          "start": {
+            "line": 30,
+            "column": 6
+          },
+          "end": {
+            "line": 30,
+            "column": 25
+          }
+        },
+        "24": {
+          "start": {
+            "line": 31,
+            "column": 6
+          },
+          "end": {
+            "line": 34,
+            "column": 9
+          }
+        },
+        "25": {
+          "start": {
+            "line": 35,
+            "column": 6
+          },
+          "end": {
+            "line": 35,
+            "column": 58
+          }
+        },
+        "26": {
+          "start": {
+            "line": 38,
+            "column": 4
+          },
+          "end": {
+            "line": 38,
+            "column": 43
+          }
+        },
+        "27": {
+          "start": {
+            "line": 41,
+            "column": 25
+          },
+          "end": {
+            "line": 55,
+            "column": 1
+          }
+        },
+        "28": {
+          "start": {
+            "line": 42,
+            "column": 2
+          },
+          "end": {
+            "line": 54,
+            "column": 3
+          }
+        },
+        "29": {
+          "start": {
+            "line": 43,
+            "column": 22
+          },
+          "end": {
+            "line": 45,
+            "column": 26
+          }
+        },
+        "30": {
+          "start": {
+            "line": 46,
+            "column": 4
+          },
+          "end": {
+            "line": 46,
+            "column": 63
+          }
+        },
+        "31": {
+          "start": {
+            "line": 46,
+            "column": 20
+          },
+          "end": {
+            "line": 46,
+            "column": 63
+          }
+        },
+        "32": {
+          "start": {
+            "line": 47,
+            "column": 4
+          },
+          "end": {
+            "line": 50,
+            "column": 7
+          }
+        },
+        "33": {
+          "start": {
+            "line": 52,
+            "column": 4
+          },
+          "end": {
+            "line": 52,
+            "column": 43
+          }
+        },
+        "34": {
+          "start": {
+            "line": 53,
+            "column": 4
+          },
+          "end": {
+            "line": 53,
+            "column": 23
+          }
+        },
+        "35": {
+          "start": {
+            "line": 56,
+            "column": 26
+          },
+          "end": {
+            "line": 94,
+            "column": 1
+          }
+        },
+        "36": {
+          "start": {
+            "line": 57,
+            "column": 2
+          },
+          "end": {
+            "line": 93,
+            "column": 3
+          }
+        },
+        "37": {
+          "start": {
+            "line": 58,
+            "column": 24
+          },
+          "end": {
+            "line": 58,
+            "column": 32
+          }
+        },
+        "38": {
+          "start": {
+            "line": 59,
+            "column": 19
+          },
+          "end": {
+            "line": 59,
+            "column": 58
+          }
+        },
+        "39": {
+          "start": {
+            "line": 60,
+            "column": 19
+          },
+          "end": {
+            "line": 63,
+            "column": 6
+          }
+        },
+        "40": {
+          "start": {
+            "line": 64,
+            "column": 53
+          },
+          "end": {
+            "line": 64,
+            "column": 67
+          }
+        },
+        "41": {
+          "start": {
+            "line": 65,
+            "column": 4
+          },
+          "end": {
+            "line": 65,
+            "column": 69
+          }
+        },
+        "42": {
+          "start": {
+            "line": 65,
+            "column": 25
+          },
+          "end": {
+            "line": 65,
+            "column": 69
+          }
+        },
+        "43": {
+          "start": {
+            "line": 66,
+            "column": 22
+          },
+          "end": {
+            "line": 66,
+            "column": 71
+          }
+        },
+        "44": {
+          "start": {
+            "line": 67,
+            "column": 4
+          },
+          "end": {
+            "line": 89,
+            "column": 5
+          }
+        },
+        "45": {
+          "start": {
+            "line": 68,
+            "column": 6
+          },
+          "end": {
+            "line": 71,
+            "column": 9
+          }
+        },
+        "46": {
+          "start": {
+            "line": 72,
+            "column": 6
+          },
+          "end": {
+            "line": 72,
+            "column": 64
+          }
+        },
+        "47": {
+          "start": {
+            "line": 74,
+            "column": 23
+          },
+          "end": {
+            "line": 74,
+            "column": 52
+          }
+        },
+        "48": {
+          "start": {
+            "line": 75,
+            "column": 22
+          },
+          "end": {
+            "line": 80,
+            "column": 8
+          }
+        },
+        "49": {
+          "start": {
+            "line": 81,
+            "column": 6
+          },
+          "end": {
+            "line": 81,
+            "column": 27
+          }
+        },
+        "50": {
+          "start": {
+            "line": 82,
+            "column": 6
+          },
+          "end": {
+            "line": 85,
+            "column": 9
+          }
+        },
+        "51": {
+          "start": {
+            "line": 86,
+            "column": 6
+          },
+          "end": {
+            "line": 88,
+            "column": 75
+          }
+        },
+        "52": {
+          "start": {
+            "line": 91,
+            "column": 4
+          },
+          "end": {
+            "line": 91,
+            "column": 43
+          }
+        },
+        "53": {
+          "start": {
+            "line": 92,
+            "column": 4
+          },
+          "end": {
+            "line": 92,
+            "column": 55
+          }
+        },
+        "54": {
+          "start": {
+            "line": 96,
+            "column": 22
+          },
+          "end": {
+            "line": 98,
+            "column": 1
+          }
+        },
+        "55": {
+          "start": {
+            "line": 97,
+            "column": 2
+          },
+          "end": {
+            "line": 97,
+            "column": 80
+          }
+        },
+        "56": {
+          "start": {
+            "line": 97,
+            "column": 58
+          },
+          "end": {
+            "line": 97,
+            "column": 78
+          }
+        },
+        "57": {
+          "start": {
+            "line": 99,
+            "column": 27
+          },
+          "end": {
+            "line": 112,
+            "column": 1
+          }
+        },
+        "58": {
+          "start": {
+            "line": 101,
+            "column": 17
+          },
+          "end": {
+            "line": 108,
+            "column": 8
+          }
+        },
+        "59": {
+          "start": {
+            "line": 110,
+            "column": 16
+          },
+          "end": {
+            "line": 110,
+            "column": 78
+          }
+        },
+        "60": {
+          "start": {
+            "line": 111,
+            "column": 2
+          },
+          "end": {
+            "line": 111,
+            "column": 30
+          }
+        },
+        "61": {
+          "start": {
+            "line": 113,
+            "column": 27
+          },
+          "end": {
+            "line": 121,
+            "column": 1
+          }
+        },
+        "62": {
+          "start": {
+            "line": 114,
+            "column": 17
+          },
+          "end": {
+            "line": 114,
+            "column": 27
+          }
+        },
+        "63": {
+          "start": {
+            "line": 115,
+            "column": 2
+          },
+          "end": {
+            "line": 120,
+            "column": 3
+          }
+        },
+        "64": {
+          "start": {
+            "line": 116,
+            "column": 25
+          },
+          "end": {
+            "line": 116,
+            "column": 76
+          }
+        },
+        "65": {
+          "start": {
+            "line": 117,
+            "column": 4
+          },
+          "end": {
+            "line": 117,
+            "column": 39
+          }
+        },
+        "66": {
+          "start": {
+            "line": 119,
+            "column": 4
+          },
+          "end": {
+            "line": 119,
+            "column": 43
+          }
+        },
+        "67": {
+          "start": {
+            "line": 122,
+            "column": 26
+          },
+          "end": {
+            "line": 127,
+            "column": 1
+          }
+        },
+        "68": {
+          "start": {
+            "line": 123,
+            "column": 17
+          },
+          "end": {
+            "line": 123,
+            "column": 27
+          }
+        },
+        "69": {
+          "start": {
+            "line": 124,
+            "column": 24
+          },
+          "end": {
+            "line": 124,
+            "column": 32
+          }
+        },
+        "70": {
+          "start": {
+            "line": 125,
+            "column": 22
+          },
+          "end": {
+            "line": 125,
+            "column": 69
+          }
+        },
+        "71": {
+          "start": {
+            "line": 126,
+            "column": 2
+          },
+          "end": {
+            "line": 126,
+            "column": 21
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 4,
+              "column": 24
+            },
+            "end": {
+              "line": 4,
+              "column": 25
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 44
+            },
+            "end": {
+              "line": 19,
+              "column": 1
+            }
+          },
+          "line": 4
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 20,
+              "column": 21
+            },
+            "end": {
+              "line": 20,
+              "column": 22
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 41
+            },
+            "end": {
+              "line": 40,
+              "column": 1
+            }
+          },
+          "line": 20
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 41,
+              "column": 25
+            },
+            "end": {
+              "line": 41,
+              "column": 26
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 41,
+              "column": 45
+            },
+            "end": {
+              "line": 55,
+              "column": 1
+            }
+          },
+          "line": 41
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 56,
+              "column": 26
+            },
+            "end": {
+              "line": 56,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 56,
+              "column": 46
+            },
+            "end": {
+              "line": 94,
+              "column": 1
+            }
+          },
+          "line": 56
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 96,
+              "column": 22
+            },
+            "end": {
+              "line": 96,
+              "column": 23
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 96,
+              "column": 36
+            },
+            "end": {
+              "line": 98,
+              "column": 1
+            }
+          },
+          "line": 96
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 97,
+              "column": 51
+            },
+            "end": {
+              "line": 97,
+              "column": 52
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 97,
+              "column": 58
+            },
+            "end": {
+              "line": 97,
+              "column": 78
+            }
+          },
+          "line": 97
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 99,
+              "column": 27
+            },
+            "end": {
+              "line": 99,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 99,
+              "column": 47
+            },
+            "end": {
+              "line": 112,
+              "column": 1
+            }
+          },
+          "line": 99
+        },
+        "7": {
+          "name": "(anonymous_7)",
+          "decl": {
+            "start": {
+              "line": 113,
+              "column": 27
+            },
+            "end": {
+              "line": 113,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 113,
+              "column": 47
+            },
+            "end": {
+              "line": 121,
+              "column": 1
+            }
+          },
+          "line": 113
+        },
+        "8": {
+          "name": "(anonymous_8)",
+          "decl": {
+            "start": {
+              "line": 122,
+              "column": 26
+            },
+            "end": {
+              "line": 122,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 122,
+              "column": 46
+            },
+            "end": {
+              "line": 127,
+              "column": 1
+            }
+          },
+          "line": 122
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 4
+            },
+            "end": {
+              "line": 9,
+              "column": 67
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 8,
+                "column": 4
+              },
+              "end": {
+                "line": 9,
+                "column": 67
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 8
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 24,
+              "column": 4
+            },
+            "end": {
+              "line": 24,
+              "column": 69
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 24,
+                "column": 4
+              },
+              "end": {
+                "line": 24,
+                "column": 69
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 24
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 26,
+              "column": 4
+            },
+            "end": {
+              "line": 36,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 26,
+                "column": 4
+              },
+              "end": {
+                "line": 36,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 28,
+                "column": 11
+              },
+              "end": {
+                "line": 36,
+                "column": 5
+              }
+            }
+          ],
+          "line": 26
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 46,
+              "column": 4
+            },
+            "end": {
+              "line": 46,
+              "column": 63
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 46,
+                "column": 4
+              },
+              "end": {
+                "line": 46,
+                "column": 63
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 46
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 65,
+              "column": 4
+            },
+            "end": {
+              "line": 65,
+              "column": 69
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 65,
+                "column": 4
+              },
+              "end": {
+                "line": 65,
+                "column": 69
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 65
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 67,
+              "column": 4
+            },
+            "end": {
+              "line": 89,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 67,
+                "column": 4
+              },
+              "end": {
+                "line": 89,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 73,
+                "column": 11
+              },
+              "end": {
+                "line": 89,
+                "column": 5
+              }
+            }
+          ],
+          "line": 67
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 101,
+              "column": 17
+            },
+            "end": {
+              "line": 108,
+              "column": 8
+            }
+          },
+          "type": "cond-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 102,
+                "column": 6
+              },
+              "end": {
+                "line": 107,
+                "column": 7
+              }
+            },
+            {
+              "start": {
+                "line": 108,
+                "column": 6
+              },
+              "end": {
+                "line": 108,
+                "column": 8
+              }
+            }
+          ],
+          "line": 101
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 1,
+        "14": 3,
+        "15": 3,
+        "16": 3,
+        "17": 3,
+        "18": 1,
+        "19": 3,
+        "20": 2,
+        "21": 1,
+        "22": 1,
+        "23": 1,
+        "24": 1,
+        "25": 1,
+        "26": 1,
+        "27": 1,
+        "28": 2,
+        "29": 2,
+        "30": 2,
+        "31": 1,
+        "32": 2,
+        "33": 0,
+        "34": 0,
+        "35": 1,
+        "36": 0,
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0,
+        "43": 0,
+        "44": 0,
+        "45": 0,
+        "46": 0,
+        "47": 0,
+        "48": 0,
+        "49": 0,
+        "50": 0,
+        "51": 0,
+        "52": 0,
+        "53": 0,
+        "54": 1,
+        "55": 1,
+        "56": 2,
+        "57": 1,
+        "58": 2,
+        "59": 2,
+        "60": 2,
+        "61": 1,
+        "62": 1,
+        "63": 1,
+        "64": 1,
+        "65": 1,
+        "66": 0,
+        "67": 1,
+        "68": 1,
+        "69": 1,
+        "70": 1,
+        "71": 1
+      },
+      "f": {
+        "0": 1,
+        "1": 3,
+        "2": 2,
+        "3": 0,
+        "4": 1,
+        "5": 2,
+        "6": 2,
+        "7": 1,
+        "8": 1
+      },
+      "b": {
+        "0": [
+          1,
+          0
+        ],
+        "1": [
+          1,
+          2
+        ],
+        "2": [
+          1,
+          1
+        ],
+        "3": [
+          1,
+          1
+        ],
+        "4": [
+          0,
+          0
+        ],
+        "5": [
+          0,
+          0
+        ],
+        "6": [
+          1,
+          1
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "3d9a17fd053db153b94735093391826b0b7a7268"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+```javascript
+import {
+  customerDataRequest,
+  customerRedact,
+  shopRedact,
+} from '../dataset/external/kinngh__shopify-node-express-mongodb-app/server/controllers/gdpr.js';
+
+describe('GDPR Controllers', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('customerDataRequest', () => {
+    it('should return success true on normal execution', async () => {
+      const result = await customerDataRequest(
+        'CUSTOMER_DATA_REQUEST',
+        'test-shop.myshopify.com',
+        { dummy: true }
+      );
+      expect(result).toEqual({ success: true });
+    });
+
+    it('should return success false when console.log throws', async () => {
+      jest.spyOn(console, 'log').mockImplementation(() => {
+        throw new Error('log error');
+      });
+
+      const result = await customerDataRequest(
+        'CUSTOMER_DATA_REQUEST',
+        'test-shop.myshopify.com',
+        { dummy: true }
+      );
+      expect(result).toEqual({ success: false });
+    });
+  });
+
+  describe('customerRedact', () => {
+    it('should return success true on normal execution', async () => {
+      const result = await customerRedact(
+        'CUSTOMER_REDACT',
+        'test-shop.myshopify.com',
+        { dummy: true }
+      );
+      expect(result).toEqual({ success: true });
+    });
+
+    it('should return success false when console.log throws', async () => {
+      jest.spyOn(console, 'log').mockImplementation(() => {
+        throw new Error('log error');
+      });
+
+      const result = await customerRedact(
+        'CUSTOMER_REDACT',
+        'test-shop.myshopify.com',
+        { dummy: true }
+      );
+      expect(result).toEqual({ success: false });
+    });
+  });
+
+  describe('shopRedact', () => {
+    it('should return success true on normal execution', async () => {
+      const result = await shopRedact(
+        'SHOP_REDACT',
+        'test-shop.myshopify.com',
+        { dummy: true }
+      );
+      expect(result).toEqual({ success: true });
+    });
+
+    it('should return success false when console.log throws', async () => {
+      jest.spyOn(console, 'log').mockImplementation(() => {
+        throw new Error('log error');
+      });
+
+      const result = await shopRedact(
+        'SHOP_REDACT',
+        'test-shop.myshopify.com',
+        { dummy: true }
+      );
+      expect(result).toEqual({ success: false });
+    });
+  });
+});
+```

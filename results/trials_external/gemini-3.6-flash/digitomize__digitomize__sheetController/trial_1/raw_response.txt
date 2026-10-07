@@ -1,0 +1,385 @@
+```javascript
+import { jest } from "@jest/globals";
+
+// Mock dependencies before imports
+jest.unstable_mockModule(
+  "../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/sheetModel.js",
+  () => {
+    const mockModel = jest.fn().mockImplementation((data) => ({
+      ...data,
+      save: jest.fn().mockResolvedValue({ _id: "mock_id", ...data }),
+    }));
+    mockModel.findOne = jest.fn();
+    mockModel.find = jest.fn();
+    mockModel.deleteOne = jest.fn();
+    return { default: mockModel };
+  }
+);
+
+jest.unstable_mockModule(
+  "../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js",
+  () => ({
+    getQuestionByQId: jest.fn(),
+  })
+);
+
+// Dynamically import target and mocked modules
+const { default: SheetModel } = await import(
+  "../dataset/external/digitomize__digitomize/backend/DSA_sheets/models/sheetModel.js"
+);
+const { getQuestionByQId } = await import(
+  "../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js"
+);
+const {
+  createSheet,
+  removeSheet,
+  getSheets,
+  addQuestions,
+  removeQuestion,
+} = await import(
+  "../dataset/external/digitomize__digitomize/backend/DSA_sheets/controllers/sheetController.js"
+);
+
+describe("sheetController", () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.spyOn(console, "error").mockImplementation(() => {});
+
+    req = {
+      body: {},
+      params: {},
+    };
+
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+  });
+
+  afterEach(() => {
+    console.error.mockRestore();
+  });
+
+  describe("createSheet", () => {
+    it("should return 400 if required fields are missing", async () => {
+      req.body = { name: "Sheet 1", s_id: "s1" }; // missing desc and questions
+
+      await createSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Bad Request",
+        message:
+          "Missing required fields. Please provide name, s_id, desc, and questions.",
+      });
+    });
+
+    it("should create a sheet successfully and return 201", async () => {
+      req.body = {
+        name: "Striver SDE Sheet",
+        s_id: "striver-sde",
+        desc: "DSA Practice",
+        questions: ["q1", "q2"],
+      };
+
+      await createSheet(req, res);
+
+      expect(SheetModel).toHaveBeenCalledWith(req.body);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        _id: "mock_id",
+        ...req.body,
+      });
+    });
+
+    it("should return 500 when an error occurs during creation", async () => {
+      req.body = {
+        name: "Sheet 1",
+        s_id: "s1",
+        desc: "Desc",
+        questions: [],
+      };
+
+      SheetModel.mockImplementationOnce(() => ({
+        save: jest.fn().mockRejectedValue(new Error("Database error")),
+      }));
+
+      await createSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal Server Error",
+        message: "An unexpected error occurred. Please try again later.",
+      });
+    });
+  });
+
+  describe("removeSheet", () => {
+    it("should return 400 if s_id is missing", async () => {
+      req.body = {};
+
+      await removeSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Bad Request",
+        message: "Missing required fields. Please provide s_id.",
+      });
+    });
+
+    it("should return 404 if sheet is not found", async () => {
+      req.body = { s_id: "nonexistent_s_id" };
+      SheetModel.findOne.mockResolvedValue(null);
+
+      await removeSheet(req, res);
+
+      expect(SheetModel.findOne).toHaveBeenCalledWith({ s_id: "nonexistent_s_id" });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Not Found",
+        message: "Sheet not found.",
+      });
+    });
+
+    it("should remove sheet successfully and return 200", async () => {
+      req.body = { s_id: "s1" };
+      SheetModel.findOne.mockResolvedValue({ s_id: "s1" });
+      SheetModel.deleteOne.mockResolvedValue({ deletedCount: 1 });
+
+      await removeSheet(req, res);
+
+      expect(SheetModel.deleteOne).toHaveBeenCalledWith({ s_id: "s1" });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "Sheet removed successfully.",
+      });
+    });
+
+    it("should return 500 if an error occurs during removal", async () => {
+      req.body = { s_id: "s1" };
+      SheetModel.findOne.mockRejectedValue(new Error("Database failure"));
+
+      await removeSheet(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal Server Error",
+        message: "An unexpected error occurred. Please try again later.",
+      });
+    });
+  });
+
+  describe("getSheets", () => {
+    it("should fetch all sheets with question details successfully and return 200", async () => {
+      const mockSheet = {
+        name: "Sheet 1",
+        s_id: "s1",
+        questions: ["q1", "q2"],
+        toObject: jest.fn().mockReturnValue({
+          name: "Sheet 1",
+          s_id: "s1",
+          questions: ["q1", "q2"],
+        }),
+      };
+
+      SheetModel.find.mockResolvedValue([mockSheet]);
+      getQuestionByQId
+        .mockResolvedValueOnce({ q_id: "q1", title: "Two Sum" })
+        .mockResolvedValueOnce({ q_id: "q2", title: "3Sum" });
+
+      await getSheets(req, res);
+
+      expect(SheetModel.find).toHaveBeenCalled();
+      expect(getQuestionByQId).toHaveBeenCalledWith({ params: { q_id: "q1" } });
+      expect(getQuestionByQId).toHaveBeenCalledWith({ params: { q_id: "q2" } });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        count: 1,
+        sheets: [
+          {
+            name: "Sheet 1",
+            s_id: "s1",
+            questions: [
+              { q_id: "q1", title: "Two Sum" },
+              { q_id: "q2", title: "3Sum" },
+            ],
+          },
+        ],
+      });
+    });
+
+    it("should return 500 if an error occurs while fetching sheets", async () => {
+      SheetModel.find.mockRejectedValue(new Error("Database failure"));
+
+      await getSheets(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal Server Error",
+        message: "An unexpected error occurred. Please try again later.",
+      });
+    });
+  });
+
+  describe("addQuestions", () => {
+    it("should return 400 if s_id or q_ids are invalid/missing", async () => {
+      req.body = { s_id: "s1", q_ids: [] }; // empty q_ids array
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Bad Request",
+        message:
+          "Invalid or missing required fields. Please provide s_id and a non-empty array of q_ids.",
+      });
+    });
+
+    it("should return 404 if the sheet is not found", async () => {
+      req.body = { s_id: "s1", q_ids: ["q10"] };
+      SheetModel.findOne.mockResolvedValue(null);
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Not Found",
+        message: "Sheet not found.",
+      });
+    });
+
+    it("should return 409 if any question already exists in the sheet", async () => {
+      req.body = { s_id: "s1", q_ids: ["q1", "q3"] };
+      const sheet = {
+        s_id: "s1",
+        questions: ["q1", "q2"],
+      };
+      SheetModel.findOne.mockResolvedValue(sheet);
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Conflict",
+        message: "Questions with the following q_ids already exist in the sheet: q1.",
+      });
+    });
+
+    it("should add new questions to the sheet and return 200", async () => {
+      req.body = { s_id: "s1", q_ids: ["q3", "q4"] };
+      const sheet = {
+        s_id: "s1",
+        questions: ["q1", "q2"],
+        save: jest.fn().mockResolvedValue(true),
+      };
+      SheetModel.findOne.mockResolvedValue(sheet);
+
+      await addQuestions(req, res);
+
+      expect(sheet.questions).toEqual(["q1", "q2", "q3", "q4"]);
+      expect(sheet.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "Questions added to the sheet successfully.",
+        sheet,
+      });
+    });
+
+    it("should return 500 if an error occurs", async () => {
+      req.body = { s_id: "s1", q_ids: ["q3"] };
+      SheetModel.findOne.mockRejectedValue(new Error("Database failure"));
+
+      await addQuestions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal Server Error",
+        message: "An unexpected error occurred. Please try again later.",
+      });
+    });
+  });
+
+  describe("removeQuestion", () => {
+    it("should return 400 if s_id or q_id is missing", async () => {
+      req.body = { s_id: "s1" }; // missing q_id
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Bad Request",
+        message: "Missing required fields. Please provide s_id and q_id.",
+      });
+    });
+
+    it("should return 404 if sheet is not found", async () => {
+      req.body = { s_id: "s1", q_id: "q1" };
+      SheetModel.findOne.mockResolvedValue(null);
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Not Found",
+        message: "Sheet not found.",
+      });
+    });
+
+    it("should return 404 if question is not in the sheet", async () => {
+      req.body = { s_id: "s1", q_id: "q99" };
+      const sheet = {
+        s_id: "s1",
+        questions: ["q1", "q2"],
+      };
+      SheetModel.findOne.mockResolvedValue(sheet);
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Not Found",
+        message: "Question not found in the sheet.",
+      });
+    });
+
+    it("should remove question from the sheet and return 200", async () => {
+      req.body = { s_id: "s1", q_id: "q1" };
+      const sheet = {
+        s_id: "s1",
+        questions: ["q1", "q2"],
+        save: jest.fn().mockResolvedValue(true),
+      };
+      SheetModel.findOne.mockResolvedValue(sheet);
+
+      await removeQuestion(req, res);
+
+      expect(sheet.questions).toEqual(["q2"]);
+      expect(sheet.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "Question removed from the sheet successfully.",
+        sheet,
+      });
+    });
+
+    it("should return 500 if an error occurs", async () => {
+      req.body = { s_id: "s1", q_id: "q1" };
+      SheetModel.findOne.mockRejectedValue(new Error("Database error"));
+
+      await removeQuestion(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal Server Error",
+        message: "An unexpected error occurred. Please try again later.",
+      });
+    });
+  });
+});
+```

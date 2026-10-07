@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "panshak__accountill__invoices",
+  "targetFilename": "external/panshak__accountill/server/controllers/invoices.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:11:04.597Z",
+  "finishedAt": "2026-10-05T05:11:16.512Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 14,
+  "testsTotal": 14,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 16.28,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 17.07,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 749,
+    "completionTokens": 3870,
+    "totalTokens": 4619,
+    "reasoningTokens": 1854
+  },
+  "latencyMs": 8793
+}

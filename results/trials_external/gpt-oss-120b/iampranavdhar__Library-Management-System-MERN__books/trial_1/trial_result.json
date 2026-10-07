@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "iampranavdhar__Library-Management-System-MERN__books",
+  "targetFilename": "external/iampranavdhar__Library-Management-System-MERN/backend/routes/books.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:03:31.988Z",
+  "finishedAt": "2026-10-05T05:03:39.235Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 907,
+    "completionTokens": 2303,
+    "totalTokens": 3210,
+    "reasoningTokens": 840
+  },
+  "latencyMs": 5395
+}

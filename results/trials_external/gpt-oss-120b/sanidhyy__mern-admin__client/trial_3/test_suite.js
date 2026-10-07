@@ -1,0 +1,227 @@
+import { jest } from '@jest/globals';
+import {
+  getProducts,
+  getCustomers,
+  getTransactions,
+  getGeography,
+} from '../dataset/external/sanidhyy__mern-admin/server/controllers/client.js';
+
+// Mock models
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/Product.js', () => ({
+  __esModule: true,
+  default: { find: jest.fn() },
+}));
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/ProductStat.js', () => ({
+  __esModule: true,
+  default: { find: jest.fn() },
+}));
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/User.js', () => ({
+  __esModule: true,
+  default: { find: jest.fn(), select: jest.fn() },
+}));
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/Transaction.js', () => ({
+  __esModule: true,
+  default: { find: jest.fn(), countDocuments: jest.fn() },
+}));
+
+// Mock external lib
+jest.mock('country-iso-2-to-3', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+import Product from '../dataset/external/sanidhyy__mern-admin/server/models/Product.js';
+import ProductStat from '../dataset/external/sanidhyy__mern-admin/server/models/ProductStat.js';
+import User from '../dataset/external/sanidhyy__mern-admin/server/models/User.js';
+import Transaction from '../dataset/external/sanidhyy__mern-admin/server/models/Transaction.js';
+import getCountryISO3 from 'country-iso-2-to-3';
+
+const createRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('getProducts', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return products with their stats', async () => {
+    const mockProducts = [
+      { _id: 'p1', _doc: { name: 'Prod1', _id: 'p1' } },
+      { _id: 'p2', _doc: { name: 'Prod2', _id: 'p2' } },
+    ];
+    const mockStats = [{ value: 10 }, { value: 20 }];
+
+    Product.find.mockResolvedValue(mockProducts);
+    ProductStat.find.mockImplementation(({ productId }) => {
+      const idx = mockProducts.findIndex((p) => p._id === productId);
+      return Promise.resolve([mockStats[idx]]);
+    });
+
+    const res = createRes();
+    await getProducts(null, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith([
+      { name: 'Prod1', _id: 'p1', stat: [{ value: 10 }] },
+      { name: 'Prod2', _id: 'p2', stat: [{ value: 20 }] },
+    ]);
+    expect(Product.find).toHaveBeenCalledTimes(1);
+    expect(ProductStat.find).toHaveBeenCalledTimes(2);
+  });
+
+  it('should handle errors', async () => {
+    Product.find.mockRejectedValue(new Error('db fail'));
+
+    const res = createRes();
+    await getProducts(null, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: 'db fail' });
+  });
+});
+
+describe('getCustomers', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return users with role user without passwords', async () => {
+    const mockUsers = [{ _id: 'u1', name: 'Alice' }, { _id: 'u2', name: 'Bob' }];
+    User.find.mockReturnValue({
+      select: jest.fn().mockResolvedValue(mockUsers),
+    });
+
+    const res = createRes();
+    await getCustomers({}, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockUsers);
+    expect(User.find).toHaveBeenCalledWith({ role: 'user' });
+  });
+
+  it('should handle errors', async () => {
+    User.find.mockImplementation(() => ({
+      select: jest.fn().mockRejectedValue(new Error('boom')),
+    }));
+
+    const res = createRes();
+    await getCustomers({}, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: 'boom' });
+  });
+});
+
+describe('getTransactions', () => {
+  const mockTransactions = [{ _id: 't1' }, { _id: 't2' }];
+  const mockTotal = 42;
+
+  const mockChain = {
+    sort: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    limit: jest.fn().mockResolvedValue(mockTransactions),
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return paginated, sorted, searched transactions and total count', async () => {
+    const query = {
+      page: '0',
+      pageSize: '2',
+      sort: JSON.stringify({ field: 'cost', sort: 'desc' }),
+      search: 'abc',
+    };
+
+    Transaction.find.mockReturnValue(mockChain);
+    Transaction.countDocuments.mockResolvedValue(mockTotal);
+
+    const res = createRes();
+    await getTransactions({ query }, res);
+
+    // verify search regex handling via lodash escapeRegExp (real function)
+    expect(Transaction.find).toHaveBeenCalledWith(
+      expect.objectContaining({
+        $or: expect.arrayContaining([
+          { cost: { $regex: expect.any(RegExp) } },
+          { userId: { $regex: expect.any(RegExp) } },
+        ]),
+      })
+    );
+
+    // verify sort object passed
+    expect(mockChain.sort).toHaveBeenCalledWith({ cost: -1 });
+    expect(mockChain.skip).toHaveBeenCalledWith(0); // page * pageSize
+    expect(mockChain.limit).toHaveBeenCalledWith(2);
+
+    expect(Transaction.countDocuments).toHaveBeenCalledWith({
+      name: { $regex: 'abc', $options: 'i' },
+    });
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      transactions: mockTransactions,
+      total: mockTotal,
+    });
+  });
+
+  it('should handle errors', async () => {
+    Transaction.find.mockImplementation(() => {
+      throw new Error('fail');
+    });
+
+    const res = createRes();
+    await getTransactions({ query: {} }, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: 'fail' });
+  });
+});
+
+describe('getGeography', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should map country codes to ISO3 and count occurrences', async () => {
+    const users = [
+      { country: 'US' },
+      { country: 'IN' },
+      { country: 'US' },
+    ];
+    User.find.mockResolvedValue(users);
+
+    getCountryISO3.mockImplementation((code) => {
+      const map = { US: 'USA', IN: 'IND' };
+      return map[code] || code;
+    });
+
+    const res = createRes();
+    await getGeography({}, res);
+
+    expect(User.find).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(200);
+    // Order of entries is not guaranteed; compare as sets
+    const expected = [
+      { id: 'USA', value: 2 },
+      { id: 'IND', value: 1 },
+    ];
+    expect(res.json).toHaveBeenCalledWith(expect.arrayContaining(expected));
+    expect(res.json.mock.calls[0][0]).toHaveLength(2);
+  });
+
+  it('should handle errors', async () => {
+    User.find.mockRejectedValue(new Error('oops'));
+
+    const res = createRes();
+    await getGeography({}, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: 'oops' });
+  });
+});

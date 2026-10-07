@@ -1,0 +1,105 @@
+import { jest } from '@jest/globals';
+import {
+  customerDataRequest,
+  customerRedact,
+  shopRedact,
+} from '../dataset/external/kinngh__shopify-node-express-mongodb-app/server/controllers/gdpr.js';
+
+describe('customerDataRequest', () => {
+  const topic = 'CUSTOMER_DATA_REQUEST';
+  const shop = 'example.myshopify.com';
+  const body = {
+    shop_id: 123,
+    shop_domain: shop,
+    orders_requested: [1, 2],
+    customer: { id: 1, email: 'a@b.com', phone: '123' },
+    data_request: { id: 111 },
+  };
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('returns success true on normal execution', async () => {
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const result = await customerDataRequest(topic, shop, body);
+    expect(result).toEqual({ success: true });
+    expect(logSpy).toHaveBeenCalledTimes(2);
+    expect(logSpy).toHaveBeenCalledWith(`Handle ${topic} for ${shop}`);
+    expect(logSpy).toHaveBeenCalledWith(body);
+  });
+
+  it('returns success false when console.log throws', async () => {
+    const error = new Error('log failure');
+    jest.spyOn(console, 'log').mockImplementation(() => {
+      throw error;
+    });
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const result = await customerDataRequest(topic, shop, body);
+    expect(result).toEqual({ success: false });
+    expect(errSpy).toHaveBeenCalledWith(error);
+  });
+});
+
+describe('customerRedact', () => {
+  const topic = 'CUSTOMER_REDACT';
+  const shop = 'example.myshopify.com';
+  const body = {
+    shop_id: 123,
+    shop_domain: shop,
+    customer: { id: 1, email: 'a@b.com', phone: '123' },
+    orders_to_redact: [1, 2],
+  };
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('returns success true on normal execution', async () => {
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const result = await customerRedact(topic, shop, body);
+    expect(result).toEqual({ success: true });
+    expect(logSpy).toHaveBeenCalledTimes(2);
+    expect(logSpy).toHaveBeenCalledWith(`Handle ${topic} for ${shop}`);
+  });
+
+  it('returns success false when an error occurs', async () => {
+    const error = new Error('boom');
+    jest.spyOn(console, 'log').mockImplementation(() => {
+      throw error;
+    });
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const result = await customerRedact(topic, shop, body);
+    expect(result).toEqual({ success: false });
+    expect(errSpy).toHaveBeenCalledWith(error);
+  });
+});
+
+describe('shopRedact', () => {
+  const topic = 'SHOP_REDACT';
+  const shop = 'example.myshopify.com';
+  const body = { shop_id: 123, shop_domain: shop };
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('returns success true on normal execution', async () => {
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const result = await shopRedact(topic, shop, body);
+    expect(result).toEqual({ success: true });
+    expect(logSpy).toHaveBeenCalledTimes(2);
+    expect(logSpy).toHaveBeenCalledWith(`Handle ${topic} for ${shop}`);
+  });
+
+  it('returns success false when console.log throws', async () => {
+    const error = new Error('log error');
+    jest.spyOn(console, 'log').mockImplementation(() => {
+      throw error;
+    });
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const result = await shopRedact(topic, shop, body);
+    expect(result).toEqual({ success: false });
+    expect(errSpy).toHaveBeenCalledWith(error);
+  });
+});

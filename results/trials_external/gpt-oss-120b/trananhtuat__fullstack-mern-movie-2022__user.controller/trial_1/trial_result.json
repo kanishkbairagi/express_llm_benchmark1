@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "trananhtuat__fullstack-mern-movie-2022__user.controller",
+  "targetFilename": "external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/user.controller.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:18:11.780Z",
+  "finishedAt": "2026-10-05T05:18:25.748Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 14,
+  "testsTotal": 14,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 8.7,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 10,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 741,
+    "completionTokens": 3684,
+    "totalTokens": 4425,
+    "reasoningTokens": 1792
+  },
+  "latencyMs": 8190
+}

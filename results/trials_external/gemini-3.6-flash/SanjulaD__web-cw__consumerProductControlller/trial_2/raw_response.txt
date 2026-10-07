@@ -1,0 +1,172 @@
+```javascript
+import { jest } from '@jest/globals';
+import ConsumerProducts from '../dataset/external/SanjulaD__web-cw/backend/models/consumerProductModel.js';
+import {
+    getConsumerProducts,
+    getConsumerProductById,
+    deleteConsumerProduct,
+    createConsumer,
+    updateConsumer
+} from '../dataset/external/SanjulaD__web-cw/backend/controllers/consumerProductControlller.js';
+
+jest.mock('../dataset/external/SanjulaD__web-cw/backend/models/consumerProductModel.js');
+
+describe('Consumer Product Controller', () => {
+    let req;
+    let res;
+    let next;
+
+    beforeEach(() => {
+        req = {
+            params: {},
+            body: {},
+            user: {}
+        };
+        res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn().mockReturnThis()
+        };
+        next = jest.fn();
+        jest.clearAllMocks();
+    });
+
+    describe('getConsumerProducts', () => {
+        it('should fetch all products and return json res', async () => {
+            const mockProducts = [{ name: 'Prod 1' }, { name: 'Prod 2' }];
+            ConsumerProducts.find.mockResolvedValue(mockProducts);
+
+            await getConsumerProducts(req, res, next);
+
+            expect(ConsumerProducts.find).toHaveBeenCalledWith({});
+            expect(res.json).toHaveBeenCalledWith(mockProducts);
+        });
+    });
+
+    describe('getConsumerProductById', () => {
+        it('should fetch product by id and return json res', async () => {
+            req.params.id = '123';
+            const mockProduct = { _id: '123', name: 'Prod 1' };
+            ConsumerProducts.findById.mockResolvedValue(mockProduct);
+
+            await getConsumerProductById(req, res, next);
+
+            expect(ConsumerProducts.findById).toHaveBeenCalledWith('123');
+            expect(res.json).toHaveBeenCalledWith(mockProduct);
+        });
+
+        it('should return 404 status and error via next if product not found', async () => {
+            req.params.id = 'invalid_id';
+            ConsumerProducts.findById.mockResolvedValue(null);
+
+            await getConsumerProductById(req, res, next);
+
+            expect(ConsumerProducts.findById).toHaveBeenCalledWith('invalid_id');
+            expect(res.status).toHaveBeenCalledWith(404);
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
+            expect(next.mock.calls[0][0].message).toBe('Consumer Product not Found');
+        });
+    });
+
+    describe('deleteConsumerProduct', () => {
+        it('should delete product and return success message if product exists', async () => {
+            req.params.id = '123';
+            const mockProduct = {
+                _id: '123',
+                remove: jest.fn().mockResolvedValue(true)
+            };
+            ConsumerProducts.findById.mockResolvedValue(mockProduct);
+
+            await deleteConsumerProduct(req, res, next);
+
+            expect(ConsumerProducts.findById).toHaveBeenCalledWith('123');
+            expect(mockProduct.remove).toHaveBeenCalled();
+            expect(res.json).toHaveBeenCalledWith({ message: 'Consumer product removed' });
+        });
+
+        it('should return 404 status and error via next if product to delete not found', async () => {
+            req.params.id = 'invalid_id';
+            ConsumerProducts.findById.mockResolvedValue(null);
+
+            await deleteConsumerProduct(req, res, next);
+
+            expect(ConsumerProducts.findById).toHaveBeenCalledWith('invalid_id');
+            expect(res.status).toHaveBeenCalledWith(404);
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
+            expect(next.mock.calls[0][0].message).toBe('Consumer Product not Found');
+        });
+    });
+
+    describe('createConsumer', () => {
+        it('should create new consumer product and return status 201 with created product', async () => {
+            req.user = { _id: 'user123' };
+            const mockCreatedProduct = {
+                prod_name: 'Sample name',
+                user: 'user123',
+                seller_name: 'Sample seller',
+                image: '/images/consumer/mogra_rice.jpg',
+                price: 0,
+                prod_size: '0kg',
+                quantity: 0,
+                avalaible_location: 'Sample location'
+            };
+
+            ConsumerProducts.prototype.save = jest.fn().mockResolvedValue(mockCreatedProduct);
+
+            await createConsumer(req, res, next);
+
+            expect(res.status).toHaveBeenCalledWith(201);
+            expect(res.json).toHaveBeenCalledWith(mockCreatedProduct);
+        });
+    });
+
+    describe('updateConsumer', () => {
+        it('should update product and return updated consumer product', async () => {
+            req.params.id = '123';
+            req.body = {
+                prod_name: 'Updated Name',
+                price: 100,
+                image: '/updated.jpg',
+                seller_name: 'Updated Seller',
+                prod_size: '5kg',
+                quantity: 10,
+                avalaible_location: 'Updated Location'
+            };
+
+            const mockProduct = {
+                _id: '123',
+                save: jest.fn().mockImplementation(function() {
+                    return Promise.resolve(this);
+                })
+            };
+
+            ConsumerProducts.findById.mockResolvedValue(mockProduct);
+
+            await updateConsumer(req, res, next);
+
+            expect(ConsumerProducts.findById).toHaveBeenCalledWith('123');
+            expect(mockProduct.prod_name).toBe('Updated Name');
+            expect(mockProduct.price).toBe(100);
+            expect(mockProduct.image).toBe('/updated.jpg');
+            expect(mockProduct.seller_name).toBe('Updated Seller');
+            expect(mockProduct.prod_size).toBe('5kg');
+            expect(mockProduct.quantity).toBe(10);
+            expect(mockProduct.avalaible_location).toBe('Updated Location');
+            expect(res.status).toHaveBeenCalledWith(201);
+            expect(res.json).toHaveBeenCalledWith(mockProduct);
+        });
+
+        it('should return 401 status and error via next if product to update is not found', async () => {
+            req.params.id = 'invalid_id';
+            req.body = {};
+            ConsumerProducts.findById.mockResolvedValue(null);
+
+            await updateConsumer(req, res, next);
+
+            expect(ConsumerProducts.findById).toHaveBeenCalledWith('invalid_id');
+            expect(res.status).toHaveBeenCalledWith(401);
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
+            expect(next.mock.calls[0][0].message).toBe('Product not found');
+        });
+    });
+});
+```

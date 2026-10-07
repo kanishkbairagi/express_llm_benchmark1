@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "SanjulaD__web-cw__productLendMachineController",
+  "targetFilename": "external/SanjulaD__web-cw/backend/controllers/productLendMachineController.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:14:20.790Z",
+  "finishedAt": "2026-10-05T05:14:45.396Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 8,
+  "testsTotal": 8,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 20,
+  "branchCoverage": 0,
+  "functionCoverage": 20,
+  "lineCoverage": 20,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 922,
+    "completionTokens": 1850,
+    "totalTokens": 5506,
+    "thinkingTokens": 2734
+  },
+  "latencyMs": 20950
+}

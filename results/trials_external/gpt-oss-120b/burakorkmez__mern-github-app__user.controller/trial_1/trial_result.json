@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "burakorkmez__mern-github-app__user.controller",
+  "targetFilename": "external/burakorkmez__mern-github-app/backend/controllers/user.controller.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T04:58:12.531Z",
+  "finishedAt": "2026-10-05T04:58:20.991Z",
+  "suiteOk": false,
+  "testsPassed": 2,
+  "testsFailed": 6,
+  "testsTotal": 8,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 37.93,
+  "branchCoverage": 0,
+  "functionCoverage": 33.33,
+  "lineCoverage": 37.93,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 709,
+    "completionTokens": 2006,
+    "totalTokens": 2715,
+    "reasoningTokens": 442
+  },
+  "latencyMs": 4657
+}

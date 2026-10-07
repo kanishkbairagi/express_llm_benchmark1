@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "dimartarmizi__OmniCloud__authRoutes",
+  "targetFilename": "external/dimartarmizi__OmniCloud/backend/src/routes/authRoutes.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T04:57:02.283Z",
+  "finishedAt": "2026-10-07T04:58:41.323Z",
+  "suiteOk": true,
+  "testsPassed": 11,
+  "testsFailed": 0,
+  "testsTotal": 11,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 100,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 679,
+    "completionTokens": 2463,
+    "totalTokens": 9149,
+    "thinkingTokens": 6007
+  },
+  "latencyMs": 35238
+}

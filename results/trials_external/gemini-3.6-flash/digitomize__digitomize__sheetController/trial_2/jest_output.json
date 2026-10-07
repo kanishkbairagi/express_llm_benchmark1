@@ -1,0 +1,2789 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 16,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 4,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 20,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791201795021,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "createSheet"
+          ],
+          "duration": 26,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "sheetController createSheet should return 400 if required fields are missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if required fields are missing",
+          "startAt": 1791201796614
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "createSheet"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:63:18)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController createSheet should create and return a new sheet on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create and return a new sheet on success",
+          "startAt": 1791201796644
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "createSheet"
+          ],
+          "duration": 22,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:83:18)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController createSheet should return 500 when database operation throws an error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 when database operation throws an error",
+          "startAt": 1791201796670
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeSheet"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "sheetController removeSheet should return 400 if s_id is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if s_id is missing",
+          "startAt": 1791201796694
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeSheet"
+          ],
+          "duration": 7,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:113:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController removeSheet should return 404 if sheet is not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 if sheet is not found",
+          "startAt": 1791201796699
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeSheet"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:127:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController removeSheet should remove the sheet and return 200 on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should remove the sheet and return 200 on success",
+          "startAt": 1791201796708
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeSheet"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:143:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController removeSheet should return 500 if an error occurs during deletion",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 if an error occurs during deletion",
+          "startAt": 1791201796710
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "getSheets"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:166:23)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController getSheets should fetch sheets and populate questions details",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should fetch sheets and populate questions details",
+          "startAt": 1791201796713
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "getSheets"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:192:23)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController getSheets should handle empty sheets list",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle empty sheets list",
+          "startAt": 1791201796715
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "getSheets"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.find.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:204:23)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController getSheets should return 500 when SheetModel.find fails",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 when SheetModel.find fails",
+          "startAt": 1791201796720
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "addQuestions"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "sheetController addQuestions should return 400 if s_id or q_ids is missing/invalid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if s_id or q_ids is missing/invalid",
+          "startAt": 1791201796723
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "addQuestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:233:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController addQuestions should return 404 if sheet is not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 if sheet is not found",
+          "startAt": 1791201796726
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "addQuestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:250:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController addQuestions should return 409 if any question already exists in sheet",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 409 if any question already exists in sheet",
+          "startAt": 1791201796728
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "addQuestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:268:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController addQuestions should add questions and return 200 on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should add questions and return 200 on success",
+          "startAt": 1791201796730
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "addQuestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:284:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController addQuestions should return 500 when exception occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 when exception occurs",
+          "startAt": 1791201796732
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeQuestion"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "sheetController removeQuestion should return 400 if s_id or q_id is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 if s_id or q_id is missing",
+          "startAt": 1791201796735
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeQuestion"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:311:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController removeQuestion should return 404 if sheet is not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 if sheet is not found",
+          "startAt": 1791201796737
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeQuestion"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:328:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController removeQuestion should return 404 if question is not in the sheet",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 if question is not in the sheet",
+          "startAt": 1791201796739
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeQuestion"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:346:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController removeQuestion should remove question and return 200 on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should remove question and return 200 on success",
+          "startAt": 1791201796740
+        },
+        {
+          "ancestorTitles": [
+            "sheetController",
+            "removeQuestion"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: SheetModel.findOne.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:362:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "sheetController removeQuestion should return 500 when exception occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 when exception occurs",
+          "startAt": 1791201796742
+        }
+      ],
+      "endTime": 1791201797106,
+      "message": "  ● sheetController › createSheet › should create and return a new sheet on success\n\n    TypeError: SheetModel.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 61 |\u001b[39m\n     \u001b[90m 62 |\u001b[39m       \u001b[36mconst\u001b[39m mockSave \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(sheetData)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 63 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m ({\n     \u001b[90m    |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 64 |\u001b[39m         save\u001b[33m:\u001b[39m mockSave\u001b[33m,\u001b[39m\n     \u001b[90m 65 |\u001b[39m       }))\u001b[33m;\u001b[39m\n     \u001b[90m 66 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:63:18)\n\n  ● sheetController › createSheet › should return 500 when database operation throws an error\n\n    TypeError: SheetModel.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 81 |\u001b[39m       }\u001b[33m;\u001b[39m\n     \u001b[90m 82 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 83 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m ({\n     \u001b[90m    |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 84 |\u001b[39m         save\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Database error'\u001b[39m))\u001b[33m,\u001b[39m\n     \u001b[90m 85 |\u001b[39m       }))\u001b[33m;\u001b[39m\n     \u001b[90m 86 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:83:18)\n\n  ● sheetController › removeSheet › should return 404 if sheet is not found\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 111 |\u001b[39m     it(\u001b[32m'should return 404 if sheet is not found'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 112 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { s_id\u001b[33m:\u001b[39m \u001b[32m'non-existent'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 113 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 114 |\u001b[39m\n     \u001b[90m 115 |\u001b[39m       \u001b[36mawait\u001b[39m removeSheet(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 116 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:113:26)\n\n  ● sheetController › removeSheet › should remove the sheet and return 200 on success\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 125 |\u001b[39m     it(\u001b[32m'should remove the sheet and return 200 on success'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 126 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { s_id\u001b[33m:\u001b[39m \u001b[32m's1'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 127 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue({ s_id\u001b[33m:\u001b[39m \u001b[32m's1'\u001b[39m })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 128 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mdeleteOne\u001b[33m.\u001b[39mmockResolvedValue({ deletedCount\u001b[33m:\u001b[39m \u001b[35m1\u001b[39m })\u001b[33m;\u001b[39m\n     \u001b[90m 129 |\u001b[39m\n     \u001b[90m 130 |\u001b[39m       \u001b[36mawait\u001b[39m removeSheet(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:127:26)\n\n  ● sheetController › removeSheet › should return 500 if an error occurs during deletion\n\n    TypeError: SheetModel.findOne.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 141 |\u001b[39m     it(\u001b[32m'should return 500 if an error occurs during deletion'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 142 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { s_id\u001b[33m:\u001b[39m \u001b[32m's1'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 143 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'DB failure'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 144 |\u001b[39m\n     \u001b[90m 145 |\u001b[39m       \u001b[36mawait\u001b[39m removeSheet(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 146 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:143:26)\n\n  ● sheetController › getSheets › should fetch sheets and populate questions details\n\n    TypeError: SheetModel.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 164 |\u001b[39m       ]\u001b[33m;\u001b[39m\n     \u001b[90m 165 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 166 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue(mockSheets)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 167 |\u001b[39m       getQuestionByQId\n     \u001b[90m 168 |\u001b[39m         \u001b[33m.\u001b[39mmockResolvedValueOnce({ q_id\u001b[33m:\u001b[39m \u001b[32m'q1'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'Two Sum'\u001b[39m })\n     \u001b[90m 169 |\u001b[39m         \u001b[33m.\u001b[39mmockResolvedValueOnce({ q_id\u001b[33m:\u001b[39m \u001b[32m'q2'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'Three Sum'\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:166:23)\n\n  ● sheetController › getSheets › should handle empty sheets list\n\n    TypeError: SheetModel.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 190 |\u001b[39m\n     \u001b[90m 191 |\u001b[39m     it(\u001b[32m'should handle empty sheets list'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 192 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue([])\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 193 |\u001b[39m\n     \u001b[90m 194 |\u001b[39m       \u001b[36mawait\u001b[39m getSheets(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 195 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:192:23)\n\n  ● sheetController › getSheets › should return 500 when SheetModel.find fails\n\n    TypeError: SheetModel.find.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 202 |\u001b[39m\n     \u001b[90m 203 |\u001b[39m     it(\u001b[32m'should return 500 when SheetModel.find fails'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 204 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Fetch failed'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 205 |\u001b[39m\n     \u001b[90m 206 |\u001b[39m       \u001b[36mawait\u001b[39m getSheets(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 207 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:204:23)\n\n  ● sheetController › addQuestions › should return 404 if sheet is not found\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 231 |\u001b[39m     it(\u001b[32m'should return 404 if sheet is not found'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 232 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { s_id\u001b[33m:\u001b[39m \u001b[32m's1'\u001b[39m\u001b[33m,\u001b[39m q_ids\u001b[33m:\u001b[39m [\u001b[32m'q1'\u001b[39m] }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 233 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 234 |\u001b[39m\n     \u001b[90m 235 |\u001b[39m       \u001b[36mawait\u001b[39m addQuestions(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 236 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:233:26)\n\n  ● sheetController › addQuestions › should return 409 if any question already exists in sheet\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 248 |\u001b[39m         questions\u001b[33m:\u001b[39m [\u001b[32m'q1'\u001b[39m]\u001b[33m,\u001b[39m\n     \u001b[90m 249 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 250 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(mockSheet)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 251 |\u001b[39m\n     \u001b[90m 252 |\u001b[39m       \u001b[36mawait\u001b[39m addQuestions(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 253 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:250:26)\n\n  ● sheetController › addQuestions › should add questions and return 200 on success\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 266 |\u001b[39m         save\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mtrue\u001b[39m)\u001b[33m,\u001b[39m\n     \u001b[90m 267 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 268 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(mockSheet)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 269 |\u001b[39m\n     \u001b[90m 270 |\u001b[39m       \u001b[36mawait\u001b[39m addQuestions(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 271 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:268:26)\n\n  ● sheetController › addQuestions › should return 500 when exception occurs\n\n    TypeError: SheetModel.findOne.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 282 |\u001b[39m     it(\u001b[32m'should return 500 when exception occurs'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 283 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { s_id\u001b[33m:\u001b[39m \u001b[32m's1'\u001b[39m\u001b[33m,\u001b[39m q_ids\u001b[33m:\u001b[39m [\u001b[32m'q1'\u001b[39m] }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 284 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Server error'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 285 |\u001b[39m\n     \u001b[90m 286 |\u001b[39m       \u001b[36mawait\u001b[39m addQuestions(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 287 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:284:26)\n\n  ● sheetController › removeQuestion › should return 404 if sheet is not found\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 309 |\u001b[39m     it(\u001b[32m'should return 404 if sheet is not found'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 310 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { s_id\u001b[33m:\u001b[39m \u001b[32m's1'\u001b[39m\u001b[33m,\u001b[39m q_id\u001b[33m:\u001b[39m \u001b[32m'q1'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 311 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 312 |\u001b[39m\n     \u001b[90m 313 |\u001b[39m       \u001b[36mawait\u001b[39m removeQuestion(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 314 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:311:26)\n\n  ● sheetController › removeQuestion › should return 404 if question is not in the sheet\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 326 |\u001b[39m         questions\u001b[33m:\u001b[39m [\u001b[32m'q1'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'q2'\u001b[39m]\u001b[33m,\u001b[39m\n     \u001b[90m 327 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 328 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(mockSheet)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 329 |\u001b[39m\n     \u001b[90m 330 |\u001b[39m       \u001b[36mawait\u001b[39m removeQuestion(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 331 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:328:26)\n\n  ● sheetController › removeQuestion › should remove question and return 200 on success\n\n    TypeError: SheetModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 344 |\u001b[39m         save\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mtrue\u001b[39m)\u001b[33m,\u001b[39m\n     \u001b[90m 345 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 346 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(mockSheet)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 347 |\u001b[39m\n     \u001b[90m 348 |\u001b[39m       \u001b[36mawait\u001b[39m removeQuestion(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 349 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:346:26)\n\n  ● sheetController › removeQuestion › should return 500 when exception occurs\n\n    TypeError: SheetModel.findOne.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 360 |\u001b[39m     it(\u001b[32m'should return 500 when exception occurs'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 361 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { s_id\u001b[33m:\u001b[39m \u001b[32m's1'\u001b[39m\u001b[33m,\u001b[39m q_id\u001b[33m:\u001b[39m \u001b[32m'q1'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 362 |\u001b[39m       \u001b[33mSheetModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Unexpected error'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 363 |\u001b[39m\n     \u001b[90m 364 |\u001b[39m       \u001b[36mawait\u001b[39m removeQuestion(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 365 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js:362:26)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__sheetController_gemini-3.6-flash_trial2.test.js",
+      "startTime": 1791201795261,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\models\\sheetModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\models\\sheetModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 20
+          },
+          "end": {
+            "line": 9,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 11,
+            "column": 19
+          },
+          "end": {
+            "line": 11,
+            "column": 55
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "562449045e347c96921349d88a0a9b523026a115"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\models\\questionModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\models\\questionModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 23
+          },
+          "end": {
+            "line": 9,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 11,
+            "column": 22
+          },
+          "end": {
+            "line": 11,
+            "column": 64
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "ef6b7478a5b7c371e0a6e3c68c8407bf9fbc662f"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\controllers\\questionController.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\controllers\\questionController.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 6,
+            "column": 31
+          },
+          "end": {
+            "line": 50,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 7,
+            "column": 2
+          },
+          "end": {
+            "line": 49,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 8,
+            "column": 26
+          },
+          "end": {
+            "line": 8,
+            "column": 34
+          }
+        },
+        "3": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 16,
+            "column": 5
+          }
+        },
+        "4": {
+          "start": {
+            "line": 12,
+            "column": 6
+          },
+          "end": {
+            "line": 15,
+            "column": 9
+          }
+        },
+        "5": {
+          "start": {
+            "line": 19,
+            "column": 30
+          },
+          "end": {
+            "line": 21,
+            "column": 6
+          }
+        },
+        "6": {
+          "start": {
+            "line": 20,
+            "column": 44
+          },
+          "end": {
+            "line": 20,
+            "column": 50
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 4
+          },
+          "end": {
+            "line": 31,
+            "column": 5
+          }
+        },
+        "8": {
+          "start": {
+            "line": 24,
+            "column": 28
+          },
+          "end": {
+            "line": 24,
+            "column": 64
+          }
+        },
+        "9": {
+          "start": {
+            "line": 24,
+            "column": 57
+          },
+          "end": {
+            "line": 24,
+            "column": 63
+          }
+        },
+        "10": {
+          "start": {
+            "line": 25,
+            "column": 6
+          },
+          "end": {
+            "line": 30,
+            "column": 9
+          }
+        },
+        "11": {
+          "start": {
+            "line": 34,
+            "column": 25
+          },
+          "end": {
+            "line": 36,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 35,
+            "column": 20
+          },
+          "end": {
+            "line": 35,
+            "column": 47
+          }
+        },
+        "13": {
+          "start": {
+            "line": 39,
+            "column": 27
+          },
+          "end": {
+            "line": 39,
+            "column": 71
+          }
+        },
+        "14": {
+          "start": {
+            "line": 42,
+            "column": 4
+          },
+          "end": {
+            "line": 42,
+            "column": 41
+          }
+        },
+        "15": {
+          "start": {
+            "line": 44,
+            "column": 4
+          },
+          "end": {
+            "line": 44,
+            "column": 54
+          }
+        },
+        "16": {
+          "start": {
+            "line": 45,
+            "column": 4
+          },
+          "end": {
+            "line": 48,
+            "column": 7
+          }
+        },
+        "17": {
+          "start": {
+            "line": 53,
+            "column": 32
+          },
+          "end": {
+            "line": 85,
+            "column": 1
+          }
+        },
+        "18": {
+          "start": {
+            "line": 54,
+            "column": 2
+          },
+          "end": {
+            "line": 84,
+            "column": 3
+          }
+        },
+        "19": {
+          "start": {
+            "line": 55,
+            "column": 21
+          },
+          "end": {
+            "line": 55,
+            "column": 29
+          }
+        },
+        "20": {
+          "start": {
+            "line": 58,
+            "column": 4
+          },
+          "end": {
+            "line": 63,
+            "column": 5
+          }
+        },
+        "21": {
+          "start": {
+            "line": 59,
+            "column": 6
+          },
+          "end": {
+            "line": 62,
+            "column": 9
+          }
+        },
+        "22": {
+          "start": {
+            "line": 66,
+            "column": 21
+          },
+          "end": {
+            "line": 66,
+            "column": 58
+          }
+        },
+        "23": {
+          "start": {
+            "line": 69,
+            "column": 4
+          },
+          "end": {
+            "line": 74,
+            "column": 5
+          }
+        },
+        "24": {
+          "start": {
+            "line": 70,
+            "column": 6
+          },
+          "end": {
+            "line": 73,
+            "column": 9
+          }
+        },
+        "25": {
+          "start": {
+            "line": 77,
+            "column": 4
+          },
+          "end": {
+            "line": 77,
+            "column": 35
+          }
+        },
+        "26": {
+          "start": {
+            "line": 79,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 52
+          }
+        },
+        "27": {
+          "start": {
+            "line": 80,
+            "column": 4
+          },
+          "end": {
+            "line": 83,
+            "column": 7
+          }
+        },
+        "28": {
+          "start": {
+            "line": 88,
+            "column": 35
+          },
+          "end": {
+            "line": 124,
+            "column": 1
+          }
+        },
+        "29": {
+          "start": {
+            "line": 89,
+            "column": 2
+          },
+          "end": {
+            "line": 123,
+            "column": 3
+          }
+        },
+        "30": {
+          "start": {
+            "line": 90,
+            "column": 21
+          },
+          "end": {
+            "line": 90,
+            "column": 29
+          }
+        },
+        "31": {
+          "start": {
+            "line": 93,
+            "column": 4
+          },
+          "end": {
+            "line": 98,
+            "column": 5
+          }
+        },
+        "32": {
+          "start": {
+            "line": 94,
+            "column": 6
+          },
+          "end": {
+            "line": 97,
+            "column": 9
+          }
+        },
+        "33": {
+          "start": {
+            "line": 101,
+            "column": 28
+          },
+          "end": {
+            "line": 101,
+            "column": 74
+          }
+        },
+        "34": {
+          "start": {
+            "line": 104,
+            "column": 4
+          },
+          "end": {
+            "line": 109,
+            "column": 5
+          }
+        },
+        "35": {
+          "start": {
+            "line": 105,
+            "column": 6
+          },
+          "end": {
+            "line": 108,
+            "column": 9
+          }
+        },
+        "36": {
+          "start": {
+            "line": 112,
+            "column": 4
+          },
+          "end": {
+            "line": 116,
+            "column": 7
+          }
+        },
+        "37": {
+          "start": {
+            "line": 118,
+            "column": 4
+          },
+          "end": {
+            "line": 118,
+            "column": 53
+          }
+        },
+        "38": {
+          "start": {
+            "line": 119,
+            "column": 4
+          },
+          "end": {
+            "line": 122,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 31
+            },
+            "end": {
+              "line": 6,
+              "column": 32
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 51
+            },
+            "end": {
+              "line": 50,
+              "column": 1
+            }
+          },
+          "line": 6
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 20,
+              "column": 37
+            },
+            "end": {
+              "line": 20,
+              "column": 38
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 44
+            },
+            "end": {
+              "line": 20,
+              "column": 50
+            }
+          },
+          "line": 20
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 24,
+              "column": 50
+            },
+            "end": {
+              "line": 24,
+              "column": 51
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 24,
+              "column": 57
+            },
+            "end": {
+              "line": 24,
+              "column": 63
+            }
+          },
+          "line": 24
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 35,
+              "column": 6
+            },
+            "end": {
+              "line": 35,
+              "column": 7
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 35,
+              "column": 20
+            },
+            "end": {
+              "line": 35,
+              "column": 47
+            }
+          },
+          "line": 35
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 53,
+              "column": 32
+            },
+            "end": {
+              "line": 53,
+              "column": 33
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 53,
+              "column": 52
+            },
+            "end": {
+              "line": 85,
+              "column": 1
+            }
+          },
+          "line": 53
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 88,
+              "column": 35
+            },
+            "end": {
+              "line": 88,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 88,
+              "column": 55
+            },
+            "end": {
+              "line": 124,
+              "column": 1
+            }
+          },
+          "line": 88
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 4
+            },
+            "end": {
+              "line": 16,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 11,
+                "column": 4
+              },
+              "end": {
+                "line": 16,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 11
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 8
+            },
+            "end": {
+              "line": 11,
+              "column": 67
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 11,
+                "column": 8
+              },
+              "end": {
+                "line": 11,
+                "column": 37
+              }
+            },
+            {
+              "start": {
+                "line": 11,
+                "column": 41
+              },
+              "end": {
+                "line": 11,
+                "column": 67
+              }
+            }
+          ],
+          "line": 11
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 4
+            },
+            "end": {
+              "line": 31,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 4
+              },
+              "end": {
+                "line": 31,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 23
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 58,
+              "column": 4
+            },
+            "end": {
+              "line": 63,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 58,
+                "column": 4
+              },
+              "end": {
+                "line": 63,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 58
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 69,
+              "column": 4
+            },
+            "end": {
+              "line": 74,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 69,
+                "column": 4
+              },
+              "end": {
+                "line": 74,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 69
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 93,
+              "column": 4
+            },
+            "end": {
+              "line": 98,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 93,
+                "column": 4
+              },
+              "end": {
+                "line": 98,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 93
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 104,
+              "column": 4
+            },
+            "end": {
+              "line": 109,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 104,
+                "column": 4
+              },
+              "end": {
+                "line": 109,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 104
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 1,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 1,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0,
+        "35": 0,
+        "36": 0,
+        "37": 0,
+        "38": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ],
+        "3": [
+          0,
+          0
+        ],
+        "4": [
+          0,
+          0
+        ],
+        "5": [
+          0,
+          0
+        ],
+        "6": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "8b6cdee9b27171eb2f80a73f9e075ce407cee1db"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\controllers\\sheetController.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\controllers\\sheetController.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 6,
+            "column": 27
+          },
+          "end": {
+            "line": 43,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 7,
+            "column": 2
+          },
+          "end": {
+            "line": 42,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 9,
+            "column": 44
+          },
+          "end": {
+            "line": 9,
+            "column": 52
+          }
+        },
+        "3": {
+          "start": {
+            "line": 12,
+            "column": 4
+          },
+          "end": {
+            "line": 18,
+            "column": 5
+          }
+        },
+        "4": {
+          "start": {
+            "line": 13,
+            "column": 6
+          },
+          "end": {
+            "line": 17,
+            "column": 9
+          }
+        },
+        "5": {
+          "start": {
+            "line": 21,
+            "column": 21
+          },
+          "end": {
+            "line": 26,
+            "column": 6
+          }
+        },
+        "6": {
+          "start": {
+            "line": 29,
+            "column": 23
+          },
+          "end": {
+            "line": 29,
+            "column": 44
+          }
+        },
+        "7": {
+          "start": {
+            "line": 32,
+            "column": 4
+          },
+          "end": {
+            "line": 32,
+            "column": 37
+          }
+        },
+        "8": {
+          "start": {
+            "line": 35,
+            "column": 4
+          },
+          "end": {
+            "line": 35,
+            "column": 50
+          }
+        },
+        "9": {
+          "start": {
+            "line": 38,
+            "column": 4
+          },
+          "end": {
+            "line": 41,
+            "column": 7
+          }
+        },
+        "10": {
+          "start": {
+            "line": 45,
+            "column": 27
+          },
+          "end": {
+            "line": 83,
+            "column": 1
+          }
+        },
+        "11": {
+          "start": {
+            "line": 46,
+            "column": 2
+          },
+          "end": {
+            "line": 82,
+            "column": 3
+          }
+        },
+        "12": {
+          "start": {
+            "line": 47,
+            "column": 21
+          },
+          "end": {
+            "line": 47,
+            "column": 29
+          }
+        },
+        "13": {
+          "start": {
+            "line": 50,
+            "column": 4
+          },
+          "end": {
+            "line": 55,
+            "column": 5
+          }
+        },
+        "14": {
+          "start": {
+            "line": 51,
+            "column": 6
+          },
+          "end": {
+            "line": 54,
+            "column": 9
+          }
+        },
+        "15": {
+          "start": {
+            "line": 58,
+            "column": 18
+          },
+          "end": {
+            "line": 58,
+            "column": 52
+          }
+        },
+        "16": {
+          "start": {
+            "line": 61,
+            "column": 4
+          },
+          "end": {
+            "line": 66,
+            "column": 5
+          }
+        },
+        "17": {
+          "start": {
+            "line": 62,
+            "column": 6
+          },
+          "end": {
+            "line": 65,
+            "column": 9
+          }
+        },
+        "18": {
+          "start": {
+            "line": 69,
+            "column": 4
+          },
+          "end": {
+            "line": 69,
+            "column": 41
+          }
+        },
+        "19": {
+          "start": {
+            "line": 72,
+            "column": 4
+          },
+          "end": {
+            "line": 75,
+            "column": 7
+          }
+        },
+        "20": {
+          "start": {
+            "line": 77,
+            "column": 4
+          },
+          "end": {
+            "line": 77,
+            "column": 50
+          }
+        },
+        "21": {
+          "start": {
+            "line": 78,
+            "column": 4
+          },
+          "end": {
+            "line": 81,
+            "column": 7
+          }
+        },
+        "22": {
+          "start": {
+            "line": 85,
+            "column": 25
+          },
+          "end": {
+            "line": 118,
+            "column": 1
+          }
+        },
+        "23": {
+          "start": {
+            "line": 86,
+            "column": 2
+          },
+          "end": {
+            "line": 117,
+            "column": 3
+          }
+        },
+        "24": {
+          "start": {
+            "line": 87,
+            "column": 19
+          },
+          "end": {
+            "line": 87,
+            "column": 42
+          }
+        },
+        "25": {
+          "start": {
+            "line": 89,
+            "column": 32
+          },
+          "end": {
+            "line": 89,
+            "column": 34
+          }
+        },
+        "26": {
+          "start": {
+            "line": 91,
+            "column": 4
+          },
+          "end": {
+            "line": 106,
+            "column": 5
+          }
+        },
+        "27": {
+          "start": {
+            "line": 92,
+            "column": 35
+          },
+          "end": {
+            "line": 92,
+            "column": 37
+          }
+        },
+        "28": {
+          "start": {
+            "line": 95,
+            "column": 6
+          },
+          "end": {
+            "line": 100,
+            "column": 7
+          }
+        },
+        "29": {
+          "start": {
+            "line": 96,
+            "column": 32
+          },
+          "end": {
+            "line": 98,
+            "column": 10
+          }
+        },
+        "30": {
+          "start": {
+            "line": 99,
+            "column": 8
+          },
+          "end": {
+            "line": 99,
+            "column": 51
+          }
+        },
+        "31": {
+          "start": {
+            "line": 102,
+            "column": 6
+          },
+          "end": {
+            "line": 105,
+            "column": 9
+          }
+        },
+        "32": {
+          "start": {
+            "line": 108,
+            "column": 4
+          },
+          "end": {
+            "line": 110,
+            "column": 80
+          }
+        },
+        "33": {
+          "start": {
+            "line": 112,
+            "column": 4
+          },
+          "end": {
+            "line": 112,
+            "column": 51
+          }
+        },
+        "34": {
+          "start": {
+            "line": 113,
+            "column": 4
+          },
+          "end": {
+            "line": 116,
+            "column": 7
+          }
+        },
+        "35": {
+          "start": {
+            "line": 120,
+            "column": 28
+          },
+          "end": {
+            "line": 177,
+            "column": 1
+          }
+        },
+        "36": {
+          "start": {
+            "line": 121,
+            "column": 2
+          },
+          "end": {
+            "line": 176,
+            "column": 3
+          }
+        },
+        "37": {
+          "start": {
+            "line": 122,
+            "column": 28
+          },
+          "end": {
+            "line": 122,
+            "column": 36
+          }
+        },
+        "38": {
+          "start": {
+            "line": 125,
+            "column": 4
+          },
+          "end": {
+            "line": 131,
+            "column": 5
+          }
+        },
+        "39": {
+          "start": {
+            "line": 126,
+            "column": 6
+          },
+          "end": {
+            "line": 130,
+            "column": 9
+          }
+        },
+        "40": {
+          "start": {
+            "line": 134,
+            "column": 18
+          },
+          "end": {
+            "line": 134,
+            "column": 52
+          }
+        },
+        "41": {
+          "start": {
+            "line": 137,
+            "column": 4
+          },
+          "end": {
+            "line": 142,
+            "column": 5
+          }
+        },
+        "42": {
+          "start": {
+            "line": 138,
+            "column": 6
+          },
+          "end": {
+            "line": 141,
+            "column": 9
+          }
+        },
+        "43": {
+          "start": {
+            "line": 145,
+            "column": 30
+          },
+          "end": {
+            "line": 147,
+            "column": 5
+          }
+        },
+        "44": {
+          "start": {
+            "line": 146,
+            "column": 6
+          },
+          "end": {
+            "line": 146,
+            "column": 33
+          }
+        },
+        "45": {
+          "start": {
+            "line": 149,
+            "column": 4
+          },
+          "end": {
+            "line": 156,
+            "column": 5
+          }
+        },
+        "46": {
+          "start": {
+            "line": 150,
+            "column": 6
+          },
+          "end": {
+            "line": 155,
+            "column": 9
+          }
+        },
+        "47": {
+          "start": {
+            "line": 159,
+            "column": 4
+          },
+          "end": {
+            "line": 159,
+            "column": 35
+          }
+        },
+        "48": {
+          "start": {
+            "line": 162,
+            "column": 4
+          },
+          "end": {
+            "line": 162,
+            "column": 23
+          }
+        },
+        "49": {
+          "start": {
+            "line": 165,
+            "column": 4
+          },
+          "end": {
+            "line": 169,
+            "column": 7
+          }
+        },
+        "50": {
+          "start": {
+            "line": 171,
+            "column": 4
+          },
+          "end": {
+            "line": 171,
+            "column": 61
+          }
+        },
+        "51": {
+          "start": {
+            "line": 172,
+            "column": 4
+          },
+          "end": {
+            "line": 175,
+            "column": 7
+          }
+        },
+        "52": {
+          "start": {
+            "line": 179,
+            "column": 30
+          },
+          "end": {
+            "line": 231,
+            "column": 1
+          }
+        },
+        "53": {
+          "start": {
+            "line": 180,
+            "column": 2
+          },
+          "end": {
+            "line": 230,
+            "column": 3
+          }
+        },
+        "54": {
+          "start": {
+            "line": 181,
+            "column": 27
+          },
+          "end": {
+            "line": 181,
+            "column": 35
+          }
+        },
+        "55": {
+          "start": {
+            "line": 184,
+            "column": 4
+          },
+          "end": {
+            "line": 189,
+            "column": 5
+          }
+        },
+        "56": {
+          "start": {
+            "line": 185,
+            "column": 6
+          },
+          "end": {
+            "line": 188,
+            "column": 9
+          }
+        },
+        "57": {
+          "start": {
+            "line": 192,
+            "column": 18
+          },
+          "end": {
+            "line": 192,
+            "column": 52
+          }
+        },
+        "58": {
+          "start": {
+            "line": 195,
+            "column": 4
+          },
+          "end": {
+            "line": 200,
+            "column": 5
+          }
+        },
+        "59": {
+          "start": {
+            "line": 196,
+            "column": 6
+          },
+          "end": {
+            "line": 199,
+            "column": 9
+          }
+        },
+        "60": {
+          "start": {
+            "line": 203,
+            "column": 28
+          },
+          "end": {
+            "line": 203,
+            "column": 57
+          }
+        },
+        "61": {
+          "start": {
+            "line": 205,
+            "column": 4
+          },
+          "end": {
+            "line": 210,
+            "column": 5
+          }
+        },
+        "62": {
+          "start": {
+            "line": 206,
+            "column": 6
+          },
+          "end": {
+            "line": 209,
+            "column": 9
+          }
+        },
+        "63": {
+          "start": {
+            "line": 213,
+            "column": 4
+          },
+          "end": {
+            "line": 213,
+            "column": 47
+          }
+        },
+        "64": {
+          "start": {
+            "line": 216,
+            "column": 4
+          },
+          "end": {
+            "line": 216,
+            "column": 23
+          }
+        },
+        "65": {
+          "start": {
+            "line": 219,
+            "column": 4
+          },
+          "end": {
+            "line": 223,
+            "column": 7
+          }
+        },
+        "66": {
+          "start": {
+            "line": 225,
+            "column": 4
+          },
+          "end": {
+            "line": 225,
+            "column": 64
+          }
+        },
+        "67": {
+          "start": {
+            "line": 226,
+            "column": 4
+          },
+          "end": {
+            "line": 229,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 27
+            },
+            "end": {
+              "line": 6,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 47
+            },
+            "end": {
+              "line": 43,
+              "column": 1
+            }
+          },
+          "line": 6
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 45,
+              "column": 27
+            },
+            "end": {
+              "line": 45,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 45,
+              "column": 47
+            },
+            "end": {
+              "line": 83,
+              "column": 1
+            }
+          },
+          "line": 45
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 85,
+              "column": 25
+            },
+            "end": {
+              "line": 85,
+              "column": 26
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 85,
+              "column": 45
+            },
+            "end": {
+              "line": 118,
+              "column": 1
+            }
+          },
+          "line": 85
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 120,
+              "column": 28
+            },
+            "end": {
+              "line": 120,
+              "column": 29
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 120,
+              "column": 48
+            },
+            "end": {
+              "line": 177,
+              "column": 1
+            }
+          },
+          "line": 120
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 145,
+              "column": 53
+            },
+            "end": {
+              "line": 145,
+              "column": 54
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 146,
+              "column": 6
+            },
+            "end": {
+              "line": 146,
+              "column": 33
+            }
+          },
+          "line": 146
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 179,
+              "column": 30
+            },
+            "end": {
+              "line": 179,
+              "column": 31
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 179,
+              "column": 50
+            },
+            "end": {
+              "line": 231,
+              "column": 1
+            }
+          },
+          "line": 179
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 4
+            },
+            "end": {
+              "line": 18,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 12,
+                "column": 4
+              },
+              "end": {
+                "line": 18,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 12
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 8
+            },
+            "end": {
+              "line": 12,
+              "column": 45
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 12,
+                "column": 8
+              },
+              "end": {
+                "line": 12,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 12,
+                "column": 17
+              },
+              "end": {
+                "line": 12,
+                "column": 22
+              }
+            },
+            {
+              "start": {
+                "line": 12,
+                "column": 26
+              },
+              "end": {
+                "line": 12,
+                "column": 31
+              }
+            },
+            {
+              "start": {
+                "line": 12,
+                "column": 35
+              },
+              "end": {
+                "line": 12,
+                "column": 45
+              }
+            }
+          ],
+          "line": 12
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 50,
+              "column": 4
+            },
+            "end": {
+              "line": 55,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 50,
+                "column": 4
+              },
+              "end": {
+                "line": 55,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 50
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 61,
+              "column": 4
+            },
+            "end": {
+              "line": 66,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 61,
+                "column": 4
+              },
+              "end": {
+                "line": 66,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 61
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 125,
+              "column": 4
+            },
+            "end": {
+              "line": 131,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 125,
+                "column": 4
+              },
+              "end": {
+                "line": 131,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 125
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 125,
+              "column": 8
+            },
+            "end": {
+              "line": 125,
+              "column": 70
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 125,
+                "column": 8
+              },
+              "end": {
+                "line": 125,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 125,
+                "column": 17
+              },
+              "end": {
+                "line": 125,
+                "column": 23
+              }
+            },
+            {
+              "start": {
+                "line": 125,
+                "column": 27
+              },
+              "end": {
+                "line": 125,
+                "column": 48
+              }
+            },
+            {
+              "start": {
+                "line": 125,
+                "column": 52
+              },
+              "end": {
+                "line": 125,
+                "column": 70
+              }
+            }
+          ],
+          "line": 125
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 137,
+              "column": 4
+            },
+            "end": {
+              "line": 142,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 137,
+                "column": 4
+              },
+              "end": {
+                "line": 142,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 137
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 149,
+              "column": 4
+            },
+            "end": {
+              "line": 156,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 149,
+                "column": 4
+              },
+              "end": {
+                "line": 156,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 149
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 184,
+              "column": 4
+            },
+            "end": {
+              "line": 189,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 184,
+                "column": 4
+              },
+              "end": {
+                "line": 189,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 184
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 184,
+              "column": 8
+            },
+            "end": {
+              "line": 184,
+              "column": 22
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 184,
+                "column": 8
+              },
+              "end": {
+                "line": 184,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 184,
+                "column": 17
+              },
+              "end": {
+                "line": 184,
+                "column": 22
+              }
+            }
+          ],
+          "line": 184
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 195,
+              "column": 4
+            },
+            "end": {
+              "line": 200,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 195,
+                "column": 4
+              },
+              "end": {
+                "line": 200,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 195
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 205,
+              "column": 4
+            },
+            "end": {
+              "line": 210,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 205,
+                "column": 4
+              },
+              "end": {
+                "line": 210,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 205
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "14": 1,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 1,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 0,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0,
+        "35": 1,
+        "36": 1,
+        "37": 1,
+        "38": 1,
+        "39": 1,
+        "40": 0,
+        "41": 0,
+        "42": 0,
+        "43": 0,
+        "44": 0,
+        "45": 0,
+        "46": 0,
+        "47": 0,
+        "48": 0,
+        "49": 0,
+        "50": 0,
+        "51": 0,
+        "52": 1,
+        "53": 1,
+        "54": 1,
+        "55": 1,
+        "56": 1,
+        "57": 0,
+        "58": 0,
+        "59": 0,
+        "60": 0,
+        "61": 0,
+        "62": 0,
+        "63": 0,
+        "64": 0,
+        "65": 0,
+        "66": 0,
+        "67": 0
+      },
+      "f": {
+        "0": 1,
+        "1": 1,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 1
+      },
+      "b": {
+        "0": [
+          1,
+          0
+        ],
+        "1": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "2": [
+          1,
+          0
+        ],
+        "3": [
+          0,
+          0
+        ],
+        "4": [
+          1,
+          0
+        ],
+        "5": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "6": [
+          0,
+          0
+        ],
+        "7": [
+          0,
+          0
+        ],
+        "8": [
+          1,
+          0
+        ],
+        "9": [
+          1,
+          1
+        ],
+        "10": [
+          0,
+          0
+        ],
+        "11": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "5d32ef3e28435a1372ef8b7bcec66b32819f8650"
+    }
+  }
+}

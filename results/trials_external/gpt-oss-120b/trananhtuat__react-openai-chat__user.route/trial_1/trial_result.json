@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "trananhtuat__react-openai-chat__user.route",
+  "targetFilename": "external/trananhtuat__react-openai-chat/server/routes/user.route.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:25:10.707Z",
+  "finishedAt": "2026-10-05T05:25:17.590Z",
+  "suiteOk": false,
+  "testsPassed": 3,
+  "testsFailed": 1,
+  "testsTotal": 4,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 80,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 80,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 485,
+    "completionTokens": 1123,
+    "totalTokens": 1608,
+    "reasoningTokens": 491
+  },
+  "latencyMs": 2956
+}

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "digitomize__digitomize__sheetController",
+  "targetFilename": "external/digitomize__digitomize/backend/DSA_sheets/controllers/sheetController.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:02:28.788Z",
+  "finishedAt": "2026-10-05T05:02:37.825Z",
+  "suiteOk": false,
+  "testsPassed": 9,
+  "testsFailed": 3,
+  "testsTotal": 12,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 52.94,
+  "branchCoverage": 60.71,
+  "functionCoverage": 83.33,
+  "lineCoverage": 52.94,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1665,
+    "completionTokens": 2119,
+    "totalTokens": 3784,
+    "reasoningTokens": 292
+  },
+  "latencyMs": 5109
+}

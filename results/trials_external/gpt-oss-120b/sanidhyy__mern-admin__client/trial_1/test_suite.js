@@ -1,0 +1,235 @@
+import { jest } from '@jest/globals';
+import {
+  getProducts,
+  getCustomers,
+  getTransactions,
+  getGeography,
+} from '../dataset/external/sanidhyy__mern-admin/server/controllers/client.js';
+
+// Mock external modules and models
+jest.mock('country-iso-2-to-3', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+jest.mock('lodash', () => ({
+  __esModule: true,
+  escapeRegExp: jest.fn((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+}));
+
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/Product.js', () => ({
+  __esModule: true,
+  default: {
+    find: jest.fn(),
+  },
+}));
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/ProductStat.js', () => ({
+  __esModule: true,
+  default: {
+    find: jest.fn(),
+  },
+}));
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/User.js', () => ({
+  __esModule: true,
+  default: {
+    find: jest.fn(),
+    find: jest.fn(),
+    find: jest.fn(),
+  },
+}));
+jest.mock('../dataset/external/sanidhyy__mern-admin/server/models/Transaction.js', () => ({
+  __esModule: true,
+  default: {
+    find: jest.fn(),
+    countDocuments: jest.fn(),
+  },
+}));
+
+// Helper to create a mock response object
+const createRes = () => {
+  const res = {};
+  res.status = jest.fn(() => res);
+  res.json = jest.fn(() => res);
+  return res;
+};
+
+describe('client controller', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('getProducts', () => {
+    it('should return products with stats', async () => {
+      const mockProducts = [
+        { _id: 'p1', _doc: { name: 'Prod1' } },
+        { _id: 'p2', _doc: { name: 'Prod2' } },
+      ];
+      const mockStats = [{ month: 'Jan' }, { month: 'Feb' }];
+
+      const Product = (await import('../dataset/external/sanidhyy__mern-admin/server/models/Product.js')).default;
+      const ProductStat = (await import('../dataset/external/sanidhyy__mern-admin/server/models/ProductStat.js')).default;
+
+      Product.find.mockResolvedValue(mockProducts);
+      ProductStat.find.mockResolvedValue(mockStats);
+
+      const res = createRes();
+      await getProducts({}, res);
+
+      expect(Product.find).toHaveBeenCalledTimes(1);
+      expect(ProductStat.find).toHaveBeenCalledTimes(2);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith([
+        { name: 'Prod1', stat: mockStats },
+        { name: 'Prod2', stat: mockStats },
+      ]);
+    });
+
+    it('should handle errors', async () => {
+      const Product = (await import('../dataset/external/sanidhyy__mern-admin/server/models/Product.js')).default;
+      Product.find.mockRejectedValue(new Error('db fail'));
+
+      const res = createRes();
+      await getProducts({}, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'db fail' });
+    });
+  });
+
+  describe('getCustomers', () => {
+    it('should return users with role user', async () => {
+      const mockUsers = [{ _id: 'u1', name: 'Alice' }, { _id: 'u2', name: 'Bob' }];
+      const User = (await import('../dataset/external/sanidhyy__mern-admin/server/models/User.js')).default;
+      User.find.mockReturnValue({
+        select: jest.fn().mockResolvedValue(mockUsers),
+      });
+
+      const res = createRes();
+      await getCustomers({}, res);
+
+      expect(User.find).toHaveBeenCalledWith({ role: 'user' });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockUsers);
+    });
+
+    it('should handle errors', async () => {
+      const User = (await import('../dataset/external/sanidhyy__mern-admin/server/models/User.js')).default;
+      User.find.mockReturnValue({
+        select: jest.fn().mockRejectedValue(new Error('find error')),
+      });
+
+      const res = createRes();
+      await getCustomers({}, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'find error' });
+    });
+  });
+
+  describe('getTransactions', () => {
+    const mockTx = [{ _id: 't1' }, { _id: 't2' }];
+
+    it('should return paginated, sorted transactions with total', async () => {
+      const req = {
+        query: {
+          page: '0',
+          pageSize: '2',
+          sort: JSON.stringify({ field: 'cost', sort: 'desc' }),
+          search: 'abc',
+        },
+      };
+
+      const Transaction = (await import('../dataset/external/sanidhyy__mern-admin/server/models/Transaction.js')).default;
+      const chain = {
+        sort: jest.fn(() => ({
+          skip: jest.fn(() => ({
+            limit: jest.fn(() => Promise.resolve(mockTx)),
+          })),
+        })),
+      };
+      Transaction.find.mockReturnValue(chain);
+      Transaction.countDocuments.mockResolvedValue(42);
+
+      const res = createRes();
+      await getTransactions(req, res);
+
+      // verify query building
+      expect(Transaction.find).toHaveBeenCalledWith({
+        $or: [
+          { cost: { $regex: new RegExp('abc', 'i') } },
+          { userId: { $regex: new RegExp('abc', 'i') } },
+        ],
+      });
+      expect(chain.sort).toHaveBeenCalledWith({ cost: -1 });
+      expect(chain.sort().skip).toHaveBeenCalledWith(0 * 2);
+      expect(chain.sort().skip().limit).toHaveBeenCalledWith(2);
+      expect(Transaction.countDocuments).toHaveBeenCalledWith({
+        name: { $regex: 'abc', $options: 'i' },
+      });
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        transactions: mockTx,
+        total: 42,
+      });
+    });
+
+    it('should handle errors', async () => {
+      const req = { query: {} };
+      const Transaction = (await import('../dataset/external/sanidhyy__mern-admin/server/models/Transaction.js')).default;
+      Transaction.find.mockImplementation(() => {
+        throw new Error('tx error');
+      });
+
+      const res = createRes();
+      await getTransactions(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'tx error' });
+    });
+  });
+
+  describe('getGeography', () => {
+    it('should map countries to ISO3 and count', async () => {
+      const mockUsers = [
+        { country: 'US' },
+        { country: 'US' },
+        { country: 'IN' },
+        { country: 'FR' },
+      ];
+      const User = (await import('../dataset/external/sanidhyy__mern-admin/server/models/User.js')).default;
+      User.find.mockResolvedValue(mockUsers);
+
+      const getCountryISO3 = (await import('country-iso-2-to-3')).default;
+      getCountryISO3.mockImplementation((code) => ({
+        US: 'USA',
+        IN: 'IND',
+        FR: 'FRA',
+      }[code]));
+
+      const res = createRes();
+      await getGeography({}, res);
+
+      expect(User.find).toHaveBeenCalledTimes(1);
+      expect(getCountryISO3).toHaveBeenCalledTimes(4);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.arrayContaining([
+          { id: 'USA', value: 2 },
+          { id: 'IND', value: 1 },
+          { id: 'FRA', value: 1 },
+        ])
+      );
+    });
+
+    it('should handle errors', async () => {
+      const User = (await import('../dataset/external/sanidhyy__mern-admin/server/models/User.js')).default;
+      User.find.mockRejectedValue(new Error('user fail'));
+
+      const res = createRes();
+      await getGeography({}, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ message: 'user fail' });
+    });
+  });
+});

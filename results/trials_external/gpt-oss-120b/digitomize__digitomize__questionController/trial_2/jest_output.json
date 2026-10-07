@@ -1,0 +1,1175 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 9,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 3,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 12,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177976565,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "questionController - createQuestions"
+          ],
+          "duration": 9,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "questionController - createQuestions should return 400 when body is not an array or empty",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 when body is not an array or empty",
+          "startAt": 1791177977593
+        },
+        {
+          "ancestorTitles": [
+            "questionController - createQuestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:58:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - createQuestions should return 409 when duplicate q_id exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 409 when duplicate q_id exists",
+          "startAt": 1791177977603
+        },
+        {
+          "ancestorTitles": [
+            "questionController - createQuestions"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:82:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - createQuestions should create and return questions with 201 on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create and return questions with 201 on success",
+          "startAt": 1791177977615
+        },
+        {
+          "ancestorTitles": [
+            "questionController - createQuestions"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.find.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:105:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - createQuestions should return 500 on unexpected error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 on unexpected error",
+          "startAt": 1791177977617
+        },
+        {
+          "ancestorTitles": [
+            "questionController - getQuestionByQId"
+          ],
+          "duration": 10,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "questionController - getQuestionByQId should return 400 when q_id is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 when q_id is missing",
+          "startAt": 1791177977619
+        },
+        {
+          "ancestorTitles": [
+            "questionController - getQuestionByQId"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:139:27)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - getQuestionByQId should return 404 when question not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 when question not found",
+          "startAt": 1791177977629
+        },
+        {
+          "ancestorTitles": [
+            "questionController - getQuestionByQId"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:156:27)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - getQuestionByQId should return 200 with the question when found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 200 with the question when found",
+          "startAt": 1791177977631
+        },
+        {
+          "ancestorTitles": [
+            "questionController - getQuestionByQId"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.findOne.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:169:27)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - getQuestionByQId should return 500 on unexpected error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 on unexpected error",
+          "startAt": 1791177977633
+        },
+        {
+          "ancestorTitles": [
+            "questionController - deleteQuestionByQId"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "questionController - deleteQuestionByQId should return 400 when q_id is missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 400 when q_id is missing",
+          "startAt": 1791177977634
+        },
+        {
+          "ancestorTitles": [
+            "questionController - deleteQuestionByQId"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.findOneAndDelete.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:203:36)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - deleteQuestionByQId should return 404 when question to delete does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 when question to delete does not exist",
+          "startAt": 1791177977636
+        },
+        {
+          "ancestorTitles": [
+            "questionController - deleteQuestionByQId"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.findOneAndDelete.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:220:36)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - deleteQuestionByQId should delete and return success response with 200",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should delete and return success response with 200",
+          "startAt": 1791177977638
+        },
+        {
+          "ancestorTitles": [
+            "questionController - deleteQuestionByQId"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: QuestionModel.findOneAndDelete.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:237:36)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "questionController - deleteQuestionByQId should return 500 on unexpected error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 500 on unexpected error",
+          "startAt": 1791177977639
+        }
+      ],
+      "endTime": 1791177977753,
+      "message": "  ● questionController - createQuestions › should return 409 when duplicate q_id exists\n\n    TypeError: QuestionModel.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 56 |\u001b[39m\n     \u001b[90m 57 |\u001b[39m     \u001b[90m// Mock find to return an existing question with q_id 'Q1'\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 58 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue([{ q_id\u001b[33m:\u001b[39m \u001b[32m'Q1'\u001b[39m }])\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 59 |\u001b[39m\n     \u001b[90m 60 |\u001b[39m     \u001b[36mawait\u001b[39m createQuestions(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 61 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:58:24)\n\n  ● questionController - createQuestions › should create and return questions with 201 on success\n\n    TypeError: QuestionModel.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 80 |\u001b[39m\n     \u001b[90m 81 |\u001b[39m     \u001b[90m// No duplicates\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 82 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue([])\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 83 |\u001b[39m\n     \u001b[90m 84 |\u001b[39m     \u001b[90m// Mock insertMany to return saved documents\u001b[39m\n     \u001b[90m 85 |\u001b[39m     \u001b[36mconst\u001b[39m saved \u001b[33m=\u001b[39m [\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:82:24)\n\n  ● questionController - createQuestions › should return 500 on unexpected error\n\n    TypeError: QuestionModel.find.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 103 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\n     \u001b[90m 104 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 105 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'DB failure'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 106 |\u001b[39m\n     \u001b[90m 107 |\u001b[39m     \u001b[36mawait\u001b[39m createQuestions(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 108 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:105:24)\n\n  ● questionController - getQuestionByQId › should return 404 when question not found\n\n    TypeError: QuestionModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 137 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\n     \u001b[90m 138 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 139 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 140 |\u001b[39m\n     \u001b[90m 141 |\u001b[39m     \u001b[36mawait\u001b[39m getQuestionByQId(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 142 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:139:27)\n\n  ● questionController - getQuestionByQId › should return 200 with the question when found\n\n    TypeError: QuestionModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 154 |\u001b[39m\n     \u001b[90m 155 |\u001b[39m     \u001b[36mconst\u001b[39m found \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'id1'\u001b[39m\u001b[33m,\u001b[39m q_id\u001b[33m:\u001b[39m \u001b[32m'Q1'\u001b[39m\u001b[33m,\u001b[39m text\u001b[33m:\u001b[39m \u001b[32m'Sample'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 156 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(found)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 157 |\u001b[39m\n     \u001b[90m 158 |\u001b[39m     \u001b[36mawait\u001b[39m getQuestionByQId(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 159 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:156:27)\n\n  ● questionController - getQuestionByQId › should return 500 on unexpected error\n\n    TypeError: QuestionModel.findOne.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 167 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\n     \u001b[90m 168 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 169 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'DB error'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 170 |\u001b[39m\n     \u001b[90m 171 |\u001b[39m     \u001b[36mawait\u001b[39m getQuestionByQId(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 172 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:169:27)\n\n  ● questionController - deleteQuestionByQId › should return 404 when question to delete does not exist\n\n    TypeError: QuestionModel.findOneAndDelete.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 201 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\n     \u001b[90m 202 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfindOneAndDelete\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 204 |\u001b[39m\n     \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m deleteQuestionByQId(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 206 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:203:36)\n\n  ● questionController - deleteQuestionByQId › should delete and return success response with 200\n\n    TypeError: QuestionModel.findOneAndDelete.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 218 |\u001b[39m\n     \u001b[90m 219 |\u001b[39m     \u001b[36mconst\u001b[39m deleted \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'id1'\u001b[39m\u001b[33m,\u001b[39m q_id\u001b[33m:\u001b[39m \u001b[32m'Q1'\u001b[39m\u001b[33m,\u001b[39m text\u001b[33m:\u001b[39m \u001b[32m'To be deleted'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 220 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfindOneAndDelete\u001b[33m.\u001b[39mmockResolvedValue(deleted)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 221 |\u001b[39m\n     \u001b[90m 222 |\u001b[39m     \u001b[36mawait\u001b[39m deleteQuestionByQId(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 223 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:220:36)\n\n  ● questionController - deleteQuestionByQId › should return 500 on unexpected error\n\n    TypeError: QuestionModel.findOneAndDelete.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 235 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\n     \u001b[90m 236 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 237 |\u001b[39m     \u001b[33mQuestionModel\u001b[39m\u001b[33m.\u001b[39mfindOneAndDelete\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'DB fail'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 238 |\u001b[39m\n     \u001b[90m 239 |\u001b[39m     \u001b[36mawait\u001b[39m deleteQuestionByQId(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 240 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js:237:36)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\digitomize__digitomize__questionController_gpt-oss-120b_trial2.test.js",
+      "startTime": 1791177976696,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\models\\questionModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\models\\questionModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 23
+          },
+          "end": {
+            "line": 9,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 11,
+            "column": 22
+          },
+          "end": {
+            "line": 11,
+            "column": 64
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "ef6b7478a5b7c371e0a6e3c68c8407bf9fbc662f"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\controllers\\questionController.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\digitomize__digitomize\\backend\\DSA_sheets\\controllers\\questionController.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 6,
+            "column": 31
+          },
+          "end": {
+            "line": 50,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 7,
+            "column": 2
+          },
+          "end": {
+            "line": 49,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 8,
+            "column": 26
+          },
+          "end": {
+            "line": 8,
+            "column": 34
+          }
+        },
+        "3": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 16,
+            "column": 5
+          }
+        },
+        "4": {
+          "start": {
+            "line": 12,
+            "column": 6
+          },
+          "end": {
+            "line": 15,
+            "column": 9
+          }
+        },
+        "5": {
+          "start": {
+            "line": 19,
+            "column": 30
+          },
+          "end": {
+            "line": 21,
+            "column": 6
+          }
+        },
+        "6": {
+          "start": {
+            "line": 20,
+            "column": 44
+          },
+          "end": {
+            "line": 20,
+            "column": 50
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 4
+          },
+          "end": {
+            "line": 31,
+            "column": 5
+          }
+        },
+        "8": {
+          "start": {
+            "line": 24,
+            "column": 28
+          },
+          "end": {
+            "line": 24,
+            "column": 64
+          }
+        },
+        "9": {
+          "start": {
+            "line": 24,
+            "column": 57
+          },
+          "end": {
+            "line": 24,
+            "column": 63
+          }
+        },
+        "10": {
+          "start": {
+            "line": 25,
+            "column": 6
+          },
+          "end": {
+            "line": 30,
+            "column": 9
+          }
+        },
+        "11": {
+          "start": {
+            "line": 34,
+            "column": 25
+          },
+          "end": {
+            "line": 36,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 35,
+            "column": 20
+          },
+          "end": {
+            "line": 35,
+            "column": 47
+          }
+        },
+        "13": {
+          "start": {
+            "line": 39,
+            "column": 27
+          },
+          "end": {
+            "line": 39,
+            "column": 71
+          }
+        },
+        "14": {
+          "start": {
+            "line": 42,
+            "column": 4
+          },
+          "end": {
+            "line": 42,
+            "column": 41
+          }
+        },
+        "15": {
+          "start": {
+            "line": 44,
+            "column": 4
+          },
+          "end": {
+            "line": 44,
+            "column": 54
+          }
+        },
+        "16": {
+          "start": {
+            "line": 45,
+            "column": 4
+          },
+          "end": {
+            "line": 48,
+            "column": 7
+          }
+        },
+        "17": {
+          "start": {
+            "line": 53,
+            "column": 32
+          },
+          "end": {
+            "line": 85,
+            "column": 1
+          }
+        },
+        "18": {
+          "start": {
+            "line": 54,
+            "column": 2
+          },
+          "end": {
+            "line": 84,
+            "column": 3
+          }
+        },
+        "19": {
+          "start": {
+            "line": 55,
+            "column": 21
+          },
+          "end": {
+            "line": 55,
+            "column": 29
+          }
+        },
+        "20": {
+          "start": {
+            "line": 58,
+            "column": 4
+          },
+          "end": {
+            "line": 63,
+            "column": 5
+          }
+        },
+        "21": {
+          "start": {
+            "line": 59,
+            "column": 6
+          },
+          "end": {
+            "line": 62,
+            "column": 9
+          }
+        },
+        "22": {
+          "start": {
+            "line": 66,
+            "column": 21
+          },
+          "end": {
+            "line": 66,
+            "column": 58
+          }
+        },
+        "23": {
+          "start": {
+            "line": 69,
+            "column": 4
+          },
+          "end": {
+            "line": 74,
+            "column": 5
+          }
+        },
+        "24": {
+          "start": {
+            "line": 70,
+            "column": 6
+          },
+          "end": {
+            "line": 73,
+            "column": 9
+          }
+        },
+        "25": {
+          "start": {
+            "line": 77,
+            "column": 4
+          },
+          "end": {
+            "line": 77,
+            "column": 35
+          }
+        },
+        "26": {
+          "start": {
+            "line": 79,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 52
+          }
+        },
+        "27": {
+          "start": {
+            "line": 80,
+            "column": 4
+          },
+          "end": {
+            "line": 83,
+            "column": 7
+          }
+        },
+        "28": {
+          "start": {
+            "line": 88,
+            "column": 35
+          },
+          "end": {
+            "line": 124,
+            "column": 1
+          }
+        },
+        "29": {
+          "start": {
+            "line": 89,
+            "column": 2
+          },
+          "end": {
+            "line": 123,
+            "column": 3
+          }
+        },
+        "30": {
+          "start": {
+            "line": 90,
+            "column": 21
+          },
+          "end": {
+            "line": 90,
+            "column": 29
+          }
+        },
+        "31": {
+          "start": {
+            "line": 93,
+            "column": 4
+          },
+          "end": {
+            "line": 98,
+            "column": 5
+          }
+        },
+        "32": {
+          "start": {
+            "line": 94,
+            "column": 6
+          },
+          "end": {
+            "line": 97,
+            "column": 9
+          }
+        },
+        "33": {
+          "start": {
+            "line": 101,
+            "column": 28
+          },
+          "end": {
+            "line": 101,
+            "column": 74
+          }
+        },
+        "34": {
+          "start": {
+            "line": 104,
+            "column": 4
+          },
+          "end": {
+            "line": 109,
+            "column": 5
+          }
+        },
+        "35": {
+          "start": {
+            "line": 105,
+            "column": 6
+          },
+          "end": {
+            "line": 108,
+            "column": 9
+          }
+        },
+        "36": {
+          "start": {
+            "line": 112,
+            "column": 4
+          },
+          "end": {
+            "line": 116,
+            "column": 7
+          }
+        },
+        "37": {
+          "start": {
+            "line": 118,
+            "column": 4
+          },
+          "end": {
+            "line": 118,
+            "column": 53
+          }
+        },
+        "38": {
+          "start": {
+            "line": 119,
+            "column": 4
+          },
+          "end": {
+            "line": 122,
+            "column": 7
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 31
+            },
+            "end": {
+              "line": 6,
+              "column": 32
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 51
+            },
+            "end": {
+              "line": 50,
+              "column": 1
+            }
+          },
+          "line": 6
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 20,
+              "column": 37
+            },
+            "end": {
+              "line": 20,
+              "column": 38
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 44
+            },
+            "end": {
+              "line": 20,
+              "column": 50
+            }
+          },
+          "line": 20
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 24,
+              "column": 50
+            },
+            "end": {
+              "line": 24,
+              "column": 51
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 24,
+              "column": 57
+            },
+            "end": {
+              "line": 24,
+              "column": 63
+            }
+          },
+          "line": 24
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 35,
+              "column": 6
+            },
+            "end": {
+              "line": 35,
+              "column": 7
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 35,
+              "column": 20
+            },
+            "end": {
+              "line": 35,
+              "column": 47
+            }
+          },
+          "line": 35
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 53,
+              "column": 32
+            },
+            "end": {
+              "line": 53,
+              "column": 33
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 53,
+              "column": 52
+            },
+            "end": {
+              "line": 85,
+              "column": 1
+            }
+          },
+          "line": 53
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 88,
+              "column": 35
+            },
+            "end": {
+              "line": 88,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 88,
+              "column": 55
+            },
+            "end": {
+              "line": 124,
+              "column": 1
+            }
+          },
+          "line": 88
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 4
+            },
+            "end": {
+              "line": 16,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 11,
+                "column": 4
+              },
+              "end": {
+                "line": 16,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 11
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 8
+            },
+            "end": {
+              "line": 11,
+              "column": 67
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 11,
+                "column": 8
+              },
+              "end": {
+                "line": 11,
+                "column": 37
+              }
+            },
+            {
+              "start": {
+                "line": 11,
+                "column": 41
+              },
+              "end": {
+                "line": 11,
+                "column": 67
+              }
+            }
+          ],
+          "line": 11
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 4
+            },
+            "end": {
+              "line": 31,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 23,
+                "column": 4
+              },
+              "end": {
+                "line": 31,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 23
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 58,
+              "column": 4
+            },
+            "end": {
+              "line": 63,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 58,
+                "column": 4
+              },
+              "end": {
+                "line": 63,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 58
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 69,
+              "column": 4
+            },
+            "end": {
+              "line": 74,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 69,
+                "column": 4
+              },
+              "end": {
+                "line": 74,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 69
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 93,
+              "column": 4
+            },
+            "end": {
+              "line": 98,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 93,
+                "column": 4
+              },
+              "end": {
+                "line": 98,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 93
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 104,
+              "column": 4
+            },
+            "end": {
+              "line": 109,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 104,
+                "column": 4
+              },
+              "end": {
+                "line": 109,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 104
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 1,
+        "18": 1,
+        "19": 1,
+        "20": 1,
+        "21": 1,
+        "22": 0,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 1,
+        "29": 1,
+        "30": 1,
+        "31": 1,
+        "32": 1,
+        "33": 0,
+        "34": 0,
+        "35": 0,
+        "36": 0,
+        "37": 0,
+        "38": 0
+      },
+      "f": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 1,
+        "5": 1
+      },
+      "b": {
+        "0": [
+          1,
+          0
+        ],
+        "1": [
+          1,
+          1
+        ],
+        "2": [
+          0,
+          0
+        ],
+        "3": [
+          1,
+          0
+        ],
+        "4": [
+          0,
+          0
+        ],
+        "5": [
+          1,
+          0
+        ],
+        "6": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "8b6cdee9b27171eb2f80a73f9e075ce407cee1db"
+    }
+  }
+}

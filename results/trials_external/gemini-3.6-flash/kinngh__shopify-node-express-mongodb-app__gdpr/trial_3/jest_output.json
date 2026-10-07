@@ -1,0 +1,482 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 6,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 6,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791349652868,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "GDPR Controllers",
+            "customerDataRequest"
+          ],
+          "duration": 9,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GDPR Controllers customerDataRequest should handle customer data request successfully and return { success: true }",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle customer data request successfully and return { success: true }",
+          "startAt": 1791349653227
+        },
+        {
+          "ancestorTitles": [
+            "GDPR Controllers",
+            "customerDataRequest"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GDPR Controllers customerDataRequest should catch error and return { success: false } when an exception occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should catch error and return { success: false } when an exception occurs",
+          "startAt": 1791349653238
+        },
+        {
+          "ancestorTitles": [
+            "GDPR Controllers",
+            "customerRedact"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GDPR Controllers customerRedact should handle customer redact successfully and return { success: true }",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle customer redact successfully and return { success: true }",
+          "startAt": 1791349653242
+        },
+        {
+          "ancestorTitles": [
+            "GDPR Controllers",
+            "customerRedact"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GDPR Controllers customerRedact should catch error and return { success: false } when an exception occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should catch error and return { success: false } when an exception occurs",
+          "startAt": 1791349653244
+        },
+        {
+          "ancestorTitles": [
+            "GDPR Controllers",
+            "shopRedact"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GDPR Controllers shopRedact should handle shop redact successfully and return { success: true }",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle shop redact successfully and return { success: true }",
+          "startAt": 1791349653246
+        },
+        {
+          "ancestorTitles": [
+            "GDPR Controllers",
+            "shopRedact"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GDPR Controllers shopRedact should catch error and return { success: false } when an exception occurs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should catch error and return { success: false } when an exception occurs",
+          "startAt": 1791349653248
+        }
+      ],
+      "endTime": 1791349653251,
+      "message": "",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\kinngh__shopify-node-express-mongodb-app__gdpr_gemini-3.6-flash_trial3.test.js",
+      "startTime": 1791349653001,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\kinngh__shopify-node-express-mongodb-app\\server\\controllers\\gdpr.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\kinngh__shopify-node-express-mongodb-app\\server\\controllers\\gdpr.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 7,
+            "column": 28
+          },
+          "end": {
+            "line": 34,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 26,
+            "column": 2
+          },
+          "end": {
+            "line": 33,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 27,
+            "column": 4
+          },
+          "end": {
+            "line": 27,
+            "column": 47
+          }
+        },
+        "3": {
+          "start": {
+            "line": 28,
+            "column": 4
+          },
+          "end": {
+            "line": 28,
+            "column": 36
+          }
+        },
+        "4": {
+          "start": {
+            "line": 29,
+            "column": 4
+          },
+          "end": {
+            "line": 29,
+            "column": 29
+          }
+        },
+        "5": {
+          "start": {
+            "line": 31,
+            "column": 4
+          },
+          "end": {
+            "line": 31,
+            "column": 21
+          }
+        },
+        "6": {
+          "start": {
+            "line": 32,
+            "column": 4
+          },
+          "end": {
+            "line": 32,
+            "column": 30
+          }
+        },
+        "7": {
+          "start": {
+            "line": 42,
+            "column": 23
+          },
+          "end": {
+            "line": 66,
+            "column": 1
+          }
+        },
+        "8": {
+          "start": {
+            "line": 58,
+            "column": 2
+          },
+          "end": {
+            "line": 65,
+            "column": 3
+          }
+        },
+        "9": {
+          "start": {
+            "line": 59,
+            "column": 4
+          },
+          "end": {
+            "line": 59,
+            "column": 47
+          }
+        },
+        "10": {
+          "start": {
+            "line": 60,
+            "column": 4
+          },
+          "end": {
+            "line": 60,
+            "column": 36
+          }
+        },
+        "11": {
+          "start": {
+            "line": 61,
+            "column": 4
+          },
+          "end": {
+            "line": 61,
+            "column": 29
+          }
+        },
+        "12": {
+          "start": {
+            "line": 63,
+            "column": 4
+          },
+          "end": {
+            "line": 63,
+            "column": 21
+          }
+        },
+        "13": {
+          "start": {
+            "line": 64,
+            "column": 4
+          },
+          "end": {
+            "line": 64,
+            "column": 30
+          }
+        },
+        "14": {
+          "start": {
+            "line": 74,
+            "column": 19
+          },
+          "end": {
+            "line": 88,
+            "column": 1
+          }
+        },
+        "15": {
+          "start": {
+            "line": 80,
+            "column": 2
+          },
+          "end": {
+            "line": 87,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 81,
+            "column": 4
+          },
+          "end": {
+            "line": 81,
+            "column": 47
+          }
+        },
+        "17": {
+          "start": {
+            "line": 82,
+            "column": 4
+          },
+          "end": {
+            "line": 82,
+            "column": 36
+          }
+        },
+        "18": {
+          "start": {
+            "line": 83,
+            "column": 4
+          },
+          "end": {
+            "line": 83,
+            "column": 29
+          }
+        },
+        "19": {
+          "start": {
+            "line": 85,
+            "column": 4
+          },
+          "end": {
+            "line": 85,
+            "column": 21
+          }
+        },
+        "20": {
+          "start": {
+            "line": 86,
+            "column": 4
+          },
+          "end": {
+            "line": 86,
+            "column": 30
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 7,
+              "column": 28
+            },
+            "end": {
+              "line": 7,
+              "column": 29
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 71
+            },
+            "end": {
+              "line": 34,
+              "column": 1
+            }
+          },
+          "line": 7
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 42,
+              "column": 23
+            },
+            "end": {
+              "line": 42,
+              "column": 24
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 42,
+              "column": 66
+            },
+            "end": {
+              "line": 66,
+              "column": 1
+            }
+          },
+          "line": 42
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 74,
+              "column": 19
+            },
+            "end": {
+              "line": 74,
+              "column": 20
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 74,
+              "column": 62
+            },
+            "end": {
+              "line": 88,
+              "column": 1
+            }
+          },
+          "line": 74
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 2,
+        "2": 2,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 2,
+        "9": 2,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "14": 1,
+        "15": 2,
+        "16": 2,
+        "17": 1,
+        "18": 1,
+        "19": 1,
+        "20": 1
+      },
+      "f": {
+        "0": 2,
+        "1": 2,
+        "2": 2
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "c67e3faabfefa2f16d19d2417e08b62a18b8d704"
+    }
+  }
+}

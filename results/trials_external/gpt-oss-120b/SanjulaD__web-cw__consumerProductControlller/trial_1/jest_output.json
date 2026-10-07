@@ -1,0 +1,925 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 8,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 8,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177225692,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "getConsumerProducts"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:25:29)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers getConsumerProducts should return all consumer products as json",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return all consumer products as json",
+          "startAt": 1791177226882
+        },
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "getConsumerProductById"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:37:33)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers getConsumerProductById should return product when found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return product when found",
+          "startAt": 1791177226895
+        },
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "getConsumerProductById"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:47:33)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers getConsumerProductById should set 404 and throw error when not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should set 404 and throw error when not found",
+          "startAt": 1791177226897
+        },
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "deleteConsumerProduct"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:64:33)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers deleteConsumerProduct should remove product and respond with a message when found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should remove product and respond with a message when found",
+          "startAt": 1791177226899
+        },
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "deleteConsumerProduct"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:75:33)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers deleteConsumerProduct should set 404 and throw error when product does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should set 404 and throw error when product does not exist",
+          "startAt": 1791177226900
+        },
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "createConsumer"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:92:24)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers createConsumer should create a new consumer product and respond with 201",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create a new consumer product and respond with 201",
+          "startAt": 1791177226902
+        },
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "updateConsumer"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:140:33)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers updateConsumer should update and return the product when found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should update and return the product when found",
+          "startAt": 1791177226904
+        },
+        {
+          "ancestorTitles": [
+            "Consumer Product Controllers",
+            "updateConsumer"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:153:33)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Consumer Product Controllers updateConsumer should set 401 and throw error when product not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should set 401 and throw error when product not found",
+          "startAt": 1791177226905
+        }
+      ],
+      "endTime": 1791177226972,
+      "message": "  ● Consumer Product Controllers › getConsumerProducts › should return all consumer products as json\n\n    TypeError: ConsumerProducts.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 23 |\u001b[39m     it(\u001b[32m'should return all consumer products as json'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m fakeProducts \u001b[33m=\u001b[39m [{ _id\u001b[33m:\u001b[39m \u001b[32m'1'\u001b[39m }\u001b[33m,\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'2'\u001b[39m }]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 25 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue(fakeProducts)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 26 |\u001b[39m\n     \u001b[90m 27 |\u001b[39m       \u001b[36mawait\u001b[39m getConsumerProducts({}\u001b[33m,\u001b[39m mockRes\u001b[33m,\u001b[39m jest\u001b[33m.\u001b[39mfn())\u001b[33m;\u001b[39m\n     \u001b[90m 28 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:25:29)\n\n  ● Consumer Product Controllers › getConsumerProductById › should return product when found\n\n    TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 35 |\u001b[39m     it(\u001b[32m'should return product when found'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 36 |\u001b[39m       \u001b[36mconst\u001b[39m fakeProduct \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'123'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 37 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(fakeProduct)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 38 |\u001b[39m\n     \u001b[90m 39 |\u001b[39m       \u001b[36mconst\u001b[39m mockReq \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'123'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 40 |\u001b[39m       \u001b[36mawait\u001b[39m getConsumerProductById(mockReq\u001b[33m,\u001b[39m mockRes\u001b[33m,\u001b[39m jest\u001b[33m.\u001b[39mfn())\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:37:33)\n\n  ● Consumer Product Controllers › getConsumerProductById › should set 404 and throw error when not found\n\n    TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 45 |\u001b[39m\n     \u001b[90m 46 |\u001b[39m     it(\u001b[32m'should set 404 and throw error when not found'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 48 |\u001b[39m\n     \u001b[90m 49 |\u001b[39m       \u001b[36mconst\u001b[39m mockReq \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'nonexistent'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 50 |\u001b[39m       \u001b[36mconst\u001b[39m next \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:47:33)\n\n  ● Consumer Product Controllers › deleteConsumerProduct › should remove product and respond with a message when found\n\n    TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 62 |\u001b[39m       \u001b[36mconst\u001b[39m removeMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m;\u001b[39m\n     \u001b[90m 63 |\u001b[39m       \u001b[36mconst\u001b[39m fakeProduct \u001b[33m=\u001b[39m { remove\u001b[33m:\u001b[39m removeMock }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 64 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(fakeProduct)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 65 |\u001b[39m\n     \u001b[90m 66 |\u001b[39m       \u001b[36mconst\u001b[39m mockReq \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'del-id'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 67 |\u001b[39m       \u001b[36mawait\u001b[39m deleteConsumerProduct(mockReq\u001b[33m,\u001b[39m mockRes\u001b[33m,\u001b[39m jest\u001b[33m.\u001b[39mfn())\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:64:33)\n\n  ● Consumer Product Controllers › deleteConsumerProduct › should set 404 and throw error when product does not exist\n\n    TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 73 |\u001b[39m\n     \u001b[90m 74 |\u001b[39m     it(\u001b[32m'should set 404 and throw error when product does not exist'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 75 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 76 |\u001b[39m\n     \u001b[90m 77 |\u001b[39m       \u001b[36mconst\u001b[39m mockReq \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'missing'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 78 |\u001b[39m       \u001b[36mconst\u001b[39m next \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:75:33)\n\n  ● Consumer Product Controllers › createConsumer › should create a new consumer product and respond with 201\n\n    TypeError: ConsumerProducts.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 90 |\u001b[39m       \u001b[36mconst\u001b[39m savedProduct \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'new-id'\u001b[39m\u001b[33m,\u001b[39m prod_name\u001b[33m:\u001b[39m \u001b[32m'Sample name'\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 91 |\u001b[39m       \u001b[36mconst\u001b[39m saveMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(savedProduct)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 92 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m ({\n     \u001b[90m    |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 93 |\u001b[39m         save\u001b[33m:\u001b[39m saveMock\u001b[33m,\u001b[39m\n     \u001b[90m 94 |\u001b[39m       }))\u001b[33m;\u001b[39m\n     \u001b[90m 95 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:92:24)\n\n  ● Consumer Product Controllers › updateConsumer › should update and return the product when found\n\n    TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 138 |\u001b[39m         avalaible_location\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m\n     \u001b[90m 139 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 140 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(fakeProduct)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 141 |\u001b[39m\n     \u001b[90m 142 |\u001b[39m       \u001b[36mconst\u001b[39m mockReq \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'upd-id'\u001b[39m }\u001b[33m,\u001b[39m body\u001b[33m:\u001b[39m updateData }\u001b[33m;\u001b[39m\n     \u001b[90m 143 |\u001b[39m       \u001b[36mawait\u001b[39m updateConsumer(mockReq\u001b[33m,\u001b[39m mockRes\u001b[33m,\u001b[39m jest\u001b[33m.\u001b[39mfn())\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:140:33)\n\n  ● Consumer Product Controllers › updateConsumer › should set 401 and throw error when product not found\n\n    TypeError: ConsumerProducts.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 151 |\u001b[39m\n     \u001b[90m 152 |\u001b[39m     it(\u001b[32m'should set 401 and throw error when product not found'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 153 |\u001b[39m       \u001b[33mConsumerProducts\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 154 |\u001b[39m\n     \u001b[90m 155 |\u001b[39m       \u001b[36mconst\u001b[39m mockReq \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'missing'\u001b[39m }\u001b[33m,\u001b[39m body\u001b[33m:\u001b[39m updateData }\u001b[33m;\u001b[39m\n     \u001b[90m 156 |\u001b[39m       \u001b[36mconst\u001b[39m next \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js:153:33)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__consumerProductControlller_gpt-oss-120b_trial1.test.js",
+      "startTime": 1791177225814,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\models\\consumerProductModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\models\\consumerProductModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 36
+          },
+          "end": {
+            "line": 18,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 20,
+            "column": 30
+          },
+          "end": {
+            "line": 59,
+            "column": 2
+          }
+        },
+        "2": {
+          "start": {
+            "line": 61,
+            "column": 26
+          },
+          "end": {
+            "line": 61,
+            "column": 84
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "51572fed171bc9ec2c67713c3cab5c51f75d818a"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\controllers\\consumerProductControlller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\controllers\\consumerProductControlller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 9,
+            "column": 28
+          },
+          "end": {
+            "line": 12,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 10,
+            "column": 29
+          },
+          "end": {
+            "line": 10,
+            "column": 60
+          }
+        },
+        "2": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 11,
+            "column": 31
+          }
+        },
+        "3": {
+          "start": {
+            "line": 17,
+            "column": 31
+          },
+          "end": {
+            "line": 26,
+            "column": 2
+          }
+        },
+        "4": {
+          "start": {
+            "line": 18,
+            "column": 28
+          },
+          "end": {
+            "line": 18,
+            "column": 74
+          }
+        },
+        "5": {
+          "start": {
+            "line": 20,
+            "column": 4
+          },
+          "end": {
+            "line": 25,
+            "column": 5
+          }
+        },
+        "6": {
+          "start": {
+            "line": 21,
+            "column": 8
+          },
+          "end": {
+            "line": 21,
+            "column": 34
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 8
+          },
+          "end": {
+            "line": 23,
+            "column": 23
+          }
+        },
+        "8": {
+          "start": {
+            "line": 24,
+            "column": 8
+          },
+          "end": {
+            "line": 24,
+            "column": 53
+          }
+        },
+        "9": {
+          "start": {
+            "line": 31,
+            "column": 30
+          },
+          "end": {
+            "line": 41,
+            "column": 2
+          }
+        },
+        "10": {
+          "start": {
+            "line": 32,
+            "column": 28
+          },
+          "end": {
+            "line": 32,
+            "column": 74
+          }
+        },
+        "11": {
+          "start": {
+            "line": 34,
+            "column": 4
+          },
+          "end": {
+            "line": 40,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 35,
+            "column": 8
+          },
+          "end": {
+            "line": 35,
+            "column": 32
+          }
+        },
+        "13": {
+          "start": {
+            "line": 36,
+            "column": 8
+          },
+          "end": {
+            "line": 36,
+            "column": 58
+          }
+        },
+        "14": {
+          "start": {
+            "line": 38,
+            "column": 8
+          },
+          "end": {
+            "line": 38,
+            "column": 23
+          }
+        },
+        "15": {
+          "start": {
+            "line": 39,
+            "column": 8
+          },
+          "end": {
+            "line": 39,
+            "column": 53
+          }
+        },
+        "16": {
+          "start": {
+            "line": 46,
+            "column": 23
+          },
+          "end": {
+            "line": 60,
+            "column": 2
+          }
+        },
+        "17": {
+          "start": {
+            "line": 47,
+            "column": 28
+          },
+          "end": {
+            "line": 56,
+            "column": 6
+          }
+        },
+        "18": {
+          "start": {
+            "line": 58,
+            "column": 35
+          },
+          "end": {
+            "line": 58,
+            "column": 63
+          }
+        },
+        "19": {
+          "start": {
+            "line": 59,
+            "column": 4
+          },
+          "end": {
+            "line": 59,
+            "column": 48
+          }
+        },
+        "20": {
+          "start": {
+            "line": 65,
+            "column": 23
+          },
+          "end": {
+            "line": 86,
+            "column": 2
+          }
+        },
+        "21": {
+          "start": {
+            "line": 66,
+            "column": 94
+          },
+          "end": {
+            "line": 66,
+            "column": 102
+          }
+        },
+        "22": {
+          "start": {
+            "line": 68,
+            "column": 34
+          },
+          "end": {
+            "line": 68,
+            "column": 80
+          }
+        },
+        "23": {
+          "start": {
+            "line": 70,
+            "column": 4
+          },
+          "end": {
+            "line": 85,
+            "column": 5
+          }
+        },
+        "24": {
+          "start": {
+            "line": 72,
+            "column": 8
+          },
+          "end": {
+            "line": 72,
+            "column": 51
+          }
+        },
+        "25": {
+          "start": {
+            "line": 73,
+            "column": 8
+          },
+          "end": {
+            "line": 73,
+            "column": 43
+          }
+        },
+        "26": {
+          "start": {
+            "line": 74,
+            "column": 8
+          },
+          "end": {
+            "line": 74,
+            "column": 43
+          }
+        },
+        "27": {
+          "start": {
+            "line": 75,
+            "column": 8
+          },
+          "end": {
+            "line": 75,
+            "column": 55
+          }
+        },
+        "28": {
+          "start": {
+            "line": 76,
+            "column": 8
+          },
+          "end": {
+            "line": 76,
+            "column": 49
+          }
+        },
+        "29": {
+          "start": {
+            "line": 77,
+            "column": 8
+          },
+          "end": {
+            "line": 77,
+            "column": 51
+          }
+        },
+        "30": {
+          "start": {
+            "line": 78,
+            "column": 8
+          },
+          "end": {
+            "line": 78,
+            "column": 69
+          }
+        },
+        "31": {
+          "start": {
+            "line": 80,
+            "column": 32
+          },
+          "end": {
+            "line": 80,
+            "column": 66
+          }
+        },
+        "32": {
+          "start": {
+            "line": 81,
+            "column": 8
+          },
+          "end": {
+            "line": 81,
+            "column": 45
+          }
+        },
+        "33": {
+          "start": {
+            "line": 83,
+            "column": 8
+          },
+          "end": {
+            "line": 83,
+            "column": 23
+          }
+        },
+        "34": {
+          "start": {
+            "line": 84,
+            "column": 8
+          },
+          "end": {
+            "line": 84,
+            "column": 44
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 9,
+              "column": 41
+            },
+            "end": {
+              "line": 9,
+              "column": 42
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 61
+            },
+            "end": {
+              "line": 12,
+              "column": 1
+            }
+          },
+          "line": 9
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 17,
+              "column": 44
+            },
+            "end": {
+              "line": 17,
+              "column": 45
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 64
+            },
+            "end": {
+              "line": 26,
+              "column": 1
+            }
+          },
+          "line": 17
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 31,
+              "column": 43
+            },
+            "end": {
+              "line": 31,
+              "column": 44
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 31,
+              "column": 63
+            },
+            "end": {
+              "line": 41,
+              "column": 1
+            }
+          },
+          "line": 31
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 46,
+              "column": 36
+            },
+            "end": {
+              "line": 46,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 46,
+              "column": 56
+            },
+            "end": {
+              "line": 60,
+              "column": 1
+            }
+          },
+          "line": 46
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 65,
+              "column": 36
+            },
+            "end": {
+              "line": 65,
+              "column": 37
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 65,
+              "column": 56
+            },
+            "end": {
+              "line": 86,
+              "column": 1
+            }
+          },
+          "line": 65
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 4
+            },
+            "end": {
+              "line": 25,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 20,
+                "column": 4
+              },
+              "end": {
+                "line": 25,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 22,
+                "column": 11
+              },
+              "end": {
+                "line": 25,
+                "column": 5
+              }
+            }
+          ],
+          "line": 20
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 34,
+              "column": 4
+            },
+            "end": {
+              "line": 40,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 34,
+                "column": 4
+              },
+              "end": {
+                "line": 40,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 37,
+                "column": 11
+              },
+              "end": {
+                "line": 40,
+                "column": 5
+              }
+            }
+          ],
+          "line": 34
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 70,
+              "column": 4
+            },
+            "end": {
+              "line": 85,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 70,
+                "column": 4
+              },
+              "end": {
+                "line": 85,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 82,
+                "column": 11
+              },
+              "end": {
+                "line": 85,
+                "column": 5
+              }
+            }
+          ],
+          "line": 70
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 1,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 1,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 1,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 0,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "66bff0e64104b7cf8e26d603024defac555602f8"
+    }
+  }
+}

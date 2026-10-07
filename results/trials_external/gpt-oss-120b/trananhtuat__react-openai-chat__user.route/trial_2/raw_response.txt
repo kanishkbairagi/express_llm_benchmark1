@@ -1,0 +1,68 @@
+```javascript
+import request from "supertest";
+import express from "express";
+import router from "../dataset/external/trananhtuat__react-openai-chat/server/routes/user.route.js";
+
+// Mock the dependencies used inside the router
+jest.mock(
+  "../dataset/external/trananhtuat__react-openai-chat/server/controllers/user.controller.js",
+  () => ({
+    userRegister: jest.fn((req, res) => res.status(201).json({ success: true })),
+    userSignIn: jest.fn((req, res) => res.status(200).json({ token: "dummy-token" })),
+  })
+);
+jest.mock(
+  "../dataset/external/trananhtuat__react-openai-chat/server/middlewares/token.middleware.js",
+  () => ({
+    tokenAuth: jest.fn((req, res, next) => {
+      req.user = { username: "mockedUser" };
+      next();
+    }),
+  })
+);
+jest.mock(
+  "../dataset/external/trananhtuat__react-openai-chat/server/utils/validator.js",
+  () => ({
+    validate: jest.fn((req, res, next) => next()),
+  })
+);
+
+import { userRegister, userSignIn } from "../dataset/external/trananhtuat__react-openai-chat/server/controllers/user.controller.js";
+import { tokenAuth } from "../dataset/external/trananhtuat__react-openai-chat/server/middlewares/token.middleware.js";
+import { validate } from "../dataset/external/trananhtuat__react-openai-chat/server/utils/validator.js";
+
+describe("User routes", () => {
+  const app = express();
+  app.use(express.json());
+  app.use(router);
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("POST /signup should run validation and controller", async () => {
+    const payload = { username: "validUser", password: "validPass123" };
+    const response = await request(app).post("/signup").send(payload);
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({ success: true });
+    expect(validate).toHaveBeenCalledTimes(1);
+    expect(userRegister).toHaveBeenCalledTimes(1);
+  });
+
+  test("POST /signin should run validation and controller", async () => {
+    const payload = { username: "validUser", password: "validPass123" };
+    const response = await request(app).post("/signin").send(payload);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ token: "dummy-token" });
+    expect(validate).toHaveBeenCalledTimes(1);
+    expect(userSignIn).toHaveBeenCalledTimes(1);
+  });
+
+  test("GET /check-token should invoke tokenAuth and return username", async () => {
+    const response = await request(app).get("/check-token");
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ username: "mockedUser" });
+    expect(tokenAuth).toHaveBeenCalledTimes(1);
+  });
+});
+```

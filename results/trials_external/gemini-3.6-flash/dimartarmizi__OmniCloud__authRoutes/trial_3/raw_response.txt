@@ -1,0 +1,256 @@
+```javascript
+import { jest } from '@jest/globals';
+
+const mockEnv = {
+	authCookieName: 'omni_session',
+	appMode: 'hosted',
+};
+
+const mockClearUserSessions = jest.fn();
+const mockCreateSession = jest.fn();
+const mockDestroySession = jest.fn();
+const mockGetAuthSummary = jest.fn();
+const mockLoginHostedUser = jest.fn();
+const mockRegisterHostedUser = jest.fn();
+
+jest.unstable_mockModule(
+	'../dataset/external/dimartarmizi__OmniCloud/backend/src/config/env.js',
+	() => ({
+		env: mockEnv,
+	})
+);
+
+jest.unstable_mockModule(
+	'../dataset/external/dimartarmizi__OmniCloud/backend/src/services/authService.js',
+	() => ({
+		clearUserSessions: mockClearUserSessions,
+		createSession: mockCreateSession,
+		destroySession: mockDestroySession,
+		getAuthSummary: mockGetAuthSummary,
+		loginHostedUser: mockLoginHostedUser,
+		registerHostedUser: mockRegisterHostedUser,
+	})
+);
+
+const { default: router } = await import(
+	'../dataset/external/dimartarmizi__OmniCloud/backend/src/routes/authRoutes.js'
+);
+
+function getRouteHandler(path, method) {
+	const layer = router.stack.find(
+		(l) => l.route && l.route.path === path && l.route.methods[method.toLowerCase()]
+	);
+	if (!layer) {
+		throw new Error(`Route not found for ${method.toUpperCase()} ${path}`);
+	}
+	return layer.route.stack[0].handle;
+}
+
+function mockReqRes({ body, headers = {}, user, locals = {} } = {}) {
+	const req = {
+		body,
+		headers,
+		user,
+	};
+	const res = {
+		locals,
+		status: jest.fn().mockReturnThis(),
+		json: jest.fn().mockReturnThis(),
+		cookie: jest.fn().mockReturnThis(),
+		clearCookie: jest.fn().mockReturnThis(),
+	};
+	const next = jest.fn();
+	return { req, res, next };
+}
+
+describe('authRoutes', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+		mockEnv.authCookieName = 'omni_session';
+		mockEnv.appMode = 'hosted';
+	});
+
+	describe('GET /auth/me', () => {
+		it('should return auth summary for authenticated user', () => {
+			const handler = getRouteHandler('/auth/me', 'get');
+			const user = { id: 'user-1', email: 'user@example.com' };
+			const { req, res } = mockReqRes({ user });
+			const summary = { id: 'user-1', email: 'user@example.com', isHost: false };
+
+			mockGetAuthSummary.mockReturnValue(summary);
+
+			handler(req, res);
+
+			expect(mockGetAuthSummary).toHaveBeenCalledWith(user);
+			expect(res.json).toHaveBeenCalledWith({ data: summary });
+		});
+	});
+
+	describe('POST /auth/register', () => {
+		it('should register user, clear existing sessions, create new session, set cookie, and return 201', () => {
+			const handler = getRouteHandler('/auth/register', 'post');
+			const body = { email: 'new@example.com', password: 'password123' };
+			const locals = { authCookieOptions: { httpOnly: true, sameSite: 'strict' } };
+			const { req, res, next } = mockReqRes({ body, locals });
+
+			const registeredUser = { id: 'user-100', email: 'new@example.com' };
+			const session = { token: 'new-session-token' };
+			const summary = { id: 'user-100', email: 'new@example.com' };
+
+			mockRegisterHostedUser.mockReturnValue(registeredUser);
+			mockCreateSession.mockReturnValue(session);
+			mockGetAuthSummary.mockReturnValue(summary);
+
+			handler(req, res, next);
+
+			expect(mockRegisterHostedUser).toHaveBeenCalledWith(body);
+			expect(mockClearUserSessions).toHaveBeenCalledWith('user-100');
+			expect(mockCreateSession).toHaveBeenCalledWith('user-100');
+			expect(res.cookie).toHaveBeenCalledWith('omni_session', 'new-session-token', {
+				httpOnly: true,
+				sameSite: 'strict',
+			});
+			expect(res.status).toHaveBeenCalledWith(201);
+			expect(res.json).toHaveBeenCalledWith({ data: summary });
+			expect(next).not.toHaveBeenCalled();
+		});
+
+		it('should default to empty object when req.body is undefined', () => {
+			const handler = getRouteHandler('/auth/register', 'post');
+			const { req, res, next } = mockReqRes({ body: undefined });
+
+			mockRegisterHostedUser.mockReturnValue({ id: 'user-101' });
+			mockCreateSession.mockReturnValue({ token: 'token' });
+
+			handler(req, res, next);
+
+			expect(mockRegisterHostedUser).toHaveBeenCalledWith({});
+		});
+
+		it('should pass caught errors to next', () => {
+			const handler = getRouteHandler('/auth/register', 'post');
+			const { req, res, next } = mockReqRes({ body: {} });
+			const error = new Error('Registration failed');
+
+			mockRegisterHostedUser.mockImplementation(() => {
+				throw error;
+			});
+
+			handler(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(error);
+		});
+	});
+
+	describe('POST /auth/login', () => {
+		it('should login user, create session, set cookie, and return auth summary', () => {
+			const handler = getRouteHandler('/auth/login', 'post');
+			const body = { email: 'login@example.com', password: 'password123' };
+			const { req, res, next } = mockReqRes({ body });
+
+			const user = { id: 'user-200' };
+			const session = { token: 'login-session-token' };
+			const summary = { id: 'user-200', email: 'login@example.com' };
+
+			mockLoginHostedUser.mockReturnValue(user);
+			mockCreateSession.mockReturnValue(session);
+			mockGetAuthSummary.mockReturnValue(summary);
+
+			handler(req, res, next);
+
+			expect(mockLoginHostedUser).toHaveBeenCalledWith(body);
+			expect(mockCreateSession).toHaveBeenCalledWith('user-200');
+			expect(res.cookie).toHaveBeenCalledWith('omni_session', 'login-session-token', {});
+			expect(res.json).toHaveBeenCalledWith({ data: summary });
+			expect(next).not.toHaveBeenCalled();
+		});
+
+		it('should default to empty object when req.body is undefined', () => {
+			const handler = getRouteHandler('/auth/login', 'post');
+			const { req, res, next } = mockReqRes({ body: undefined });
+
+			mockLoginHostedUser.mockReturnValue({ id: 'user-201' });
+			mockCreateSession.mockReturnValue({ token: 'token' });
+
+			handler(req, res, next);
+
+			expect(mockLoginHostedUser).toHaveBeenCalledWith({});
+		});
+
+		it('should pass caught errors to next', () => {
+			const handler = getRouteHandler('/auth/login', 'post');
+			const { req, res, next } = mockReqRes({ body: {} });
+			const error = new Error('Invalid credentials');
+
+			mockLoginHostedUser.mockImplementation(() => {
+				throw error;
+			});
+
+			handler(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(error);
+		});
+	});
+
+	describe('POST /auth/logout', () => {
+		it('should destroy session if cookie token exists and clear cookie in hosted mode', () => {
+			mockEnv.appMode = 'hosted';
+			const handler = getRouteHandler('/auth/logout', 'post');
+			const cookieHeader = 'other_cookie=123; omni_session=token%20abc; foo=bar';
+			const locals = { authCookieOptions: { domain: 'example.com' } };
+			const { req, res } = mockReqRes({
+				headers: { cookie: cookieHeader },
+				locals,
+				user: { id: 'user-300' },
+			});
+
+			mockGetAuthSummary.mockReturnValue(null);
+
+			handler(req, res);
+
+			expect(mockDestroySession).toHaveBeenCalledWith('token abc');
+			expect(res.clearCookie).toHaveBeenCalledWith('omni_session', {
+				domain: 'example.com',
+				maxAge: 0,
+			});
+			expect(mockGetAuthSummary).toHaveBeenCalledWith(null);
+			expect(res.json).toHaveBeenCalledWith({ data: null });
+		});
+
+		it('should not call destroySession if token is missing in cookie header', () => {
+			const handler = getRouteHandler('/auth/logout', 'post');
+			const { req, res } = mockReqRes({ headers: { cookie: 'other_cookie=123' } });
+
+			handler(req, res);
+
+			expect(mockDestroySession).not.toHaveBeenCalled();
+			expect(res.clearCookie).toHaveBeenCalledWith('omni_session', { maxAge: 0 });
+		});
+
+		it('should not call destroySession if cookie header is missing', () => {
+			const handler = getRouteHandler('/auth/logout', 'post');
+			const { req, res } = mockReqRes({ headers: {} });
+
+			handler(req, res);
+
+			expect(mockDestroySession).not.toHaveBeenCalled();
+			expect(res.clearCookie).toHaveBeenCalledWith('omni_session', { maxAge: 0 });
+		});
+
+		it('should pass req.user to getAuthSummary when appMode is local', () => {
+			mockEnv.appMode = 'local';
+			const handler = getRouteHandler('/auth/logout', 'post');
+			const user = { id: 'local-user' };
+			const { req, res } = mockReqRes({ user });
+			const summary = { id: 'local-user', mode: 'local' };
+
+			mockGetAuthSummary.mockReturnValue(summary);
+
+			handler(req, res);
+
+			expect(mockGetAuthSummary).toHaveBeenCalledWith(user);
+			expect(res.json).toHaveBeenCalledWith({ data: summary });
+		});
+	});
+});
+```

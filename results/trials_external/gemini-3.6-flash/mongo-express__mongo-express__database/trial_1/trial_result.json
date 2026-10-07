@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "mongo-express__mongo-express__database",
+  "targetFilename": "external/mongo-express__mongo-express/lib/routes/database.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:05:50.135Z",
+  "finishedAt": "2026-10-05T05:06:16.621Z",
+  "suiteOk": false,
+  "testsPassed": 12,
+  "testsFailed": 1,
+  "testsTotal": 13,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 100,
+  "branchCoverage": 90.32,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1205,
+    "completionTokens": 2149,
+    "totalTokens": 6528,
+    "thinkingTokens": 3174
+  },
+  "latencyMs": 23322
+}

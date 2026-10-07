@@ -1,0 +1,98 @@
+```javascript
+import { jest } from '@jest/globals';
+import express from 'express';
+import request from 'supertest';
+
+const mockReviewController = {
+  getReviewsOfUser: jest.fn((req, res) => res.status(200).json({ status: 'success', data: [] })),
+  create: jest.fn((req, res) => res.status(201).json({ status: 'created', id: 'review123' })),
+  remove: jest.fn((req, res) => res.status(200).json({ status: 'deleted' }))
+};
+
+const mockTokenMiddleware = {
+  auth: jest.fn((req, res, next) => next())
+};
+
+const mockRequestHandler = {
+  validate: jest.fn((req, res, next) => next())
+};
+
+jest.unstable_mockModule('../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/review.controller.js', () => ({
+  default: mockReviewController
+}));
+
+jest.unstable_mockModule('../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/middlewares/token.middleware.js', () => ({
+  default: mockTokenMiddleware
+}));
+
+jest.unstable_mockModule('../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/request.handler.js', () => ({
+  default: mockRequestHandler
+}));
+
+const { default: reviewRouter } = await import('../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/routes/review.route.js');
+
+describe('Review Routes', () => {
+  let app;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    app = express();
+    app.use(express.json());
+    app.use('/', reviewRouter);
+  });
+
+  describe('GET /', () => {
+    test('should authenticate and call getReviewsOfUser controller', async () => {
+      const res = await request(app).get('/');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({ status: 'success', data: [] });
+      expect(mockTokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(mockReviewController.getReviewsOfUser).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('POST /', () => {
+    test('should validate request body and call create controller for valid payload', async () => {
+      const payload = {
+        mediaId: 'movie_123',
+        content: 'Awesome movie!',
+        mediaType: 'movie',
+        mediaTitle: 'Inception',
+        mediaPoster: 'http://example.com/poster.jpg'
+      };
+
+      const res = await request(app).post('/').send(payload);
+
+      expect(res.status).toBe(201);
+      expect(res.body).toEqual({ status: 'created', id: 'review123' });
+      expect(mockTokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(mockRequestHandler.validate).toHaveBeenCalledTimes(1);
+      expect(mockReviewController.create).toHaveBeenCalledTimes(1);
+    });
+
+    test('should fail express-validator validation if required fields are missing', async () => {
+      mockRequestHandler.validate.mockImplementation((req, res, next) => {
+        return res.status(400).json({ errors: ['mediaId is required'] });
+      });
+
+      const res = await request(app).post('/').send({});
+
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('errors');
+      expect(mockReviewController.create).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('DELETE /:reviewId', () => {
+    test('should authenticate and call remove controller', async () => {
+      const res = await request(app).delete('/review123');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({ status: 'deleted' });
+      expect(mockTokenMiddleware.auth).toHaveBeenCalledTimes(1);
+      expect(mockReviewController.remove).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+```

@@ -1,0 +1,219 @@
+```javascript
+import { jest } from '@jest/globals';
+import userController from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/user.controller.js";
+import userModel from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/models/user.model.js";
+import jsonwebtoken from "jsonwebtoken";
+import responseHandler from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/response.handler.js";
+
+jest.mock("../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/models/user.model.js");
+jest.mock("jsonwebtoken");
+jest.mock("../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/response.handler.js");
+
+describe("User Controller Unit Tests", () => {
+  let req, res;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    req = {
+      body: {},
+      user: {}
+    };
+    res = {};
+  });
+
+  describe("signup", () => {
+    test("should return badrequest if username is already used", async () => {
+      req.body = { username: "existinguser", password: "password123", displayName: "Existing User" };
+      userModel.findOne.mockResolvedValue({ id: "existingId" });
+
+      await userController.signup(req, res);
+
+      expect(userModel.findOne).toHaveBeenCalledWith({ username: "existinguser" });
+      expect(responseHandler.badrequest).toHaveBeenCalledWith(res, "username already used");
+    });
+
+    test("should create a new user and return created response", async () => {
+      req.body = { username: "newuser", password: "password123", displayName: "New User" };
+      userModel.findOne.mockResolvedValue(null);
+
+      const mockUserInstance = {
+        id: "user123",
+        _doc: { username: "newuser", displayName: "New User" },
+        setPassword: jest.fn(),
+        save: jest.fn().mockResolvedValue(true)
+      };
+
+      userModel.mockImplementation(() => mockUserInstance);
+      jsonwebtoken.sign.mockReturnValue("mockedToken");
+
+      await userController.signup(req, res);
+
+      expect(mockUserInstance.setPassword).toHaveBeenCalledWith("password123");
+      expect(mockUserInstance.save).toHaveBeenCalled();
+      expect(jsonwebtoken.sign).toHaveBeenCalled();
+      expect(responseHandler.created).toHaveBeenCalledWith(res, {
+        token: "mockedToken",
+        username: "newuser",
+        displayName: "New User",
+        id: "user123"
+      });
+    });
+
+    test("should handle error and call responseHandler.error on exception", async () => {
+      req.body = { username: "testuser" };
+      userModel.findOne.mockRejectedValue(new Error("Database error"));
+
+      await userController.signup(req, res);
+
+      expect(responseHandler.error).toHaveBeenCalledWith(res);
+    });
+  });
+
+  describe("signin", () => {
+    test("should return badrequest if user does not exist", async () => {
+      req.body = { username: "nonexistent", password: "password123" };
+      const selectMock = jest.fn().mockResolvedValue(null);
+      userModel.findOne.mockReturnValue({ select: selectMock });
+
+      await userController.signin(req, res);
+
+      expect(userModel.findOne).toHaveBeenCalledWith({ username: "nonexistent" });
+      expect(selectMock).toHaveBeenCalledWith("username password salt id displayName");
+      expect(responseHandler.badrequest).toHaveBeenCalledWith(res, "User not exist");
+    });
+
+    test("should return badrequest if password is wrong", async () => {
+      req.body = { username: "user1", password: "wrongpassword" };
+      const mockUser = {
+        validPassword: jest.fn().mockReturnValue(false)
+      };
+      userModel.findOne.mockReturnValue({ select: jest.fn().mockResolvedValue(mockUser) });
+
+      await userController.signin(req, res);
+
+      expect(mockUser.validPassword).toHaveBeenCalledWith("wrongpassword");
+      expect(responseHandler.badrequest).toHaveBeenCalledWith(res, "Wrong password");
+    });
+
+    test("should sign in user successfully and return created response", async () => {
+      req.body = { username: "user1", password: "correctpassword" };
+      const mockUser = {
+        id: "user123",
+        password: "hashedPassword",
+        salt: "saltValue",
+        _doc: { username: "user1", displayName: "User One" },
+        validPassword: jest.fn().mockReturnValue(true)
+      };
+      userModel.findOne.mockReturnValue({ select: jest.fn().mockResolvedValue(mockUser) });
+      jsonwebtoken.sign.mockReturnValue("mockedToken");
+
+      await userController.signin(req, res);
+
+      expect(jsonwebtoken.sign).toHaveBeenCalled();
+      expect(mockUser.password).toBeUndefined();
+      expect(mockUser.salt).toBeUndefined();
+      expect(responseHandler.created).toHaveBeenCalledWith(res, {
+        token: "mockedToken",
+        username: "user1",
+        displayName: "User One",
+        id: "user123"
+      });
+    });
+
+    test("should handle error and call responseHandler.error on exception", async () => {
+      req.body = { username: "user1" };
+      userModel.findOne.mockImplementation(() => {
+        throw new Error("DB Error");
+      });
+
+      await userController.signin(req, res);
+
+      expect(responseHandler.error).toHaveBeenCalledWith(res);
+    });
+  });
+
+  describe("updatePassword", () => {
+    test("should return unauthorize if user is not found", async () => {
+      req.user = { id: "user123" };
+      req.body = { password: "oldPassword", newPassword: "newPassword" };
+      userModel.findById.mockReturnValue({ select: jest.fn().mockResolvedValue(null) });
+
+      await userController.updatePassword(req, res);
+
+      expect(userModel.findById).toHaveBeenCalledWith("user123");
+      expect(responseHandler.unauthorize).toHaveBeenCalledWith(res);
+    });
+
+    test("should return badrequest if current password is wrong", async () => {
+      req.user = { id: "user123" };
+      req.body = { password: "wrongOldPassword", newPassword: "newPassword" };
+      const mockUser = {
+        validPassword: jest.fn().mockReturnValue(false)
+      };
+      userModel.findById.mockReturnValue({ select: jest.fn().mockResolvedValue(mockUser) });
+
+      await userController.updatePassword(req, res);
+
+      expect(mockUser.validPassword).toHaveBeenCalledWith("wrongOldPassword");
+      expect(responseHandler.badrequest).toHaveBeenCalledWith(res, "Wrong password");
+    });
+
+    test("should update password and call responseHandler.ok on success", async () => {
+      req.user = { id: "user123" };
+      req.body = { password: "correctOldPassword", newPassword: "newPassword123" };
+      const mockUser = {
+        validPassword: jest.fn().mockReturnValue(true),
+        setPassword: jest.fn(),
+        save: jest.fn().mockResolvedValue(true)
+      };
+      userModel.findById.mockReturnValue({ select: jest.fn().mockResolvedValue(mockUser) });
+
+      await userController.updatePassword(req, res);
+
+      expect(mockUser.setPassword).toHaveBeenCalledWith("newPassword123");
+      expect(mockUser.save).toHaveBeenCalled();
+      expect(responseHandler.ok).toHaveBeenCalledWith(res);
+    });
+
+    test("should handle error and call responseHandler.error on exception", async () => {
+      req.user = { id: "user123" };
+      userModel.findById.mockReturnValue({ select: jest.fn().mockRejectedValue(new Error("Error")) });
+
+      await userController.updatePassword(req, res);
+
+      expect(responseHandler.error).toHaveBeenCalledWith(res);
+    });
+  });
+
+  describe("getInfo", () => {
+    test("should return notfound if user does not exist", async () => {
+      req.user = { id: "user123" };
+      userModel.findById.mockResolvedValue(null);
+
+      await userController.getInfo(req, res);
+
+      expect(userModel.findById).toHaveBeenCalledWith("user123");
+      expect(responseHandler.notfound).toHaveBeenCalledWith(res);
+    });
+
+    test("should return ok with user info when user is found", async () => {
+      req.user = { id: "user123" };
+      const mockUser = { id: "user123", username: "testuser", displayName: "Test User" };
+      userModel.findById.mockResolvedValue(mockUser);
+
+      await userController.getInfo(req, res);
+
+      expect(responseHandler.ok).toHaveBeenCalledWith(res, mockUser);
+    });
+
+    test("should handle error and call responseHandler.error on exception", async () => {
+      req.user = { id: "user123" };
+      userModel.findById.mockRejectedValue(new Error("Database failure"));
+
+      await userController.getInfo(req, res);
+
+      expect(responseHandler.error).toHaveBeenCalledWith(res);
+    });
+  });
+});
+```

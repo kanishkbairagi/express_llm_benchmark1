@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "dimartarmizi__OmniCloud__authRoutes",
+  "targetFilename": "external/dimartarmizi__OmniCloud/backend/src/routes/authRoutes.js",
+  "trial": 3,
+  "startedAt": "2026-10-06T05:41:20.018Z",
+  "finishedAt": "2026-10-06T05:41:29.104Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 7,
+  "testsTotal": 7,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 16.13,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 16.13,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 609,
+    "completionTokens": 2133,
+    "totalTokens": 2742,
+    "reasoningTokens": 686
+  },
+  "latencyMs": 5118
+}

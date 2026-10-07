@@ -1,0 +1,194 @@
+```javascript
+import {
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  updateOrderToDelivered,
+  getMyOrders,
+  getOrders,
+} from '../dataset/external/SanjulaD__web-cw/backend/controllers/orderController.js';
+import orderSeed from '../dataset/external/SanjulaD__web-cw/backend/models/orderSeedModel.js';
+
+jest.mock('../dataset/external/SanjulaD__web-cw/backend/models/orderSeedModel.js');
+
+describe('orderController', () => {
+  const mockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('addOrderItems', () => {
+    it('throws error when orderItems array is empty', async () => {
+      const req = { body: { orderItems: [] }, user: { _id: 'user1' } };
+      const res = mockRes();
+
+      await expect(addOrderItems(req, res)).rejects.toThrow('No Order Items');
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it('creates and returns order when data is valid', async () => {
+      const orderData = {
+        orderItems: [{ product: 'p1', qty: 2 }],
+        shippingAddress: { address: '123 St' },
+        paymentMethod: 'PayPal',
+        itemsPrice: 100,
+        taxPrice: 10,
+        shippingPrice: 5,
+        totalPrice: 115,
+      };
+      const req = { body: orderData, user: { _id: 'user123' } };
+      const res = mockRes();
+
+      // mock constructor and save
+      const savedOrder = { ...orderData, user: 'user123', _id: 'orderId' };
+      orderSeed.mockImplementation(() => ({
+        ...orderData,
+        user: 'user123',
+        save: jest.fn().mockResolvedValue(savedOrder),
+      }));
+
+      await addOrderItems(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(savedOrder);
+    });
+  });
+
+  describe('getOrderById', () => {
+    it('returns order when found', async () => {
+      const req = { params: { id: 'orderId' } };
+      const res = mockRes();
+
+      const foundOrder = { _id: 'orderId', user: { name: 'John' } };
+      orderSeed.findById = jest.fn().mockResolvedValue(foundOrder);
+      foundOrder.populate = jest.fn().mockResolvedValue(foundOrder);
+
+      await getOrderById(req, res);
+
+      expect(orderSeed.findById).toHaveBeenCalledWith('orderId');
+      expect(res.json).toHaveBeenCalledWith(foundOrder);
+    });
+
+    it('throws 404 when order not found', async () => {
+      const req = { params: { id: 'missing' } };
+      const res = mockRes();
+
+      orderSeed.findById = jest.fn().mockResolvedValue(null);
+
+      await expect(getOrderById(req, res)).rejects.toThrow('Order Not Found');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('updateOrderToPaid', () => {
+    const paymentBody = {
+      id: 'payId',
+      status: 'COMPLETED',
+      update_time: '2023-01-01T00:00:00Z',
+      payer: { email_address: 'payer@example.com' },
+    };
+
+    it('updates order to paid and returns updated order', async () => {
+      const req = { params: { id: 'orderId' }, body: paymentBody };
+      const res = mockRes();
+
+      const mockOrder = {
+        save: jest.fn().mockResolvedValue({ isPaid: true, paymentResult: {} }),
+      };
+      orderSeed.findById = jest.fn().mockResolvedValue(mockOrder);
+
+      await updateOrderToPaid(req, res);
+
+      expect(mockOrder.isPaid).toBe(true);
+      expect(mockOrder.paymentResult).toMatchObject({
+        id: paymentBody.id,
+        status: paymentBody.status,
+        update_time: paymentBody.update_time,
+        email_address: paymentBody.payer.email_address,
+      });
+      expect(res.json).toHaveBeenCalledWith({
+        isPaid: true,
+        paymentResult: {},
+      });
+    });
+
+    it('throws 404 when order not found', async () => {
+      const req = { params: { id: 'missing' }, body: paymentBody };
+      const res = mockRes();
+
+      orderSeed.findById = jest.fn().mockResolvedValue(null);
+
+      await expect(updateOrderToPaid(req, res)).rejects.toThrow('Order Not Found');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('updateOrderToDelivered', () => {
+    it('sets delivered flag and returns order', async () => {
+      const req = { params: { id: 'orderId' } };
+      const res = mockRes();
+
+      const mockOrder = {
+        save: jest.fn().mockResolvedValue({ isDelivered: true, deliveredAt: expect.any(Number) }),
+      };
+      orderSeed.findById = jest.fn().mockResolvedValue(mockOrder);
+
+      await updateOrderToDelivered(req, res);
+
+      expect(mockOrder.isDelivered).toBe(true);
+      expect(res.json).toHaveBeenCalledWith({
+        isDelivered: true,
+        deliveredAt: expect.any(Number),
+      });
+    });
+
+    it('throws 404 when order not found', async () => {
+      const req = { params: { id: 'missing' } };
+      const res = mockRes();
+
+      orderSeed.findById = jest.fn().mockResolvedValue(null);
+
+      await expect(updateOrderToDelivered(req, res)).rejects.toThrow('Order Not Found');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('getMyOrders', () => {
+    it('returns orders for logged‑in user', async () => {
+      const req = { user: { _id: 'user123' } };
+      const res = mockRes();
+
+      const orders = [{ _id: 'o1' }, { _id: 'o2' }];
+      orderSeed.find = jest.fn().mockResolvedValue(orders);
+
+      await getMyOrders(req, res);
+
+      expect(orderSeed.find).toHaveBeenCalledWith({ user: 'user123' });
+      expect(res.json).toHaveBeenCalledWith(orders);
+    });
+  });
+
+  describe('getOrders', () => {
+    it('returns all orders with populated user fields', async () => {
+      const req = {};
+      const res = mockRes();
+
+      const orders = [{ _id: 'o1' }, { _id: 'o2' }];
+      orderSeed.find = jest.fn().mockReturnValue({
+        populate: jest.fn().mockResolvedValue(orders),
+      });
+
+      await getOrders(req, res);
+
+      expect(orderSeed.find).toHaveBeenCalledWith({});
+      expect(res.json).toHaveBeenCalledWith(orders);
+    });
+  });
+});
+```

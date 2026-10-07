@@ -1,0 +1,220 @@
+```javascript
+import { jest } from '@jest/globals';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Resolve the controller path relative to this test file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const controllerPath = path.join(
+  __dirname,
+  '..',
+  'dataset',
+  'external',
+  'trananhtuat__fullstack-mern-movie-2022',
+  'server',
+  'src',
+  'controllers',
+  'review.controller.js'
+);
+
+// ---- Mock response handler ----
+const mockCreated = jest.fn();
+const mockOk = jest.fn();
+const mockNotfound = jest.fn();
+const mockError = jest.fn();
+
+jest.unstable_mockModule(
+  path.join(
+    __dirname,
+    '..',
+    'dataset',
+    'external',
+    'trananhtuat__fullstack-mern-movie-2022',
+    'server',
+    'src',
+    'handlers',
+    'response.handler.js'
+  ),
+  () => ({
+    default: {
+      created: mockCreated,
+      ok: mockOk,
+      notfound: mockNotfound,
+      error: mockError,
+    },
+  })
+);
+
+// ---- Mock review model ----
+const mockSave = jest.fn();
+const mockRemove = jest.fn();
+
+let mockReviewInstance;
+
+const mockFindOne = jest.fn();
+const mockFind = jest.fn();
+
+jest.unstable_mockModule(
+  path.join(
+    __dirname,
+    '..',
+    'dataset',
+    'external',
+    'trananhtuat__fullstack-mern-movie-2022',
+    'server',
+    'src',
+    'models',
+    'review.model.js'
+  ),
+  () => {
+    const ReviewMock = jest.fn((data) => {
+      mockReviewInstance = {
+        ...data,
+        save: mockSave,
+        remove: mockRemove,
+        _doc: { rating: data.rating, comment: data.comment },
+        id: 'generatedReviewId',
+      };
+      return mockReviewInstance;
+    });
+    ReviewMock.findOne = mockFindOne;
+    ReviewMock.find = mockFind;
+    return { default: ReviewMock };
+  }
+);
+
+// ---- Import the controller after mocking dependencies ----
+const { default: reviewController } = await import(controllerPath);
+
+describe('review.controller', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('create', () => {
+    const req = {
+      params: { movieId: 'movie123' },
+      user: { id: 'user1' },
+      body: { rating: 5, comment: 'Great movie!' },
+    };
+    const res = {};
+
+    test('should create review and send created response', async () => {
+      mockSave.mockResolvedValueOnce();
+
+      await reviewController.create(req, res);
+
+      // Verify model instantiation
+      const ReviewModel = (await import(
+        path.join(
+          __dirname,
+          '..',
+          'dataset',
+          'external',
+          'trananhtuat__fullstack-mern-movie-2022',
+          'server',
+          'src',
+          'models',
+          'review.model.js'
+        )
+      )).default;
+      expect(ReviewModel).toHaveBeenCalledWith({
+        user: 'user1',
+        movieId: 'movie123',
+        rating: 5,
+        comment: 'Great movie!',
+      });
+
+      // Verify save called
+      expect(mockSave).toHaveBeenCalledTimes(1);
+
+      // Verify response
+      expect(mockCreated).toHaveBeenCalledWith(res, {
+        rating: 5,
+        comment: 'Great movie!',
+        id: 'generatedReviewId',
+        user: req.user,
+      });
+    });
+
+    test('should handle errors and call responseHandler.error', async () => {
+      mockSave.mockRejectedValueOnce(new Error('DB error'));
+
+      await reviewController.create(req, res);
+
+      expect(mockError).toHaveBeenCalledWith(res);
+    });
+  });
+
+  describe('remove', () => {
+    const req = {
+      params: { reviewId: 'rev123' },
+      user: { id: 'user1' },
+    };
+    const res = {};
+
+    test('should remove existing review and send ok response', async () => {
+      mockFindOne.mockResolvedValueOnce({
+        ...mockReviewInstance,
+        remove: mockRemove,
+      });
+      mockRemove.mockResolvedValueOnce();
+
+      await reviewController.remove(req, res);
+
+      expect(mockFindOne).toHaveBeenCalledWith({
+        _id: 'rev123',
+        user: 'user1',
+      });
+      expect(mockRemove).toHaveBeenCalledTimes(1);
+      expect(mockOk).toHaveBeenCalledWith(res);
+    });
+
+    test('should return notfound when review does not exist', async () => {
+      mockFindOne.mockResolvedValueOnce(null);
+
+      await reviewController.remove(req, res);
+
+      expect(mockNotfound).toHaveBeenCalledWith(res);
+    });
+
+    test('should handle errors and call responseHandler.error', async () => {
+      mockFindOne.mockRejectedValueOnce(new Error('DB error'));
+
+      await reviewController.remove(req, res);
+
+      expect(mockError).toHaveBeenCalledWith(res);
+    });
+  });
+
+  describe('getReviewsOfUser', () => {
+    const req = {
+      user: { id: 'user1' },
+    };
+    const res = {};
+
+    test('should retrieve reviews and send ok response', async () => {
+      const mockReviews = [{ id: 'r1' }, { id: 'r2' }];
+      mockFind.mockReturnValue({
+        sort: jest.fn().mockResolvedValue(mockReviews),
+      });
+
+      await reviewController.getReviewsOfUser(req, res);
+
+      expect(mockFind).toHaveBeenCalledWith({ user: 'user1' });
+      expect(mockOk).toHaveBeenCalledWith(res, mockReviews);
+    });
+
+    test('should handle errors and call responseHandler.error', async () => {
+      mockFind.mockImplementation(() => {
+        throw new Error('DB error');
+      });
+
+      await reviewController.getReviewsOfUser(req, res);
+
+      expect(mockError).toHaveBeenCalledWith(res);
+    });
+  });
+});
+```

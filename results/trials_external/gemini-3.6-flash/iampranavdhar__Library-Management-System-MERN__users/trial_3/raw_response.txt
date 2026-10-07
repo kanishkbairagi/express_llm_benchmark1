@@ -1,0 +1,278 @@
+```javascript
+import request from 'supertest';
+import express from 'express';
+import { jest } from '@jest/globals';
+
+jest.mock('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/User.js', () => ({
+  __esModule: true,
+  default: {
+    findById: jest.fn(),
+    find: jest.fn(),
+    findByIdAndUpdate: jest.fn(),
+    findByIdAndDelete: jest.fn(),
+  },
+}));
+
+import User from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/User.js';
+import router from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/routes/users.js';
+
+const app = express();
+app.use(express.json());
+app.use('/', router);
+
+describe('Users Routes', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('GET /getuser/:id', () => {
+    it('should return user details excluding password and updatedAt on success', async () => {
+      const mockUserData = {
+        _doc: {
+          _id: 'user123',
+          username: 'JohnDoe',
+          password: 'hashedpassword',
+          updatedAt: '2023-01-01',
+          email: 'john@example.com',
+        },
+      };
+
+      const populate2 = jest.fn().mockResolvedValue(mockUserData);
+      const populate1 = jest.fn().mockReturnValue({ populate: populate2 });
+      User.findById.mockReturnValue({ populate: populate1 });
+
+      const response = await request(app).get('/getuser/user123');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        _id: 'user123',
+        username: 'JohnDoe',
+        email: 'john@example.com',
+      });
+      expect(User.findById).toHaveBeenCalledWith('user123');
+      expect(populate1).toHaveBeenCalledWith('activeTransactions');
+      expect(populate2).toHaveBeenCalledWith('prevTransactions');
+    });
+
+    it('should return status 500 when an error occurs', async () => {
+      User.findById.mockImplementation(() => {
+        throw new Error('Database error');
+      });
+
+      const response = await request(app).get('/getuser/user123');
+
+      expect(response.status).toBe(500);
+    });
+  });
+
+  describe('GET /allmembers', () => {
+    it('should return all members sorted by _id descending', async () => {
+      const mockMembers = [
+        { _id: '2', username: 'UserTwo' },
+        { _id: '1', username: 'UserOne' },
+      ];
+
+      const sortMock = jest.fn().mockResolvedValue(mockMembers);
+      const populate2 = jest.fn().mockReturnValue({ sort: sortMock });
+      const populate1 = jest.fn().mockReturnValue({ populate: populate2 });
+      User.find.mockReturnValue({ populate: populate1 });
+
+      const response = await request(app).get('/allmembers');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockMembers);
+      expect(User.find).toHaveBeenCalledWith({});
+      expect(sortMock).toHaveBeenCalledWith({ _id: -1 });
+    });
+
+    it('should return status 500 when database error occurs', async () => {
+      User.find.mockImplementation(() => {
+        throw new Error('Database error');
+      });
+
+      const response = await request(app).get('/allmembers');
+
+      expect(response.status).toBe(500);
+    });
+  });
+
+  describe('PUT /updateuser/:id', () => {
+    it('should return 403 if request is not from the user or admin', async () => {
+      const response = await request(app)
+        .put('/updateuser/user123')
+        .send({ userId: 'otherUser', isAdmin: false });
+
+      expect(response.status).toBe(403);
+      expect(response.body).toBe('You can update only your account!');
+    });
+
+    it('should update user successfully when authorized and no password is provided', async () => {
+      User.findByIdAndUpdate.mockResolvedValue({});
+
+      const response = await request(app)
+        .put('/updateuser/user123')
+        .send({ userId: 'user123', username: 'NewName' });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe('Account has been updated');
+      expect(User.findByIdAndUpdate).toHaveBeenCalledWith('user123', {
+        $set: { userId: 'user123', username: 'NewName' },
+      });
+    });
+
+    it('should allow admin to update user account', async () => {
+      User.findByIdAndUpdate.mockResolvedValue({});
+
+      const response = await request(app)
+        .put('/updateuser/user123')
+        .send({ isAdmin: true, username: 'UpdatedByAdmin' });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe('Account has been updated');
+    });
+
+    it('should return 500 if password is included due to unhandled bcrypt reference error', async () => {
+      const response = await request(app)
+        .put('/updateuser/user123')
+        .send({ userId: 'user123', password: 'newpassword' });
+
+      expect(response.status).toBe(500);
+    });
+
+    it('should return 500 if DB operation fails', async () => {
+      User.findByIdAndUpdate.mockRejectedValue(new Error('Update failed'));
+
+      const response = await request(app)
+        .put('/updateuser/user123')
+        .send({ userId: 'user123', username: 'NewName' });
+
+      expect(response.status).toBe(500);
+    });
+  });
+
+  describe('PUT /:id/move-to-activetransactions', () => {
+    it('should return 403 if user is not admin', async () => {
+      const response = await request(app)
+        .put('/tx123/move-to-activetransactions')
+        .send({ isAdmin: false, userId: 'user123' });
+
+      expect(response.status).toBe(403);
+      expect(response.body).toBe('Only Admin can add a transaction');
+    });
+
+    it('should move transaction to active transactions when requested by admin', async () => {
+      const mockUser = {
+        updateOne: jest.fn().mockResolvedValue({}),
+      };
+      User.findById.mockResolvedValue(mockUser);
+
+      const response = await request(app)
+        .put('/tx123/move-to-activetransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe('Added to Active Transaction');
+      expect(User.findById).toHaveBeenCalledWith('user123');
+      expect(mockUser.updateOne).toHaveBeenCalledWith({
+        $push: { activeTransactions: 'tx123' },
+      });
+    });
+
+    it('should return 500 on error', async () => {
+      User.findById.mockRejectedValue(new Error('Find error'));
+
+      const response = await request(app)
+        .put('/tx123/move-to-activetransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(response.status).toBe(500);
+    });
+  });
+
+  describe('PUT /:id/move-to-prevtransactions', () => {
+    it('should return 403 if user is not admin', async () => {
+      const response = await request(app)
+        .put('/tx123/move-to-prevtransactions')
+        .send({ isAdmin: false, userId: 'user123' });
+
+      expect(response.status).toBe(403);
+      expect(response.body).toBe('Only Admin can do this');
+    });
+
+    it('should move transaction to prev transactions when requested by admin', async () => {
+      const mockUser = {
+        updateOne: jest.fn().mockResolvedValue({}),
+      };
+      User.findById.mockResolvedValue(mockUser);
+
+      const response = await request(app)
+        .put('/tx123/move-to-prevtransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe('Added to Prev transaction Transaction');
+      expect(User.findById).toHaveBeenCalledWith('user123');
+      expect(mockUser.updateOne).toHaveBeenNthCalledWith(1, {
+        $pull: { activeTransactions: 'tx123' },
+      });
+      expect(mockUser.updateOne).toHaveBeenNthCalledWith(2, {
+        $push: { prevTransactions: 'tx123' },
+      });
+    });
+
+    it('should return 500 on error', async () => {
+      User.findById.mockRejectedValue(new Error('User not found'));
+
+      const response = await request(app)
+        .put('/tx123/move-to-prevtransactions')
+        .send({ isAdmin: true, userId: 'user123' });
+
+      expect(response.status).toBe(500);
+    });
+  });
+
+  describe('DELETE /deleteuser/:id', () => {
+    it('should return 403 if user tries to delete another account without admin', async () => {
+      const response = await request(app)
+        .delete('/deleteuser/user123')
+        .send({ userId: 'otherUser', isAdmin: false });
+
+      expect(response.status).toBe(403);
+      expect(response.body).toBe('You can delete only your account!');
+    });
+
+    it('should delete user successfully if requested by owner', async () => {
+      User.findByIdAndDelete.mockResolvedValue({});
+
+      const response = await request(app)
+        .delete('/deleteuser/user123')
+        .send({ userId: 'user123' });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe('Account has been deleted');
+      expect(User.findByIdAndDelete).toHaveBeenCalledWith('user123');
+    });
+
+    it('should delete user successfully if requested by admin', async () => {
+      User.findByIdAndDelete.mockResolvedValue({});
+
+      const response = await request(app)
+        .delete('/deleteuser/user123')
+        .send({ isAdmin: true });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe('Account has been deleted');
+    });
+
+    it('should return 500 if database error occurs during deletion', async () => {
+      User.findByIdAndDelete.mockRejectedValue(new Error('Delete error'));
+
+      const response = await request(app)
+        .delete('/deleteuser/user123')
+        .send({ userId: 'user123' });
+
+      expect(response.status).toBe(500);
+    });
+  });
+});
+```

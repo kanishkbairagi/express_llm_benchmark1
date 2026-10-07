@@ -1,0 +1,174 @@
+import { jest } from '@jest/globals';
+import {
+  getLendMachnines,
+  getLendMachnineById,
+  deleteLendMachnine,
+  createLendMachine,
+  updateLendMachine,
+} from '../dataset/external/SanjulaD__web-cw/backend/controllers/productLendMachineController.js';
+
+// Mock async handler to bypass wrapper
+jest.mock('express-async-handler', () => (fn) => fn);
+
+// Mock the ProductLendMachines model
+jest.mock('../dataset/external/SanjulaD__web-cw/backend/models/productLendMachineModel.js', () => {
+  const mockSave = jest.fn().mockResolvedValue({});
+  const mockRemove = jest.fn();
+  class MockProductLendMachines {
+    constructor(data) {
+      Object.assign(this, data);
+      this.save = mockSave;
+      this.remove = mockRemove;
+    }
+    static find = jest.fn();
+    static findById = jest.fn();
+  }
+  return { default: MockProductLendMachines };
+});
+
+import ProductLendMachines from '../dataset/external/SanjulaD__web-cw/backend/models/productLendMachineModel.js';
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe('productLendMachineController', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('getLendMachnines', () => {
+    it('should return all lend machines as JSON', async () => {
+      const fakeMachines = [{ _id: '1' }, { _id: '2' }];
+      ProductLendMachines.find.mockResolvedValue(fakeMachines);
+      const req = {};
+      const res = mockRes();
+
+      await getLendMachnines(req, res);
+
+      expect(ProductLendMachines.find).toHaveBeenCalledWith({});
+      expect(res.json).toHaveBeenCalledWith(fakeMachines);
+    });
+  });
+
+  describe('getLendMachnineById', () => {
+    it('should return machine when found', async () => {
+      const fakeMachine = { _id: '123', name: 'test' };
+      ProductLendMachines.findById.mockResolvedValue(fakeMachine);
+      const req = { params: { id: '123' } };
+      const res = mockRes();
+
+      await getLendMachnineById(req, res);
+
+      expect(ProductLendMachines.findById).toHaveBeenCalledWith('123');
+      expect(res.json).toHaveBeenCalledWith(fakeMachine);
+    });
+
+    it('should throw 404 error when not found', async () => {
+      ProductLendMachines.findById.mockResolvedValue(null);
+      const req = { params: { id: 'nonexistent' } };
+      const res = mockRes();
+
+      await expect(getLendMachnineById(req, res)).rejects.toThrow('Machine not Found');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('deleteLendMachnine', () => {
+    it('should remove machine and respond with message', async () => {
+      const fakeMachine = {
+        _id: 'del1',
+        remove: jest.fn(),
+      };
+      ProductLendMachines.findById.mockResolvedValue(fakeMachine);
+      const req = { params: { id: 'del1' } };
+      const res = mockRes();
+
+      await deleteLendMachnine(req, res);
+
+      expect(ProductLendMachines.findById).toHaveBeenCalledWith('del1');
+      expect(fakeMachine.remove).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith({ message: 'Machine Removed' });
+    });
+
+    it('should throw 404 when machine does not exist', async () => {
+      ProductLendMachines.findById.mockResolvedValue(null);
+      const req = { params: { id: 'missing' } };
+      const res = mockRes();
+
+      await expect(deleteLendMachnine(req, res)).rejects.toThrow('Machine not Found');
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('createLendMachine', () => {
+    it('should create a machine and respond with 201 and created object', async () => {
+      const fakeUser = { _id: 'user1' };
+      const savedMachine = { _id: 'new1', name: 'sample machine' };
+      // Mock the constructor to return an object whose save resolves to savedMachine
+      const SaveMock = jest.fn().mockResolvedValue(savedMachine);
+      const MockConstructor = jest.fn().mockImplementation(() => ({
+        save: SaveMock,
+      }));
+      // Replace default export with mock constructor
+      ProductLendMachines.mockImplementation(MockConstructor);
+
+      const req = { user: fakeUser };
+      const res = mockRes();
+
+      await createLendMachine(req, res);
+
+      expect(MockConstructor).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'sample machine',
+          user: fakeUser._id,
+        })
+      );
+      expect(SaveMock).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(savedMachine);
+    });
+  });
+
+  describe('updateLendMachine', () => {
+    it('should update fields and respond with updated machine', async () => {
+      const existing = {
+        _id: 'upd1',
+        save: jest.fn().mockResolvedValue({ _id: 'upd1', name: 'new name' }),
+      };
+      ProductLendMachines.findById.mockResolvedValue(existing);
+      const req = {
+        params: { id: 'upd1' },
+        body: {
+          name: 'new name',
+          price: 100,
+          image: '/img.png',
+          description: 'desc',
+          target_plant: 'veg',
+          quantity: 5,
+          machine_power: '10HP',
+        },
+      };
+      const res = mockRes();
+
+      await updateLendMachine(req, res);
+
+      expect(ProductLendMachines.findById).toHaveBeenCalledWith('upd1');
+      expect(existing.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ _id: 'upd1', name: 'new name' });
+    });
+
+    it('should throw 401 error when machine not found', async () => {
+      ProductLendMachines.findById.mockResolvedValue(null);
+      const req = { params: { id: 'missing' }, body: {} };
+      const res = mockRes();
+
+      await expect(updateLendMachine(req, res)).rejects.toThrow('Product not found');
+      expect(res.status).toHaveBeenCalledWith(401);
+    });
+  });
+});

@@ -1,0 +1,1138 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 14,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 14,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177074710,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getInvoicesByUser"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:58:31)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getInvoicesByUser should return invoices for a valid user",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return invoices for a valid user",
+          "startAt": 1791177076074
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getInvoicesByUser"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.find.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:71:31)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getInvoicesByUser should handle errors from the model",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors from the model",
+          "startAt": 1791177076088
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getTotalCount"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.countDocuments.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:85:41)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getTotalCount should return total count for a user",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return total count for a user",
+          "startAt": 1791177076090
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getTotalCount"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.countDocuments.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:98:41)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getTotalCount should handle model errors",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle model errors",
+          "startAt": 1791177076093
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getInvoices"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.find.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:113:31)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getInvoices should return all invoices sorted descending",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return all invoices sorted descending",
+          "startAt": 1791177076095
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getInvoices"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.find.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:128:31)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getInvoices should handle errors from find/sort",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors from find/sort",
+          "startAt": 1791177076097
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "createInvoice"
+          ],
+          "duration": 22,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mockInstance.save.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:150:31)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller createInvoice should create and return a new invoice",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create and return a new invoice",
+          "startAt": 1791177076099
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "createInvoice"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mockInstance.save.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:166:31)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller createInvoice should handle save errors",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle save errors",
+          "startAt": 1791177076122
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getInvoice"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:179:35)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getInvoice should return invoice by id",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return invoice by id",
+          "startAt": 1791177076124
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "getInvoice"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: InvoiceModel.findById.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:192:35)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller getInvoice should handle errors from findById",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors from findById",
+          "startAt": 1791177076126
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "updateInvoice"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:206:45)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller updateInvoice should update and return the invoice when id is valid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should update and return the invoice when id is valid",
+          "startAt": 1791177076127
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "updateInvoice"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:225:45)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller updateInvoice should respond with 404 when id is invalid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should respond with 404 when id is invalid",
+          "startAt": 1791177076128
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "deleteInvoice"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:238:45)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller deleteInvoice should delete invoice when id is valid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should delete invoice when id is valid",
+          "startAt": 1791177076130
+        },
+        {
+          "ancestorTitles": [
+            "Invoices Controller",
+            "deleteInvoice"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:252:45)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Invoices Controller deleteInvoice should respond with 404 for invalid id",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should respond with 404 for invalid id",
+          "startAt": 1791177076131
+        }
+      ],
+      "endTime": 1791177076232,
+      "message": "  ● Invoices Controller › getInvoicesByUser › should return invoices for a valid user\n\n    TypeError: InvoiceModel.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 56 |\u001b[39m         it(\u001b[32m'should return invoices for a valid user'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 57 |\u001b[39m             \u001b[36mconst\u001b[39m fakeInvoices \u001b[33m=\u001b[39m [{ _id\u001b[33m:\u001b[39m \u001b[32m'1'\u001b[39m }\u001b[33m,\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'2'\u001b[39m }]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 58 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue(fakeInvoices)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 59 |\u001b[39m\n     \u001b[90m 60 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'user123'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 61 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:58:31)\n\n  ● Invoices Controller › getInvoicesByUser › should handle errors from the model\n\n    TypeError: InvoiceModel.find.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 69 |\u001b[39m\n     \u001b[90m 70 |\u001b[39m         it(\u001b[32m'should handle errors from the model'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 71 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'db error'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 72 |\u001b[39m\n     \u001b[90m 73 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'user123'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 74 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:71:31)\n\n  ● Invoices Controller › getTotalCount › should return total count for a user\n\n    TypeError: InvoiceModel.countDocuments.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 83 |\u001b[39m     describe(\u001b[32m'getTotalCount'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 84 |\u001b[39m         it(\u001b[32m'should return total count for a user'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 85 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mcountDocuments\u001b[33m.\u001b[39mmockResolvedValue(\u001b[35m7\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 86 |\u001b[39m\n     \u001b[90m 87 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'userA'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 88 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:85:41)\n\n  ● Invoices Controller › getTotalCount › should handle model errors\n\n    TypeError: InvoiceModel.countDocuments.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m  96 |\u001b[39m\n     \u001b[90m  97 |\u001b[39m         it(\u001b[32m'should handle model errors'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  98 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mcountDocuments\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'count fail'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m  99 |\u001b[39m\n     \u001b[90m 100 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'userA'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 101 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:98:41)\n\n  ● Invoices Controller › getInvoices › should return all invoices sorted descending\n\n    TypeError: InvoiceModel.find.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 111 |\u001b[39m         it(\u001b[32m'should return all invoices sorted descending'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 112 |\u001b[39m             \u001b[36mconst\u001b[39m fakeInvoices \u001b[33m=\u001b[39m [{ _id\u001b[33m:\u001b[39m \u001b[32m'3'\u001b[39m }\u001b[33m,\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'2'\u001b[39m }\u001b[33m,\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'1'\u001b[39m }]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 113 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValue({\n     \u001b[90m     |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 114 |\u001b[39m                 sort\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(fakeInvoices)\u001b[33m,\u001b[39m\n     \u001b[90m 115 |\u001b[39m             })\u001b[33m;\u001b[39m\n     \u001b[90m 116 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:113:31)\n\n  ● Invoices Controller › getInvoices › should handle errors from find/sort\n\n    TypeError: InvoiceModel.find.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 126 |\u001b[39m\n     \u001b[90m 127 |\u001b[39m         it(\u001b[32m'should handle errors from find/sort'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 128 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValue({\n     \u001b[90m     |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 129 |\u001b[39m                 sort\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'sort error'\u001b[39m))\u001b[33m,\u001b[39m\n     \u001b[90m 130 |\u001b[39m             })\u001b[33m;\u001b[39m\n     \u001b[90m 131 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:128:31)\n\n  ● Invoices Controller › createInvoice › should create and return a new invoice\n\n    TypeError: mockInstance.save.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 148 |\u001b[39m             \u001b[90m// Mock the instance's save to resolve\u001b[39m\n     \u001b[90m 149 |\u001b[39m             \u001b[36mconst\u001b[39m mockInstance \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mInvoiceModel\u001b[39m(payload)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 150 |\u001b[39m             mockInstance\u001b[33m.\u001b[39msave\u001b[33m.\u001b[39mmockResolvedValue(undefined)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 151 |\u001b[39m             jest\u001b[33m.\u001b[39mspyOn(\u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mprototype\u001b[33m,\u001b[39m \u001b[32m'constructor'\u001b[39m)\u001b[33m.\u001b[39mmockReturnValue(mockInstance)\u001b[33m;\u001b[39m\n     \u001b[90m 152 |\u001b[39m\n     \u001b[90m 153 |\u001b[39m             \u001b[36mawait\u001b[39m createInvoice(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:150:31)\n\n  ● Invoices Controller › createInvoice › should handle save errors\n\n    TypeError: mockInstance.save.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 164 |\u001b[39m\n     \u001b[90m 165 |\u001b[39m             \u001b[36mconst\u001b[39m mockInstance \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mInvoiceModel\u001b[39m(payload)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 166 |\u001b[39m             mockInstance\u001b[33m.\u001b[39msave\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'save fail'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 167 |\u001b[39m             jest\u001b[33m.\u001b[39mspyOn(\u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mprototype\u001b[33m,\u001b[39m \u001b[32m'constructor'\u001b[39m)\u001b[33m.\u001b[39mmockReturnValue(mockInstance)\u001b[33m;\u001b[39m\n     \u001b[90m 168 |\u001b[39m\n     \u001b[90m 169 |\u001b[39m             \u001b[36mawait\u001b[39m createInvoice(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:166:31)\n\n  ● Invoices Controller › getInvoice › should return invoice by id\n\n    TypeError: InvoiceModel.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 177 |\u001b[39m         it(\u001b[32m'should return invoice by id'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 178 |\u001b[39m             \u001b[36mconst\u001b[39m fakeInvoice \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'abc'\u001b[39m\u001b[33m,\u001b[39m amount\u001b[33m:\u001b[39m \u001b[35m50\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 179 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(fakeInvoice)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 180 |\u001b[39m\n     \u001b[90m 181 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'abc'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 182 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:179:35)\n\n  ● Invoices Controller › getInvoice › should handle errors from findById\n\n    TypeError: InvoiceModel.findById.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 190 |\u001b[39m\n     \u001b[90m 191 |\u001b[39m         it(\u001b[32m'should handle errors from findById'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 192 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'not found'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 193 |\u001b[39m\n     \u001b[90m 194 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'xyz'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 195 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:192:35)\n\n  ● Invoices Controller › updateInvoice › should update and return the invoice when id is valid\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 204 |\u001b[39m     describe(\u001b[32m'updateInvoice'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 205 |\u001b[39m         it(\u001b[32m'should update and return the invoice when id is valid'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 206 |\u001b[39m             mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValue(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 207 |\u001b[39m             \u001b[36mconst\u001b[39m updated \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'upd1'\u001b[39m\u001b[33m,\u001b[39m amount\u001b[33m:\u001b[39m \u001b[35m999\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 208 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfindByIdAndUpdate\u001b[33m.\u001b[39mmockResolvedValue(updated)\u001b[33m;\u001b[39m\n     \u001b[90m 209 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:206:45)\n\n  ● Invoices Controller › updateInvoice › should respond with 404 when id is invalid\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 223 |\u001b[39m\n     \u001b[90m 224 |\u001b[39m         it(\u001b[32m'should respond with 404 when id is invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 225 |\u001b[39m             mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValue(\u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 226 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'invalid'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 227 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n     \u001b[90m 228 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:225:45)\n\n  ● Invoices Controller › deleteInvoice › should delete invoice when id is valid\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 236 |\u001b[39m     describe(\u001b[32m'deleteInvoice'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 237 |\u001b[39m         it(\u001b[32m'should delete invoice when id is valid'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 238 |\u001b[39m             mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValue(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 239 |\u001b[39m             \u001b[33mInvoiceModel\u001b[39m\u001b[33m.\u001b[39mfindByIdAndRemove\u001b[33m.\u001b[39mmockResolvedValue(undefined)\u001b[33m;\u001b[39m\n     \u001b[90m 240 |\u001b[39m\n     \u001b[90m 241 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'del1'\u001b[39m } }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:238:45)\n\n  ● Invoices Controller › deleteInvoice › should respond with 404 for invalid id\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 250 |\u001b[39m\n     \u001b[90m 251 |\u001b[39m         it(\u001b[32m'should respond with 404 for invalid id'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 252 |\u001b[39m             mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValue(\u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 253 |\u001b[39m             \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'bad'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 254 |\u001b[39m             \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n     \u001b[90m 255 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__invoices_gpt-oss-120b_trial1.test.js:252:45)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__invoices_gpt-oss-120b_trial1.test.js",
+      "startTime": 1791177074831,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\models\\InvoiceModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\models\\InvoiceModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 22
+          },
+          "end": {
+            "line": 23,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 25,
+            "column": 21
+          },
+          "end": {
+            "line": 25,
+            "column": 66
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "9ecec7bee4fc8fc497971c603f47c9697f1fb46b"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\controllers\\invoices.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\controllers\\invoices.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 9,
+            "column": 33
+          },
+          "end": {
+            "line": 19,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 10,
+            "column": 26
+          },
+          "end": {
+            "line": 10,
+            "column": 35
+          }
+        },
+        "2": {
+          "start": {
+            "line": 12,
+            "column": 4
+          },
+          "end": {
+            "line": 18,
+            "column": 5
+          }
+        },
+        "3": {
+          "start": {
+            "line": 13,
+            "column": 25
+          },
+          "end": {
+            "line": 13,
+            "column": 74
+          }
+        },
+        "4": {
+          "start": {
+            "line": 15,
+            "column": 8
+          },
+          "end": {
+            "line": 15,
+            "column": 49
+          }
+        },
+        "5": {
+          "start": {
+            "line": 17,
+            "column": 8
+          },
+          "end": {
+            "line": 17,
+            "column": 57
+          }
+        },
+        "6": {
+          "start": {
+            "line": 22,
+            "column": 29
+          },
+          "end": {
+            "line": 33,
+            "column": 1
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 26
+          },
+          "end": {
+            "line": 23,
+            "column": 35
+          }
+        },
+        "8": {
+          "start": {
+            "line": 25,
+            "column": 4
+          },
+          "end": {
+            "line": 32,
+            "column": 5
+          }
+        },
+        "9": {
+          "start": {
+            "line": 27,
+            "column": 27
+          },
+          "end": {
+            "line": 27,
+            "column": 86
+          }
+        },
+        "10": {
+          "start": {
+            "line": 29,
+            "column": 8
+          },
+          "end": {
+            "line": 29,
+            "column": 41
+          }
+        },
+        "11": {
+          "start": {
+            "line": 31,
+            "column": 8
+          },
+          "end": {
+            "line": 31,
+            "column": 57
+          }
+        },
+        "12": {
+          "start": {
+            "line": 36,
+            "column": 27
+          },
+          "end": {
+            "line": 48,
+            "column": 1
+          }
+        },
+        "13": {
+          "start": {
+            "line": 38,
+            "column": 4
+          },
+          "end": {
+            "line": 46,
+            "column": 5
+          }
+        },
+        "14": {
+          "start": {
+            "line": 39,
+            "column": 28
+          },
+          "end": {
+            "line": 39,
+            "column": 70
+          }
+        },
+        "15": {
+          "start": {
+            "line": 41,
+            "column": 8
+          },
+          "end": {
+            "line": 41,
+            "column": 41
+          }
+        },
+        "16": {
+          "start": {
+            "line": 44,
+            "column": 8
+          },
+          "end": {
+            "line": 44,
+            "column": 43
+          }
+        },
+        "17": {
+          "start": {
+            "line": 53,
+            "column": 29
+          },
+          "end": {
+            "line": 66,
+            "column": 1
+          }
+        },
+        "18": {
+          "start": {
+            "line": 55,
+            "column": 20
+          },
+          "end": {
+            "line": 55,
+            "column": 28
+          }
+        },
+        "19": {
+          "start": {
+            "line": 57,
+            "column": 23
+          },
+          "end": {
+            "line": 57,
+            "column": 48
+          }
+        },
+        "20": {
+          "start": {
+            "line": 59,
+            "column": 4
+          },
+          "end": {
+            "line": 64,
+            "column": 5
+          }
+        },
+        "21": {
+          "start": {
+            "line": 60,
+            "column": 8
+          },
+          "end": {
+            "line": 60,
+            "column": 31
+          }
+        },
+        "22": {
+          "start": {
+            "line": 61,
+            "column": 8
+          },
+          "end": {
+            "line": 61,
+            "column": 40
+          }
+        },
+        "23": {
+          "start": {
+            "line": 63,
+            "column": 8
+          },
+          "end": {
+            "line": 63,
+            "column": 43
+          }
+        },
+        "24": {
+          "start": {
+            "line": 68,
+            "column": 26
+          },
+          "end": {
+            "line": 78,
+            "column": 1
+          }
+        },
+        "25": {
+          "start": {
+            "line": 69,
+            "column": 19
+          },
+          "end": {
+            "line": 69,
+            "column": 29
+          }
+        },
+        "26": {
+          "start": {
+            "line": 71,
+            "column": 4
+          },
+          "end": {
+            "line": 77,
+            "column": 5
+          }
+        },
+        "27": {
+          "start": {
+            "line": 72,
+            "column": 24
+          },
+          "end": {
+            "line": 72,
+            "column": 55
+          }
+        },
+        "28": {
+          "start": {
+            "line": 74,
+            "column": 8
+          },
+          "end": {
+            "line": 74,
+            "column": 38
+          }
+        },
+        "29": {
+          "start": {
+            "line": 76,
+            "column": 8
+          },
+          "end": {
+            "line": 76,
+            "column": 57
+          }
+        },
+        "30": {
+          "start": {
+            "line": 81,
+            "column": 29
+          },
+          "end": {
+            "line": 90,
+            "column": 1
+          }
+        },
+        "31": {
+          "start": {
+            "line": 82,
+            "column": 24
+          },
+          "end": {
+            "line": 82,
+            "column": 34
+          }
+        },
+        "32": {
+          "start": {
+            "line": 83,
+            "column": 20
+          },
+          "end": {
+            "line": 83,
+            "column": 28
+          }
+        },
+        "33": {
+          "start": {
+            "line": 85,
+            "column": 4
+          },
+          "end": {
+            "line": 85,
+            "column": 100
+          }
+        },
+        "34": {
+          "start": {
+            "line": 85,
+            "column": 46
+          },
+          "end": {
+            "line": 85,
+            "column": 100
+          }
+        },
+        "35": {
+          "start": {
+            "line": 87,
+            "column": 27
+          },
+          "end": {
+            "line": 87,
+            "column": 101
+          }
+        },
+        "36": {
+          "start": {
+            "line": 89,
+            "column": 4
+          },
+          "end": {
+            "line": 89,
+            "column": 28
+          }
+        },
+        "37": {
+          "start": {
+            "line": 93,
+            "column": 29
+          },
+          "end": {
+            "line": 101,
+            "column": 1
+          }
+        },
+        "38": {
+          "start": {
+            "line": 94,
+            "column": 19
+          },
+          "end": {
+            "line": 94,
+            "column": 29
+          }
+        },
+        "39": {
+          "start": {
+            "line": 96,
+            "column": 4
+          },
+          "end": {
+            "line": 96,
+            "column": 99
+          }
+        },
+        "40": {
+          "start": {
+            "line": 96,
+            "column": 45
+          },
+          "end": {
+            "line": 96,
+            "column": 99
+          }
+        },
+        "41": {
+          "start": {
+            "line": 98,
+            "column": 4
+          },
+          "end": {
+            "line": 98,
+            "column": 44
+          }
+        },
+        "42": {
+          "start": {
+            "line": 100,
+            "column": 4
+          },
+          "end": {
+            "line": 100,
+            "column": 55
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 9,
+              "column": 33
+            },
+            "end": {
+              "line": 9,
+              "column": 34
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 53
+            },
+            "end": {
+              "line": 19,
+              "column": 1
+            }
+          },
+          "line": 9
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 22,
+              "column": 29
+            },
+            "end": {
+              "line": 22,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 49
+            },
+            "end": {
+              "line": 33,
+              "column": 1
+            }
+          },
+          "line": 22
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 36,
+              "column": 27
+            },
+            "end": {
+              "line": 36,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 36,
+              "column": 47
+            },
+            "end": {
+              "line": 48,
+              "column": 1
+            }
+          },
+          "line": 36
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 53,
+              "column": 29
+            },
+            "end": {
+              "line": 53,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 53,
+              "column": 49
+            },
+            "end": {
+              "line": 66,
+              "column": 1
+            }
+          },
+          "line": 53
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 68,
+              "column": 26
+            },
+            "end": {
+              "line": 68,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 68,
+              "column": 46
+            },
+            "end": {
+              "line": 78,
+              "column": 1
+            }
+          },
+          "line": 68
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 81,
+              "column": 29
+            },
+            "end": {
+              "line": 81,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 81,
+              "column": 49
+            },
+            "end": {
+              "line": 90,
+              "column": 1
+            }
+          },
+          "line": 81
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 93,
+              "column": 29
+            },
+            "end": {
+              "line": 93,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 93,
+              "column": 49
+            },
+            "end": {
+              "line": 101,
+              "column": 1
+            }
+          },
+          "line": 93
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 85,
+              "column": 4
+            },
+            "end": {
+              "line": 85,
+              "column": 100
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 85,
+                "column": 4
+              },
+              "end": {
+                "line": 85,
+                "column": 100
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 85
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 96,
+              "column": 4
+            },
+            "end": {
+              "line": 96,
+              "column": 99
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 96,
+                "column": 4
+              },
+              "end": {
+                "line": 96,
+                "column": 99
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 96
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 1,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 1,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 1,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 1,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 0,
+        "29": 0,
+        "30": 1,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0,
+        "35": 0,
+        "36": 0,
+        "37": 1,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "fd3ac48607b3ab529567d51508b7a7e6484d787f"
+    }
+  }
+}

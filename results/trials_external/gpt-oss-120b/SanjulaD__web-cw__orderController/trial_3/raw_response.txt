@@ -1,0 +1,216 @@
+```javascript
+import {
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  getMyOrders,
+  getOrders,
+  updateOrderToDelivered,
+} from '../dataset/external/SanjulaD__web-cw/backend/controllers/orderController.js';
+import orderSeed from '../dataset/external/SanjulaD__web-cw/backend/models/orderSeedModel.js';
+
+jest.mock('../dataset/external/SanjulaD__web-cw/backend/models/orderSeedModel.js');
+
+describe('orderController', () => {
+  const mockRes = () => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+  const mockNext = jest.fn();
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('addOrderItems', () => {
+    it('should return 400 when orderItems is empty', async () => {
+      const req = { body: { orderItems: [] }, user: { _id: 'uid' } };
+      const res = mockRes();
+
+      await addOrderItems(req, res, mockNext);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(mockNext).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'No Order Items' })
+      );
+    });
+
+    it('should create an order and respond with 201', async () => {
+      const savedOrder = { _id: 'orderId', save: jest.fn() };
+      orderSeed.mockImplementation((data) => ({
+        ...data,
+        save: jest.fn().mockResolvedValue(savedOrder),
+      }));
+
+      const req = {
+        body: {
+          orderItems: [{ product: 'p1', qty: 2 }],
+          shippingAddress: { address: 'addr' },
+          paymentMethod: 'PayPal',
+          itemsPrice: 100,
+          taxPrice: 10,
+          shippingPrice: 5,
+          totalPrice: 115,
+        },
+        user: { _id: 'uid' },
+      };
+      const res = mockRes();
+
+      await addOrderItems(req, res, mockNext);
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(savedOrder);
+      expect(mockNext).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('getOrderById', () => {
+    it('should return order when found', async () => {
+      const mockOrder = { _id: 'oid' };
+      orderSeed.findById = jest.fn().mockReturnValue({
+        populate: jest.fn().mockResolvedValue(mockOrder),
+      });
+
+      const req = { params: { id: 'oid' } };
+      const res = mockRes();
+
+      await getOrderById(req, res, mockNext);
+
+      expect(res.json).toHaveBeenCalledWith(mockOrder);
+      expect(mockNext).not.toHaveBeenCalled();
+    });
+
+    it('should call next with 404 error when not found', async () => {
+      orderSeed.findById = jest.fn().mockReturnValue({
+        populate: jest.fn().mockResolvedValue(null),
+      });
+
+      const req = { params: { id: 'missing' } };
+      const res = mockRes();
+
+      await getOrderById(req, res, mockNext);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(mockNext).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'Order not Found' })
+      );
+    });
+  });
+
+  describe('updateOrderToPaid', () => {
+    it('should update payment fields and return updated order', async () => {
+      const mockOrder = {
+        save: jest.fn().mockResolvedValue({ isPaid: true, paymentResult: {} }),
+      };
+      orderSeed.findById = jest.fn().mockResolvedValue(mockOrder);
+
+      const req = {
+        params: { id: 'oid' },
+        body: {
+          id: 'pid',
+          status: 'COMPLETED',
+          update_time: 'now',
+          payer: { email_address: 'test@example.com' },
+        },
+      };
+      const res = mockRes();
+
+      await updateOrderToPaid(req, res, mockNext);
+
+      expect(mockOrder.isPaid).toBe(true);
+      expect(mockOrder.paymentResult).toMatchObject({
+        id: 'pid',
+        status: 'COMPLETED',
+        update_time: 'now',
+        email_address: 'test@example.com',
+      });
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({ isPaid: true })
+      );
+      expect(mockNext).not.toHaveBeenCalled();
+    });
+
+    it('should call next with 404 when order not found', async () => {
+      orderSeed.findById = jest.fn().mockResolvedValue(null);
+
+      const req = { params: { id: 'missing' }, body: {} };
+      const res = mockRes();
+
+      await updateOrderToPaid(req, res, mockNext);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(mockNext).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'Order not Found' })
+      );
+    });
+  });
+
+  describe('updateOrderToDelivered', () => {
+    it('should set delivered flags and return updated order', async () => {
+      const mockOrder = {
+        save: jest.fn().mockResolvedValue({ isDelivered: true }),
+      };
+      orderSeed.findById = jest.fn().mockResolvedValue(mockOrder);
+
+      const req = { params: { id: 'oid' } };
+      const res = mockRes();
+
+      await updateOrderToDelivered(req, res, mockNext);
+
+      expect(mockOrder.isDelivered).toBe(true);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({ isDelivered: true })
+      );
+      expect(mockNext).not.toHaveBeenCalled();
+    });
+
+    it('should call next with 404 when order not found', async () => {
+      orderSeed.findById = jest.fn().mockResolvedValue(null);
+
+      const req = { params: { id: 'missing' } };
+      const res = mockRes();
+
+      await updateOrderToDelivered(req, res, mockNext);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(mockNext).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'Order not Found' })
+      );
+    });
+  });
+
+  describe('getMyOrders', () => {
+    it('should return orders belonging to logged‑in user', async () => {
+      const fakeOrders = [{ _id: 'o1' }, { _id: 'o2' }];
+      orderSeed.find = jest.fn().mockResolvedValue(fakeOrders);
+
+      const req = { user: { _id: 'uid' } };
+      const res = mockRes();
+
+      await getMyOrders(req, res, mockNext);
+
+      expect(orderSeed.find).toHaveBeenCalledWith({ user: 'uid' });
+      expect(res.json).toHaveBeenCalledWith(fakeOrders);
+    });
+  });
+
+  describe('getOrders', () => {
+    it('should return all orders with populated user fields', async () => {
+      const fakeOrders = [{ _id: 'o1' }, { _id: 'o2' }];
+      orderSeed.find = jest.fn().mockReturnValue({
+        populate: jest.fn().mockResolvedValue(fakeOrders),
+      });
+
+      const req = {};
+      const res = mockRes();
+
+      await getOrders(req, res, mockNext);
+
+      expect(orderSeed.find).toHaveBeenCalledWith({});
+      expect(res.json).toHaveBeenCalledWith(fakeOrders);
+    });
+  });
+});
+```

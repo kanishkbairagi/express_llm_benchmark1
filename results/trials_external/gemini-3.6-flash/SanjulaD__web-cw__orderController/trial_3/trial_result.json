@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "SanjulaD__web-cw__orderController",
+  "targetFilename": "external/SanjulaD__web-cw/backend/controllers/orderController.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T05:17:36.785Z",
+  "finishedAt": "2026-10-07T05:18:05.862Z",
+  "suiteOk": false,
+  "testsPassed": 1,
+  "testsFailed": 9,
+  "testsTotal": 10,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 27.03,
+  "branchCoverage": 30,
+  "functionCoverage": 16.67,
+  "lineCoverage": 27.03,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1005,
+    "completionTokens": 2055,
+    "totalTokens": 6359,
+    "thinkingTokens": 3299
+  },
+  "latencyMs": 26037
+}

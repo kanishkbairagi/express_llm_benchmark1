@@ -1,0 +1,145 @@
+```javascript
+import express from 'express';
+import request from 'supertest';
+import router from '../dataset/external/dimartarmizi__OmniCloud/backend/src/routes/authRoutes.js';
+
+// Mock environment configuration
+jest.mock(
+  '../dataset/external/dimartarmizi__OmniCloud/backend/src/config/env.js',
+  () => ({
+    env: {
+      authCookieName: 'authToken',
+      appMode: 'local',
+    },
+  })
+);
+
+// Mock authentication service
+jest.mock(
+  '../dataset/external/dimartarmizi__OmniCloud/backend/src/services/authService.js',
+  () => ({
+    getAuthSummary: jest.fn(),
+    registerHostedUser: jest.fn(),
+    loginHostedUser: jest.fn(),
+    clearUserSessions: jest.fn(),
+    createSession: jest.fn(),
+    destroySession: jest.fn(),
+  })
+);
+
+import { env } from '../dataset/external/dimartarmizi__OmniCloud/backend/src/config/env.js';
+import {
+  getAuthSummary,
+  registerHostedUser,
+  loginHostedUser,
+  clearUserSessions,
+  createSession,
+  destroySession,
+} from '../dataset/external/dimartarmizi__OmniCloud/backend/src/services/authService.js';
+
+const app = express();
+app.use(express.json());
+
+// Attach a dummy user to req for routes that rely on it
+app.use((req, res, next) => {
+  req.user = { id: 'dummyUser', name: 'Dummy' };
+  next();
+});
+app.use(router);
+
+describe('authRoutes', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('GET /auth/me returns auth summary', async () => {
+    getAuthSummary.mockReturnValue({ id: 'dummyUser' });
+
+    const res = await request(app).get('/auth/me').expect(200);
+
+    expect(getAuthSummary).toHaveBeenCalledWith({ id: 'dummyUser', name: 'Dummy' });
+    expect(res.body).toEqual({ data: { id: 'dummyUser' } });
+  });
+
+  test('POST /auth/register creates user, session and sets auth cookie', async () => {
+    const newUser = { id: 'newUser', name: 'New User' };
+    const session = { token: 'session-token-123' };
+    registerHostedUser.mockReturnValue(newUser);
+    createSession.mockReturnValue(session);
+    getAuthSummary.mockReturnValue({ id: 'newUser' });
+
+    const res = await request(app)
+      .post('/auth/register')
+      .send({ email: 'test@example.com', password: 'secret' })
+      .expect(201);
+
+    // Service calls
+    expect(registerHostedUser).toHaveBeenCalledWith({ email: 'test@example.com', password: 'secret' });
+    expect(clearUserSessions).toHaveBeenCalledWith('newUser');
+    expect(createSession).toHaveBeenCalledWith('newUser');
+    expect(setCookieHeader(res)).toContain(`authToken=${session.token}`);
+
+    // Response body
+    expect(res.body).toEqual({ data: { id: 'newUser' } });
+  });
+
+  test('POST /auth/login creates session and sets auth cookie', async () => {
+    const existingUser = { id: 'existingUser', name: 'Existing' };
+    const session = { token: 'login-token-456' };
+    loginHostedUser.mockReturnValue(existingUser);
+    createSession.mockReturnValue(session);
+    getAuthSummary.mockReturnValue({ id: 'existingUser' });
+
+    const res = await request(app)
+      .post('/auth/login')
+      .send({ email: 'login@example.com', password: 'pw' })
+      .expect(200);
+
+    // Service calls
+    expect(loginHostedUser).toHaveBeenCalledWith({ email: 'login@example.com', password: 'pw' });
+    expect(createSession).toHaveBeenCalledWith('existingUser');
+    expect(setCookieHeader(res)).toContain(`authToken=${session.token}`);
+
+    // Response body
+    expect(res.body).toEqual({ data: { id: 'existingUser' } });
+  });
+
+  test('POST /auth/logout destroys session, clears cookie and returns summary', async () => {
+    const encodedToken = encodeURIComponent('logout-token-789');
+    destroySession.mockImplementation(() => {});
+    getAuthSummary.mockReturnValue({ id: 'dummyUser' });
+
+    const res = await request(app)
+      .post('/auth/logout')
+      .set('Cookie', `authToken=${encodedToken}`)
+      .expect(200);
+
+    // Token should be decoded before passing to destroySession
+    expect(destroySession).toHaveBeenCalledWith('logout-token-789');
+
+    // Clear cookie header should set Max-Age=0
+    const cleared = clearCookieHeader(res);
+    expect(cleared).toContain('authToken='); // empty value
+    expect(cleared).toMatch(/Max-Age=0/);
+
+    // Response body should contain auth summary (local mode returns req.user)
+    expect(res.body).toEqual({ data: { id: 'dummyUser' } });
+  });
+});
+
+/**
+ * Helper to extract the Set-Cookie header string for the auth cookie.
+ */
+function setCookieHeader(res) {
+  const header = res.headers['set-cookie']?.find((c) => c.startsWith(`${env.authCookieName}=`));
+  return header ?? '';
+}
+
+/**
+ * Helper to extract the cleared cookie Set-Cookie header.
+ */
+function clearCookieHeader(res) {
+  const header = res.headers['set-cookie']?.find((c) => c.startsWith(`${env.authCookieName}=;`));
+  return header ?? '';
+}
+```

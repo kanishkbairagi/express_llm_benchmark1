@@ -1,0 +1,45 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 1,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 0,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791264085590,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [],
+      "coverage": {},
+      "endTime": 1791264086089,
+      "message": "  ● Test suite failed to run\n\n    Cannot find module '../models/orderSeedModel.js' from 'tests_trials_external/SanjulaD__web-cw__orderController_gemini-3.6-flash_trial2.test.js'\n\n    To mock a module that does not exist on disk, pass `{virtual: true}` in the mock options. See https://jestjs.io/docs/jest-object#jestmockmodulename-factory-options\n\n    \u001b[0m \u001b[90m 1 |\u001b[39m \u001b[36mimport\u001b[39m { jest } \u001b[36mfrom\u001b[39m \u001b[32m'@jest/globals'\u001b[39m\u001b[33m;\u001b[39m\n     \u001b[90m 2 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 3 |\u001b[39m jest\u001b[33m.\u001b[39munstable_mockModule(\u001b[32m'../models/orderSeedModel.js'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m   |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 4 |\u001b[39m   \u001b[36mconst\u001b[39m \u001b[33mMockOrderSeed\u001b[39m \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockImplementation(\u001b[36mfunction\u001b[39m (data) {\n     \u001b[90m 5 |\u001b[39m     \u001b[33mObject\u001b[39m\u001b[33m.\u001b[39massign(\u001b[36mthis\u001b[39m\u001b[33m,\u001b[39m data)\u001b[33m;\u001b[39m\n     \u001b[90m 6 |\u001b[39m     \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msave \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue({ _id\u001b[33m:\u001b[39m \u001b[32m'order123'\u001b[39m\u001b[33m,\u001b[39m \u001b[33m...\u001b[39mdata })\u001b[33m;\u001b[39m\u001b[0m\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/index.js:1031:11)\n      at tests_trials_external/SanjulaD__web-cw__orderController_gemini-3.6-flash_trial2.test.js:3:6\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__orderController_gemini-3.6-flash_trial2.test.js",
+      "startTime": 1791264086089,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {}
+}

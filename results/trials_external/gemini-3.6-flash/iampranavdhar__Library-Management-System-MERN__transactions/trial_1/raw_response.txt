@@ -1,0 +1,191 @@
+```javascript
+import { jest } from '@jest/globals';
+import request from 'supertest';
+import express from 'express';
+
+const mockSave = jest.fn();
+const mockFind = jest.fn();
+const mockFindByIdAndUpdate = jest.fn();
+const mockFindByIdAndDelete = jest.fn();
+const mockBookFindById = jest.fn();
+
+jest.unstable_mockModule('../models/Book.js', () => ({
+  default: {
+    findById: mockBookFindById,
+  },
+}));
+
+jest.unstable_mockModule('../models/BookTransaction.js', () => {
+  function MockBookTransaction(data) {
+    Object.assign(this, data);
+    this._id = 'mock_tx_id';
+    this.save = mockSave;
+  }
+  MockBookTransaction.find = mockFind;
+  MockBookTransaction.findByIdAndUpdate = mockFindByIdAndUpdate;
+  MockBookTransaction.findByIdAndDelete = mockFindByIdAndDelete;
+
+  return { default: MockBookTransaction };
+});
+
+const router = (await import('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/routes/transactions.js')).default;
+
+const app = express();
+app.use(express.json());
+app.use('/', router);
+
+describe('Transactions Router', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('POST /add-transaction', () => {
+    it('should add a transaction successfully if user is admin', async () => {
+      const mockTx = {
+        _id: 'tx_123',
+        bookId: 'b_123',
+        borrowerId: 'u_123',
+        bookName: 'Test Book',
+        borrowerName: 'John Doe',
+        transactionType: 'Issue',
+        fromDate: '2023-01-01',
+        toDate: '2023-01-10',
+      };
+
+      mockSave.mockResolvedValue(mockTx);
+      const mockBookInstance = { updateOne: jest.fn().mockResolvedValue(true) };
+      mockBookFindById.mockReturnValue(mockBookInstance);
+
+      const res = await request(app)
+        .post('/add-transaction')
+        .send({
+          isAdmin: true,
+          bookId: 'b_123',
+          borrowerId: 'u_123',
+          bookName: 'Test Book',
+          borrowerName: 'John Doe',
+          transactionType: 'Issue',
+          fromDate: '2023-01-01',
+          toDate: '2023-01-10',
+        });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(mockTx);
+      expect(mockBookFindById).toHaveBeenCalledWith('b_123');
+      expect(mockBookInstance.updateOne).toHaveBeenCalledWith({
+        $push: { transactions: 'tx_123' },
+      });
+    });
+
+    it('should return status 500 if user is not admin', async () => {
+      const res = await request(app)
+        .post('/add-transaction')
+        .send({ isAdmin: false });
+
+      expect(res.status).toBe(500);
+      expect(res.body).toBe('You are not allowed to add a Transaction');
+    });
+
+    it('should return status 504 on error', async () => {
+      mockSave.mockRejectedValue(new Error('Database failure'));
+
+      const res = await request(app)
+        .post('/add-transaction')
+        .send({ isAdmin: true, bookId: 'b_123' });
+
+      expect(res.status).toBe(504);
+    });
+  });
+
+  describe('GET /all-transactions', () => {
+    it('should fetch all transactions sorted by _id descending', async () => {
+      const transactions = [{ _id: 'tx_1' }, { _id: 'tx_2' }];
+      mockFind.mockReturnValue({
+        sort: jest.fn().mockResolvedValue(transactions),
+      });
+
+      const res = await request(app).get('/all-transactions');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(transactions);
+      expect(mockFind).toHaveBeenCalledWith({});
+    });
+
+    it('should return status 504 on error', async () => {
+      mockFind.mockReturnValue({
+        sort: jest.fn().mockRejectedValue(new Error('Fetch failed')),
+      });
+
+      const res = await request(app).get('/all-transactions');
+
+      expect(res.status).toBe(504);
+    });
+  });
+
+  describe('PUT /update-transaction/:id', () => {
+    it('should update transaction details if user is admin', async () => {
+      mockFindByIdAndUpdate.mockResolvedValue({});
+
+      const res = await request(app)
+        .put('/update-transaction/tx_123')
+        .send({ isAdmin: true, transactionType: 'Return' });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Transaction details updated successfully');
+      expect(mockFindByIdAndUpdate).toHaveBeenCalledWith('tx_123', {
+        $set: { isAdmin: true, transactionType: 'Return' },
+      });
+    });
+
+    it('should return status 504 on error', async () => {
+      mockFindByIdAndUpdate.mockRejectedValue(new Error('Update failed'));
+
+      const res = await request(app)
+        .put('/update-transaction/tx_123')
+        .send({ isAdmin: true });
+
+      expect(res.status).toBe(504);
+    });
+  });
+
+  describe('DELETE /remove-transaction/:id', () => {
+    it('should delete transaction if user is admin', async () => {
+      const mockDeletedTx = { _id: 'tx_123', bookId: 'b_123' };
+      mockFindByIdAndDelete.mockResolvedValue(mockDeletedTx);
+      const mockBookInstance = { updateOne: jest.fn().mockResolvedValue(true) };
+      mockBookFindById.mockReturnValue(mockBookInstance);
+
+      const res = await request(app)
+        .delete('/remove-transaction/tx_123')
+        .send({ isAdmin: true });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toBe('Transaction deleted successfully');
+      expect(mockFindByIdAndDelete).toHaveBeenCalledWith('tx_123');
+      expect(mockBookFindById).toHaveBeenCalledWith('b_123');
+      expect(mockBookInstance.updateOne).toHaveBeenCalledWith({
+        $pull: { transactions: 'tx_123' },
+      });
+    });
+
+    it('should return status 403 if user is not admin', async () => {
+      const res = await request(app)
+        .delete('/remove-transaction/tx_123')
+        .send({ isAdmin: false });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toBe('You dont have permission to delete a book!');
+    });
+
+    it('should return status 504 on error', async () => {
+      mockFindByIdAndDelete.mockRejectedValue(new Error('Delete error'));
+
+      const res = await request(app)
+        .delete('/remove-transaction/tx_123')
+        .send({ isAdmin: true });
+
+      expect(res.status).toBe(504);
+    });
+  });
+});
+```

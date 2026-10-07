@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "mongo-express__mongo-express__database",
+  "targetFilename": "external/mongo-express__mongo-express/lib/routes/database.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:06:16.625Z",
+  "finishedAt": "2026-10-05T05:06:25.010Z",
+  "suiteOk": false,
+  "testsPassed": 5,
+  "testsFailed": 4,
+  "testsTotal": 9,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 68.42,
+  "branchCoverage": 54.84,
+  "functionCoverage": 71.43,
+  "lineCoverage": 67.57,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1071,
+    "completionTokens": 2405,
+    "totalTokens": 3476,
+    "reasoningTokens": 539
+  },
+  "latencyMs": 5669
+}

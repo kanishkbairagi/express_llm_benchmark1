@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "panshak__accountill__invoices",
+  "targetFilename": "external/panshak__accountill/server/controllers/invoices.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:10:25.240Z",
+  "finishedAt": "2026-10-05T05:11:04.593Z",
+  "suiteOk": false,
+  "testsPassed": 2,
+  "testsFailed": 12,
+  "testsTotal": 14,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 32.56,
+  "branchCoverage": 50,
+  "functionCoverage": 28.57,
+  "lineCoverage": 29.27,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 811,
+    "completionTokens": 2039,
+    "totalTokens": 6530,
+    "thinkingTokens": 3680
+  },
+  "latencyMs": 20534
+}

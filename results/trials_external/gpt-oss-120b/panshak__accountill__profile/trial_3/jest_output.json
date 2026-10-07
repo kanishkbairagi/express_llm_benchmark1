@@ -1,0 +1,1253 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 13,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 2,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 15,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791350127529,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfiles"
+          ],
+          "duration": 6,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:57:25)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfiles should return all profiles with status 200",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return all profiles with status 200",
+          "startAt": 1791350128839
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfiles"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:73:25)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfiles should handle errors with status 404",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors with status 404",
+          "startAt": 1791350128853
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfile"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:91:29)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfile should return a single profile with status 200",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return a single profile with status 200",
+          "startAt": 1791350128856
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findById.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:105:29)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfile should handle errors with status 404",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors with status 404",
+          "startAt": 1791350128858
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "createProfile"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:133:28)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers createProfile should create a profile when email is unique",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create a profile when email is unique",
+          "startAt": 1791350128860
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "createProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:156:28)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers createProfile should return 404 when profile already exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 when profile already exists",
+          "startAt": 1791350128861
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "createProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:170:28)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers createProfile should handle save errors with status 409",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle save errors with status 409",
+          "startAt": 1791350128862
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesByUser"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:193:28)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfilesByUser should return profile matching userId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return profile matching userId",
+          "startAt": 1791350128872
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesByUser"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:206:28)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfilesByUser should handle errors with status 404",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors with status 404",
+          "startAt": 1791350128874
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesBySearch"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:224:25)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfilesBySearch should return profiles matching name or email regex",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return profiles matching name or email regex",
+          "startAt": 1791350128876
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesBySearch"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:239:25)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers getProfilesBySearch should handle errors with status 404",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors with status 404",
+          "startAt": 1791350128877
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "updateProfile"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Profile Controllers updateProfile should return 404 for invalid ObjectId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 404 for invalid ObjectId",
+          "startAt": 1791350128878
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "updateProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findByIdAndUpdate.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:267:38)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers updateProfile should update and return the updated profile",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should update and return the updated profile",
+          "startAt": 1791350128883
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "deleteProfile"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Profile Controllers deleteProfile should return 404 for invalid ObjectId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return 404 for invalid ObjectId",
+          "startAt": 1791350128885
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "deleteProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Cannot read properties of undefined (reading 'mockResolvedValue')\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js:296:38)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "Profile Controllers deleteProfile should delete the profile and return success message",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should delete the profile and return success message",
+          "startAt": 1791350128887
+        }
+      ],
+      "endTime": 1791350128990,
+      "message": "  ● Profile Controllers › getProfiles › should return all profiles with status 200\n\n    TypeError: ProfileModel.find.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 55 |\u001b[39m       \u001b[36mconst\u001b[39m mockProfiles \u001b[33m=\u001b[39m [{ name\u001b[33m:\u001b[39m \u001b[32m'A'\u001b[39m }\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'B'\u001b[39m }]\u001b[33m;\u001b[39m\n     \u001b[90m 56 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 57 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValue({\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 58 |\u001b[39m         sort\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(mockProfiles)\u001b[33m,\u001b[39m\n     \u001b[90m 59 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 60 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:57:25)\n\n  ● Profile Controllers › getProfiles › should handle errors with status 404\n\n    TypeError: ProfileModel.find.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 71 |\u001b[39m     it(\u001b[32m'should handle errors with status 404'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 72 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 73 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m {\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 74 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'DB error'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 75 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 76 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:73:25)\n\n  ● Profile Controllers › getProfile › should return a single profile with status 200\n\n    TypeError: ProfileModel.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 89 |\u001b[39m       \u001b[36mconst\u001b[39m mockProfile \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'123'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'John'\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 90 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 91 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(mockProfile)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 92 |\u001b[39m\n     \u001b[90m 93 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'123'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 94 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:91:29)\n\n  ● Profile Controllers › getProfile › should handle errors with status 404\n\n    TypeError: ProfileModel.findById.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 103 |\u001b[39m     it(\u001b[32m'should handle errors with status 404'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 104 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 105 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 106 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Not found'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 107 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 108 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:105:29)\n\n  ● Profile Controllers › createProfile › should create a profile when email is unique\n\n    TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 131 |\u001b[39m     it(\u001b[32m'should create a profile when email is unique'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 132 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 133 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 134 |\u001b[39m       \u001b[36mconst\u001b[39m saveMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue({})\u001b[33m;\u001b[39m\n     \u001b[90m 135 |\u001b[39m       \u001b[90m// Mock the constructor to return an object with save method\u001b[39m\n     \u001b[90m 136 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mMockedProfile\u001b[39m \u001b[33m=\u001b[39m \u001b[36mfunction\u001b[39m (data) {\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:133:28)\n\n  ● Profile Controllers › createProfile › should return 404 when profile already exists\n\n    TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 154 |\u001b[39m     it(\u001b[32m'should return 404 when profile already exists'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 155 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 156 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue({ email\u001b[33m:\u001b[39m baseBody\u001b[33m.\u001b[39memail })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 157 |\u001b[39m\n     \u001b[90m 158 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { body\u001b[33m:\u001b[39m baseBody }\u001b[33m;\u001b[39m\n     \u001b[90m 159 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:156:28)\n\n  ● Profile Controllers › createProfile › should handle save errors with status 409\n\n    TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 168 |\u001b[39m     it(\u001b[32m'should handle save errors with status 409'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 169 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 170 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 171 |\u001b[39m       \u001b[36mconst\u001b[39m saveMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Save failed'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m 172 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mMockedProfile\u001b[39m \u001b[33m=\u001b[39m \u001b[36mfunction\u001b[39m (data) {\n     \u001b[90m 173 |\u001b[39m         \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msave \u001b[33m=\u001b[39m saveMock\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:170:28)\n\n  ● Profile Controllers › getProfilesByUser › should return profile matching userId\n\n    TypeError: ProfileModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 191 |\u001b[39m       \u001b[36mconst\u001b[39m mockProfile \u001b[33m=\u001b[39m { userId\u001b[33m:\u001b[39m \u001b[32m'uid123'\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 192 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 193 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(mockProfile)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 194 |\u001b[39m\n     \u001b[90m 195 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'uid123'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 196 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:193:28)\n\n  ● Profile Controllers › getProfilesByUser › should handle errors with status 404\n\n    TypeError: ProfileModel.findOne.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 204 |\u001b[39m     it(\u001b[32m'should handle errors with status 404'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 205 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 206 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 207 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Lookup error'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 208 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 209 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:206:28)\n\n  ● Profile Controllers › getProfilesBySearch › should return profiles matching name or email regex\n\n    TypeError: ProfileModel.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 222 |\u001b[39m       \u001b[36mconst\u001b[39m mockProfiles \u001b[33m=\u001b[39m [{ name\u001b[33m:\u001b[39m \u001b[32m'Alice'\u001b[39m }\u001b[33m,\u001b[39m { email\u001b[33m:\u001b[39m \u001b[32m'bob@example.com'\u001b[39m }]\u001b[33m;\u001b[39m\n     \u001b[90m 223 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 224 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue(mockProfiles)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 225 |\u001b[39m\n     \u001b[90m 226 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'a'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 227 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:224:25)\n\n  ● Profile Controllers › getProfilesBySearch › should handle errors with status 404\n\n    TypeError: ProfileModel.find.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 237 |\u001b[39m     it(\u001b[32m'should handle errors with status 404'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 238 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 239 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 240 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'Search error'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 241 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 242 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:239:25)\n\n  ● Profile Controllers › updateProfile › should update and return the updated profile\n\n    TypeError: ProfileModel.findByIdAndUpdate.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 265 |\u001b[39m       \u001b[36mconst\u001b[39m updated \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'valid-id'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'Updated'\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 266 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 267 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindByIdAndUpdate\u001b[33m.\u001b[39mmockResolvedValue(updated)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 268 |\u001b[39m\n     \u001b[90m 269 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'valid-id'\u001b[39m }\u001b[33m,\u001b[39m body\u001b[33m:\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'Updated'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 270 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:267:38)\n\n  ● Profile Controllers › deleteProfile › should delete the profile and return success message\n\n    TypeError: Cannot read properties of undefined (reading 'mockResolvedValue')\n\n    \u001b[0m \u001b[90m 294 |\u001b[39m     it(\u001b[32m'should delete the profile and return success message'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 295 |\u001b[39m       \u001b[36mconst\u001b[39m \u001b[33mProfileModel\u001b[39m \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m \u001b[36mimport\u001b[39m(\u001b[32m'../dataset/external/panshak__accountill/server/models/ProfileModel.js'\u001b[39m))\u001b[33m.\u001b[39m\u001b[36mdefault\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 296 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindByIdAndRemove\u001b[33m.\u001b[39mmockResolvedValue({})\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 297 |\u001b[39m\n     \u001b[90m 298 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'valid-id'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 299 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockResponse()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial3.test.js:296:38)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial3.test.js",
+      "startTime": 1791350127664,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\models\\ProfileModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\models\\ProfileModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 22
+          },
+          "end": {
+            "line": 13,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 15,
+            "column": 16
+          },
+          "end": {
+            "line": 15,
+            "column": 56
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "906d6145dc0fd9b4956695465de32e5eaad65870"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\controllers\\profile.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\controllers\\profile.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 6,
+            "column": 15
+          },
+          "end": {
+            "line": 6,
+            "column": 31
+          }
+        },
+        "1": {
+          "start": {
+            "line": 8,
+            "column": 27
+          },
+          "end": {
+            "line": 16,
+            "column": 1
+          }
+        },
+        "2": {
+          "start": {
+            "line": 9,
+            "column": 2
+          },
+          "end": {
+            "line": 15,
+            "column": 3
+          }
+        },
+        "3": {
+          "start": {
+            "line": 10,
+            "column": 26
+          },
+          "end": {
+            "line": 10,
+            "column": 69
+          }
+        },
+        "4": {
+          "start": {
+            "line": 12,
+            "column": 6
+          },
+          "end": {
+            "line": 12,
+            "column": 40
+          }
+        },
+        "5": {
+          "start": {
+            "line": 14,
+            "column": 6
+          },
+          "end": {
+            "line": 14,
+            "column": 55
+          }
+        },
+        "6": {
+          "start": {
+            "line": 18,
+            "column": 26
+          },
+          "end": {
+            "line": 28,
+            "column": 1
+          }
+        },
+        "7": {
+          "start": {
+            "line": 19,
+            "column": 17
+          },
+          "end": {
+            "line": 19,
+            "column": 27
+          }
+        },
+        "8": {
+          "start": {
+            "line": 21,
+            "column": 2
+          },
+          "end": {
+            "line": 27,
+            "column": 3
+          }
+        },
+        "9": {
+          "start": {
+            "line": 22,
+            "column": 22
+          },
+          "end": {
+            "line": 22,
+            "column": 53
+          }
+        },
+        "10": {
+          "start": {
+            "line": 24,
+            "column": 6
+          },
+          "end": {
+            "line": 24,
+            "column": 36
+          }
+        },
+        "11": {
+          "start": {
+            "line": 26,
+            "column": 6
+          },
+          "end": {
+            "line": 26,
+            "column": 55
+          }
+        },
+        "12": {
+          "start": {
+            "line": 30,
+            "column": 29
+          },
+          "end": {
+            "line": 65,
+            "column": 1
+          }
+        },
+        "13": {
+          "start": {
+            "line": 40,
+            "column": 7
+          },
+          "end": {
+            "line": 40,
+            "column": 15
+          }
+        },
+        "14": {
+          "start": {
+            "line": 43,
+            "column": 21
+          },
+          "end": {
+            "line": 53,
+            "column": 4
+          }
+        },
+        "15": {
+          "start": {
+            "line": 55,
+            "column": 2
+          },
+          "end": {
+            "line": 64,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 56,
+            "column": 25
+          },
+          "end": {
+            "line": 56,
+            "column": 62
+          }
+        },
+        "17": {
+          "start": {
+            "line": 58,
+            "column": 4
+          },
+          "end": {
+            "line": 58,
+            "column": 86
+          }
+        },
+        "18": {
+          "start": {
+            "line": 58,
+            "column": 21
+          },
+          "end": {
+            "line": 58,
+            "column": 86
+          }
+        },
+        "19": {
+          "start": {
+            "line": 59,
+            "column": 6
+          },
+          "end": {
+            "line": 59,
+            "column": 30
+          }
+        },
+        "20": {
+          "start": {
+            "line": 61,
+            "column": 6
+          },
+          "end": {
+            "line": 61,
+            "column": 40
+          }
+        },
+        "21": {
+          "start": {
+            "line": 63,
+            "column": 6
+          },
+          "end": {
+            "line": 63,
+            "column": 55
+          }
+        },
+        "22": {
+          "start": {
+            "line": 69,
+            "column": 33
+          },
+          "end": {
+            "line": 81,
+            "column": 1
+          }
+        },
+        "23": {
+          "start": {
+            "line": 70,
+            "column": 26
+          },
+          "end": {
+            "line": 70,
+            "column": 35
+          }
+        },
+        "24": {
+          "start": {
+            "line": 72,
+            "column": 2
+          },
+          "end": {
+            "line": 80,
+            "column": 3
+          }
+        },
+        "25": {
+          "start": {
+            "line": 75,
+            "column": 22
+          },
+          "end": {
+            "line": 75,
+            "column": 73
+          }
+        },
+        "26": {
+          "start": {
+            "line": 77,
+            "column": 6
+          },
+          "end": {
+            "line": 77,
+            "column": 34
+          }
+        },
+        "27": {
+          "start": {
+            "line": 79,
+            "column": 6
+          },
+          "end": {
+            "line": 79,
+            "column": 55
+          }
+        },
+        "28": {
+          "start": {
+            "line": 85,
+            "column": 35
+          },
+          "end": {
+            "line": 98,
+            "column": 1
+          }
+        },
+        "29": {
+          "start": {
+            "line": 86,
+            "column": 26
+          },
+          "end": {
+            "line": 86,
+            "column": 35
+          }
+        },
+        "30": {
+          "start": {
+            "line": 88,
+            "column": 2
+          },
+          "end": {
+            "line": 97,
+            "column": 3
+          }
+        },
+        "31": {
+          "start": {
+            "line": 89,
+            "column": 19
+          },
+          "end": {
+            "line": 89,
+            "column": 47
+          }
+        },
+        "32": {
+          "start": {
+            "line": 90,
+            "column": 20
+          },
+          "end": {
+            "line": 90,
+            "column": 48
+          }
+        },
+        "33": {
+          "start": {
+            "line": 92,
+            "column": 23
+          },
+          "end": {
+            "line": 92,
+            "column": 80
+          }
+        },
+        "34": {
+          "start": {
+            "line": 94,
+            "column": 6
+          },
+          "end": {
+            "line": 94,
+            "column": 35
+          }
+        },
+        "35": {
+          "start": {
+            "line": 96,
+            "column": 6
+          },
+          "end": {
+            "line": 96,
+            "column": 55
+          }
+        },
+        "36": {
+          "start": {
+            "line": 101,
+            "column": 29
+          },
+          "end": {
+            "line": 110,
+            "column": 1
+          }
+        },
+        "37": {
+          "start": {
+            "line": 102,
+            "column": 22
+          },
+          "end": {
+            "line": 102,
+            "column": 32
+          }
+        },
+        "38": {
+          "start": {
+            "line": 103,
+            "column": 18
+          },
+          "end": {
+            "line": 103,
+            "column": 26
+          }
+        },
+        "39": {
+          "start": {
+            "line": 105,
+            "column": 2
+          },
+          "end": {
+            "line": 105,
+            "column": 97
+          }
+        },
+        "40": {
+          "start": {
+            "line": 105,
+            "column": 44
+          },
+          "end": {
+            "line": 105,
+            "column": 97
+          }
+        },
+        "41": {
+          "start": {
+            "line": 107,
+            "column": 25
+          },
+          "end": {
+            "line": 107,
+            "column": 99
+          }
+        },
+        "42": {
+          "start": {
+            "line": 109,
+            "column": 2
+          },
+          "end": {
+            "line": 109,
+            "column": 26
+          }
+        },
+        "43": {
+          "start": {
+            "line": 113,
+            "column": 31
+          },
+          "end": {
+            "line": 121,
+            "column": 1
+          }
+        },
+        "44": {
+          "start": {
+            "line": 114,
+            "column": 19
+          },
+          "end": {
+            "line": 114,
+            "column": 29
+          }
+        },
+        "45": {
+          "start": {
+            "line": 116,
+            "column": 4
+          },
+          "end": {
+            "line": 116,
+            "column": 103
+          }
+        },
+        "46": {
+          "start": {
+            "line": 116,
+            "column": 46
+          },
+          "end": {
+            "line": 116,
+            "column": 103
+          }
+        },
+        "47": {
+          "start": {
+            "line": 118,
+            "column": 4
+          },
+          "end": {
+            "line": 118,
+            "column": 45
+          }
+        },
+        "48": {
+          "start": {
+            "line": 120,
+            "column": 4
+          },
+          "end": {
+            "line": 120,
+            "column": 59
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 27
+            },
+            "end": {
+              "line": 8,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 47
+            },
+            "end": {
+              "line": 16,
+              "column": 1
+            }
+          },
+          "line": 8
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 18,
+              "column": 26
+            },
+            "end": {
+              "line": 18,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 18,
+              "column": 46
+            },
+            "end": {
+              "line": 28,
+              "column": 1
+            }
+          },
+          "line": 18
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 30,
+              "column": 29
+            },
+            "end": {
+              "line": 30,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 30,
+              "column": 49
+            },
+            "end": {
+              "line": 65,
+              "column": 1
+            }
+          },
+          "line": 30
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 69,
+              "column": 33
+            },
+            "end": {
+              "line": 69,
+              "column": 34
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 69,
+              "column": 53
+            },
+            "end": {
+              "line": 81,
+              "column": 1
+            }
+          },
+          "line": 69
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 85,
+              "column": 35
+            },
+            "end": {
+              "line": 85,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 85,
+              "column": 55
+            },
+            "end": {
+              "line": 98,
+              "column": 1
+            }
+          },
+          "line": 85
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 101,
+              "column": 29
+            },
+            "end": {
+              "line": 101,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 101,
+              "column": 49
+            },
+            "end": {
+              "line": 110,
+              "column": 1
+            }
+          },
+          "line": 101
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 113,
+              "column": 31
+            },
+            "end": {
+              "line": 113,
+              "column": 32
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 113,
+              "column": 51
+            },
+            "end": {
+              "line": 121,
+              "column": 1
+            }
+          },
+          "line": 113
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 58,
+              "column": 4
+            },
+            "end": {
+              "line": 58,
+              "column": 86
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 58,
+                "column": 4
+              },
+              "end": {
+                "line": 58,
+                "column": 86
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 58
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 105,
+              "column": 2
+            },
+            "end": {
+              "line": 105,
+              "column": 97
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 105,
+                "column": 2
+              },
+              "end": {
+                "line": 105,
+                "column": 97
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 105
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 116,
+              "column": 4
+            },
+            "end": {
+              "line": 116,
+              "column": 103
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 116,
+                "column": 4
+              },
+              "end": {
+                "line": 116,
+                "column": 103
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 116
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 1,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 1,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 1,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 1,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0,
+        "35": 0,
+        "36": 1,
+        "37": 1,
+        "38": 1,
+        "39": 1,
+        "40": 1,
+        "41": 0,
+        "42": 0,
+        "43": 1,
+        "44": 1,
+        "45": 1,
+        "46": 1,
+        "47": 0,
+        "48": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 1
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          1,
+          0
+        ],
+        "2": [
+          1,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "fa79c50013ba310eb4d50d58fd036961989ec50e"
+    }
+  }
+}

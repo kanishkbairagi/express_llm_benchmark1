@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "sanidhyy__mern-admin__client",
+  "targetFilename": "external/sanidhyy__mern-admin/server/controllers/client.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:13:10.671Z",
+  "finishedAt": "2026-10-05T05:13:19.772Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 8,
+  "testsTotal": 8,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 10.26,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 10.26,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 921,
+    "completionTokens": 2465,
+    "totalTokens": 3386,
+    "reasoningTokens": 575
+  },
+  "latencyMs": 5702
+}

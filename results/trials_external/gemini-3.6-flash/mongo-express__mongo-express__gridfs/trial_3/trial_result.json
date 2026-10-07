@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "mongo-express__mongo-express__gridfs",
+  "targetFilename": "external/mongo-express__mongo-express/lib/routes/gridfs.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T05:11:47.277Z",
+  "finishedAt": "2026-10-07T05:12:29.103Z",
+  "suiteOk": false,
+  "testsPassed": 13,
+  "testsFailed": 1,
+  "testsTotal": 14,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 100,
+  "branchCoverage": 71.88,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1766,
+    "completionTokens": 3027,
+    "totalTokens": 6542,
+    "thinkingTokens": 1749
+  },
+  "latencyMs": 20142
+}

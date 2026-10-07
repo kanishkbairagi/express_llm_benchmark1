@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "sanidhyy__mern-admin__client",
+  "targetFilename": "external/sanidhyy__mern-admin/server/controllers/client.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:12:48.025Z",
+  "finishedAt": "2026-10-05T05:13:10.669Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1003,
+    "completionTokens": 2128,
+    "totalTokens": 5425,
+    "thinkingTokens": 2294
+  },
+  "latencyMs": 20816
+}

@@ -1,0 +1,738 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 6,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 2,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 8,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791264943168,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "getUserProfileAndRepos"
+          ],
+          "duration": 13,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "user.controller getUserProfileAndRepos should return user profile and repos on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should return user profile and repos on success",
+          "startAt": 1791264944725
+        },
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "getUserProfileAndRepos"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "user.controller getUserProfileAndRepos should handle fetch errors and respond with 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "passed",
+          "title": "should handle fetch errors and respond with 500",
+          "startAt": 1791264944740
+        },
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "likeProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: User.findById.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:128:21)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "user.controller likeProfile should return 404 when the target user does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 when the target user does not exist",
+          "startAt": 1791264944745
+        },
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "likeProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: User.findById.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:143:21)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "user.controller likeProfile should return 400 when the profile is already liked",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 400 when the profile is already liked",
+          "startAt": 1791264944761
+        },
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "likeProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: User.findById.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:156:21)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "user.controller likeProfile should like a profile successfully and save both users",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should like a profile successfully and save both users",
+          "startAt": 1791264944764
+        },
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "likeProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: User.findById.mockRejectedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:179:21)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "user.controller likeProfile should handle unexpected errors with 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle unexpected errors with 500",
+          "startAt": 1791264944767
+        },
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "getLikes"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: User.findById.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:196:21)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "user.controller getLikes should return likedBy array for the authenticated user",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return likedBy array for the authenticated user",
+          "startAt": 1791264944769
+        },
+        {
+          "ancestorTitles": [
+            "user.controller",
+            "getLikes"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: User.findById.mockRejectedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:209:21)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "user.controller getLikes should handle errors and respond with 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors and respond with 500",
+          "startAt": 1791264944771
+        }
+      ],
+      "endTime": 1791264944857,
+      "message": "  ● user.controller › likeProfile › should return 404 when the target user does not exist\n\n    TypeError: User.findById.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 126 |\u001b[39m\n     \u001b[90m 127 |\u001b[39m     it(\u001b[32m'should return 404 when the target user does not exist'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 128 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValueOnce(mockAuthUser)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 129 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValueOnce(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 130 |\u001b[39m\n     \u001b[90m 131 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m'nonexistent'\u001b[39m }\u001b[33m,\u001b[39m user\u001b[33m:\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'auth-id'\u001b[39m } }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:128:21)\n\n  ● user.controller › likeProfile › should return 400 when the profile is already liked\n\n    TypeError: User.findById.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 141 |\u001b[39m     it(\u001b[32m'should return 400 when the profile is already liked'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 142 |\u001b[39m       mockAuthUser\u001b[33m.\u001b[39mlikedProfiles \u001b[33m=\u001b[39m [\u001b[32m'targetUser'\u001b[39m]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 143 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValueOnce(mockAuthUser)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 144 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValueOnce(mockTargetUser)\u001b[33m;\u001b[39m\n     \u001b[90m 145 |\u001b[39m\n     \u001b[90m 146 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m'targetUser'\u001b[39m }\u001b[33m,\u001b[39m user\u001b[33m:\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'auth-id'\u001b[39m } }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:143:21)\n\n  ● user.controller › likeProfile › should like a profile successfully and save both users\n\n    TypeError: User.findById.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 154 |\u001b[39m\n     \u001b[90m 155 |\u001b[39m     it(\u001b[32m'should like a profile successfully and save both users'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 156 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValueOnce(mockAuthUser)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 157 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValueOnce(mockTargetUser)\u001b[33m;\u001b[39m\n     \u001b[90m 158 |\u001b[39m\n     \u001b[90m 159 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m'targetUser'\u001b[39m }\u001b[33m,\u001b[39m user\u001b[33m:\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'auth-id'\u001b[39m } }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:156:21)\n\n  ● user.controller › likeProfile › should handle unexpected errors with 500\n\n    TypeError: User.findById.mockRejectedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 177 |\u001b[39m\n     \u001b[90m 178 |\u001b[39m     it(\u001b[32m'should handle unexpected errors with 500'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 179 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockRejectedValueOnce(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'DB failure'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 180 |\u001b[39m\n     \u001b[90m 181 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m'any'\u001b[39m }\u001b[33m,\u001b[39m user\u001b[33m:\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'auth-id'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 182 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m createRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:179:21)\n\n  ● user.controller › getLikes › should return likedBy array for the authenticated user\n\n    TypeError: User.findById.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 194 |\u001b[39m         likedBy\u001b[33m:\u001b[39m [{ username\u001b[33m:\u001b[39m \u001b[32m'john'\u001b[39m\u001b[33m,\u001b[39m likedDate\u001b[33m:\u001b[39m \u001b[35m123\u001b[39m }]\u001b[33m,\u001b[39m\n     \u001b[90m 195 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 196 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValueOnce(mockUser)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 197 |\u001b[39m\n     \u001b[90m 198 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { user\u001b[33m:\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'auth-id'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 199 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m createRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:196:21)\n\n  ● user.controller › getLikes › should handle errors and respond with 500\n\n    TypeError: User.findById.mockRejectedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 207 |\u001b[39m\n     \u001b[90m 208 |\u001b[39m     it(\u001b[32m'should handle errors and respond with 500'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 209 |\u001b[39m       \u001b[33mUser\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockRejectedValueOnce(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'DB error'\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 210 |\u001b[39m\n     \u001b[90m 211 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { user\u001b[33m:\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'auth-id'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 212 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m createRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js:209:21)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\burakorkmez__mern-github-app__user.controller_gpt-oss-120b_trial3.test.js",
+      "startTime": 1791264943376,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\burakorkmez__mern-github-app\\backend\\models\\user.model.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\burakorkmez__mern-github-app\\backend\\models\\user.model.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 19
+          },
+          "end": {
+            "line": 42,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 44,
+            "column": 13
+          },
+          "end": {
+            "line": 44,
+            "column": 47
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "e28f3d8f5888a6bb504791505ba6730efeb42ea4"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\burakorkmez__mern-github-app\\backend\\controllers\\user.controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\burakorkmez__mern-github-app\\backend\\controllers\\user.controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 38
+          },
+          "end": {
+            "line": 27,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 4,
+            "column": 22
+          },
+          "end": {
+            "line": 4,
+            "column": 32
+          }
+        },
+        "2": {
+          "start": {
+            "line": 5,
+            "column": 1
+          },
+          "end": {
+            "line": 26,
+            "column": 2
+          }
+        },
+        "3": {
+          "start": {
+            "line": 8,
+            "column": 18
+          },
+          "end": {
+            "line": 12,
+            "column": 4
+          }
+        },
+        "4": {
+          "start": {
+            "line": 14,
+            "column": 22
+          },
+          "end": {
+            "line": 14,
+            "column": 42
+          }
+        },
+        "5": {
+          "start": {
+            "line": 16,
+            "column": 18
+          },
+          "end": {
+            "line": 20,
+            "column": 4
+          }
+        },
+        "6": {
+          "start": {
+            "line": 21,
+            "column": 16
+          },
+          "end": {
+            "line": 21,
+            "column": 36
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 2
+          },
+          "end": {
+            "line": 23,
+            "column": 47
+          }
+        },
+        "8": {
+          "start": {
+            "line": 25,
+            "column": 2
+          },
+          "end": {
+            "line": 25,
+            "column": 49
+          }
+        },
+        "9": {
+          "start": {
+            "line": 29,
+            "column": 27
+          },
+          "end": {
+            "line": 55,
+            "column": 1
+          }
+        },
+        "10": {
+          "start": {
+            "line": 30,
+            "column": 1
+          },
+          "end": {
+            "line": 54,
+            "column": 2
+          }
+        },
+        "11": {
+          "start": {
+            "line": 31,
+            "column": 23
+          },
+          "end": {
+            "line": 31,
+            "column": 33
+          }
+        },
+        "12": {
+          "start": {
+            "line": 32,
+            "column": 15
+          },
+          "end": {
+            "line": 32,
+            "column": 59
+          }
+        },
+        "13": {
+          "start": {
+            "line": 33,
+            "column": 2
+          },
+          "end": {
+            "line": 33,
+            "column": 33
+          }
+        },
+        "14": {
+          "start": {
+            "line": 34,
+            "column": 21
+          },
+          "end": {
+            "line": 34,
+            "column": 53
+          }
+        },
+        "15": {
+          "start": {
+            "line": 36,
+            "column": 2
+          },
+          "end": {
+            "line": 38,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 37,
+            "column": 3
+          },
+          "end": {
+            "line": 37,
+            "column": 66
+          }
+        },
+        "17": {
+          "start": {
+            "line": 40,
+            "column": 2
+          },
+          "end": {
+            "line": 42,
+            "column": 3
+          }
+        },
+        "18": {
+          "start": {
+            "line": 41,
+            "column": 3
+          },
+          "end": {
+            "line": 41,
+            "column": 64
+          }
+        },
+        "19": {
+          "start": {
+            "line": 44,
+            "column": 2
+          },
+          "end": {
+            "line": 44,
+            "column": 105
+          }
+        },
+        "20": {
+          "start": {
+            "line": 45,
+            "column": 2
+          },
+          "end": {
+            "line": 45,
+            "column": 47
+          }
+        },
+        "21": {
+          "start": {
+            "line": 49,
+            "column": 2
+          },
+          "end": {
+            "line": 49,
+            "column": 54
+          }
+        },
+        "22": {
+          "start": {
+            "line": 51,
+            "column": 2
+          },
+          "end": {
+            "line": 51,
+            "column": 50
+          }
+        },
+        "23": {
+          "start": {
+            "line": 53,
+            "column": 2
+          },
+          "end": {
+            "line": 53,
+            "column": 49
+          }
+        },
+        "24": {
+          "start": {
+            "line": 57,
+            "column": 24
+          },
+          "end": {
+            "line": 64,
+            "column": 1
+          }
+        },
+        "25": {
+          "start": {
+            "line": 58,
+            "column": 1
+          },
+          "end": {
+            "line": 63,
+            "column": 2
+          }
+        },
+        "26": {
+          "start": {
+            "line": 59,
+            "column": 15
+          },
+          "end": {
+            "line": 59,
+            "column": 59
+          }
+        },
+        "27": {
+          "start": {
+            "line": 60,
+            "column": 2
+          },
+          "end": {
+            "line": 60,
+            "column": 50
+          }
+        },
+        "28": {
+          "start": {
+            "line": 62,
+            "column": 2
+          },
+          "end": {
+            "line": 62,
+            "column": 49
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 3,
+              "column": 38
+            },
+            "end": {
+              "line": 3,
+              "column": 39
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 58
+            },
+            "end": {
+              "line": 27,
+              "column": 1
+            }
+          },
+          "line": 3
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 29,
+              "column": 27
+            },
+            "end": {
+              "line": 29,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 29,
+              "column": 47
+            },
+            "end": {
+              "line": 55,
+              "column": 1
+            }
+          },
+          "line": 29
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 57,
+              "column": 24
+            },
+            "end": {
+              "line": 57,
+              "column": 25
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 57,
+              "column": 44
+            },
+            "end": {
+              "line": 64,
+              "column": 1
+            }
+          },
+          "line": 57
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 36,
+              "column": 2
+            },
+            "end": {
+              "line": 38,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 36,
+                "column": 2
+              },
+              "end": {
+                "line": 38,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 36
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 40,
+              "column": 2
+            },
+            "end": {
+              "line": 42,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 40,
+                "column": 2
+              },
+              "end": {
+                "line": 42,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 40
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 1,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 0
+      },
+      "f": {
+        "0": 2,
+        "1": 0,
+        "2": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "ec5d55609593bb7ced3e7c1d7c27b44cefd5eae5"
+    }
+  }
+}

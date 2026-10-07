@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "digitomize__digitomize__questionController",
+  "targetFilename": "external/digitomize__digitomize/backend/DSA_sheets/controllers/questionController.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:00:28.068Z",
+  "finishedAt": "2026-10-05T05:00:48.236Z",
+  "suiteOk": true,
+  "testsPassed": 13,
+  "testsFailed": 0,
+  "testsTotal": 13,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 100,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1120,
+    "completionTokens": 2168,
+    "totalTokens": 4432,
+    "thinkingTokens": 1144
+  },
+  "latencyMs": 14366
+}

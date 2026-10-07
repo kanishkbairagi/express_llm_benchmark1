@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "ShakirFarhan__Realtime-Chat__user",
+  "targetFilename": "external/ShakirFarhan__Realtime-Chat/server/controllers/user.js",
+  "trial": 2,
+  "startedAt": "2026-10-06T05:26:39.990Z",
+  "finishedAt": "2026-10-06T05:26:50.258Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 1266,
+    "completionTokens": 3502,
+    "totalTokens": 4768,
+    "reasoningTokens": 450
+  },
+  "latencyMs": 7928
+}

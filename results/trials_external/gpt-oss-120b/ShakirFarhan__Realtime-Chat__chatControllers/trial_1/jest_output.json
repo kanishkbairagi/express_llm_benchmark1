@@ -1,0 +1,1938 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 13,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 13,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177361587,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "accessChats"
+          ],
+          "duration": 15,
+          "failing": false,
+          "failureDetails": [
+            {
+              "stringValue": "\"root\"",
+              "kind": "ObjectId",
+              "value": "root",
+              "path": "users",
+              "reason": {},
+              "valueType": "string"
+            }
+          ],
+          "failureMessages": [
+            "CastError: Cast to ObjectId failed for value \"root\" (type string) at path \"users\" for model \"Chat\"\n    at SchemaObjectId.cast (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\schema\\objectId.js:252:11)\n    at SchemaObjectId.SchemaType.applySetters (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\schemaType.js:1405:12)\n    at SchemaObjectId.SchemaType.castForQuery (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\schemaType.js:1825:17)\n    at SchemaArray._castForQuery (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\schema\\array.js:531:30)\n    at SchemaArray.castForQuery (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\schema\\array.js:555:20)\n    at SchemaArray.cast$elemMatch (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\schema\\array.js:615:23)\n    at SchemaArray.castForQuery (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\schema\\array.js:555:20)\n    at cast (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\cast.js:335:43)\n    at cast (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\cast.js:76:20)\n    at model.Query.Query.cast (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\query.js:5227:12)\n    at model.Query.Query._castConditions (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\query.js:2427:10)\n    at model.Query._find (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\query.js:2454:8)\n    at maybeTracedQueryExec (D:\\express-llm-benchmark\\node_modules\\mongoose\\lib\\query.js:4797:83)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at accessChats (D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\controllers\\chatControllers.js:7:20)\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:45:5)"
+          ],
+          "fullName": "accessChats should respond with error when userId missing",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should respond with error when userId missing",
+          "startAt": 1791177364850
+        },
+        {
+          "ancestorTitles": [
+            "accessChats"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.find.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:51:15)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "accessChats should return existing one‑to‑one chat",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return existing one‑to‑one chat",
+          "startAt": 1791177364880
+        },
+        {
+          "ancestorTitles": [
+            "accessChats"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.find.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:72:15)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "accessChats should create a new chat when none exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create a new chat when none exists",
+          "startAt": 1791177364884
+        },
+        {
+          "ancestorTitles": [
+            "fetchAllChats"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.find.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:101:15)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "fetchAllChats should return populated chats on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return populated chats on success",
+          "startAt": 1791177364886
+        },
+        {
+          "ancestorTitles": [
+            "fetchAllChats"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.find.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:117:15)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "fetchAllChats should handle errors and send 500",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors and send 500",
+          "startAt": 1791177364888
+        },
+        {
+          "ancestorTitles": [
+            "creatGroup"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "SyntaxError: \"undefined\" is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parse (D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\controllers\\chatControllers.js:64:28)\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:138:11)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "creatGroup should validate missing fields",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should validate missing fields",
+          "startAt": 1791177364889
+        },
+        {
+          "ancestorTitles": [
+            "creatGroup"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.create.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:148:17)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "creatGroup should create group when data valid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create group when data valid",
+          "startAt": 1791177364894
+        },
+        {
+          "ancestorTitles": [
+            "renameGroup"
+          ],
+          "duration": 5003,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "Error: thrown: \"Exceeded timeout of 5000 ms for a test.\nAdd a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"\n    at _getError (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1985:12)\n    at Array.map (<anonymous>)\n    at makeSingleTestResult (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1915:38)\n    at makeTestResults (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1945:26)\n    at makeRunResult (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1876:18)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:797:35)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)\n\n[cause]: Error: thrown: \"Exceeded timeout of 5000 ms for a test.\nAdd a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"\n    at D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:178:3\n    at _dispatchDescribe (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:626:26)\n    at describe (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:594:44)\n    at D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:173:1\n    at SourceTextModule.evaluate (node:internal/vm/module:233:26)\n    at EsmLoader.walkGraphSync (D:\\express-llm-benchmark\\node_modules\\jest-runtime\\build\\index.js:1172:16)\n    at EsmLoader.tryLoadGraphSync (D:\\express-llm-benchmark\\node_modules\\jest-runtime\\build\\index.js:873:19)\n    at EsmLoader.loadEsmModule (D:\\express-llm-benchmark\\node_modules\\jest-runtime\\build\\index.js:1817:27)\n    at EsmLoader.loadAndEvaluate (D:\\express-llm-benchmark\\node_modules\\jest-runtime\\build\\index.js:1803:31)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "renameGroup should validate missing params",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should validate missing params",
+          "startAt": 1791177364896
+        },
+        {
+          "ancestorTitles": [
+            "renameGroup"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.findByIdAndUpdate.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:188:28)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "renameGroup should rename existing chat",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should rename existing chat",
+          "startAt": 1791177369903
+        },
+        {
+          "ancestorTitles": [
+            "addToGroup"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:209:18)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "addToGroup should add user when not present",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should add user when not present",
+          "startAt": 1791177369906
+        },
+        {
+          "ancestorTitles": [
+            "addToGroup"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:224:18)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "addToGroup should return 409 when user already in group",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 409 when user already in group",
+          "startAt": 1791177369908
+        },
+        {
+          "ancestorTitles": [
+            "removeFromGroup"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:242:18)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "removeFromGroup should remove user when present",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should remove user when present",
+          "startAt": 1791177369910
+        },
+        {
+          "ancestorTitles": [
+            "removeFromGroup"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Chat.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:262:18)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "removeFromGroup should return 409 when user not in group",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 409 when user not in group",
+          "startAt": 1791177369913
+        }
+      ],
+      "endTime": 1791177370065,
+      "message": "  ● accessChats › should respond with error when userId missing\n\n    CastError: Cast to ObjectId failed for value \"root\" (type string) at path \"users\" for model \"Chat\"\n\n    \u001b[0m \u001b[90m  5 |\u001b[39m   \u001b[36mconst\u001b[39m { userId } \u001b[33m=\u001b[39m req\u001b[33m.\u001b[39mbody\u001b[33m;\u001b[39m\n     \u001b[90m  6 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[33m!\u001b[39muserId) res\u001b[33m.\u001b[39msend({ message\u001b[33m:\u001b[39m \u001b[32m\"Provide User's Id\"\u001b[39m })\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  7 |\u001b[39m   \u001b[36mlet\u001b[39m chatExists \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfind({\n     \u001b[90m    |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m  8 |\u001b[39m     isGroup\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\n     \u001b[90m  9 |\u001b[39m     $and\u001b[33m:\u001b[39m [\n     \u001b[90m 10 |\u001b[39m       { users\u001b[33m:\u001b[39m { $elemMatch\u001b[33m:\u001b[39m { $eq\u001b[33m:\u001b[39m userId } } }\u001b[33m,\u001b[39m\u001b[0m\n\n      at SchemaObjectId.cast (node_modules/mongoose/lib/schema/objectId.js:252:11)\n      at SchemaObjectId.SchemaType.applySetters (node_modules/mongoose/lib/schemaType.js:1405:12)\n      at SchemaObjectId.SchemaType.castForQuery (node_modules/mongoose/lib/schemaType.js:1825:17)\n      at SchemaArray._castForQuery (node_modules/mongoose/lib/schema/array.js:531:30)\n      at SchemaArray.castForQuery (node_modules/mongoose/lib/schema/array.js:555:20)\n      at SchemaArray.cast$elemMatch (node_modules/mongoose/lib/schema/array.js:615:23)\n      at SchemaArray.castForQuery (node_modules/mongoose/lib/schema/array.js:555:20)\n      at cast (node_modules/mongoose/lib/cast.js:335:43)\n      at cast (node_modules/mongoose/lib/cast.js:76:20)\n      at model.Query.Query.cast (node_modules/mongoose/lib/query.js:5227:12)\n      at model.Query.Query._castConditions (node_modules/mongoose/lib/query.js:2427:10)\n      at model.Query._find (node_modules/mongoose/lib/query.js:2454:8)\n      at maybeTracedQueryExec (node_modules/mongoose/lib/query.js:4797:83)\n      at accessChats (dataset/external/ShakirFarhan__Realtime-Chat/server/controllers/chatControllers.js:7:20)\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:45:5)\n\n  ● accessChats › should return existing one‑to‑one chat\n\n    TypeError: Chat.find.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 49 |\u001b[39m   test(\u001b[32m'should return existing one‑to‑one chat'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 50 |\u001b[39m     \u001b[36mconst\u001b[39m chatDoc \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'c1'\u001b[39m\u001b[33m,\u001b[39m users\u001b[33m:\u001b[39m []\u001b[33m,\u001b[39m latestMessage\u001b[33m:\u001b[39m {} }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 51 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValue(mockQuery([chatDoc]))\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 52 |\u001b[39m     user\u001b[33m.\u001b[39mpopulate\u001b[33m.\u001b[39mmockResolvedValue([chatDoc])\u001b[33m;\u001b[39m\n     \u001b[90m 53 |\u001b[39m\n     \u001b[90m 54 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { body\u001b[33m:\u001b[39m { userId\u001b[33m:\u001b[39m \u001b[32m'u1'\u001b[39m }\u001b[33m,\u001b[39m rootUserId\u001b[33m:\u001b[39m \u001b[32m'root'\u001b[39m }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:51:15)\n\n  ● accessChats › should create a new chat when none exists\n\n    TypeError: Chat.find.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 70 |\u001b[39m   test(\u001b[32m'should create a new chat when none exists'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 71 |\u001b[39m     \u001b[90m// find returns empty array\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 72 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValue(mockQuery([]))\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 73 |\u001b[39m     \u001b[90m// create returns newly created chat doc\u001b[39m\n     \u001b[90m 74 |\u001b[39m     \u001b[36mconst\u001b[39m newChat \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'newId'\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 75 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mcreate\u001b[33m.\u001b[39mmockResolvedValue(newChat)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:72:15)\n\n  ● fetchAllChats › should return populated chats on success\n\n    TypeError: Chat.find.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m  99 |\u001b[39m   test(\u001b[32m'should return populated chats on success'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 100 |\u001b[39m     \u001b[36mconst\u001b[39m chats \u001b[33m=\u001b[39m [{ _id\u001b[33m:\u001b[39m \u001b[32m'c1'\u001b[39m }\u001b[33m,\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'c2'\u001b[39m }]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 101 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValue(mockQuery(chats))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 102 |\u001b[39m     user\u001b[33m.\u001b[39mpopulate\u001b[33m.\u001b[39mmockResolvedValue(chats)\u001b[33m;\u001b[39m\n     \u001b[90m 103 |\u001b[39m\n     \u001b[90m 104 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { rootUserId\u001b[33m:\u001b[39m \u001b[32m'root'\u001b[39m }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:101:15)\n\n  ● fetchAllChats › should handle errors and send 500\n\n    TypeError: Chat.find.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 115 |\u001b[39m   test(\u001b[32m'should handle errors and send 500'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 116 |\u001b[39m     \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'db error'\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 117 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 118 |\u001b[39m       \u001b[36mthrow\u001b[39m error\u001b[33m;\u001b[39m\n     \u001b[90m 119 |\u001b[39m     })\u001b[33m;\u001b[39m\n     \u001b[90m 120 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:117:15)\n\n  ● creatGroup › should validate missing fields\n\n    SyntaxError: \"undefined\" is not valid JSON\n        at JSON.parse (<anonymous>)\n\n    \u001b[0m \u001b[90m 62 |\u001b[39m     res\u001b[33m.\u001b[39mstatus(\u001b[35m400\u001b[39m)\u001b[33m.\u001b[39mjson({ message\u001b[33m:\u001b[39m \u001b[32m'Please fill the fields'\u001b[39m })\u001b[33m;\u001b[39m\n     \u001b[90m 63 |\u001b[39m   }\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 64 |\u001b[39m   \u001b[36mconst\u001b[39m parsedUsers \u001b[33m=\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mparse(users)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 65 |\u001b[39m   \u001b[36mif\u001b[39m (parsedUsers\u001b[33m.\u001b[39mlength \u001b[33m<\u001b[39m \u001b[35m2\u001b[39m)\n     \u001b[90m 66 |\u001b[39m     res\u001b[33m.\u001b[39msend(\u001b[35m400\u001b[39m)\u001b[33m.\u001b[39msend(\u001b[32m'Group should contain more than 2 users'\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 67 |\u001b[39m   parsedUsers\u001b[33m.\u001b[39mpush(req\u001b[33m.\u001b[39mrootUser)\u001b[33m;\u001b[39m\u001b[0m\n\n      at parse (dataset/external/ShakirFarhan__Realtime-Chat/server/controllers/chatControllers.js:64:28)\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:138:11)\n\n  ● creatGroup › should create group when data valid\n\n    TypeError: Chat.create.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 146 |\u001b[39m     \u001b[36mconst\u001b[39m populatedChat \u001b[33m=\u001b[39m [{ _id\u001b[33m:\u001b[39m \u001b[32m'g1'\u001b[39m\u001b[33m,\u001b[39m users\u001b[33m:\u001b[39m []\u001b[33m,\u001b[39m groupAdmin\u001b[33m:\u001b[39m {} }]\u001b[33m;\u001b[39m\n     \u001b[90m 147 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 148 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mcreate\u001b[33m.\u001b[39mmockResolvedValue(createdChat)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 149 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockReturnValue(mockQuery(populatedChat))\u001b[33m;\u001b[39m\n     \u001b[90m 150 |\u001b[39m\n     \u001b[90m 151 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m {\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:148:17)\n\n  ● renameGroup › should validate missing params\n\n    thrown: \"Exceeded timeout of 5000 ms for a test.\n    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"\n\n      at _getError (node_modules/jest-circus/build/jestAdapterInit.js:1985:12)\n          at Array.map (<anonymous>)\n\n    Cause:\n        thrown: \"Exceeded timeout of 5000 ms for a test.\n        Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"\n\n        \u001b[0m \u001b[90m 176 |\u001b[39m   })\u001b[33m;\u001b[39m\n         \u001b[90m 177 |\u001b[39m\n        \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 178 |\u001b[39m   test(\u001b[32m'should validate missing params'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n         \u001b[90m     |\u001b[39m   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n         \u001b[90m 179 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { body\u001b[33m:\u001b[39m {} }\u001b[33m;\u001b[39m\n         \u001b[90m 180 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m { status\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnThis()\u001b[33m,\u001b[39m send\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn() }\u001b[33m;\u001b[39m\n         \u001b[90m 181 |\u001b[39m     \u001b[36mawait\u001b[39m renameGroup(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\u001b[0m\n\n          at tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:178:3\n          at tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:173:1\n\n  ● renameGroup › should rename existing chat\n\n    TypeError: Chat.findByIdAndUpdate.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 186 |\u001b[39m   test(\u001b[32m'should rename existing chat'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 187 |\u001b[39m     \u001b[36mconst\u001b[39m chatDoc \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'c1'\u001b[39m\u001b[33m,\u001b[39m chatName\u001b[33m:\u001b[39m \u001b[32m'old'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 188 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfindByIdAndUpdate\u001b[33m.\u001b[39mmockReturnValue(mockQuery(chatDoc))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 189 |\u001b[39m\n     \u001b[90m 190 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { body\u001b[33m:\u001b[39m { chatId\u001b[33m:\u001b[39m \u001b[32m'c1'\u001b[39m\u001b[33m,\u001b[39m chatName\u001b[33m:\u001b[39m \u001b[32m'new'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 191 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m { status\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnThis()\u001b[33m,\u001b[39m send\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn() }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:188:28)\n\n  ● addToGroup › should add user when not present\n\n    TypeError: Chat.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 207 |\u001b[39m   test(\u001b[32m'should add user when not present'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 208 |\u001b[39m     \u001b[36mconst\u001b[39m chatAfter \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'g1'\u001b[39m\u001b[33m,\u001b[39m users\u001b[33m:\u001b[39m [\u001b[32m'u1'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'newUser'\u001b[39m] }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 209 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue({ users\u001b[33m:\u001b[39m [\u001b[32m'u1'\u001b[39m] })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 210 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfindByIdAndUpdate\u001b[33m.\u001b[39mmockReturnValue(mockQuery(chatAfter))\u001b[33m;\u001b[39m\n     \u001b[90m 211 |\u001b[39m\n     \u001b[90m 212 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { body\u001b[33m:\u001b[39m { userId\u001b[33m:\u001b[39m \u001b[32m'newUser'\u001b[39m\u001b[33m,\u001b[39m chatId\u001b[33m:\u001b[39m \u001b[32m'g1'\u001b[39m } }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:209:18)\n\n  ● addToGroup › should return 409 when user already in group\n\n    TypeError: Chat.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 222 |\u001b[39m\n     \u001b[90m 223 |\u001b[39m   test(\u001b[32m'should return 409 when user already in group'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 224 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue({ users\u001b[33m:\u001b[39m [\u001b[32m'u1'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'u2'\u001b[39m] })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 225 |\u001b[39m\n     \u001b[90m 226 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { body\u001b[33m:\u001b[39m { userId\u001b[33m:\u001b[39m \u001b[32m'u1'\u001b[39m\u001b[33m,\u001b[39m chatId\u001b[33m:\u001b[39m \u001b[32m'g1'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 227 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m { status\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnThis()\u001b[33m,\u001b[39m send\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn() }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:224:18)\n\n  ● removeFromGroup › should remove user when present\n\n    TypeError: Chat.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 240 |\u001b[39m   test(\u001b[32m'should remove user when present'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 241 |\u001b[39m     \u001b[36mconst\u001b[39m updatedChat \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'g1'\u001b[39m\u001b[33m,\u001b[39m users\u001b[33m:\u001b[39m [\u001b[32m'u2'\u001b[39m] }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 242 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue({ users\u001b[33m:\u001b[39m [\u001b[32m'u1'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'u2'\u001b[39m] })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 243 |\u001b[39m     \u001b[90m// mock the chain of update with populate then .then(...)\u001b[39m\n     \u001b[90m 244 |\u001b[39m     \u001b[36mconst\u001b[39m updateQuery \u001b[33m=\u001b[39m {\n     \u001b[90m 245 |\u001b[39m       populate\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnThis()\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:242:18)\n\n  ● removeFromGroup › should return 409 when user not in group\n\n    TypeError: Chat.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 260 |\u001b[39m\n     \u001b[90m 261 |\u001b[39m   test(\u001b[32m'should return 409 when user not in group'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 262 |\u001b[39m     \u001b[33mChat\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue({ users\u001b[33m:\u001b[39m [\u001b[32m'u2'\u001b[39m] })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 263 |\u001b[39m\n     \u001b[90m 264 |\u001b[39m     \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { body\u001b[33m:\u001b[39m { userId\u001b[33m:\u001b[39m \u001b[32m'u1'\u001b[39m\u001b[33m,\u001b[39m chatId\u001b[33m:\u001b[39m \u001b[32m'g1'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 265 |\u001b[39m     \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m { status\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnThis()\u001b[33m,\u001b[39m send\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn() }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js:262:18)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\ShakirFarhan__Realtime-Chat__chatControllers_gpt-oss-120b_trial1.test.js",
+      "startTime": 1791177361719,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\models\\chatModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\models\\chatModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 2,
+            "column": 19
+          },
+          "end": {
+            "line": 33,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 34,
+            "column": 18
+          },
+          "end": {
+            "line": 34,
+            "column": 52
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "3ba646b33f8aed11199ba4fb8996d10c254e23c3"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\models\\userModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\models\\userModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 19
+          },
+          "end": {
+            "line": 37,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 38,
+            "column": 0
+          },
+          "end": {
+            "line": 43,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 39,
+            "column": 2
+          },
+          "end": {
+            "line": 41,
+            "column": 3
+          }
+        },
+        "3": {
+          "start": {
+            "line": 40,
+            "column": 4
+          },
+          "end": {
+            "line": 40,
+            "column": 57
+          }
+        },
+        "4": {
+          "start": {
+            "line": 42,
+            "column": 2
+          },
+          "end": {
+            "line": 42,
+            "column": 9
+          }
+        },
+        "5": {
+          "start": {
+            "line": 44,
+            "column": 0
+          },
+          "end": {
+            "line": 58,
+            "column": 2
+          }
+        },
+        "6": {
+          "start": {
+            "line": 45,
+            "column": 2
+          },
+          "end": {
+            "line": 57,
+            "column": 3
+          }
+        },
+        "7": {
+          "start": {
+            "line": 46,
+            "column": 16
+          },
+          "end": {
+            "line": 52,
+            "column": 5
+          }
+        },
+        "8": {
+          "start": {
+            "line": 54,
+            "column": 4
+          },
+          "end": {
+            "line": 54,
+            "column": 17
+          }
+        },
+        "9": {
+          "start": {
+            "line": 56,
+            "column": 4
+          },
+          "end": {
+            "line": 56,
+            "column": 48
+          }
+        },
+        "10": {
+          "start": {
+            "line": 60,
+            "column": 18
+          },
+          "end": {
+            "line": 60,
+            "column": 52
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 38,
+              "column": 23
+            },
+            "end": {
+              "line": 38,
+              "column": 24
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 38,
+              "column": 45
+            },
+            "end": {
+              "line": 43,
+              "column": 1
+            }
+          },
+          "line": 38
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 44,
+              "column": 39
+            },
+            "end": {
+              "line": 44,
+              "column": 40
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 44,
+              "column": 57
+            },
+            "end": {
+              "line": 58,
+              "column": 1
+            }
+          },
+          "line": 44
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 39,
+              "column": 2
+            },
+            "end": {
+              "line": 41,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 39,
+                "column": 2
+              },
+              "end": {
+                "line": 41,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 39
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "e689f51dad121915b77be3395547fc8c15bda0e8"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\controllers\\chatControllers.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\ShakirFarhan__Realtime-Chat\\server\\controllers\\chatControllers.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 4,
+            "column": 27
+          },
+          "end": {
+            "line": 39,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 21
+          },
+          "end": {
+            "line": 5,
+            "column": 29
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 2
+          },
+          "end": {
+            "line": 6,
+            "column": 58
+          }
+        },
+        "3": {
+          "start": {
+            "line": 6,
+            "column": 15
+          },
+          "end": {
+            "line": 6,
+            "column": 58
+          }
+        },
+        "4": {
+          "start": {
+            "line": 7,
+            "column": 19
+          },
+          "end": {
+            "line": 15,
+            "column": 30
+          }
+        },
+        "5": {
+          "start": {
+            "line": 16,
+            "column": 2
+          },
+          "end": {
+            "line": 19,
+            "column": 5
+          }
+        },
+        "6": {
+          "start": {
+            "line": 20,
+            "column": 2
+          },
+          "end": {
+            "line": 38,
+            "column": 3
+          }
+        },
+        "7": {
+          "start": {
+            "line": 21,
+            "column": 4
+          },
+          "end": {
+            "line": 21,
+            "column": 40
+          }
+        },
+        "8": {
+          "start": {
+            "line": 23,
+            "column": 15
+          },
+          "end": {
+            "line": 27,
+            "column": 5
+          }
+        },
+        "9": {
+          "start": {
+            "line": 28,
+            "column": 4
+          },
+          "end": {
+            "line": 37,
+            "column": 5
+          }
+        },
+        "10": {
+          "start": {
+            "line": 29,
+            "column": 22
+          },
+          "end": {
+            "line": 29,
+            "column": 45
+          }
+        },
+        "11": {
+          "start": {
+            "line": 30,
+            "column": 19
+          },
+          "end": {
+            "line": 33,
+            "column": 7
+          }
+        },
+        "12": {
+          "start": {
+            "line": 34,
+            "column": 6
+          },
+          "end": {
+            "line": 34,
+            "column": 33
+          }
+        },
+        "13": {
+          "start": {
+            "line": 36,
+            "column": 6
+          },
+          "end": {
+            "line": 36,
+            "column": 34
+          }
+        },
+        "14": {
+          "start": {
+            "line": 40,
+            "column": 29
+          },
+          "end": {
+            "line": 58,
+            "column": 1
+          }
+        },
+        "15": {
+          "start": {
+            "line": 41,
+            "column": 2
+          },
+          "end": {
+            "line": 57,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 42,
+            "column": 18
+          },
+          "end": {
+            "line": 48,
+            "column": 30
+          }
+        },
+        "17": {
+          "start": {
+            "line": 49,
+            "column": 23
+          },
+          "end": {
+            "line": 52,
+            "column": 6
+          }
+        },
+        "18": {
+          "start": {
+            "line": 53,
+            "column": 4
+          },
+          "end": {
+            "line": 53,
+            "column": 37
+          }
+        },
+        "19": {
+          "start": {
+            "line": 55,
+            "column": 4
+          },
+          "end": {
+            "line": 55,
+            "column": 32
+          }
+        },
+        "20": {
+          "start": {
+            "line": 56,
+            "column": 4
+          },
+          "end": {
+            "line": 56,
+            "column": 23
+          }
+        },
+        "21": {
+          "start": {
+            "line": 59,
+            "column": 26
+          },
+          "end": {
+            "line": 83,
+            "column": 1
+          }
+        },
+        "22": {
+          "start": {
+            "line": 60,
+            "column": 30
+          },
+          "end": {
+            "line": 60,
+            "column": 38
+          }
+        },
+        "23": {
+          "start": {
+            "line": 61,
+            "column": 2
+          },
+          "end": {
+            "line": 63,
+            "column": 3
+          }
+        },
+        "24": {
+          "start": {
+            "line": 62,
+            "column": 4
+          },
+          "end": {
+            "line": 62,
+            "column": 64
+          }
+        },
+        "25": {
+          "start": {
+            "line": 64,
+            "column": 22
+          },
+          "end": {
+            "line": 64,
+            "column": 39
+          }
+        },
+        "26": {
+          "start": {
+            "line": 65,
+            "column": 2
+          },
+          "end": {
+            "line": 66,
+            "column": 65
+          }
+        },
+        "27": {
+          "start": {
+            "line": 66,
+            "column": 4
+          },
+          "end": {
+            "line": 66,
+            "column": 65
+          }
+        },
+        "28": {
+          "start": {
+            "line": 67,
+            "column": 2
+          },
+          "end": {
+            "line": 67,
+            "column": 33
+          }
+        },
+        "29": {
+          "start": {
+            "line": 68,
+            "column": 2
+          },
+          "end": {
+            "line": 82,
+            "column": 3
+          }
+        },
+        "30": {
+          "start": {
+            "line": 69,
+            "column": 17
+          },
+          "end": {
+            "line": 74,
+            "column": 6
+          }
+        },
+        "31": {
+          "start": {
+            "line": 75,
+            "column": 24
+          },
+          "end": {
+            "line": 77,
+            "column": 42
+          }
+        },
+        "32": {
+          "start": {
+            "line": 79,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 26
+          }
+        },
+        "33": {
+          "start": {
+            "line": 81,
+            "column": 4
+          },
+          "end": {
+            "line": 81,
+            "column": 24
+          }
+        },
+        "34": {
+          "start": {
+            "line": 84,
+            "column": 27
+          },
+          "end": {
+            "line": 100,
+            "column": 1
+          }
+        },
+        "35": {
+          "start": {
+            "line": 85,
+            "column": 31
+          },
+          "end": {
+            "line": 85,
+            "column": 39
+          }
+        },
+        "36": {
+          "start": {
+            "line": 86,
+            "column": 2
+          },
+          "end": {
+            "line": 87,
+            "column": 58
+          }
+        },
+        "37": {
+          "start": {
+            "line": 87,
+            "column": 4
+          },
+          "end": {
+            "line": 87,
+            "column": 58
+          }
+        },
+        "38": {
+          "start": {
+            "line": 88,
+            "column": 2
+          },
+          "end": {
+            "line": 99,
+            "column": 3
+          }
+        },
+        "39": {
+          "start": {
+            "line": 89,
+            "column": 17
+          },
+          "end": {
+            "line": 93,
+            "column": 42
+          }
+        },
+        "40": {
+          "start": {
+            "line": 94,
+            "column": 4
+          },
+          "end": {
+            "line": 94,
+            "column": 31
+          }
+        },
+        "41": {
+          "start": {
+            "line": 94,
+            "column": 15
+          },
+          "end": {
+            "line": 94,
+            "column": 31
+          }
+        },
+        "42": {
+          "start": {
+            "line": 95,
+            "column": 4
+          },
+          "end": {
+            "line": 95,
+            "column": 31
+          }
+        },
+        "43": {
+          "start": {
+            "line": 97,
+            "column": 4
+          },
+          "end": {
+            "line": 97,
+            "column": 32
+          }
+        },
+        "44": {
+          "start": {
+            "line": 98,
+            "column": 4
+          },
+          "end": {
+            "line": 98,
+            "column": 23
+          }
+        },
+        "45": {
+          "start": {
+            "line": 101,
+            "column": 26
+          },
+          "end": {
+            "line": 115,
+            "column": 1
+          }
+        },
+        "46": {
+          "start": {
+            "line": 102,
+            "column": 29
+          },
+          "end": {
+            "line": 102,
+            "column": 37
+          }
+        },
+        "47": {
+          "start": {
+            "line": 103,
+            "column": 19
+          },
+          "end": {
+            "line": 103,
+            "column": 54
+          }
+        },
+        "48": {
+          "start": {
+            "line": 104,
+            "column": 2
+          },
+          "end": {
+            "line": 114,
+            "column": 3
+          }
+        },
+        "49": {
+          "start": {
+            "line": 105,
+            "column": 17
+          },
+          "end": {
+            "line": 109,
+            "column": 37
+          }
+        },
+        "50": {
+          "start": {
+            "line": 110,
+            "column": 4
+          },
+          "end": {
+            "line": 110,
+            "column": 31
+          }
+        },
+        "51": {
+          "start": {
+            "line": 110,
+            "column": 15
+          },
+          "end": {
+            "line": 110,
+            "column": 31
+          }
+        },
+        "52": {
+          "start": {
+            "line": 111,
+            "column": 4
+          },
+          "end": {
+            "line": 111,
+            "column": 31
+          }
+        },
+        "53": {
+          "start": {
+            "line": 113,
+            "column": 4
+          },
+          "end": {
+            "line": 113,
+            "column": 48
+          }
+        },
+        "54": {
+          "start": {
+            "line": 116,
+            "column": 31
+          },
+          "end": {
+            "line": 130,
+            "column": 1
+          }
+        },
+        "55": {
+          "start": {
+            "line": 117,
+            "column": 29
+          },
+          "end": {
+            "line": 117,
+            "column": 37
+          }
+        },
+        "56": {
+          "start": {
+            "line": 118,
+            "column": 19
+          },
+          "end": {
+            "line": 118,
+            "column": 54
+          }
+        },
+        "57": {
+          "start": {
+            "line": 119,
+            "column": 2
+          },
+          "end": {
+            "line": 129,
+            "column": 3
+          }
+        },
+        "58": {
+          "start": {
+            "line": 120,
+            "column": 4
+          },
+          "end": {
+            "line": 126,
+            "column": 37
+          }
+        },
+        "59": {
+          "start": {
+            "line": 125,
+            "column": 19
+          },
+          "end": {
+            "line": 125,
+            "column": 42
+          }
+        },
+        "60": {
+          "start": {
+            "line": 126,
+            "column": 20
+          },
+          "end": {
+            "line": 126,
+            "column": 35
+          }
+        },
+        "61": {
+          "start": {
+            "line": 128,
+            "column": 4
+          },
+          "end": {
+            "line": 128,
+            "column": 47
+          }
+        },
+        "62": {
+          "start": {
+            "line": 131,
+            "column": 29
+          },
+          "end": {
+            "line": 131,
+            "column": 51
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 4,
+              "column": 27
+            },
+            "end": {
+              "line": 4,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 47
+            },
+            "end": {
+              "line": 39,
+              "column": 1
+            }
+          },
+          "line": 4
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 40,
+              "column": 29
+            },
+            "end": {
+              "line": 40,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 40,
+              "column": 49
+            },
+            "end": {
+              "line": 58,
+              "column": 1
+            }
+          },
+          "line": 40
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 59,
+              "column": 26
+            },
+            "end": {
+              "line": 59,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 59,
+              "column": 46
+            },
+            "end": {
+              "line": 83,
+              "column": 1
+            }
+          },
+          "line": 59
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 84,
+              "column": 27
+            },
+            "end": {
+              "line": 84,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 84,
+              "column": 47
+            },
+            "end": {
+              "line": 100,
+              "column": 1
+            }
+          },
+          "line": 84
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 101,
+              "column": 26
+            },
+            "end": {
+              "line": 101,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 101,
+              "column": 46
+            },
+            "end": {
+              "line": 115,
+              "column": 1
+            }
+          },
+          "line": 101
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 116,
+              "column": 31
+            },
+            "end": {
+              "line": 116,
+              "column": 32
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 116,
+              "column": 51
+            },
+            "end": {
+              "line": 130,
+              "column": 1
+            }
+          },
+          "line": 116
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 125,
+              "column": 12
+            },
+            "end": {
+              "line": 125,
+              "column": 13
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 125,
+              "column": 19
+            },
+            "end": {
+              "line": 125,
+              "column": 42
+            }
+          },
+          "line": 125
+        },
+        "7": {
+          "name": "(anonymous_7)",
+          "decl": {
+            "start": {
+              "line": 126,
+              "column": 13
+            },
+            "end": {
+              "line": 126,
+              "column": 14
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 126,
+              "column": 20
+            },
+            "end": {
+              "line": 126,
+              "column": 35
+            }
+          },
+          "line": 126
+        },
+        "8": {
+          "name": "(anonymous_8)",
+          "decl": {
+            "start": {
+              "line": 131,
+              "column": 29
+            },
+            "end": {
+              "line": 131,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 131,
+              "column": 49
+            },
+            "end": {
+              "line": 131,
+              "column": 51
+            }
+          },
+          "line": 131
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 2
+            },
+            "end": {
+              "line": 6,
+              "column": 58
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 6,
+                "column": 2
+              },
+              "end": {
+                "line": 6,
+                "column": 58
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 6
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 2
+            },
+            "end": {
+              "line": 38,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 20,
+                "column": 2
+              },
+              "end": {
+                "line": 38,
+                "column": 3
+              }
+            },
+            {
+              "start": {
+                "line": 22,
+                "column": 9
+              },
+              "end": {
+                "line": 38,
+                "column": 3
+              }
+            }
+          ],
+          "line": 20
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 61,
+              "column": 2
+            },
+            "end": {
+              "line": 63,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 61,
+                "column": 2
+              },
+              "end": {
+                "line": 63,
+                "column": 3
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 61
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 61,
+              "column": 6
+            },
+            "end": {
+              "line": 61,
+              "column": 25
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 61,
+                "column": 6
+              },
+              "end": {
+                "line": 61,
+                "column": 15
+              }
+            },
+            {
+              "start": {
+                "line": 61,
+                "column": 19
+              },
+              "end": {
+                "line": 61,
+                "column": 25
+              }
+            }
+          ],
+          "line": 61
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 65,
+              "column": 2
+            },
+            "end": {
+              "line": 66,
+              "column": 65
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 65,
+                "column": 2
+              },
+              "end": {
+                "line": 66,
+                "column": 65
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 65
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 86,
+              "column": 2
+            },
+            "end": {
+              "line": 87,
+              "column": 58
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 86,
+                "column": 2
+              },
+              "end": {
+                "line": 87,
+                "column": 58
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 86
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 86,
+              "column": 6
+            },
+            "end": {
+              "line": 86,
+              "column": 26
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 86,
+                "column": 6
+              },
+              "end": {
+                "line": 86,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 86,
+                "column": 17
+              },
+              "end": {
+                "line": 86,
+                "column": 26
+              }
+            }
+          ],
+          "line": 86
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 94,
+              "column": 4
+            },
+            "end": {
+              "line": 94,
+              "column": 31
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 94,
+                "column": 4
+              },
+              "end": {
+                "line": 94,
+                "column": 31
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 94
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 104,
+              "column": 2
+            },
+            "end": {
+              "line": 114,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 104,
+                "column": 2
+              },
+              "end": {
+                "line": 114,
+                "column": 3
+              }
+            },
+            {
+              "start": {
+                "line": 112,
+                "column": 9
+              },
+              "end": {
+                "line": 114,
+                "column": 3
+              }
+            }
+          ],
+          "line": 104
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 110,
+              "column": 4
+            },
+            "end": {
+              "line": 110,
+              "column": 31
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 110,
+                "column": 4
+              },
+              "end": {
+                "line": 110,
+                "column": 31
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 110
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 119,
+              "column": 2
+            },
+            "end": {
+              "line": 129,
+              "column": 3
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 119,
+                "column": 2
+              },
+              "end": {
+                "line": 129,
+                "column": 3
+              }
+            },
+            {
+              "start": {
+                "line": 127,
+                "column": 9
+              },
+              "end": {
+                "line": 129,
+                "column": 3
+              }
+            }
+          ],
+          "line": 119
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 1,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 1,
+        "22": 1,
+        "23": 1,
+        "24": 1,
+        "25": 1,
+        "26": 0,
+        "27": 0,
+        "28": 0,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 1,
+        "35": 1,
+        "36": 1,
+        "37": 1,
+        "38": 1,
+        "39": 1,
+        "40": 0,
+        "41": 0,
+        "42": 0,
+        "43": 0,
+        "44": 0,
+        "45": 1,
+        "46": 0,
+        "47": 0,
+        "48": 0,
+        "49": 0,
+        "50": 0,
+        "51": 0,
+        "52": 0,
+        "53": 0,
+        "54": 1,
+        "55": 0,
+        "56": 0,
+        "57": 0,
+        "58": 0,
+        "59": 0,
+        "60": 0,
+        "61": 0,
+        "62": 1
+      },
+      "f": {
+        "0": 1,
+        "1": 0,
+        "2": 1,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "b": {
+        "0": [
+          1,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          1,
+          0
+        ],
+        "3": [
+          1,
+          0
+        ],
+        "4": [
+          0,
+          0
+        ],
+        "5": [
+          1,
+          0
+        ],
+        "6": [
+          1,
+          0
+        ],
+        "7": [
+          0,
+          0
+        ],
+        "8": [
+          0,
+          0
+        ],
+        "9": [
+          0,
+          0
+        ],
+        "10": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "89c1dc3bb72d4d4bce5e06af26ea9eb4ee6abaeb"
+    }
+  }
+}

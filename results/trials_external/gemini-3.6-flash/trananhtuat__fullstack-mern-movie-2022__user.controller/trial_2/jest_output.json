@@ -1,0 +1,1816 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 14,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 14,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791264530730,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "signup"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:26:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests signup should return badrequest if username is already used",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return badrequest if username is already used",
+          "startAt": 1791264532215
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "signup"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findOne.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:36:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests signup should create a new user and return created response",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create a new user and return created response",
+          "startAt": 1791264532229
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "signup"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findOne.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:63:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests signup should handle error and call responseHandler.error on exception",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle error and call responseHandler.error on exception",
+          "startAt": 1791264532231
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "signin"
+          ],
+          "duration": 2,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findOne.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:75:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests signin should return badrequest if user does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return badrequest if user does not exist",
+          "startAt": 1791264532234
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "signin"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findOne.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:89:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests signin should return badrequest if password is wrong",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return badrequest if password is wrong",
+          "startAt": 1791264532237
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "signin"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findOne.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:106:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests signin should sign in user successfully and return created response",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should sign in user successfully and return created response",
+          "startAt": 1791264532239
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "signin"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findOne.mockImplementation is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:124:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests signin should handle error and call responseHandler.error on exception",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle error and call responseHandler.error on exception",
+          "startAt": 1791264532241
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "updatePassword"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findById.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:138:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests updatePassword should return unauthorize if user is not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return unauthorize if user is not found",
+          "startAt": 1791264532242
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "updatePassword"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findById.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:152:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests updatePassword should return badrequest if current password is wrong",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return badrequest if current password is wrong",
+          "startAt": 1791264532244
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "updatePassword"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findById.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:168:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests updatePassword should update password and call responseHandler.ok on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should update password and call responseHandler.ok on success",
+          "startAt": 1791264532246
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "updatePassword"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findById.mockReturnValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:179:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests updatePassword should handle error and call responseHandler.error on exception",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle error and call responseHandler.error on exception",
+          "startAt": 1791264532249
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "getInfo"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:190:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests getInfo should return notfound if user does not exist",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return notfound if user does not exist",
+          "startAt": 1791264532254
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "getInfo"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:201:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests getInfo should return ok with user info when user is found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return ok with user info when user is found",
+          "startAt": 1791264532260
+        },
+        {
+          "ancestorTitles": [
+            "User Controller Unit Tests",
+            "getInfo"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: userModel.findById.mockRejectedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:210:26)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "User Controller Unit Tests getInfo should handle error and call responseHandler.error on exception",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle error and call responseHandler.error on exception",
+          "startAt": 1791264532266
+        }
+      ],
+      "endTime": 1791264532424,
+      "message": "  ● User Controller Unit Tests › signup › should return badrequest if username is already used\n\n    TypeError: userModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 24 |\u001b[39m     test(\u001b[32m\"should return badrequest if username is already used\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 25 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m\"existinguser\"\u001b[39m\u001b[33m,\u001b[39m password\u001b[33m:\u001b[39m \u001b[32m\"password123\"\u001b[39m\u001b[33m,\u001b[39m displayName\u001b[33m:\u001b[39m \u001b[32m\"Existing User\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue({ id\u001b[33m:\u001b[39m \u001b[32m\"existingId\"\u001b[39m })\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 27 |\u001b[39m\n     \u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39msignup(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 29 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:26:25)\n\n  ● User Controller Unit Tests › signup › should create a new user and return created response\n\n    TypeError: userModel.findOne.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 34 |\u001b[39m     test(\u001b[32m\"should create a new user and return created response\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 35 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m\"newuser\"\u001b[39m\u001b[33m,\u001b[39m password\u001b[33m:\u001b[39m \u001b[32m\"password123\"\u001b[39m\u001b[33m,\u001b[39m displayName\u001b[33m:\u001b[39m \u001b[32m\"New User\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 36 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 37 |\u001b[39m\n     \u001b[90m 38 |\u001b[39m       \u001b[36mconst\u001b[39m mockUserInstance \u001b[33m=\u001b[39m {\n     \u001b[90m 39 |\u001b[39m         id\u001b[33m:\u001b[39m \u001b[32m\"user123\"\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:36:25)\n\n  ● User Controller Unit Tests › signup › should handle error and call responseHandler.error on exception\n\n    TypeError: userModel.findOne.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 61 |\u001b[39m     test(\u001b[32m\"should handle error and call responseHandler.error on exception\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 62 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m\"testuser\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 63 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m\"Database error\"\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 64 |\u001b[39m\n     \u001b[90m 65 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39msignup(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 66 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:63:25)\n\n  ● User Controller Unit Tests › signin › should return badrequest if user does not exist\n\n    TypeError: userModel.findOne.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 73 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m\"nonexistent\"\u001b[39m\u001b[33m,\u001b[39m password\u001b[33m:\u001b[39m \u001b[32m\"password123\"\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 74 |\u001b[39m       \u001b[36mconst\u001b[39m selectMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 75 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockReturnValue({ select\u001b[33m:\u001b[39m selectMock })\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 76 |\u001b[39m\n     \u001b[90m 77 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39msignin(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 78 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:75:25)\n\n  ● User Controller Unit Tests › signin › should return badrequest if password is wrong\n\n    TypeError: userModel.findOne.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 87 |\u001b[39m         validPassword\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnValue(\u001b[36mfalse\u001b[39m)\n     \u001b[90m 88 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 89 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockReturnValue({ select\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(mockUser) })\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 90 |\u001b[39m\n     \u001b[90m 91 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39msignin(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 92 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:89:25)\n\n  ● User Controller Unit Tests › signin › should sign in user successfully and return created response\n\n    TypeError: userModel.findOne.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 104 |\u001b[39m         validPassword\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnValue(\u001b[36mtrue\u001b[39m)\n     \u001b[90m 105 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 106 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockReturnValue({ select\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(mockUser) })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 107 |\u001b[39m       jsonwebtoken\u001b[33m.\u001b[39msign\u001b[33m.\u001b[39mmockReturnValue(\u001b[32m\"mockedToken\"\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 108 |\u001b[39m\n     \u001b[90m 109 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39msignin(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:106:25)\n\n  ● User Controller Unit Tests › signin › should handle error and call responseHandler.error on exception\n\n    TypeError: userModel.findOne.mockImplementation is not a function\n\n    \u001b[0m \u001b[90m 122 |\u001b[39m     test(\u001b[32m\"should handle error and call responseHandler.error on exception\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 123 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { username\u001b[33m:\u001b[39m \u001b[32m\"user1\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 124 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockImplementation(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 125 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m\"DB Error\"\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m 126 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 127 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:124:25)\n\n  ● User Controller Unit Tests › updatePassword › should return unauthorize if user is not found\n\n    TypeError: userModel.findById.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 136 |\u001b[39m       req\u001b[33m.\u001b[39muser \u001b[33m=\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m\"user123\"\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 137 |\u001b[39m       req\u001b[33m.\u001b[39mbody \u001b[33m=\u001b[39m { password\u001b[33m:\u001b[39m \u001b[32m\"oldPassword\"\u001b[39m\u001b[33m,\u001b[39m newPassword\u001b[33m:\u001b[39m \u001b[32m\"newPassword\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 138 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockReturnValue({ select\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m) })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 139 |\u001b[39m\n     \u001b[90m 140 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39mupdatePassword(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 141 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:138:26)\n\n  ● User Controller Unit Tests › updatePassword › should return badrequest if current password is wrong\n\n    TypeError: userModel.findById.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 150 |\u001b[39m         validPassword\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockReturnValue(\u001b[36mfalse\u001b[39m)\n     \u001b[90m 151 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 152 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockReturnValue({ select\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(mockUser) })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 153 |\u001b[39m\n     \u001b[90m 154 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39mupdatePassword(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 155 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:152:26)\n\n  ● User Controller Unit Tests › updatePassword › should update password and call responseHandler.ok on success\n\n    TypeError: userModel.findById.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 166 |\u001b[39m         save\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mtrue\u001b[39m)\n     \u001b[90m 167 |\u001b[39m       }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 168 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockReturnValue({ select\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(mockUser) })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 169 |\u001b[39m\n     \u001b[90m 170 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39mupdatePassword(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 171 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:168:26)\n\n  ● User Controller Unit Tests › updatePassword › should handle error and call responseHandler.error on exception\n\n    TypeError: userModel.findById.mockReturnValue is not a function\n\n    \u001b[0m \u001b[90m 177 |\u001b[39m     test(\u001b[32m\"should handle error and call responseHandler.error on exception\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 178 |\u001b[39m       req\u001b[33m.\u001b[39muser \u001b[33m=\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m\"user123\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 179 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockReturnValue({ select\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m\"Error\"\u001b[39m)) })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 180 |\u001b[39m\n     \u001b[90m 181 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39mupdatePassword(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 182 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:179:26)\n\n  ● User Controller Unit Tests › getInfo › should return notfound if user does not exist\n\n    TypeError: userModel.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 188 |\u001b[39m     test(\u001b[32m\"should return notfound if user does not exist\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 189 |\u001b[39m       req\u001b[33m.\u001b[39muser \u001b[33m=\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m\"user123\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 190 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 191 |\u001b[39m\n     \u001b[90m 192 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39mgetInfo(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 193 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:190:26)\n\n  ● User Controller Unit Tests › getInfo › should return ok with user info when user is found\n\n    TypeError: userModel.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 199 |\u001b[39m       req\u001b[33m.\u001b[39muser \u001b[33m=\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m\"user123\"\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 200 |\u001b[39m       \u001b[36mconst\u001b[39m mockUser \u001b[33m=\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m\"user123\"\u001b[39m\u001b[33m,\u001b[39m username\u001b[33m:\u001b[39m \u001b[32m\"testuser\"\u001b[39m\u001b[33m,\u001b[39m displayName\u001b[33m:\u001b[39m \u001b[32m\"Test User\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 201 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(mockUser)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 202 |\u001b[39m\n     \u001b[90m 203 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39mgetInfo(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 204 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:201:26)\n\n  ● User Controller Unit Tests › getInfo › should handle error and call responseHandler.error on exception\n\n    TypeError: userModel.findById.mockRejectedValue is not a function\n\n    \u001b[0m \u001b[90m 208 |\u001b[39m     test(\u001b[32m\"should handle error and call responseHandler.error on exception\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 209 |\u001b[39m       req\u001b[33m.\u001b[39muser \u001b[33m=\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m\"user123\"\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 210 |\u001b[39m       userModel\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockRejectedValue(\u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m\"Database failure\"\u001b[39m))\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 211 |\u001b[39m\n     \u001b[90m 212 |\u001b[39m       \u001b[36mawait\u001b[39m userController\u001b[33m.\u001b[39mgetInfo(req\u001b[33m,\u001b[39m res)\u001b[33m;\u001b[39m\n     \u001b[90m 213 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js:210:26)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\trananhtuat__fullstack-mern-movie-2022__user.controller_gemini-3.6-flash_trial2.test.js",
+      "startTime": 1791264530970,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\model.options.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\model.options.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 1,
+            "column": 21
+          },
+          "end": {
+            "line": 18,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 5,
+            "column": 6
+          },
+          "end": {
+            "line": 5,
+            "column": 21
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 6
+          },
+          "end": {
+            "line": 6,
+            "column": 17
+          }
+        },
+        "3": {
+          "start": {
+            "line": 12,
+            "column": 6
+          },
+          "end": {
+            "line": 12,
+            "column": 21
+          }
+        },
+        "4": {
+          "start": {
+            "line": 13,
+            "column": 6
+          },
+          "end": {
+            "line": 13,
+            "column": 17
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 4,
+              "column": 15
+            },
+            "end": {
+              "line": 4,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 27
+            },
+            "end": {
+              "line": 7,
+              "column": 5
+            }
+          },
+          "line": 4
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 11,
+              "column": 15
+            },
+            "end": {
+              "line": 11,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 27
+            },
+            "end": {
+              "line": 14,
+              "column": 5
+            }
+          },
+          "line": 11
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "d8d576bf1ce4a5a011a9628bfb07c9c1cbfbc2d4"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\user.model.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\models\\user.model.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 5,
+            "column": 19
+          },
+          "end": {
+            "line": 25,
+            "column": 16
+          }
+        },
+        "1": {
+          "start": {
+            "line": 27,
+            "column": 0
+          },
+          "end": {
+            "line": 37,
+            "column": 2
+          }
+        },
+        "2": {
+          "start": {
+            "line": 28,
+            "column": 2
+          },
+          "end": {
+            "line": 28,
+            "column": 53
+          }
+        },
+        "3": {
+          "start": {
+            "line": 30,
+            "column": 2
+          },
+          "end": {
+            "line": 36,
+            "column": 20
+          }
+        },
+        "4": {
+          "start": {
+            "line": 39,
+            "column": 0
+          },
+          "end": {
+            "line": 49,
+            "column": 2
+          }
+        },
+        "5": {
+          "start": {
+            "line": 40,
+            "column": 15
+          },
+          "end": {
+            "line": 46,
+            "column": 19
+          }
+        },
+        "6": {
+          "start": {
+            "line": 48,
+            "column": 2
+          },
+          "end": {
+            "line": 48,
+            "column": 32
+          }
+        },
+        "7": {
+          "start": {
+            "line": 51,
+            "column": 18
+          },
+          "end": {
+            "line": 51,
+            "column": 52
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 27,
+              "column": 33
+            },
+            "end": {
+              "line": 27,
+              "column": 34
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 53
+            },
+            "end": {
+              "line": 37,
+              "column": 1
+            }
+          },
+          "line": 27
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 39,
+              "column": 35
+            },
+            "end": {
+              "line": 39,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 39,
+              "column": 55
+            },
+            "end": {
+              "line": 49,
+              "column": 1
+            }
+          },
+          "line": 39
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 1
+      },
+      "f": {
+        "0": 0,
+        "1": 0
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "2dfd61a5db5abb04fd2317283471fdfedd12a76a"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\handlers\\response.handler.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\handlers\\response.handler.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 1,
+            "column": 25
+          },
+          "end": {
+            "line": 1,
+            "column": 85
+          }
+        },
+        "1": {
+          "start": {
+            "line": 1,
+            "column": 52
+          },
+          "end": {
+            "line": 1,
+            "column": 85
+          }
+        },
+        "2": {
+          "start": {
+            "line": 3,
+            "column": 14
+          },
+          "end": {
+            "line": 6,
+            "column": 2
+          }
+        },
+        "3": {
+          "start": {
+            "line": 3,
+            "column": 23
+          },
+          "end": {
+            "line": 6,
+            "column": 2
+          }
+        },
+        "4": {
+          "start": {
+            "line": 8,
+            "column": 19
+          },
+          "end": {
+            "line": 11,
+            "column": 2
+          }
+        },
+        "5": {
+          "start": {
+            "line": 8,
+            "column": 37
+          },
+          "end": {
+            "line": 11,
+            "column": 2
+          }
+        },
+        "6": {
+          "start": {
+            "line": 13,
+            "column": 11
+          },
+          "end": {
+            "line": 13,
+            "column": 58
+          }
+        },
+        "7": {
+          "start": {
+            "line": 13,
+            "column": 26
+          },
+          "end": {
+            "line": 13,
+            "column": 58
+          }
+        },
+        "8": {
+          "start": {
+            "line": 15,
+            "column": 16
+          },
+          "end": {
+            "line": 15,
+            "column": 63
+          }
+        },
+        "9": {
+          "start": {
+            "line": 15,
+            "column": 31
+          },
+          "end": {
+            "line": 15,
+            "column": 63
+          }
+        },
+        "10": {
+          "start": {
+            "line": 17,
+            "column": 20
+          },
+          "end": {
+            "line": 20,
+            "column": 2
+          }
+        },
+        "11": {
+          "start": {
+            "line": 17,
+            "column": 29
+          },
+          "end": {
+            "line": 20,
+            "column": 2
+          }
+        },
+        "12": {
+          "start": {
+            "line": 22,
+            "column": 17
+          },
+          "end": {
+            "line": 25,
+            "column": 2
+          }
+        },
+        "13": {
+          "start": {
+            "line": 22,
+            "column": 26
+          },
+          "end": {
+            "line": 25,
+            "column": 2
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 1,
+              "column": 25
+            },
+            "end": {
+              "line": 1,
+              "column": 26
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 52
+            },
+            "end": {
+              "line": 1,
+              "column": 85
+            }
+          },
+          "line": 1
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 3,
+              "column": 14
+            },
+            "end": {
+              "line": 3,
+              "column": 15
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 23
+            },
+            "end": {
+              "line": 6,
+              "column": 2
+            }
+          },
+          "line": 3
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 19
+            },
+            "end": {
+              "line": 8,
+              "column": 20
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 37
+            },
+            "end": {
+              "line": 11,
+              "column": 2
+            }
+          },
+          "line": 8
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 13,
+              "column": 11
+            },
+            "end": {
+              "line": 13,
+              "column": 12
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 26
+            },
+            "end": {
+              "line": 13,
+              "column": 58
+            }
+          },
+          "line": 13
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 15,
+              "column": 16
+            },
+            "end": {
+              "line": 15,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 31
+            },
+            "end": {
+              "line": 15,
+              "column": 63
+            }
+          },
+          "line": 15
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 17,
+              "column": 20
+            },
+            "end": {
+              "line": 17,
+              "column": 21
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 29
+            },
+            "end": {
+              "line": 20,
+              "column": 2
+            }
+          },
+          "line": 17
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 22,
+              "column": 17
+            },
+            "end": {
+              "line": 22,
+              "column": 18
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 26
+            },
+            "end": {
+              "line": 25,
+              "column": 2
+            }
+          },
+          "line": 22
+        }
+      },
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 1,
+        "7": 0,
+        "8": 1,
+        "9": 0,
+        "10": 1,
+        "11": 0,
+        "12": 1,
+        "13": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "b1b0811ceddaeb4c1243e90a220c78bd3938e318"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\controllers\\user.controller.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\trananhtuat__fullstack-mern-movie-2022\\server\\src\\controllers\\user.controller.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 5,
+            "column": 15
+          },
+          "end": {
+            "line": 35,
+            "column": 1
+          }
+        },
+        "1": {
+          "start": {
+            "line": 6,
+            "column": 2
+          },
+          "end": {
+            "line": 34,
+            "column": 3
+          }
+        },
+        "2": {
+          "start": {
+            "line": 7,
+            "column": 48
+          },
+          "end": {
+            "line": 7,
+            "column": 56
+          }
+        },
+        "3": {
+          "start": {
+            "line": 9,
+            "column": 22
+          },
+          "end": {
+            "line": 9,
+            "column": 59
+          }
+        },
+        "4": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 11,
+            "column": 83
+          }
+        },
+        "5": {
+          "start": {
+            "line": 11,
+            "column": 19
+          },
+          "end": {
+            "line": 11,
+            "column": 83
+          }
+        },
+        "6": {
+          "start": {
+            "line": 13,
+            "column": 17
+          },
+          "end": {
+            "line": 13,
+            "column": 32
+          }
+        },
+        "7": {
+          "start": {
+            "line": 15,
+            "column": 4
+          },
+          "end": {
+            "line": 15,
+            "column": 35
+          }
+        },
+        "8": {
+          "start": {
+            "line": 16,
+            "column": 4
+          },
+          "end": {
+            "line": 16,
+            "column": 29
+          }
+        },
+        "9": {
+          "start": {
+            "line": 17,
+            "column": 4
+          },
+          "end": {
+            "line": 17,
+            "column": 31
+          }
+        },
+        "10": {
+          "start": {
+            "line": 19,
+            "column": 4
+          },
+          "end": {
+            "line": 19,
+            "column": 22
+          }
+        },
+        "11": {
+          "start": {
+            "line": 21,
+            "column": 18
+          },
+          "end": {
+            "line": 25,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 27,
+            "column": 4
+          },
+          "end": {
+            "line": 31,
+            "column": 7
+          }
+        },
+        "13": {
+          "start": {
+            "line": 33,
+            "column": 4
+          },
+          "end": {
+            "line": 33,
+            "column": 31
+          }
+        },
+        "14": {
+          "start": {
+            "line": 37,
+            "column": 15
+          },
+          "end": {
+            "line": 64,
+            "column": 1
+          }
+        },
+        "15": {
+          "start": {
+            "line": 38,
+            "column": 2
+          },
+          "end": {
+            "line": 63,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 39,
+            "column": 35
+          },
+          "end": {
+            "line": 39,
+            "column": 43
+          }
+        },
+        "17": {
+          "start": {
+            "line": 41,
+            "column": 17
+          },
+          "end": {
+            "line": 41,
+            "column": 102
+          }
+        },
+        "18": {
+          "start": {
+            "line": 43,
+            "column": 4
+          },
+          "end": {
+            "line": 43,
+            "column": 72
+          }
+        },
+        "19": {
+          "start": {
+            "line": 43,
+            "column": 15
+          },
+          "end": {
+            "line": 43,
+            "column": 72
+          }
+        },
+        "20": {
+          "start": {
+            "line": 45,
+            "column": 4
+          },
+          "end": {
+            "line": 45,
+            "column": 96
+          }
+        },
+        "21": {
+          "start": {
+            "line": 45,
+            "column": 39
+          },
+          "end": {
+            "line": 45,
+            "column": 96
+          }
+        },
+        "22": {
+          "start": {
+            "line": 47,
+            "column": 18
+          },
+          "end": {
+            "line": 51,
+            "column": 5
+          }
+        },
+        "23": {
+          "start": {
+            "line": 53,
+            "column": 4
+          },
+          "end": {
+            "line": 53,
+            "column": 30
+          }
+        },
+        "24": {
+          "start": {
+            "line": 54,
+            "column": 4
+          },
+          "end": {
+            "line": 54,
+            "column": 26
+          }
+        },
+        "25": {
+          "start": {
+            "line": 56,
+            "column": 4
+          },
+          "end": {
+            "line": 60,
+            "column": 7
+          }
+        },
+        "26": {
+          "start": {
+            "line": 62,
+            "column": 4
+          },
+          "end": {
+            "line": 62,
+            "column": 31
+          }
+        },
+        "27": {
+          "start": {
+            "line": 66,
+            "column": 23
+          },
+          "end": {
+            "line": 84,
+            "column": 1
+          }
+        },
+        "28": {
+          "start": {
+            "line": 67,
+            "column": 2
+          },
+          "end": {
+            "line": 83,
+            "column": 3
+          }
+        },
+        "29": {
+          "start": {
+            "line": 68,
+            "column": 38
+          },
+          "end": {
+            "line": 68,
+            "column": 46
+          }
+        },
+        "30": {
+          "start": {
+            "line": 70,
+            "column": 17
+          },
+          "end": {
+            "line": 70,
+            "column": 81
+          }
+        },
+        "31": {
+          "start": {
+            "line": 72,
+            "column": 4
+          },
+          "end": {
+            "line": 72,
+            "column": 55
+          }
+        },
+        "32": {
+          "start": {
+            "line": 72,
+            "column": 15
+          },
+          "end": {
+            "line": 72,
+            "column": 55
+          }
+        },
+        "33": {
+          "start": {
+            "line": 74,
+            "column": 4
+          },
+          "end": {
+            "line": 74,
+            "column": 96
+          }
+        },
+        "34": {
+          "start": {
+            "line": 74,
+            "column": 39
+          },
+          "end": {
+            "line": 74,
+            "column": 96
+          }
+        },
+        "35": {
+          "start": {
+            "line": 76,
+            "column": 4
+          },
+          "end": {
+            "line": 76,
+            "column": 34
+          }
+        },
+        "36": {
+          "start": {
+            "line": 78,
+            "column": 4
+          },
+          "end": {
+            "line": 78,
+            "column": 22
+          }
+        },
+        "37": {
+          "start": {
+            "line": 80,
+            "column": 4
+          },
+          "end": {
+            "line": 80,
+            "column": 28
+          }
+        },
+        "38": {
+          "start": {
+            "line": 82,
+            "column": 4
+          },
+          "end": {
+            "line": 82,
+            "column": 31
+          }
+        },
+        "39": {
+          "start": {
+            "line": 86,
+            "column": 16
+          },
+          "end": {
+            "line": 96,
+            "column": 1
+          }
+        },
+        "40": {
+          "start": {
+            "line": 87,
+            "column": 2
+          },
+          "end": {
+            "line": 95,
+            "column": 3
+          }
+        },
+        "41": {
+          "start": {
+            "line": 88,
+            "column": 17
+          },
+          "end": {
+            "line": 88,
+            "column": 54
+          }
+        },
+        "42": {
+          "start": {
+            "line": 90,
+            "column": 4
+          },
+          "end": {
+            "line": 90,
+            "column": 52
+          }
+        },
+        "43": {
+          "start": {
+            "line": 90,
+            "column": 15
+          },
+          "end": {
+            "line": 90,
+            "column": 52
+          }
+        },
+        "44": {
+          "start": {
+            "line": 92,
+            "column": 4
+          },
+          "end": {
+            "line": 92,
+            "column": 34
+          }
+        },
+        "45": {
+          "start": {
+            "line": 94,
+            "column": 4
+          },
+          "end": {
+            "line": 94,
+            "column": 31
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 15
+            },
+            "end": {
+              "line": 5,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 35
+            },
+            "end": {
+              "line": 35,
+              "column": 1
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 37,
+              "column": 15
+            },
+            "end": {
+              "line": 37,
+              "column": 16
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 37,
+              "column": 35
+            },
+            "end": {
+              "line": 64,
+              "column": 1
+            }
+          },
+          "line": 37
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 66,
+              "column": 23
+            },
+            "end": {
+              "line": 66,
+              "column": 24
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 66,
+              "column": 43
+            },
+            "end": {
+              "line": 84,
+              "column": 1
+            }
+          },
+          "line": 66
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 86,
+              "column": 16
+            },
+            "end": {
+              "line": 86,
+              "column": 17
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 86,
+              "column": 36
+            },
+            "end": {
+              "line": 96,
+              "column": 1
+            }
+          },
+          "line": 86
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 4
+            },
+            "end": {
+              "line": 11,
+              "column": 83
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 11,
+                "column": 4
+              },
+              "end": {
+                "line": 11,
+                "column": 83
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 11
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 4
+            },
+            "end": {
+              "line": 43,
+              "column": 72
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 43,
+                "column": 4
+              },
+              "end": {
+                "line": 43,
+                "column": 72
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 43
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 45,
+              "column": 4
+            },
+            "end": {
+              "line": 45,
+              "column": 96
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 45,
+                "column": 4
+              },
+              "end": {
+                "line": 45,
+                "column": 96
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 45
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 72,
+              "column": 4
+            },
+            "end": {
+              "line": 72,
+              "column": 55
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 72,
+                "column": 4
+              },
+              "end": {
+                "line": 72,
+                "column": 55
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 72
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 74,
+              "column": 4
+            },
+            "end": {
+              "line": 74,
+              "column": 96
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 74,
+                "column": 4
+              },
+              "end": {
+                "line": 74,
+                "column": 96
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 74
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 90,
+              "column": 4
+            },
+            "end": {
+              "line": 90,
+              "column": 52
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 90,
+                "column": 4
+              },
+              "end": {
+                "line": 90,
+                "column": 52
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 90
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 1,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 1,
+        "28": 0,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0,
+        "35": 0,
+        "36": 0,
+        "37": 0,
+        "38": 0,
+        "39": 1,
+        "40": 0,
+        "41": 0,
+        "42": 0,
+        "43": 0,
+        "44": 0,
+        "45": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ],
+        "3": [
+          0,
+          0
+        ],
+        "4": [
+          0,
+          0
+        ],
+        "5": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "94c9bd860051572a48f15282ab89e101c8cddcc4"
+    }
+  }
+}

@@ -1,0 +1,368 @@
+```javascript
+import { jest } from '@jest/globals';
+
+jest.mock('../dataset/external/mongo-express__mongo-express/lib/bson.js', () => ({
+  toString: jest.fn(),
+  toBSON: jest.fn(),
+}));
+
+jest.mock('../dataset/external/mongo-express__mongo-express/lib/filters.js', () => ({
+  stringDocIDs: jest.fn(),
+}));
+
+jest.mock('../dataset/external/mongo-express__mongo-express/lib/utils.js', () => ({
+  buildCollectionURL: jest.fn(),
+  buildDocumentURL: jest.fn(),
+}));
+
+import routes from '../dataset/external/mongo-express__mongo-express/lib/routes/document.js';
+import * as bson from '../dataset/external/mongo-express__mongo-express/lib/bson.js';
+import * as filters from '../dataset/external/mongo-express__mongo-express/lib/filters.js';
+import { buildCollectionURL, buildDocumentURL } from '../dataset/external/mongo-express__mongo-express/lib/utils.js';
+
+describe('Document Routes Handler', () => {
+  let consoleSpy;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleSpy.mockRestore();
+  });
+
+  const mockReqRes = (options = {}) => {
+    const req = {
+      query: options.query || {},
+      body: options.body || {},
+      document: options.document || { _id: 'doc123' },
+      prop: options.prop || 'testPropValue',
+      session: options.session || {},
+      collectionName: options.collectionName || 'testCol',
+      dbName: options.dbName || 'testDb',
+      collection: options.collection || {
+        insertOne: jest.fn(),
+        replaceOne: jest.fn(),
+        deleteOne: jest.fn(),
+      },
+      csrfToken: jest.fn().mockReturnValue('mock-csrf-token'),
+      get: jest.fn((header) => {
+        if (header === 'Referrer') return options.referrer || '';
+        return undefined;
+      }),
+    };
+
+    const res = {
+      send: jest.fn(),
+      render: jest.fn(),
+      redirect: jest.fn(),
+      locals: options.locals || { baseHref: '/base/' },
+    };
+
+    return { req, res };
+  };
+
+  describe('getProperty', () => {
+    it('should send the req.prop property value', () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ prop: 'myPropertyValue' });
+
+      routeHandlers.getProperty(req, res);
+
+      expect(res.send).toHaveBeenCalledWith('myPropertyValue');
+    });
+  });
+
+  describe('viewDocument', () => {
+    it('should render document view with Editing title when readOnly is false', () => {
+      const config = { options: { readOnly: false } };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ document: { _id: '123' }, query: { skip: 10 } });
+
+      filters.stringDocIDs.mockReturnValue('123');
+      bson.toString.mockReturnValue('{\n  "_id": "123"\n}');
+
+      routeHandlers.viewDocument(req, res);
+
+      expect(filters.stringDocIDs).toHaveBeenCalledWith('123');
+      expect(bson.toString).toHaveBeenCalledWith(req.document);
+      expect(res.render).toHaveBeenCalledWith('document', {
+        title: 'Editing Document: 123',
+        docLength: 3,
+        docString: '{\n  "_id": "123"\n}',
+        skip: 10,
+        csrfToken: 'mock-csrf-token',
+      });
+    });
+
+    it('should render document view with Viewing title when readOnly is true', () => {
+      const config = { options: { readOnly: true } };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ document: { _id: '456' } });
+
+      filters.stringDocIDs.mockReturnValue('456');
+      bson.toString.mockReturnValue('{}');
+
+      routeHandlers.viewDocument(req, res);
+
+      expect(res.render).toHaveBeenCalledWith('document', expect.objectContaining({
+        title: 'Viewing Document: 456',
+        skip: 0,
+      }));
+    });
+  });
+
+  describe('checkValid', () => {
+    it('should respond with Valid if bson.toBSON succeeds', () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ body: { document: '{"a": 1}' } });
+
+      bson.toBSON.mockReturnValue({ a: 1 });
+
+      routeHandlers.checkValid(req, res);
+
+      expect(bson.toBSON).toHaveBeenCalledWith('{"a": 1}');
+      expect(res.send).toHaveBeenCalledWith('Valid');
+    });
+
+    it('should respond with Invalid and log error if bson.toBSON throws', () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ body: { document: 'invalid json' } });
+
+      const error = new Error('Syntax Error');
+      bson.toBSON.mockImplementation(() => { throw error; });
+
+      routeHandlers.checkValid(req, res);
+
+      expect(consoleSpy).toHaveBeenCalledWith(error);
+      expect(res.send).toHaveBeenCalledWith('Invalid');
+    });
+  });
+
+  describe('addDocument', () => {
+    it('should set session error and redirect to referrer if document is empty', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ body: { document: '' }, referrer: '/prev-page' });
+
+      await routeHandlers.addDocument(req, res);
+
+      expect(req.session.error).toBe('You forgot to enter a document!');
+      expect(res.redirect).toHaveBeenCalledWith('/prev-page');
+    });
+
+    it('should redirect to "/" if referrer is not provided when document is empty', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ body: {} });
+
+      await routeHandlers.addDocument(req, res);
+
+      expect(req.session.error).toBe('You forgot to enter a document!');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should set session error if bson parsing fails', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ body: { document: 'bad doc' }, referrer: '/ref' });
+
+      const error = new Error('BSON Parse Error');
+      bson.toBSON.mockImplementation(() => { throw error; });
+
+      await routeHandlers.addDocument(req, res);
+
+      expect(req.session.error).toBe('That document is not valid!');
+      expect(consoleSpy).toHaveBeenCalledWith(error);
+      expect(res.redirect).toHaveBeenCalledWith('/ref');
+    });
+
+    it('should insert document and redirect to collection URL on success', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const parsedBSON = { name: 'test' };
+      bson.toBSON.mockReturnValue(parsedBSON);
+      buildCollectionURL.mockReturnValue('/collection-url');
+
+      const { req, res } = mockReqRes({
+        body: { document: '{"name": "test"}' },
+        dbName: 'testDb',
+        collectionName: 'testCol',
+        collection: { insertOne: jest.fn().mockResolvedValue({}) },
+      });
+
+      await routeHandlers.addDocument(req, res);
+
+      expect(req.collection.insertOne).toHaveBeenCalledWith(parsedBSON);
+      expect(req.session.success).toBe('Document added!');
+      expect(buildCollectionURL).toHaveBeenCalledWith('/base/', 'testDb', 'testCol');
+      expect(res.redirect).toHaveBeenCalledWith('/collection-url');
+    });
+
+    it('should handle collection insertOne rejection', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      bson.toBSON.mockReturnValue({ name: 'test' });
+
+      const dbError = new Error('Database Error');
+      const { req, res } = mockReqRes({
+        body: { document: '{"name": "test"}' },
+        referrer: '/referrer',
+        collection: { insertOne: jest.fn().mockRejectedValue(dbError) },
+      });
+
+      await routeHandlers.addDocument(req, res);
+
+      expect(req.session.error).toBe('Something went wrong: ' + dbError);
+      expect(consoleSpy).toHaveBeenCalledWith(dbError);
+      expect(res.redirect).toHaveBeenCalledWith('/referrer');
+    });
+  });
+
+  describe('updateDocument', () => {
+    it('should set error and redirect when document is missing', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ body: {} });
+
+      await routeHandlers.updateDocument(req, res);
+
+      expect(req.session.error).toBe('You forgot to enter a document!');
+      expect(res.redirect).toHaveBeenCalledWith('/');
+    });
+
+    it('should set error when bson parsing fails during update', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const { req, res } = mockReqRes({ body: { document: 'invalid' }, referrer: '/edit' });
+
+      bson.toBSON.mockImplementation(() => { throw new Error('Invalid'); });
+
+      await routeHandlers.updateDocument(req, res);
+
+      expect(req.session.error).toBe('That document is not valid!');
+      expect(res.redirect).toHaveBeenCalledWith('/edit');
+    });
+
+    it('should update document and redirect to buildDocumentURL when persistEditMode is true', async () => {
+      const config = { options: { persistEditMode: true } };
+      const routeHandlers = routes(config);
+      const parsedBSON = { name: 'updated' };
+      bson.toBSON.mockReturnValue(parsedBSON);
+      buildDocumentURL.mockReturnValue('/doc-url');
+
+      const { req, res } = mockReqRes({
+        body: { document: '{"name": "updated"}' },
+        document: { _id: 'docId123' },
+        query: { skip: '5', key: 'name', value: 'john' },
+        collection: { replaceOne: jest.fn().mockResolvedValue({}) },
+      });
+
+      await routeHandlers.updateDocument(req, res);
+
+      expect(parsedBSON._id).toBe('docId123');
+      expect(req.collection.replaceOne).toHaveBeenCalledWith({ _id: 'docId123' }, parsedBSON);
+      expect(req.session.success).toBe('Document updated!');
+      expect(buildDocumentURL).toHaveBeenCalledWith('/base/', 'testDb', 'testCol', 'docId123', {
+        skip: '5',
+        key: 'name',
+        value: 'john',
+        type: '',
+        query: '',
+        projection: '',
+        sort: {},
+      });
+      expect(res.redirect).toHaveBeenCalledWith('/doc-url');
+    });
+
+    it('should update document and redirect to buildCollectionURL when persistEditMode is false', async () => {
+      const config = { options: { persistEditMode: false } };
+      const routeHandlers = routes(config);
+      const parsedBSON = { name: 'updated' };
+      bson.toBSON.mockReturnValue(parsedBSON);
+      buildCollectionURL.mockReturnValue('/col-url');
+
+      const { req, res } = mockReqRes({
+        body: { document: '{"name": "updated"}' },
+        document: { _id: 'docId123' },
+        collection: { replaceOne: jest.fn().mockResolvedValue({}) },
+      });
+
+      await routeHandlers.updateDocument(req, res);
+
+      expect(buildCollectionURL).toHaveBeenCalledWith('/base/', 'testDb', 'testCol', {
+        skip: 0,
+        key: '',
+        value: '',
+        type: '',
+        query: '',
+        projection: '',
+        sort: {},
+      });
+      expect(res.redirect).toHaveBeenCalledWith('/col-url');
+    });
+
+    it('should handle collection replaceOne error', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      bson.toBSON.mockReturnValue({});
+
+      const dbError = new Error('Replace Failed');
+      const { req, res } = mockReqRes({
+        body: { document: '{}' },
+        referrer: '/ref-url',
+        collection: { replaceOne: jest.fn().mockRejectedValue(dbError) },
+      });
+
+      await routeHandlers.updateDocument(req, res);
+
+      expect(req.session.error).toBe('Something went wrong: ' + dbError);
+      expect(consoleSpy).toHaveBeenCalledWith(dbError);
+      expect(res.redirect).toHaveBeenCalledWith('/ref-url');
+    });
+  });
+
+  describe('deleteDocument', () => {
+    it('should delete document and redirect to collection URL on success', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      filters.stringDocIDs.mockReturnValue('doc123');
+      buildCollectionURL.mockReturnValue('/collection-url-after-delete');
+
+      const { req, res } = mockReqRes({
+        document: { _id: 'doc123' },
+        collection: { deleteOne: jest.fn().mockResolvedValue({}) },
+      });
+
+      await routeHandlers.deleteDocument(req, res);
+
+      expect(req.collection.deleteOne).toHaveBeenCalledWith({ _id: 'doc123' });
+      expect(req.session.success).toBe('Document deleted! _id: doc123');
+      expect(buildCollectionURL).toHaveBeenCalled();
+      expect(res.redirect).toHaveBeenCalledWith('/collection-url-after-delete');
+    });
+
+    it('should handle deleteOne rejection', async () => {
+      const config = { options: {} };
+      const routeHandlers = routes(config);
+      const dbError = new Error('Delete Error');
+
+      const { req, res } = mockReqRes({
+        document: { _id: 'doc123' },
+        referrer: '/ref-delete',
+        collection: { deleteOne: jest.fn().mockRejectedValue(dbError) },
+      });
+
+      await routeHandlers.deleteDocument(req, res);
+
+      expect(req.session.error).toBe('Something went wrong! ' + dbError);
+      expect(consoleSpy).toHaveBeenCalledWith(dbError);
+      expect(res.redirect).toHaveBeenCalledWith('/ref-delete');
+    });
+  });
+});
+```

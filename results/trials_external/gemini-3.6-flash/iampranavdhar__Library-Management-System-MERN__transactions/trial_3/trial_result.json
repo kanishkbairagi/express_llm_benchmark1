@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "iampranavdhar__Library-Management-System-MERN__transactions",
+  "targetFilename": "external/iampranavdhar__Library-Management-System-MERN/backend/routes/transactions.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T05:04:22.946Z",
+  "finishedAt": "2026-10-07T05:05:20.355Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 793,
+    "completionTokens": 1773,
+    "totalTokens": 8797,
+    "thinkingTokens": 6231
+  },
+  "latencyMs": 34121
+}

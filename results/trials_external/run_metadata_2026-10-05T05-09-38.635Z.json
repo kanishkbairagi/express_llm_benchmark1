@@ -1,0 +1,42 @@
+{
+  "benchmarkTimestamp": "2026-10-05T05:09:38.635Z",
+  "kTrials": 3,
+  "cliArgs": [
+    "--k",
+    "3",
+    "--insecure-tls"
+  ],
+  "tlsMode": "insecure",
+  "hasNodeExtraCaCerts": false,
+  "isDryRun": false,
+  "isMock": false,
+  "maxOutputTokens": 32768,
+  "geminiMinIntervalMs": 4500,
+  "samplingParameters": {
+    "temperature": "provider default",
+    "top_p": "provider default",
+    "top_k": "provider default"
+  },
+  "models": [
+    {
+      "id": "gemini-3.6-flash",
+      "provider": "Google GenAI SDK (@google/genai)",
+      "callStyle": "models.generateContent"
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "provider": "Groq (OpenAI-compatible client)",
+      "callStyle": "chat.completions.create"
+    }
+  ],
+  "toolVersions": {
+    "node": "v24.21.0",
+    "jest": "30.5.1",
+    "stryker": "10.0.0",
+    "googleGenAi": "2.22.0",
+    "openai": "7.15.0",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "systemPromptText": "You are a Senior QA Automation Engineer. Output only valid Jest unit tests using ES Module syntax. Always import target functions using relative path '../dataset/<targetFilename>'. Return ONLY valid JavaScript code in a clean markdown block (```javascript ... ```). Do NOT include any conversational filler, explanations, markdown text outside the code block, or questions."
+}

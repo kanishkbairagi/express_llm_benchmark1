@@ -1,0 +1,323 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { jest } from '@jest/globals';
+
+// Resolve absolute paths for modules relative to this test file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const userModelPath = path.join(
+  __dirname,
+  '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/models/user.model.js'
+);
+const responseHandlerPath = path.join(
+  __dirname,
+  '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/response.handler.js'
+);
+const controllerPath = path.join(
+  __dirname,
+  '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/user.controller.js'
+);
+
+// ------- Mock dependencies -------
+const mockFindOne = jest.fn();
+const mockFindById = jest.fn();
+
+class MockUser {
+  constructor() {
+    this.setPassword = jest.fn();
+    this.save = jest.fn();
+    this.validPassword = jest.fn();
+    this._doc = {};
+    this.id = 'mock-id';
+  }
+}
+MockUser.findOne = mockFindOne;
+MockUser.findById = mockFindById;
+
+// userModel default export is the constructor function (Mongoose model)
+jest.mock(userModelPath, () => ({
+  __esModule: true,
+  default: MockUser,
+}));
+
+// response.handler mock
+const responseHandler = {
+  badrequest: jest.fn(),
+  created: jest.fn(),
+  error: jest.fn(),
+  ok: jest.fn(),
+  unauthorize: jest.fn(),
+  notfound: jest.fn(),
+};
+jest.mock(responseHandlerPath, () => ({
+  __esModule: true,
+  default: responseHandler,
+}));
+
+// jsonwebtoken mock
+jest.mock('jsonwebtoken', () => ({
+  __esModule: true,
+  default: {
+    sign: jest.fn(() => 'signed-token'),
+  },
+}));
+
+// Import the controller after mocks are set
+import userController from '../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/user.controller.js';
+import jsonwebtoken from 'jsonwebtoken';
+
+const { signup, signin, updatePassword, getInfo } = userController;
+
+// ------- Helper to reset all mocks -------
+function resetAll() {
+  mockFindOne.mockReset();
+  mockFindById.mockReset();
+  responseHandler.badrequest.mockReset();
+  responseHandler.created.mockReset();
+  responseHandler.error.mockReset();
+  responseHandler.ok.mockReset();
+  responseHandler.unauthorize.mockReset();
+  responseHandler.notfound.mockReset();
+  jsonwebtoken.default.sign.mockClear();
+}
+
+// ------- Tests -------
+describe('User Controller', () => {
+  beforeEach(() => {
+    resetAll();
+    process.env.TOKEN_SECRET = 'test-secret';
+  });
+
+  // ---------- signup ----------
+  test('signup - success creates user and returns token', async () => {
+    // arrange
+    mockFindOne.mockResolvedValue(null);
+    const mockUserInstance = new MockUser();
+    mockUserInstance.save.mockResolvedValue();
+    mockUserInstance._doc = { username: 'john', displayName: 'John Doe' };
+    // make constructor return our prepared instance
+    const ctorSpy = jest.spyOn(MockUser.prototype, 'constructor').mockImplementation(() => mockUserInstance);
+
+    const req = {
+      body: { username: 'john', password: 'pass123', displayName: 'John Doe' },
+    };
+    const res = {};
+
+    // act
+    await signup(req, res);
+
+    // assert
+    expect(mockFindOne).toHaveBeenCalledWith({ username: 'john' });
+    expect(mockUserInstance.setPassword).toHaveBeenCalledWith('pass123');
+    expect(mockUserInstance.save).toHaveBeenCalled();
+    expect(jsonwebtoken.default.sign).toHaveBeenCalledWith(
+      { data: mockUserInstance.id },
+      'test-secret',
+      { expiresIn: '24h' }
+    );
+    expect(responseHandler.created).toHaveBeenCalledWith(res, {
+      token: 'signed-token',
+      ...mockUserInstance._doc,
+      id: mockUserInstance.id,
+    });
+
+    ctorSpy.mockRestore();
+  });
+
+  test('signup - username already used returns badrequest', async () => {
+    mockFindOne.mockResolvedValue({ username: 'john' });
+
+    const req = { body: { username: 'john', password: 'any', displayName: 'Any' } };
+    const res = {};
+
+    await signup(req, res);
+
+    expect(responseHandler.badrequest).toHaveBeenCalledWith(res, 'username already used');
+    expect(responseHandler.created).not.toHaveBeenCalled();
+  });
+
+  test('signup - unexpected error triggers error handler', async () => {
+    mockFindOne.mockRejectedValue(new Error('db error'));
+
+    const req = { body: { username: 'john', password: 'any', displayName: 'Any' } };
+    const res = {};
+
+    await signup(req, res);
+
+    expect(responseHandler.error).toHaveBeenCalledWith(res);
+  });
+
+  // ---------- signin ----------
+  test('signin - success returns token and user data without password/salt', async () => {
+    const mockUser = {
+      id: 'uid123',
+      username: 'john',
+      displayName: 'John',
+      password: 'hashed',
+      salt: 'salt',
+      _doc: { username: 'john', displayName: 'John', id: 'uid123' },
+      validPassword: jest.fn().mockReturnValue(true),
+    };
+    mockFindOne.mockResolvedValue(mockUser);
+
+    const req = { body: { username: 'john', password: 'pass' } };
+    const res = {};
+
+    await signin(req, res);
+
+    expect(mockFindOne).toHaveBeenCalledWith({ username: 'john' });
+    expect(mockUser.validPassword).toHaveBeenCalledWith('pass');
+    expect(jsonwebtoken.default.sign).toHaveBeenCalledWith(
+      { data: mockUser.id },
+      'test-secret',
+      { expiresIn: '24h' }
+    );
+    expect(responseHandler.created).toHaveBeenCalledWith(res, {
+      token: 'signed-token',
+      ...mockUser._doc,
+      id: mockUser.id,
+    });
+    // ensure password & salt are removed in the response
+    expect(mockUser.password).toBeUndefined();
+    expect(mockUser.salt).toBeUndefined();
+  });
+
+  test('signin - user not exist returns badrequest', async () => {
+    mockFindOne.mockResolvedValue(null);
+
+    const req = { body: { username: 'unknown', password: 'any' } };
+    const res = {};
+
+    await signin(req, res);
+
+    expect(responseHandler.badrequest).toHaveBeenCalledWith(res, 'User not exist');
+  });
+
+  test('signin - wrong password returns badrequest', async () => {
+    const mockUser = {
+      id: 'uid123',
+      validPassword: jest.fn().mockReturnValue(false),
+    };
+    mockFindOne.mockResolvedValue(mockUser);
+
+    const req = { body: { username: 'john', password: 'bad' } };
+    const res = {};
+
+    await signin(req, res);
+
+    expect(responseHandler.badrequest).toHaveBeenCalledWith(res, 'Wrong password');
+  });
+
+  test('signin - unexpected error triggers error handler', async () => {
+    mockFindOne.mockRejectedValue(new Error('boom'));
+
+    const req = { body: { username: 'john', password: 'any' } };
+    const res = {};
+
+    await signin(req, res);
+
+    expect(responseHandler.error).toHaveBeenCalledWith(res);
+  });
+
+  // ---------- updatePassword ----------
+  test('updatePassword - success updates password and returns ok', async () => {
+    const mockUser = {
+      id: 'uid123',
+      password: 'oldhash',
+      salt: 'oldsalt',
+      validPassword: jest.fn().mockReturnValue(true),
+      setPassword: jest.fn(),
+      save: jest.fn().mockResolvedValue(),
+    };
+    mockFindById.mockResolvedValue(mockUser);
+
+    const req = {
+      body: { password: 'oldPass', newPassword: 'newPass' },
+      user: { id: 'uid123' },
+    };
+    const res = {};
+
+    await updatePassword(req, res);
+
+    expect(mockFindById).toHaveBeenCalledWith('uid123');
+    expect(mockUser.validPassword).toHaveBeenCalledWith('oldPass');
+    expect(mockUser.setPassword).toHaveBeenCalledWith('newPass');
+    expect(mockUser.save).toHaveBeenCalled();
+    expect(responseHandler.ok).toHaveBeenCalledWith(res);
+  });
+
+  test('updatePassword - user not found returns unauthorize', async () => {
+    mockFindById.mockResolvedValue(null);
+
+    const req = { body: {}, user: { id: 'uid123' } };
+    const res = {};
+
+    await updatePassword(req, res);
+
+    expect(responseHandler.unauthorize).toHaveBeenCalledWith(res);
+  });
+
+  test('updatePassword - wrong current password returns badrequest', async () => {
+    const mockUser = {
+      validPassword: jest.fn().mockReturnValue(false),
+    };
+    mockFindById.mockResolvedValue(mockUser);
+
+    const req = {
+      body: { password: 'wrong', newPassword: 'new' },
+      user: { id: 'uid123' },
+    };
+    const res = {};
+
+    await updatePassword(req, res);
+
+    expect(responseHandler.badrequest).toHaveBeenCalledWith(res, 'Wrong password');
+  });
+
+  test('updatePassword - unexpected error triggers error handler', async () => {
+    mockFindById.mockRejectedValue(new Error('fail'));
+
+    const req = { body: {}, user: { id: 'uid123' } };
+    const res = {};
+
+    await updatePassword(req, res);
+
+    expect(responseHandler.error).toHaveBeenCalledWith(res);
+  });
+
+  // ---------- getInfo ----------
+  test('getInfo - success returns ok with user data', async () => {
+    const mockUser = { id: 'uid123', name: 'John' };
+    mockFindById.mockResolvedValue(mockUser);
+
+    const req = { user: { id: 'uid123' } };
+    const res = {};
+
+    await getInfo(req, res);
+
+    expect(mockFindById).toHaveBeenCalledWith('uid123');
+    expect(responseHandler.ok).toHaveBeenCalledWith(res, mockUser);
+  });
+
+  test('getInfo - user not found returns notfound', async () => {
+    mockFindById.mockResolvedValue(null);
+
+    const req = { user: { id: 'uid123' } };
+    const res = {};
+
+    await getInfo(req, res);
+
+    expect(responseHandler.notfound).toHaveBeenCalledWith(res);
+  });
+
+  test('getInfo - unexpected error triggers error handler', async () => {
+    mockFindById.mockRejectedValue(new Error('oops'));
+
+    const req = { user: { id: 'uid123' } };
+    const res = {};
+
+    await getInfo(req, res);
+
+    expect(responseHandler.error).toHaveBeenCalledWith(res);
+  });
+});

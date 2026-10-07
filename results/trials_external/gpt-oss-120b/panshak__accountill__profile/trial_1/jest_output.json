@@ -1,0 +1,1261 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 15,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 15,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177119666,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfiles"
+          ],
+          "duration": 4,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:53:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfiles should return 200 with profiles on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 200 with profiles on success",
+          "startAt": 1791177122143
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfiles"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockImplementationOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:68:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfiles should return 404 with error message on failure",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 with error message on failure",
+          "startAt": 1791177122153
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findById.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:85:29)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfile should return 200 with a profile",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 200 with a profile",
+          "startAt": 1791177122155
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfile"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findById.mockImplementationOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:99:29)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfile should handle errors with 404",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors with 404",
+          "startAt": 1791177122157
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "createProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:128:28)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers createProfile should reject creation if profile with email exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should reject creation if profile with email exists",
+          "startAt": 1791177122158
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "createProfile"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:141:28)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers createProfile should create and return 201 on success",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create and return 201 on success",
+          "startAt": 1791177122160
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "createProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:162:28)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers createProfile should return 409 on unexpected error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 409 on unexpected error",
+          "startAt": 1791177122161
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesByUser"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:178:28)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfilesByUser should return profile wrapped in data key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return profile wrapped in data key",
+          "startAt": 1791177122163
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesByUser"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.findOne.mockImplementationOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:191:28)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfilesByUser should handle errors with 404",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should handle errors with 404",
+          "startAt": 1791177122164
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesBySearch"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockResolvedValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:208:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfilesBySearch should return matching profiles",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return matching profiles",
+          "startAt": 1791177122166
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "getProfilesBySearch"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProfileModel.find.mockImplementationOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:223:25)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers getProfilesBySearch should return 404 on error",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should return 404 on error",
+          "startAt": 1791177122168
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "updateProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:239:39)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers updateProfile should reject invalid ObjectId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should reject invalid ObjectId",
+          "startAt": 1791177122169
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "updateProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:250:39)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers updateProfile should update and return the updated profile",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should update and return the updated profile",
+          "startAt": 1791177122171
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "deleteProfile"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:270:39)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers deleteProfile should reject invalid ObjectId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should reject invalid ObjectId",
+          "startAt": 1791177122172
+        },
+        {
+          "ancestorTitles": [
+            "Profile Controllers",
+            "deleteProfile"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js:281:39)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "Profile Controllers deleteProfile should delete and confirm deletion",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should delete and confirm deletion",
+          "startAt": 1791177122174
+        }
+      ],
+      "endTime": 1791177122298,
+      "message": "  ● Profile Controllers › getProfiles › should return 200 with profiles on success\n\n    TypeError: ProfileModel.find.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 51 |\u001b[39m     it(\u001b[32m'should return 200 with profiles on success'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 52 |\u001b[39m       \u001b[36mconst\u001b[39m profiles \u001b[33m=\u001b[39m [{ _id\u001b[33m:\u001b[39m \u001b[32m'1'\u001b[39m }\u001b[33m,\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'2'\u001b[39m }]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 53 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValueOnce(profiles)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 54 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockReturnValueOnce({ sort\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue(profiles) })\u001b[33m;\u001b[39m\n     \u001b[90m 55 |\u001b[39m\n     \u001b[90m 56 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m {}\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:53:25)\n\n  ● Profile Controllers › getProfiles › should return 404 with error message on failure\n\n    TypeError: ProfileModel.find.mockImplementationOnce is not a function\n\n    \u001b[0m \u001b[90m 66 |\u001b[39m     it(\u001b[32m'should return 404 with error message on failure'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 67 |\u001b[39m       \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'db error'\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 68 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockImplementationOnce(() \u001b[33m=>\u001b[39m {\n     \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 69 |\u001b[39m         \u001b[36mthrow\u001b[39m error\u001b[33m;\u001b[39m\n     \u001b[90m 70 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 71 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:68:25)\n\n  ● Profile Controllers › getProfile › should return 200 with a profile\n\n    TypeError: ProfileModel.findById.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 83 |\u001b[39m     it(\u001b[32m'should return 200 with a profile'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 84 |\u001b[39m       \u001b[36mconst\u001b[39m profile \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'abc'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 85 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValueOnce(profile)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 86 |\u001b[39m\n     \u001b[90m 87 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'abc'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 88 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:85:29)\n\n  ● Profile Controllers › getProfile › should handle errors with 404\n\n    TypeError: ProfileModel.findById.mockImplementationOnce is not a function\n\n    \u001b[0m \u001b[90m  97 |\u001b[39m     it(\u001b[32m'should handle errors with 404'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m  98 |\u001b[39m       \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'not found'\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  99 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockImplementationOnce(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 100 |\u001b[39m         \u001b[36mthrow\u001b[39m error\u001b[33m;\u001b[39m\n     \u001b[90m 101 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 102 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:99:29)\n\n  ● Profile Controllers › createProfile › should reject creation if profile with email exists\n\n    TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 126 |\u001b[39m\n     \u001b[90m 127 |\u001b[39m     it(\u001b[32m'should reject creation if profile with email exists'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 128 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValueOnce({ _id\u001b[33m:\u001b[39m \u001b[32m'dup'\u001b[39m })\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 129 |\u001b[39m\n     \u001b[90m 130 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { \u001b[33m...\u001b[39mbaseReq }\u001b[33m;\u001b[39m\n     \u001b[90m 131 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:128:28)\n\n  ● Profile Controllers › createProfile › should create and return 201 on success\n\n    TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 139 |\u001b[39m\n     \u001b[90m 140 |\u001b[39m     it(\u001b[32m'should create and return 201 on success'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 141 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValueOnce(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 142 |\u001b[39m       \u001b[36mconst\u001b[39m saveMock \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValueOnce()\u001b[33m;\u001b[39m\n     \u001b[90m 143 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mprototype\u001b[33m.\u001b[39msave \u001b[33m=\u001b[39m saveMock\u001b[33m;\u001b[39m\n     \u001b[90m 144 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:141:28)\n\n  ● Profile Controllers › createProfile › should return 409 on unexpected error\n\n    TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 160 |\u001b[39m     it(\u001b[32m'should return 409 on unexpected error'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 161 |\u001b[39m       \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'save fail'\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 162 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValueOnce(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 163 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mprototype\u001b[33m.\u001b[39msave \u001b[33m=\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockRejectedValueOnce(error)\u001b[33m;\u001b[39m\n     \u001b[90m 164 |\u001b[39m\n     \u001b[90m 165 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { \u001b[33m...\u001b[39mbaseReq }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:162:28)\n\n  ● Profile Controllers › getProfilesByUser › should return profile wrapped in data key\n\n    TypeError: ProfileModel.findOne.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 176 |\u001b[39m     it(\u001b[32m'should return profile wrapped in data key'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 177 |\u001b[39m       \u001b[36mconst\u001b[39m profile \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'u1'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 178 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockResolvedValueOnce(profile)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 179 |\u001b[39m\n     \u001b[90m 180 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'user123'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 181 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:178:28)\n\n  ● Profile Controllers › getProfilesByUser › should handle errors with 404\n\n    TypeError: ProfileModel.findOne.mockImplementationOnce is not a function\n\n    \u001b[0m \u001b[90m 189 |\u001b[39m     it(\u001b[32m'should handle errors with 404'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 190 |\u001b[39m       \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'db fail'\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 191 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindOne\u001b[33m.\u001b[39mmockImplementationOnce(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 192 |\u001b[39m         \u001b[36mthrow\u001b[39m error\u001b[33m;\u001b[39m\n     \u001b[90m 193 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 194 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:191:28)\n\n  ● Profile Controllers › getProfilesBySearch › should return matching profiles\n\n    TypeError: ProfileModel.find.mockResolvedValueOnce is not a function\n\n    \u001b[0m \u001b[90m 206 |\u001b[39m     it(\u001b[32m'should return matching profiles'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 207 |\u001b[39m       \u001b[36mconst\u001b[39m profiles \u001b[33m=\u001b[39m [{ name\u001b[33m:\u001b[39m \u001b[32m'Alice'\u001b[39m }\u001b[33m,\u001b[39m { email\u001b[33m:\u001b[39m \u001b[32m'bob@example.com'\u001b[39m }]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 208 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValueOnce(profiles)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 209 |\u001b[39m\n     \u001b[90m 210 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { query\u001b[33m:\u001b[39m { searchQuery\u001b[33m:\u001b[39m \u001b[32m'a'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 211 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:208:25)\n\n  ● Profile Controllers › getProfilesBySearch › should return 404 on error\n\n    TypeError: ProfileModel.find.mockImplementationOnce is not a function\n\n    \u001b[0m \u001b[90m 221 |\u001b[39m     it(\u001b[32m'should return 404 on error'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 222 |\u001b[39m       \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'search error'\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 223 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockImplementationOnce(() \u001b[33m=>\u001b[39m {\n     \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 224 |\u001b[39m         \u001b[36mthrow\u001b[39m error\u001b[33m;\u001b[39m\n     \u001b[90m 225 |\u001b[39m       })\u001b[33m;\u001b[39m\n     \u001b[90m 226 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:223:25)\n\n  ● Profile Controllers › updateProfile › should reject invalid ObjectId\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n\n    \u001b[0m \u001b[90m 237 |\u001b[39m   describe(\u001b[32m'updateProfile'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 238 |\u001b[39m     it(\u001b[32m'should reject invalid ObjectId'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 239 |\u001b[39m       mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValueOnce(\u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 240 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'invalid'\u001b[39m }\u001b[33m,\u001b[39m body\u001b[33m:\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'New'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 241 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n     \u001b[90m 242 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:239:39)\n\n  ● Profile Controllers › updateProfile › should update and return the updated profile\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n\n    \u001b[0m \u001b[90m 248 |\u001b[39m\n     \u001b[90m 249 |\u001b[39m     it(\u001b[32m'should update and return the updated profile'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 250 |\u001b[39m       mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValueOnce(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 251 |\u001b[39m       \u001b[36mconst\u001b[39m updated \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'valid'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'Updated'\u001b[39m }\u001b[33m;\u001b[39m\n     \u001b[90m 252 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindByIdAndUpdate\u001b[33m.\u001b[39mmockResolvedValueOnce(updated)\u001b[33m;\u001b[39m\n     \u001b[90m 253 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:250:39)\n\n  ● Profile Controllers › deleteProfile › should reject invalid ObjectId\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n\n    \u001b[0m \u001b[90m 268 |\u001b[39m   describe(\u001b[32m'deleteProfile'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 269 |\u001b[39m     it(\u001b[32m'should reject invalid ObjectId'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 270 |\u001b[39m       mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValueOnce(\u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 271 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'bad'\u001b[39m } }\u001b[33m;\u001b[39m\n     \u001b[90m 272 |\u001b[39m       \u001b[36mconst\u001b[39m res \u001b[33m=\u001b[39m mockRes()\u001b[33m;\u001b[39m\n     \u001b[90m 273 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:270:39)\n\n  ● Profile Controllers › deleteProfile › should delete and confirm deletion\n\n    TypeError: mongoose.Types.ObjectId.isValid.mockReturnValueOnce is not a function\n\n    \u001b[0m \u001b[90m 279 |\u001b[39m\n     \u001b[90m 280 |\u001b[39m     it(\u001b[32m'should delete and confirm deletion'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 281 |\u001b[39m       mongoose\u001b[33m.\u001b[39m\u001b[33mTypes\u001b[39m\u001b[33m.\u001b[39m\u001b[33mObjectId\u001b[39m\u001b[33m.\u001b[39misValid\u001b[33m.\u001b[39mmockReturnValueOnce(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 282 |\u001b[39m       \u001b[33mProfileModel\u001b[39m\u001b[33m.\u001b[39mfindByIdAndRemove\u001b[33m.\u001b[39mmockResolvedValueOnce({})\u001b[33m;\u001b[39m\n     \u001b[90m 283 |\u001b[39m\n     \u001b[90m 284 |\u001b[39m       \u001b[36mconst\u001b[39m req \u001b[33m=\u001b[39m { params\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[32m'good'\u001b[39m } }\u001b[33m;\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/panshak__accountill__profile_gpt-oss-120b_trial1.test.js:281:39)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\panshak__accountill__profile_gpt-oss-120b_trial1.test.js",
+      "startTime": 1791177119849,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\models\\ProfileModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\models\\ProfileModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 22
+          },
+          "end": {
+            "line": 13,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 15,
+            "column": 16
+          },
+          "end": {
+            "line": 15,
+            "column": 56
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "906d6145dc0fd9b4956695465de32e5eaad65870"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\controllers\\profile.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\panshak__accountill\\server\\controllers\\profile.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 6,
+            "column": 15
+          },
+          "end": {
+            "line": 6,
+            "column": 31
+          }
+        },
+        "1": {
+          "start": {
+            "line": 8,
+            "column": 27
+          },
+          "end": {
+            "line": 16,
+            "column": 1
+          }
+        },
+        "2": {
+          "start": {
+            "line": 9,
+            "column": 2
+          },
+          "end": {
+            "line": 15,
+            "column": 3
+          }
+        },
+        "3": {
+          "start": {
+            "line": 10,
+            "column": 26
+          },
+          "end": {
+            "line": 10,
+            "column": 69
+          }
+        },
+        "4": {
+          "start": {
+            "line": 12,
+            "column": 6
+          },
+          "end": {
+            "line": 12,
+            "column": 40
+          }
+        },
+        "5": {
+          "start": {
+            "line": 14,
+            "column": 6
+          },
+          "end": {
+            "line": 14,
+            "column": 55
+          }
+        },
+        "6": {
+          "start": {
+            "line": 18,
+            "column": 26
+          },
+          "end": {
+            "line": 28,
+            "column": 1
+          }
+        },
+        "7": {
+          "start": {
+            "line": 19,
+            "column": 17
+          },
+          "end": {
+            "line": 19,
+            "column": 27
+          }
+        },
+        "8": {
+          "start": {
+            "line": 21,
+            "column": 2
+          },
+          "end": {
+            "line": 27,
+            "column": 3
+          }
+        },
+        "9": {
+          "start": {
+            "line": 22,
+            "column": 22
+          },
+          "end": {
+            "line": 22,
+            "column": 53
+          }
+        },
+        "10": {
+          "start": {
+            "line": 24,
+            "column": 6
+          },
+          "end": {
+            "line": 24,
+            "column": 36
+          }
+        },
+        "11": {
+          "start": {
+            "line": 26,
+            "column": 6
+          },
+          "end": {
+            "line": 26,
+            "column": 55
+          }
+        },
+        "12": {
+          "start": {
+            "line": 30,
+            "column": 29
+          },
+          "end": {
+            "line": 65,
+            "column": 1
+          }
+        },
+        "13": {
+          "start": {
+            "line": 40,
+            "column": 7
+          },
+          "end": {
+            "line": 40,
+            "column": 15
+          }
+        },
+        "14": {
+          "start": {
+            "line": 43,
+            "column": 21
+          },
+          "end": {
+            "line": 53,
+            "column": 4
+          }
+        },
+        "15": {
+          "start": {
+            "line": 55,
+            "column": 2
+          },
+          "end": {
+            "line": 64,
+            "column": 3
+          }
+        },
+        "16": {
+          "start": {
+            "line": 56,
+            "column": 25
+          },
+          "end": {
+            "line": 56,
+            "column": 62
+          }
+        },
+        "17": {
+          "start": {
+            "line": 58,
+            "column": 4
+          },
+          "end": {
+            "line": 58,
+            "column": 86
+          }
+        },
+        "18": {
+          "start": {
+            "line": 58,
+            "column": 21
+          },
+          "end": {
+            "line": 58,
+            "column": 86
+          }
+        },
+        "19": {
+          "start": {
+            "line": 59,
+            "column": 6
+          },
+          "end": {
+            "line": 59,
+            "column": 30
+          }
+        },
+        "20": {
+          "start": {
+            "line": 61,
+            "column": 6
+          },
+          "end": {
+            "line": 61,
+            "column": 40
+          }
+        },
+        "21": {
+          "start": {
+            "line": 63,
+            "column": 6
+          },
+          "end": {
+            "line": 63,
+            "column": 55
+          }
+        },
+        "22": {
+          "start": {
+            "line": 69,
+            "column": 33
+          },
+          "end": {
+            "line": 81,
+            "column": 1
+          }
+        },
+        "23": {
+          "start": {
+            "line": 70,
+            "column": 26
+          },
+          "end": {
+            "line": 70,
+            "column": 35
+          }
+        },
+        "24": {
+          "start": {
+            "line": 72,
+            "column": 2
+          },
+          "end": {
+            "line": 80,
+            "column": 3
+          }
+        },
+        "25": {
+          "start": {
+            "line": 75,
+            "column": 22
+          },
+          "end": {
+            "line": 75,
+            "column": 73
+          }
+        },
+        "26": {
+          "start": {
+            "line": 77,
+            "column": 6
+          },
+          "end": {
+            "line": 77,
+            "column": 34
+          }
+        },
+        "27": {
+          "start": {
+            "line": 79,
+            "column": 6
+          },
+          "end": {
+            "line": 79,
+            "column": 55
+          }
+        },
+        "28": {
+          "start": {
+            "line": 85,
+            "column": 35
+          },
+          "end": {
+            "line": 98,
+            "column": 1
+          }
+        },
+        "29": {
+          "start": {
+            "line": 86,
+            "column": 26
+          },
+          "end": {
+            "line": 86,
+            "column": 35
+          }
+        },
+        "30": {
+          "start": {
+            "line": 88,
+            "column": 2
+          },
+          "end": {
+            "line": 97,
+            "column": 3
+          }
+        },
+        "31": {
+          "start": {
+            "line": 89,
+            "column": 19
+          },
+          "end": {
+            "line": 89,
+            "column": 47
+          }
+        },
+        "32": {
+          "start": {
+            "line": 90,
+            "column": 20
+          },
+          "end": {
+            "line": 90,
+            "column": 48
+          }
+        },
+        "33": {
+          "start": {
+            "line": 92,
+            "column": 23
+          },
+          "end": {
+            "line": 92,
+            "column": 80
+          }
+        },
+        "34": {
+          "start": {
+            "line": 94,
+            "column": 6
+          },
+          "end": {
+            "line": 94,
+            "column": 35
+          }
+        },
+        "35": {
+          "start": {
+            "line": 96,
+            "column": 6
+          },
+          "end": {
+            "line": 96,
+            "column": 55
+          }
+        },
+        "36": {
+          "start": {
+            "line": 101,
+            "column": 29
+          },
+          "end": {
+            "line": 110,
+            "column": 1
+          }
+        },
+        "37": {
+          "start": {
+            "line": 102,
+            "column": 22
+          },
+          "end": {
+            "line": 102,
+            "column": 32
+          }
+        },
+        "38": {
+          "start": {
+            "line": 103,
+            "column": 18
+          },
+          "end": {
+            "line": 103,
+            "column": 26
+          }
+        },
+        "39": {
+          "start": {
+            "line": 105,
+            "column": 2
+          },
+          "end": {
+            "line": 105,
+            "column": 97
+          }
+        },
+        "40": {
+          "start": {
+            "line": 105,
+            "column": 44
+          },
+          "end": {
+            "line": 105,
+            "column": 97
+          }
+        },
+        "41": {
+          "start": {
+            "line": 107,
+            "column": 25
+          },
+          "end": {
+            "line": 107,
+            "column": 99
+          }
+        },
+        "42": {
+          "start": {
+            "line": 109,
+            "column": 2
+          },
+          "end": {
+            "line": 109,
+            "column": 26
+          }
+        },
+        "43": {
+          "start": {
+            "line": 113,
+            "column": 31
+          },
+          "end": {
+            "line": 121,
+            "column": 1
+          }
+        },
+        "44": {
+          "start": {
+            "line": 114,
+            "column": 19
+          },
+          "end": {
+            "line": 114,
+            "column": 29
+          }
+        },
+        "45": {
+          "start": {
+            "line": 116,
+            "column": 4
+          },
+          "end": {
+            "line": 116,
+            "column": 103
+          }
+        },
+        "46": {
+          "start": {
+            "line": 116,
+            "column": 46
+          },
+          "end": {
+            "line": 116,
+            "column": 103
+          }
+        },
+        "47": {
+          "start": {
+            "line": 118,
+            "column": 4
+          },
+          "end": {
+            "line": 118,
+            "column": 45
+          }
+        },
+        "48": {
+          "start": {
+            "line": 120,
+            "column": 4
+          },
+          "end": {
+            "line": 120,
+            "column": 59
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 8,
+              "column": 27
+            },
+            "end": {
+              "line": 8,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 47
+            },
+            "end": {
+              "line": 16,
+              "column": 1
+            }
+          },
+          "line": 8
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 18,
+              "column": 26
+            },
+            "end": {
+              "line": 18,
+              "column": 27
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 18,
+              "column": 46
+            },
+            "end": {
+              "line": 28,
+              "column": 1
+            }
+          },
+          "line": 18
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 30,
+              "column": 29
+            },
+            "end": {
+              "line": 30,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 30,
+              "column": 49
+            },
+            "end": {
+              "line": 65,
+              "column": 1
+            }
+          },
+          "line": 30
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 69,
+              "column": 33
+            },
+            "end": {
+              "line": 69,
+              "column": 34
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 69,
+              "column": 53
+            },
+            "end": {
+              "line": 81,
+              "column": 1
+            }
+          },
+          "line": 69
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 85,
+              "column": 35
+            },
+            "end": {
+              "line": 85,
+              "column": 36
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 85,
+              "column": 55
+            },
+            "end": {
+              "line": 98,
+              "column": 1
+            }
+          },
+          "line": 85
+        },
+        "5": {
+          "name": "(anonymous_5)",
+          "decl": {
+            "start": {
+              "line": 101,
+              "column": 29
+            },
+            "end": {
+              "line": 101,
+              "column": 30
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 101,
+              "column": 49
+            },
+            "end": {
+              "line": 110,
+              "column": 1
+            }
+          },
+          "line": 101
+        },
+        "6": {
+          "name": "(anonymous_6)",
+          "decl": {
+            "start": {
+              "line": 113,
+              "column": 31
+            },
+            "end": {
+              "line": 113,
+              "column": 32
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 113,
+              "column": 51
+            },
+            "end": {
+              "line": 121,
+              "column": 1
+            }
+          },
+          "line": 113
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 58,
+              "column": 4
+            },
+            "end": {
+              "line": 58,
+              "column": 86
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 58,
+                "column": 4
+              },
+              "end": {
+                "line": 58,
+                "column": 86
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 58
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 105,
+              "column": 2
+            },
+            "end": {
+              "line": 105,
+              "column": 97
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 105,
+                "column": 2
+              },
+              "end": {
+                "line": 105,
+                "column": 97
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 105
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 116,
+              "column": 4
+            },
+            "end": {
+              "line": 116,
+              "column": 103
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 116,
+                "column": 4
+              },
+              "end": {
+                "line": 116,
+                "column": 103
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 116
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 1,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 1,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 1,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 1,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0,
+        "35": 0,
+        "36": 1,
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0,
+        "43": 1,
+        "44": 0,
+        "45": 0,
+        "46": 0,
+        "47": 0,
+        "48": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "fa79c50013ba310eb4d50d58fd036961989ec50e"
+    }
+  }
+}

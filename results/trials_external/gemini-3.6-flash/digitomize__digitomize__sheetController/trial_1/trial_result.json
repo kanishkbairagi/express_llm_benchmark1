@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "digitomize__digitomize__sheetController",
+  "targetFilename": "external/digitomize__digitomize/backend/DSA_sheets/controllers/sheetController.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:00:58.152Z",
+  "finishedAt": "2026-10-05T05:02:28.785Z",
+  "suiteOk": true,
+  "testsPassed": 19,
+  "testsFailed": 0,
+  "testsTotal": 19,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 100,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1892,
+    "completionTokens": 3423,
+    "totalTokens": 7823,
+    "thinkingTokens": 2508
+  },
+  "latencyMs": 25261
+}

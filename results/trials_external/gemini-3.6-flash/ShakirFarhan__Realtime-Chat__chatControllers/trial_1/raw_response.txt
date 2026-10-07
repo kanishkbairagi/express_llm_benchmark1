@@ -1,0 +1,292 @@
+```javascript
+import { jest } from '@jest/globals';
+import Chat from '../models/chatModel.js';
+import user from '../models/userModel.js';
+import {
+  accessChats,
+  fetchAllChats,
+  creatGroup,
+  renameGroup,
+  addToGroup,
+  removeFromGroup,
+  removeContact,
+} from '../dataset/external/ShakirFarhan__Realtime-Chat/server/controllers/chatControllers.js';
+
+jest.mock('../models/chatModel.js');
+jest.mock('../models/userModel.js');
+
+describe('chatControllers Unit Tests', () => {
+  let req;
+  let res;
+
+  const createQueryChain = (resolvedValue, shouldReject = false) => {
+    const promise = shouldReject
+      ? Promise.reject(resolvedValue)
+      : Promise.resolve(resolvedValue);
+    const chain = {
+      populate: jest.fn().mockImplementation(() => chain),
+      sort: jest.fn().mockImplementation(() => chain),
+      then: (onFulfilled, onRejected) => promise.then(onFulfilled, onRejected),
+      catch: (onRejected) => promise.catch(onRejected),
+    };
+    return chain;
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    req = {
+      body: {},
+      rootUserId: 'root_user_123',
+      rootUser: { _id: 'root_user_123', name: 'Root User' },
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+      sendStatus: jest.fn().mockReturnThis(),
+    };
+  });
+
+  describe('accessChats', () => {
+    test('should warn if userId is missing', async () => {
+      req.body = {};
+      Chat.find.mockReturnValue(createQueryChain([]));
+      user.populate.mockResolvedValue([]);
+
+      await accessChats(req, res);
+
+      expect(res.send).toHaveBeenCalledWith({ message: "Provide User's Id" });
+    });
+
+    test('should return existing chat if found', async () => {
+      req.body = { userId: 'user_456' };
+      const existingChat = [{ _id: 'chat_1', users: ['user_456', 'root_user_123'] }];
+
+      Chat.find.mockReturnValue(createQueryChain(existingChat));
+      user.populate.mockResolvedValue(existingChat);
+
+      await accessChats(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith(existingChat[0]);
+    });
+
+    test('should create new chat if non-existent', async () => {
+      req.body = { userId: 'user_456' };
+      const newChatData = { _id: 'chat_new' };
+      const populatedChat = [{ _id: 'chat_new', isGroup: false }];
+
+      Chat.find.mockReturnValueOnce(createQueryChain([]));
+      user.populate.mockResolvedValue([]);
+      Chat.create.mockResolvedValue(newChatData);
+      Chat.find.mockReturnValueOnce(createQueryChain(populatedChat));
+
+      await accessChats(req, res);
+
+      expect(Chat.create).toHaveBeenCalledWith({
+        chatName: 'sender',
+        users: ['user_456', 'root_user_123'],
+        isGroup: false,
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(populatedChat);
+    });
+
+    test('should handle creation error with 500 status', async () => {
+      req.body = { userId: 'user_456' };
+      const error = new Error('Database Error');
+
+      Chat.find.mockReturnValue(createQueryChain([]));
+      user.populate.mockResolvedValue([]);
+      Chat.create.mockRejectedValue(error);
+
+      await accessChats(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.send).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe('fetchAllChats', () => {
+    test('should fetch and return all chats for the root user', async () => {
+      const chats = [{ _id: 'chat_1' }, { _id: 'chat_2' }];
+      Chat.find.mockReturnValue(createQueryChain(chats));
+      user.populate.mockResolvedValue(chats);
+
+      await fetchAllChats(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(chats);
+    });
+
+    test('should return 500 when error occurs during fetch', async () => {
+      const error = new Error('Fetch failed');
+      Chat.find.mockImplementation(() => {
+        throw error;
+      });
+
+      await fetchAllChats(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.send).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe('creatGroup', () => {
+    test('should return 400 if chatName or users are missing', async () => {
+      req.body = { chatName: 'Group Chat' }; // users missing
+
+      await creatGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Please fill the fields' });
+    });
+
+    test('should create group successfully', async () => {
+      req.body = {
+        chatName: 'New Group',
+        users: JSON.stringify(['user1', 'user2']),
+      };
+      const createdChatData = { _id: 'group_chat_1' };
+      const populatedGroup = { _id: 'group_chat_1', chatName: 'New Group' };
+
+      Chat.create.mockResolvedValue(createdChatData);
+      Chat.findOne.mockReturnValue(createQueryChain(populatedGroup));
+
+      await creatGroup(req, res);
+
+      expect(Chat.create).toHaveBeenCalledWith({
+        chatName: 'New Group',
+        users: ['user1', 'user2', req.rootUser],
+        isGroup: true,
+        groupAdmin: 'root_user_123',
+      });
+      expect(res.send).toHaveBeenCalledWith(populatedGroup);
+    });
+
+    test('should return 500 status on creation error', async () => {
+      req.body = {
+        chatName: 'New Group',
+        users: JSON.stringify(['user1', 'user2']),
+      };
+      Chat.create.mockRejectedValue(new Error('Creation failed'));
+
+      await creatGroup(req, res);
+
+      expect(res.sendStatus).toHaveBeenCalledWith(500);
+    });
+  });
+
+  describe('renameGroup', () => {
+    test('should return 400 if chatId or chatName is missing', async () => {
+      req.body = { chatId: 'chat_1' };
+
+      await renameGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.send).toHaveBeenCalledWith('Provide Chat id and Chat name');
+    });
+
+    test('should update chat name and return updated chat', async () => {
+      req.body = { chatId: 'chat_1', chatName: 'Renamed Group' };
+      const updatedChat = { _id: 'chat_1', chatName: 'Renamed Group' };
+
+      Chat.findByIdAndUpdate.mockReturnValue(createQueryChain(updatedChat));
+
+      await renameGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith(updatedChat);
+    });
+
+    test('should handle error with 500 status', async () => {
+      req.body = { chatId: 'chat_1', chatName: 'Renamed Group' };
+      const error = new Error('Rename failed');
+      Chat.findByIdAndUpdate.mockImplementation(() => {
+        throw error;
+      });
+
+      await renameGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.send).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe('addToGroup', () => {
+    test('should add user to group if user is not already present', async () => {
+      req.body = { userId: 'user_999', chatId: 'chat_1' };
+      const existingChat = { _id: 'chat_1', users: ['user_111'] };
+      const updatedChat = { _id: 'chat_1', users: ['user_111', 'user_999'] };
+
+      Chat.findOne.mockResolvedValue(existingChat);
+      Chat.findByIdAndUpdate.mockReturnValue(createQueryChain(updatedChat));
+
+      await addToGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith(updatedChat);
+    });
+
+    test('should return 409 if user already exists in group', async () => {
+      req.body = { userId: 'user_111', chatId: 'chat_1' };
+      const existingChat = { _id: 'chat_1', users: ['user_111'] };
+
+      Chat.findOne.mockResolvedValue(existingChat);
+
+      await addToGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.send).toHaveBeenCalledWith('user already exists');
+    });
+  });
+
+  describe('removeFromGroup', () => {
+    test('should remove user from group if user exists in group', async () => {
+      req.body = { userId: 'user_999', chatId: 'chat_1' };
+      const existingChat = { _id: 'chat_1', users: ['user_999', 'user_111'] };
+      const updatedChat = { _id: 'chat_1', users: ['user_111'] };
+
+      Chat.findOne.mockResolvedValue(existingChat);
+      Chat.findByIdAndUpdate.mockReturnValue(createQueryChain(updatedChat));
+
+      await removeFromGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith(updatedChat);
+    });
+
+    test('should return 409 if user does not exist in group', async () => {
+      req.body = { userId: 'user_999', chatId: 'chat_1' };
+      const existingChat = { _id: 'chat_1', users: ['user_111'] };
+
+      Chat.findOne.mockResolvedValue(existingChat);
+
+      await removeFromGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.send).toHaveBeenCalledWith('user doesnt exists');
+    });
+
+    test('should handle update rejection in removeFromGroup', async () => {
+      req.body = { userId: 'user_999', chatId: 'chat_1' };
+      const existingChat = { _id: 'chat_1', users: ['user_999'] };
+
+      Chat.findOne.mockResolvedValue(existingChat);
+      Chat.findByIdAndUpdate.mockReturnValue(
+        createQueryChain(new Error('Update error'), true)
+      );
+
+      await removeFromGroup(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+    });
+  });
+
+  describe('removeContact', () => {
+    test('should execute without throwing errors', async () => {
+      await expect(removeContact(req, res)).resolves.not.toThrow();
+    });
+  });
+});
+```

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss-120b",
+  "controller": "kinngh__shopify-node-express-mongodb-app__gdpr",
+  "targetFilename": "external/kinngh__shopify-node-express-mongodb-app/server/controllers/gdpr.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:05:45.495Z",
+  "finishedAt": "2026-10-05T05:05:50.133Z",
+  "suiteOk": true,
+  "testsPassed": 6,
+  "testsFailed": 0,
+  "testsTotal": 6,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 0,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "stop",
+  "usage": {
+    "promptTokens": 733,
+    "completionTokens": 1038,
+    "totalTokens": 1771,
+    "reasoningTokens": 253
+  },
+  "latencyMs": 2845
+}

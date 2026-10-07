@@ -1,0 +1,100 @@
+import { jest } from '@jest/globals';
+import express from 'express';
+import request from 'supertest';
+
+const mockUserRegister = jest.fn((req, res) => res.status(201).json({ message: 'User registered' }));
+const mockUserSignIn = jest.fn((req, res) => res.status(200).json({ message: 'User signed in' }));
+const mockTokenAuth = jest.fn((req, res, next) => {
+  req.user = { username: 'validuser' };
+  next();
+});
+const mockValidate = jest.fn((req, res, next) => next());
+
+jest.unstable_mockModule(
+  '../dataset/external/trananhtuat__react-openai-chat/server/controllers/user.controller.js',
+  () => ({
+    userRegister: mockUserRegister,
+    userSignIn: mockUserSignIn
+  })
+);
+
+jest.unstable_mockModule(
+  '../dataset/external/trananhtuat__react-openai-chat/server/middlewares/token.middleware.js',
+  () => ({
+    tokenAuth: mockTokenAuth
+  })
+);
+
+jest.unstable_mockModule(
+  '../dataset/external/trananhtuat__react-openai-chat/server/utils/validator.js',
+  () => ({
+    validate: mockValidate
+  })
+);
+
+const { default: userRouter } = await import('../dataset/external/trananhtuat__react-openai-chat/server/routes/user.route.js');
+
+describe('User Routes', () => {
+  let app;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    app = express();
+    app.use(express.json());
+    app.use('/api/user', userRouter);
+  });
+
+  describe('POST /api/user/signup', () => {
+    it('should invoke validate and userRegister controller for signup route', async () => {
+      const response = await request(app)
+        .post('/api/user/signup')
+        .send({
+          username: 'validuser',
+          password: 'password123'
+        });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual({ message: 'User registered' });
+      expect(mockValidate).toHaveBeenCalledTimes(1);
+      expect(mockUserRegister).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('POST /api/user/signin', () => {
+    it('should invoke validate and userSignIn controller for signin route', async () => {
+      const response = await request(app)
+        .post('/api/user/signin')
+        .send({
+          username: 'validuser',
+          password: 'password123'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ message: 'User signed in' });
+      expect(mockValidate).toHaveBeenCalledTimes(1);
+      expect(mockUserSignIn).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('GET /api/user/check-token', () => {
+    it('should return 200 and user username when token is valid', async () => {
+      const response = await request(app).get('/api/user/check-token');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ username: 'validuser' });
+      expect(mockTokenAuth).toHaveBeenCalledTimes(1);
+    });
+
+    it('should fail if tokenAuth middleware denies access', async () => {
+      mockTokenAuth.mockImplementationOnce((req, res) => {
+        return res.status(401).json({ message: 'Unauthorized' });
+      });
+
+      const response = await request(app).get('/api/user/check-token');
+
+      expect(response.status).toBe(401);
+      expect(response.body).toEqual({ message: 'Unauthorized' });
+      expect(mockTokenAuth).toHaveBeenCalledTimes(1);
+    });
+  });
+});

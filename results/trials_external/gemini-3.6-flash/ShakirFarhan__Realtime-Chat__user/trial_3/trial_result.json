@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "ShakirFarhan__Realtime-Chat__user",
+  "targetFilename": "external/ShakirFarhan__Realtime-Chat/server/controllers/user.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T05:42:20.193Z",
+  "finishedAt": "2026-10-07T05:43:20.328Z",
+  "suiteOk": false,
+  "testsPassed": 2,
+  "testsFailed": 17,
+  "testsTotal": 19,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 22.22,
+  "branchCoverage": 0,
+  "functionCoverage": 33.33,
+  "lineCoverage": 22.06,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1436,
+    "completionTokens": 3795,
+    "totalTokens": 8391,
+    "thinkingTokens": 3160
+  },
+  "latencyMs": 28411
+}

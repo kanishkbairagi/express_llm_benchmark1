@@ -1,0 +1,85 @@
+```javascript
+import express from "express";
+import { jest } from "@jest/globals";
+
+jest.mock(
+  "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/middlewares/token.middleware.js",
+  () => ({
+    __esModule: true,
+    default: {
+      auth: jest.fn((req, res, next) => next()),
+    },
+  })
+);
+
+jest.mock(
+  "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/request.handler.js",
+  () => ({
+    __esModule: true,
+    default: {
+      validate: jest.fn((req, res, next) => next()),
+    },
+  })
+);
+
+jest.mock(
+  "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/review.controller.js",
+  () => ({
+    __esModule: true,
+    default: {
+      getReviewsOfUser: jest.fn((req, res) => res.end()),
+      create: jest.fn((req, res) => res.end()),
+      remove: jest.fn((req, res) => res.end()),
+    },
+  })
+);
+
+// After mocks are in place, import the router
+import router from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/routes/review.route.js";
+import tokenMiddleware from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/middlewares/token.middleware.js";
+import requestHandler from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/handlers/request.handler.js";
+import reviewController from "../dataset/external/trananhtuat__fullstack-mern-movie-2022/server/src/controllers/review.controller.js";
+
+describe("review.route.js router configuration", () => {
+  const findLayer = (method, path) => {
+    return router.stack.find(
+      (layer) =>
+        layer.route &&
+        layer.route.path === path &&
+        layer.route.methods[method]
+    );
+  };
+
+  test("GET '/' route registers auth middleware and getReviewsOfUser controller", () => {
+    const layer = findLayer("get", "/");
+    expect(layer).toBeDefined();
+
+    const middlewares = layer.route.stack.map((s) => s.handle);
+    // first middleware should be token auth, second the controller
+    expect(middlewares[0]).toBe(tokenMiddleware.auth);
+    expect(middlewares[1]).toBe(reviewController.getReviewsOfUser);
+  });
+
+  test("POST '/' route registers middlewares in correct order", () => {
+    const layer = findLayer("post", "/");
+    expect(layer).toBeDefined();
+
+    const middlewares = layer.route.stack.map((s) => s.handle);
+
+    // order: token auth → express‑validator middlewares → requestHandler.validate → controller
+    expect(middlewares[0]).toBe(tokenMiddleware.auth);
+    // the last two should be requestHandler.validate and the controller
+    expect(middlewares[middlewares.length - 2]).toBe(requestHandler.validate);
+    expect(middlewares[middlewares.length - 1]).toBe(reviewController.create);
+  });
+
+  test("DELETE '/:reviewId' route registers auth middleware and remove controller", () => {
+    const layer = findLayer("delete", "/:reviewId");
+    expect(layer).toBeDefined();
+
+    const middlewares = layer.route.stack.map((s) => s.handle);
+    expect(middlewares[0]).toBe(tokenMiddleware.auth);
+    expect(middlewares[1]).toBe(reviewController.remove);
+  });
+});
+```

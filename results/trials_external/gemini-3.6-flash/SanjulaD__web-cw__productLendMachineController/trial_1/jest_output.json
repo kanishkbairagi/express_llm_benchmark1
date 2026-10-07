@@ -1,0 +1,925 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 8,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 8,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1791177283055,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "getLendMachnines"
+          ],
+          "duration": 5,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProductLendMachines.find.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:49:38)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productLendMachineController getLendMachnines should fetch all lending machines and respond with json",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should fetch all lending machines and respond with json",
+          "startAt": 1791177285100
+        },
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "getLendMachnineById"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:62:42)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productLendMachineController getLendMachnineById should fetch lending machine by id if found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should fetch lending machine by id if found",
+          "startAt": 1791177285111
+        },
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "getLendMachnineById"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:72:42)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productLendMachineController getLendMachnineById should set status to 404 and pass error to next if machine not found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should set status to 404 and pass error to next if machine not found",
+          "startAt": 1791177285113
+        },
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "deleteLendMachnine"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:91:42)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productLendMachineController deleteLendMachnine should remove lending machine if found",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should remove lending machine if found",
+          "startAt": 1791177285115
+        },
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "deleteLendMachnine"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:102:42)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productLendMachineController deleteLendMachnine should set status to 404 and pass error to next if machine not found for deletion",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should set status to 404 and pass error to next if machine not found for deletion",
+          "startAt": 1791177285117
+        },
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "createLendMachine"
+          ],
+          "duration": 21,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "Error: expect(received).toHaveBeenCalledWith(...expected)\n\nMatcher error: received value must be a mock or spy function\n\nReceived has type:  function\nReceived has value: [Function model]\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:120:41)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          ],
+          "fullName": "productLendMachineController createLendMachine should create a new lend machine and respond with status 201",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should create a new lend machine and respond with status 201",
+          "startAt": 1791177285118
+        },
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "updateLendMachine"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:164:42)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productLendMachineController updateLendMachine should update lend machine details and respond with 201 if machine exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should update lend machine details and respond with 201 if machine exists",
+          "startAt": 1791177285140
+        },
+        {
+          "ancestorTitles": [
+            "productLendMachineController",
+            "updateLendMachine"
+          ],
+          "duration": 0,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n    at Object.<anonymous> (D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:183:42)\n    at Promise.finally.completed (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1834:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1774:10)\n    at _callCircusTest (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1167:40)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at _runTestInContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1103:3)\n    at runTestWithContext (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:996:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1008:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at _runTestsForDescribeBlockOnce (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1003:11)\n    at _runTestsForDescribeBlock (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:824:5)\n    at run (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:789:3)\n    at runAndTransformResultsToJestFormat (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\jestAdapterInit.js:2300:21)\n    at jestAdapter (D:\\express-llm-benchmark\\node_modules\\jest-circus\\build\\runner.js:111:19)\n    at runTestInternal (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:247:16)\n    at runTest (D:\\express-llm-benchmark\\node_modules\\jest-runner\\build\\index.js:315:7)"
+          ],
+          "fullName": "productLendMachineController updateLendMachine should set status to 401 and pass error to next if machine not found for update",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryMessages": [],
+          "retryReasons": [],
+          "status": "failed",
+          "title": "should set status to 401 and pass error to next if machine not found for update",
+          "startAt": 1791177285142
+        }
+      ],
+      "endTime": 1791177285205,
+      "message": "  ● productLendMachineController › getLendMachnines › should fetch all lending machines and respond with json\n\n    TypeError: ProductLendMachines.find.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 47 |\u001b[39m                 { name\u001b[33m:\u001b[39m \u001b[32m'Machine 2'\u001b[39m\u001b[33m,\u001b[39m price\u001b[33m:\u001b[39m \u001b[35m200\u001b[39m }\n     \u001b[90m 48 |\u001b[39m             ]\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 |\u001b[39m             \u001b[33mProductLendMachines\u001b[39m\u001b[33m.\u001b[39mfind\u001b[33m.\u001b[39mmockResolvedValue(mockMachines)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 50 |\u001b[39m\n     \u001b[90m 51 |\u001b[39m             \u001b[36mawait\u001b[39m getLendMachnines(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 52 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:49:38)\n\n  ● productLendMachineController › getLendMachnineById › should fetch lending machine by id if found\n\n    TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 60 |\u001b[39m             req\u001b[33m.\u001b[39mparams\u001b[33m.\u001b[39mid \u001b[33m=\u001b[39m \u001b[32m'machine_123'\u001b[39m\u001b[33m;\u001b[39m\n     \u001b[90m 61 |\u001b[39m             \u001b[36mconst\u001b[39m mockMachine \u001b[33m=\u001b[39m { _id\u001b[33m:\u001b[39m \u001b[32m'machine_123'\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m \u001b[32m'Machine 1'\u001b[39m }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 62 |\u001b[39m             \u001b[33mProductLendMachines\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(mockMachine)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 63 |\u001b[39m\n     \u001b[90m 64 |\u001b[39m             \u001b[36mawait\u001b[39m getLendMachnineById(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 65 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:62:42)\n\n  ● productLendMachineController › getLendMachnineById › should set status to 404 and pass error to next if machine not found\n\n    TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 70 |\u001b[39m         it(\u001b[32m'should set status to 404 and pass error to next if machine not found'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 71 |\u001b[39m             req\u001b[33m.\u001b[39mparams\u001b[33m.\u001b[39mid \u001b[33m=\u001b[39m \u001b[32m'non_existent_id'\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 72 |\u001b[39m             \u001b[33mProductLendMachines\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 73 |\u001b[39m\n     \u001b[90m 74 |\u001b[39m             \u001b[36mawait\u001b[39m getLendMachnineById(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 75 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:72:42)\n\n  ● productLendMachineController › deleteLendMachnine › should remove lending machine if found\n\n    TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 89 |\u001b[39m                 remove\u001b[33m:\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m.\u001b[39mmockResolvedValue()\n     \u001b[90m 90 |\u001b[39m             }\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 91 |\u001b[39m             \u001b[33mProductLendMachines\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(mockMachine)\u001b[33m;\u001b[39m\n     \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 92 |\u001b[39m\n     \u001b[90m 93 |\u001b[39m             \u001b[36mawait\u001b[39m deleteLendMachnine(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 94 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:91:42)\n\n  ● productLendMachineController › deleteLendMachnine › should set status to 404 and pass error to next if machine not found for deletion\n\n    TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 100 |\u001b[39m         it(\u001b[32m'should set status to 404 and pass error to next if machine not found for deletion'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 101 |\u001b[39m             req\u001b[33m.\u001b[39mparams\u001b[33m.\u001b[39mid \u001b[33m=\u001b[39m \u001b[32m'non_existent_id'\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 102 |\u001b[39m             \u001b[33mProductLendMachines\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 103 |\u001b[39m\n     \u001b[90m 104 |\u001b[39m             \u001b[36mawait\u001b[39m deleteLendMachnine(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 105 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:102:42)\n\n  ● productLendMachineController › createLendMachine › should create a new lend machine and respond with status 201\n\n    expect(received).toHaveBeenCalledWith(...expected)\n\n    Matcher error: received value must be a mock or spy function\n\n    Received has type:  function\n    Received has value: [Function model]\n\n    \u001b[0m \u001b[90m 118 |\u001b[39m             \u001b[36mawait\u001b[39m createLendMachine(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 119 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 120 |\u001b[39m             expect(\u001b[33mProductLendMachines\u001b[39m)\u001b[33m.\u001b[39mtoHaveBeenCalledWith({\n     \u001b[90m     |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 121 |\u001b[39m                 name\u001b[33m:\u001b[39m \u001b[32m'sample machine'\u001b[39m\u001b[33m,\u001b[39m\n     \u001b[90m 122 |\u001b[39m                 user\u001b[33m:\u001b[39m \u001b[32m'user_456'\u001b[39m\u001b[33m,\u001b[39m\n     \u001b[90m 123 |\u001b[39m                 image\u001b[33m:\u001b[39m \u001b[32m'/images/farmMachine.jpg'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:120:41)\n\n  ● productLendMachineController › updateLendMachine › should update lend machine details and respond with 201 if machine exists\n\n    TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 162 |\u001b[39m             }\u001b[33m;\u001b[39m\n     \u001b[90m 163 |\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 164 |\u001b[39m             \u001b[33mProductLendMachines\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(existingMachine)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 165 |\u001b[39m\n     \u001b[90m 166 |\u001b[39m             \u001b[36mawait\u001b[39m updateLendMachine(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 167 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:164:42)\n\n  ● productLendMachineController › updateLendMachine › should set status to 401 and pass error to next if machine not found for update\n\n    TypeError: ProductLendMachines.findById.mockResolvedValue is not a function\n\n    \u001b[0m \u001b[90m 181 |\u001b[39m         it(\u001b[32m'should set status to 401 and pass error to next if machine not found for update'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n     \u001b[90m 182 |\u001b[39m             req\u001b[33m.\u001b[39mparams\u001b[33m.\u001b[39mid \u001b[33m=\u001b[39m \u001b[32m'non_existent_id'\u001b[39m\u001b[33m;\u001b[39m\n    \u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 183 |\u001b[39m             \u001b[33mProductLendMachines\u001b[39m\u001b[33m.\u001b[39mfindById\u001b[33m.\u001b[39mmockResolvedValue(\u001b[36mnull\u001b[39m)\u001b[33m;\u001b[39m\n     \u001b[90m     |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 184 |\u001b[39m\n     \u001b[90m 185 |\u001b[39m             \u001b[36mawait\u001b[39m updateLendMachine(req\u001b[33m,\u001b[39m res\u001b[33m,\u001b[39m next)\u001b[33m;\u001b[39m\n     \u001b[90m 186 |\u001b[39m\u001b[0m\n\n      at Object.<anonymous> (tests_trials_external/SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js:183:42)\n",
+      "name": "D:\\express-llm-benchmark\\tests_trials_external\\SanjulaD__web-cw__productLendMachineController_gemini-3.6-flash_trial1.test.js",
+      "startTime": 1791177283190,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\models\\productLendMachineModel.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\models\\productLendMachineModel.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 3,
+            "column": 28
+          },
+          "end": {
+            "line": 18,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 20,
+            "column": 33
+          },
+          "end": {
+            "line": 63,
+            "column": 2
+          }
+        },
+        "2": {
+          "start": {
+            "line": 65,
+            "column": 29
+          },
+          "end": {
+            "line": 65,
+            "column": 93
+          }
+        }
+      },
+      "fnMap": {},
+      "branchMap": {},
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1
+      },
+      "f": {},
+      "b": {},
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "0331f1faa534500e202adab1091a475121cc9e7f"
+    },
+    "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\controllers\\productLendMachineController.js": {
+      "path": "D:\\express-llm-benchmark\\dataset\\external\\SanjulaD__web-cw\\backend\\controllers\\productLendMachineController.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 9,
+            "column": 25
+          },
+          "end": {
+            "line": 12,
+            "column": 2
+          }
+        },
+        "1": {
+          "start": {
+            "line": 10,
+            "column": 31
+          },
+          "end": {
+            "line": 10,
+            "column": 65
+          }
+        },
+        "2": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 11,
+            "column": 33
+          }
+        },
+        "3": {
+          "start": {
+            "line": 17,
+            "column": 28
+          },
+          "end": {
+            "line": 26,
+            "column": 2
+          }
+        },
+        "4": {
+          "start": {
+            "line": 18,
+            "column": 31
+          },
+          "end": {
+            "line": 18,
+            "column": 80
+          }
+        },
+        "5": {
+          "start": {
+            "line": 20,
+            "column": 4
+          },
+          "end": {
+            "line": 25,
+            "column": 5
+          }
+        },
+        "6": {
+          "start": {
+            "line": 21,
+            "column": 8
+          },
+          "end": {
+            "line": 21,
+            "column": 37
+          }
+        },
+        "7": {
+          "start": {
+            "line": 23,
+            "column": 8
+          },
+          "end": {
+            "line": 23,
+            "column": 23
+          }
+        },
+        "8": {
+          "start": {
+            "line": 24,
+            "column": 8
+          },
+          "end": {
+            "line": 24,
+            "column": 44
+          }
+        },
+        "9": {
+          "start": {
+            "line": 31,
+            "column": 27
+          },
+          "end": {
+            "line": 41,
+            "column": 2
+          }
+        },
+        "10": {
+          "start": {
+            "line": 32,
+            "column": 24
+          },
+          "end": {
+            "line": 32,
+            "column": 73
+          }
+        },
+        "11": {
+          "start": {
+            "line": 34,
+            "column": 4
+          },
+          "end": {
+            "line": 40,
+            "column": 5
+          }
+        },
+        "12": {
+          "start": {
+            "line": 35,
+            "column": 8
+          },
+          "end": {
+            "line": 35,
+            "column": 28
+          }
+        },
+        "13": {
+          "start": {
+            "line": 36,
+            "column": 8
+          },
+          "end": {
+            "line": 36,
+            "column": 49
+          }
+        },
+        "14": {
+          "start": {
+            "line": 38,
+            "column": 8
+          },
+          "end": {
+            "line": 38,
+            "column": 23
+          }
+        },
+        "15": {
+          "start": {
+            "line": 39,
+            "column": 8
+          },
+          "end": {
+            "line": 39,
+            "column": 44
+          }
+        },
+        "16": {
+          "start": {
+            "line": 46,
+            "column": 26
+          },
+          "end": {
+            "line": 60,
+            "column": 2
+          }
+        },
+        "17": {
+          "start": {
+            "line": 47,
+            "column": 24
+          },
+          "end": {
+            "line": 56,
+            "column": 6
+          }
+        },
+        "18": {
+          "start": {
+            "line": 58,
+            "column": 31
+          },
+          "end": {
+            "line": 58,
+            "column": 55
+          }
+        },
+        "19": {
+          "start": {
+            "line": 59,
+            "column": 4
+          },
+          "end": {
+            "line": 59,
+            "column": 44
+          }
+        },
+        "20": {
+          "start": {
+            "line": 65,
+            "column": 26
+          },
+          "end": {
+            "line": 86,
+            "column": 2
+          }
+        },
+        "21": {
+          "start": {
+            "line": 66,
+            "column": 87
+          },
+          "end": {
+            "line": 66,
+            "column": 95
+          }
+        },
+        "22": {
+          "start": {
+            "line": 68,
+            "column": 30
+          },
+          "end": {
+            "line": 68,
+            "column": 79
+          }
+        },
+        "23": {
+          "start": {
+            "line": 70,
+            "column": 4
+          },
+          "end": {
+            "line": 85,
+            "column": 5
+          }
+        },
+        "24": {
+          "start": {
+            "line": 72,
+            "column": 8
+          },
+          "end": {
+            "line": 72,
+            "column": 37
+          }
+        },
+        "25": {
+          "start": {
+            "line": 73,
+            "column": 8
+          },
+          "end": {
+            "line": 73,
+            "column": 39
+          }
+        },
+        "26": {
+          "start": {
+            "line": 74,
+            "column": 8
+          },
+          "end": {
+            "line": 74,
+            "column": 39
+          }
+        },
+        "27": {
+          "start": {
+            "line": 75,
+            "column": 8
+          },
+          "end": {
+            "line": 75,
+            "column": 51
+          }
+        },
+        "28": {
+          "start": {
+            "line": 76,
+            "column": 8
+          },
+          "end": {
+            "line": 76,
+            "column": 53
+          }
+        },
+        "29": {
+          "start": {
+            "line": 77,
+            "column": 8
+          },
+          "end": {
+            "line": 77,
+            "column": 45
+          }
+        },
+        "30": {
+          "start": {
+            "line": 78,
+            "column": 8
+          },
+          "end": {
+            "line": 78,
+            "column": 55
+          }
+        },
+        "31": {
+          "start": {
+            "line": 80,
+            "column": 31
+          },
+          "end": {
+            "line": 80,
+            "column": 61
+          }
+        },
+        "32": {
+          "start": {
+            "line": 81,
+            "column": 8
+          },
+          "end": {
+            "line": 81,
+            "column": 44
+          }
+        },
+        "33": {
+          "start": {
+            "line": 83,
+            "column": 8
+          },
+          "end": {
+            "line": 83,
+            "column": 23
+          }
+        },
+        "34": {
+          "start": {
+            "line": 84,
+            "column": 8
+          },
+          "end": {
+            "line": 84,
+            "column": 44
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 9,
+              "column": 38
+            },
+            "end": {
+              "line": 9,
+              "column": 39
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 57
+            },
+            "end": {
+              "line": 12,
+              "column": 1
+            }
+          },
+          "line": 9
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 17,
+              "column": 41
+            },
+            "end": {
+              "line": 17,
+              "column": 42
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 60
+            },
+            "end": {
+              "line": 26,
+              "column": 1
+            }
+          },
+          "line": 17
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 31,
+              "column": 40
+            },
+            "end": {
+              "line": 31,
+              "column": 41
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 31,
+              "column": 59
+            },
+            "end": {
+              "line": 41,
+              "column": 1
+            }
+          },
+          "line": 31
+        },
+        "3": {
+          "name": "(anonymous_3)",
+          "decl": {
+            "start": {
+              "line": 46,
+              "column": 39
+            },
+            "end": {
+              "line": 46,
+              "column": 40
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 46,
+              "column": 59
+            },
+            "end": {
+              "line": 60,
+              "column": 1
+            }
+          },
+          "line": 46
+        },
+        "4": {
+          "name": "(anonymous_4)",
+          "decl": {
+            "start": {
+              "line": 65,
+              "column": 39
+            },
+            "end": {
+              "line": 65,
+              "column": 40
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 65,
+              "column": 59
+            },
+            "end": {
+              "line": 86,
+              "column": 1
+            }
+          },
+          "line": 65
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 4
+            },
+            "end": {
+              "line": 25,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 20,
+                "column": 4
+              },
+              "end": {
+                "line": 25,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 22,
+                "column": 11
+              },
+              "end": {
+                "line": 25,
+                "column": 5
+              }
+            }
+          ],
+          "line": 20
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 34,
+              "column": 4
+            },
+            "end": {
+              "line": 40,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 34,
+                "column": 4
+              },
+              "end": {
+                "line": 40,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 37,
+                "column": 11
+              },
+              "end": {
+                "line": 40,
+                "column": 5
+              }
+            }
+          ],
+          "line": 34
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 70,
+              "column": 4
+            },
+            "end": {
+              "line": 85,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 70,
+                "column": 4
+              },
+              "end": {
+                "line": 85,
+                "column": 5
+              }
+            },
+            {
+              "start": {
+                "line": 82,
+                "column": 11
+              },
+              "end": {
+                "line": 85,
+                "column": 5
+              }
+            }
+          ],
+          "line": 70
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 1,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 1,
+        "17": 1,
+        "18": 1,
+        "19": 0,
+        "20": 1,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "27": 0,
+        "28": 0,
+        "29": 0,
+        "30": 0,
+        "31": 0,
+        "32": 0,
+        "33": 0,
+        "34": 0
+      },
+      "f": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 0
+      },
+      "b": {
+        "0": [
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "508e9d22fc0f1b7ce4963565f8e9d24a8b476f41"
+    }
+  }
+}

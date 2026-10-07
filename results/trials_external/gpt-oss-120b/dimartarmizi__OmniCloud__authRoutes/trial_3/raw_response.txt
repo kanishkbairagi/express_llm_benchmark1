@@ -1,0 +1,179 @@
+```javascript
+import router from '../dataset/external/dimartarmizi__OmniCloud/backend/src/routes/authRoutes.js';
+import {
+  clearUserSessions,
+  createSession,
+  destroySession,
+  getAuthSummary,
+  loginHostedUser,
+  registerHostedUser,
+} from '../dataset/external/dimartarmizi__OmniCloud/backend/src/services/authService.js';
+import { env } from '../dataset/external/dimartarmizi__OmniCloud/backend/src/config/env.js';
+
+jest.mock('../dataset/external/dimartarmizi__OmniCloud/backend/src/services/authService.js', () => ({
+  clearUserSessions: jest.fn(),
+  createSession: jest.fn(),
+  destroySession: jest.fn(),
+  getAuthSummary: jest.fn(),
+  loginHostedUser: jest.fn(),
+  registerHostedUser: jest.fn(),
+}));
+
+jest.mock('../dataset/external/dimartarmizi__OmniCloud/backend/src/config/env.js', () => ({
+  env: {
+    authCookieName: 'auth_token',
+    appMode: 'local',
+  },
+}));
+
+const getHandler = (method, path) => {
+  const layer = router.stack.find(
+    (l) => l.route && l.route.path === path && l.route.methods[method]
+  );
+  return layer.route.stack[0].handle;
+};
+
+const createMockRes = () => {
+  const res = {
+    json: jest.fn(),
+    cookie: jest.fn(),
+    clearCookie: jest.fn(),
+    status: jest.fn(),
+    locals: {},
+  };
+  // allow chaining: res.status(201).json(...)
+  res.status.mockReturnValue(res);
+  return res;
+};
+
+describe('authRoutes', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('GET /auth/me returns auth summary', () => {
+    const req = { user: { id: 1 } };
+    const res = createMockRes();
+
+    getAuthSummary.mockReturnValue({ id: 1, name: 'Alice' });
+
+    const handler = getHandler('get', '/auth/me');
+    handler(req, res);
+
+    expect(getAuthSummary).toHaveBeenCalledWith(req.user);
+    expect(res.json).toHaveBeenCalledWith({ data: { id: 1, name: 'Alice' } });
+  });
+
+  test('POST /auth/register success flow', () => {
+    const req = { body: { email: 'test@example.com' } };
+    const res = createMockRes();
+
+    const mockUser = { id: 42, email: 'test@example.com' };
+    const mockSession = { token: 'session-token' };
+    const mockSummary = { id: 42, email: 'test@example.com' };
+
+    registerHostedUser.mockReturnValue(mockUser);
+    createSession.mockReturnValue(mockSession);
+    getAuthSummary.mockReturnValue(mockSummary);
+
+    const handler = getHandler('post', '/auth/register');
+    handler(req, res, jest.fn());
+
+    expect(registerHostedUser).toHaveBeenCalledWith(req.body);
+    expect(clearUserSessions).toHaveBeenCalledWith(mockUser.id);
+    expect(createSession).toHaveBeenCalledWith(mockUser.id);
+    expect(res.cookie).toHaveBeenCalledWith(env.authCookieName, mockSession.token, {});
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({ data: mockSummary });
+  });
+
+  test('POST /auth/register propagates error to next', () => {
+    const req = { body: {} };
+    const res = createMockRes();
+    const next = jest.fn();
+    const error = new Error('registration failed');
+
+    registerHostedUser.mockImplementation(() => {
+      throw error;
+    });
+
+    const handler = getHandler('post', '/auth/register');
+    handler(req, res, next);
+
+    expect(next).toHaveBeenCalledWith(error);
+  });
+
+  test('POST /auth/login success flow', () => {
+    const req = { body: { email: 'login@example.com' } };
+    const res = createMockRes();
+
+    const mockUser = { id: 7, email: 'login@example.com' };
+    const mockSession = { token: 'login-token' };
+    const mockSummary = { id: 7, email: 'login@example.com' };
+
+    loginHostedUser.mockReturnValue(mockUser);
+    createSession.mockReturnValue(mockSession);
+    getAuthSummary.mockReturnValue(mockSummary);
+
+    const handler = getHandler('post', '/auth/login');
+    handler(req, res, jest.fn());
+
+    expect(loginHostedUser).toHaveBeenCalledWith(req.body);
+    expect(createSession).toHaveBeenCalledWith(mockUser.id);
+    expect(res.cookie).toHaveBeenCalledWith(env.authCookieName, mockSession.token, {});
+    expect(res.json).toHaveBeenCalledWith({ data: mockSummary });
+  });
+
+  test('POST /auth/login propagates error to next', () => {
+    const req = { body: {} };
+    const res = createMockRes();
+    const next = jest.fn();
+    const error = new Error('login failed');
+
+    loginHostedUser.mockImplementation(() => {
+      throw error;
+    });
+
+    const handler = getHandler('post', '/auth/login');
+    handler(req, res, next);
+
+    expect(next).toHaveBeenCalledWith(error);
+  });
+
+  test('POST /auth/logout clears session and cookie when token present', () => {
+    const tokenValue = 'encoded%20token';
+    const decodedToken = 'encoded token';
+    const req = {
+      headers: { cookie: `${env.authCookieName}=${tokenValue}; other=val` },
+      user: { id: 99 },
+    };
+    const res = createMockRes();
+
+    getAuthSummary.mockReturnValue({ loggedOut: true });
+
+    const handler = getHandler('post', '/auth/logout');
+    handler(req, res);
+
+    expect(destroySession).toHaveBeenCalledWith(decodedToken);
+    expect(res.clearCookie).toHaveBeenCalledWith(env.authCookieName, { maxAge: 0 });
+    expect(res.json).toHaveBeenCalledWith({ data: { loggedOut: true } });
+  });
+
+  test('POST /auth/logout works when no token is present', () => {
+    const req = {
+      headers: { cookie: 'someOtherCookie=val' },
+      user: { id: 55 },
+    };
+    const res = createMockRes();
+
+    getAuthSummary.mockReturnValue({ loggedOut: true });
+
+    const handler = getHandler('post', '/auth/logout');
+    handler(req, res);
+
+    expect(destroySession).not.toHaveBeenCalled();
+    expect(res.clearCookie).toHaveBeenCalledWith(env.authCookieName, { maxAge: 0 });
+    expect(res.json).toHaveBeenCalledWith({ data: { loggedOut: true } });
+  });
+});
+```

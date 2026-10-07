@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "Rajatm544__MERN-Ecommerce__productControllers",
+  "targetFilename": "external/Rajatm544__MERN-Ecommerce/backend/controllers/productControllers.js",
+  "trial": 3,
+  "startedAt": "2026-10-07T05:15:29.176Z",
+  "finishedAt": "2026-10-07T05:16:24.277Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 13,
+  "testsTotal": 13,
+  "errorCategory": "AssertionFailure",
+  "statementCoverage": 9.86,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 11.67,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1625,
+    "completionTokens": 2609,
+    "totalTokens": 8831,
+    "thinkingTokens": 4597
+  },
+  "latencyMs": 31685
+}

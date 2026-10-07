@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "panshak__accountill__profile",
+  "targetFilename": "external/panshak__accountill/server/controllers/profile.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:11:16.524Z",
+  "finishedAt": "2026-10-05T05:11:51.410Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 1065,
+    "completionTokens": 2203,
+    "totalTokens": 6527,
+    "thinkingTokens": 3259
+  },
+  "latencyMs": 21483
+}

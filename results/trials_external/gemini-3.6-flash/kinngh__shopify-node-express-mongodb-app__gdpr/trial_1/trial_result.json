@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "kinngh__shopify-node-express-mongodb-app__gdpr",
+  "targetFilename": "external/kinngh__shopify-node-express-mongodb-app/server/controllers/gdpr.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:05:27.950Z",
+  "finishedAt": "2026-10-05T05:05:45.493Z",
+  "suiteOk": true,
+  "testsPassed": 6,
+  "testsFailed": 0,
+  "testsTotal": 6,
+  "errorCategory": "none",
+  "statementCoverage": 100,
+  "branchCoverage": 0,
+  "functionCoverage": 100,
+  "lineCoverage": 100,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 920,
+    "completionTokens": 1038,
+    "totalTokens": 2722,
+    "thinkingTokens": 764
+  },
+  "latencyMs": 8168
+}

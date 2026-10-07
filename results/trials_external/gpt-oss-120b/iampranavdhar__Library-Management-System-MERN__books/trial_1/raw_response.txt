@@ -1,0 +1,158 @@
+```javascript
+import request from 'supertest';
+import express from 'express';
+import router from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/routes/books.js';
+import Book from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/Book.js';
+import BookCategory from '../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/BookCategory.js';
+
+jest.mock('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/Book.js', () => {
+  const mockSave = jest.fn();
+  const mockRemove = jest.fn();
+  const MockBook = jest.fn().mockImplementation((data) => ({
+    ...data,
+    save: mockSave,
+    remove: mockRemove,
+  }));
+  MockBook.find = jest.fn();
+  MockBook.findById = jest.fn();
+  MockBook.findByIdAndUpdate = jest.fn();
+  MockBook.findOne = jest.fn();
+  MockBook.updateMany = jest.fn();
+  MockBook.mockSave = mockSave;
+  MockBook.mockRemove = mockRemove;
+  return MockBook;
+});
+
+jest.mock('../dataset/external/iampranavdhar__Library-Management-System-MERN/backend/models/BookCategory.js', () => {
+  const MockCategory = {
+    findOne: jest.fn(),
+    updateMany: jest.fn(),
+  };
+  return MockCategory;
+});
+
+const app = express();
+app.use(express.json());
+app.use('/', router);
+
+describe('Books router', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('GET /allbooks returns books with status 200', async () => {
+    const mockBooks = [{ _id: '1', title: 'Mock Book' }];
+    Book.find.mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        sort: jest.fn().mockResolvedValue(mockBooks),
+      }),
+    });
+
+    const res = await request(app).get('/allbooks');
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual(mockBooks);
+    expect(Book.find).toHaveBeenCalledWith({});
+  });
+
+  test('GET /getbook/:id returns a single book with status 200', async () => {
+    const mockBook = { _id: '123', title: 'Single Book' };
+    Book.findById.mockResolvedValue({
+      populate: jest.fn().mockResolvedValue(mockBook),
+    });
+
+    const res = await request(app).get('/getbook/123');
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual(mockBook);
+    expect(Book.findById).toHaveBeenCalledWith('123');
+  });
+
+  test('GET / with category query returns books by category with status 200', async () => {
+    const mockCategory = { categoryName: 'Fiction', books: [{ _id: 'b1' }] };
+    BookCategory.findOne.mockReturnValue({
+      populate: jest.fn().mockResolvedValue(mockCategory),
+    });
+
+    const res = await request(app).get('/').query({ category: 'Fiction' });
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual(mockCategory);
+    expect(BookCategory.findOne).toHaveBeenCalledWith({ categoryName: 'Fiction' });
+  });
+
+  test('POST /addbook with admin creates a book and returns it', async () => {
+    const newBookData = {
+      isAdmin: true,
+      bookName: 'New Book',
+      alternateTitle: 'Alt',
+      author: 'Author',
+      bookCountAvailable: 5,
+      language: 'EN',
+      publisher: 'Pub',
+      bookSatus: 'Available',
+      categories: ['catId'],
+    };
+    const savedBook = { _id: 'newId', ...newBookData };
+    Book.mockImplementation(() => ({
+      save: jest.fn().mockResolvedValue(savedBook),
+    }));
+    BookCategory.updateMany.mockResolvedValue({});
+
+    const res = await request(app).post('/addbook').send(newBookData);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual(savedBook);
+    expect(BookCategory.updateMany).toHaveBeenCalledWith(
+      { _id: savedBook.categories },
+      { $push: { books: savedBook._id } }
+    );
+  });
+
+  test('POST /addbook without admin returns 403', async () => {
+    const res = await request(app).post('/addbook').send({ isAdmin: false });
+    expect(res.status).toBe(403);
+    expect(res.body).toBe('You dont have permission to delete a book!');
+  });
+
+  test('PUT /updatebook/:id with admin updates book and returns success message', async () => {
+    Book.findByIdAndUpdate.mockResolvedValue({});
+    const res = await request(app)
+      .put('/updatebook/abc')
+      .send({ isAdmin: true, title: 'Updated' });
+    expect(res.status).toBe(200);
+    expect(res.body).toBe('Book details updated successfully');
+    expect(Book.findByIdAndUpdate).toHaveBeenCalledWith('abc', { $set: { isAdmin: true, title: 'Updated' } });
+  });
+
+  test('PUT /updatebook/:id without admin returns 403', async () => {
+    const res = await request(app).put('/updatebook/abc').send({ isAdmin: false });
+    expect(res.status).toBe(403);
+    expect(res.body).toBe('You dont have permission to delete a book!');
+  });
+
+  test('DELETE /removebook/:id with admin deletes book and returns success message', async () => {
+    const mockBook = {
+      _id: 'delId',
+      categories: ['catId'],
+      remove: jest.fn().mockResolvedValue(),
+    };
+    Book.findOne.mockResolvedValue(mockBook);
+    BookCategory.updateMany.mockResolvedValue({});
+
+    const res = await request(app)
+      .delete('/removebook/delId')
+      .send({ isAdmin: true });
+    expect(res.status).toBe(200);
+    expect(res.body).toBe('Book has been deleted');
+    expect(Book.findOne).toHaveBeenCalledWith({ _id: 'delId' });
+    expect(mockBook.remove).toHaveBeenCalled();
+    expect(BookCategory.updateMany).toHaveBeenCalledWith(
+      { _id: mockBook.categories },
+      { $pull: { books: mockBook._id } }
+    );
+  });
+
+  test('DELETE /removebook/:id without admin returns 403', async () => {
+    const res = await request(app).delete('/removebook/delId').send({ isAdmin: false });
+    expect(res.status).toBe(403);
+    expect(res.body).toBe('You dont have permission to delete a book!');
+  });
+});
+```

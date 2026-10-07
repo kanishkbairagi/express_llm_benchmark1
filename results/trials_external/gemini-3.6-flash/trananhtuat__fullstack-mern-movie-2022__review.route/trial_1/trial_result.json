@@ -1,0 +1,25 @@
+{
+  "model": "gemini-3.6-flash",
+  "controller": "trananhtuat__fullstack-mern-movie-2022__review.route",
+  "targetFilename": "external/trananhtuat__fullstack-mern-movie-2022/server/src/routes/review.route.js",
+  "trial": 1,
+  "startedAt": "2026-10-05T05:23:27.539Z",
+  "finishedAt": "2026-10-05T05:23:55.234Z",
+  "suiteOk": false,
+  "testsPassed": 0,
+  "testsFailed": 0,
+  "testsTotal": 0,
+  "errorCategory": "runtime_error",
+  "statementCoverage": 0,
+  "branchCoverage": 0,
+  "functionCoverage": 0,
+  "lineCoverage": 0,
+  "finishReason": "STOP",
+  "usage": {
+    "promptTokens": 464,
+    "completionTokens": 1211,
+    "totalTokens": 3463,
+    "thinkingTokens": 1788
+  },
+  "latencyMs": 12914
+}

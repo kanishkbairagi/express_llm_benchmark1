@@ -1,0 +1,314 @@
+```javascript
+import routes from '../dataset/external/mongo-express__mongo-express/lib/routes/gridfs.js';
+import { Readable } from 'node:stream';
+
+// ---- Mocks ----
+jest.mock('mongodb', () => {
+  const EventEmitter = require('events');
+  const mockBucket = jest.fn().mockImplementation(() => ({
+    openUploadStream: jest.fn().mockImplementation(() => {
+      const ee = new EventEmitter();
+      // Mimic a writable stream that returns itself on pipe
+      return Object.assign(ee, {
+        on: ee.on.bind(ee),
+        pipe: function () {
+          return this;
+        },
+      });
+    }),
+    find: jest.fn(),
+    openDownloadStream: jest.fn(),
+    delete: jest.fn(),
+  }));
+  const ObjectId = {
+    createFromHexString: jest.fn().mockImplementation((hex) => ({ hex })),
+  };
+  return { GridFSBucket: mockBucket, ObjectId };
+});
+
+jest.mock('../dataset/external/mongo-express__mongo-express/lib/utils.js', () => ({
+  bytesToSize: jest.fn((bytes) => `${bytes}B`),
+}));
+
+import mongo from 'mongodb';
+import * as utils from '../dataset/external/mongo-express__mongo-express/lib/utils.js';
+
+describe('gridfs routes', () => {
+  let exp;
+  beforeEach(() => {
+    exp = routes(); // get exported handlers
+    jest.clearAllMocks();
+  });
+
+  // ---------- viewBucket ----------
+  test('viewBucket builds correct context and renders', async () => {
+    const req = {
+      bucketName: 'myBucket',
+      dbName: 'myDB',
+      connFiles: [
+        {
+          _id: 'id1',
+          filename: 'file1.txt',
+          length: 1024,
+          chunkSize: 255,
+          contentType: 'text/plain',
+        },
+        {
+          _id: 'id2',
+          filename: 'file2.jpg',
+          length: 2048,
+          chunkSize: 255,
+          metadata: { contentType: 'image/jpeg', extra: 'keep' },
+        },
+      ],
+      csrfToken: () => 'csrf-token',
+    };
+    const res = {
+      locals: { gridFSBuckets: { myDB: ['bucketA'] } },
+      render: jest.fn(),
+    };
+
+    await exp.viewBucket(req, res);
+
+    // utils called correctly
+    const avgChunk = (255 + 255) / 2;
+    const totalSize = 1024 + 2048;
+    expect(utils.bytesToSize).toHaveBeenCalledWith(avgChunk);
+    expect(utils.bytesToSize).toHaveBeenCalledWith(totalSize);
+    expect(utils.bytesToSize).toHaveBeenCalledWith(1024);
+    expect(utils.bytesToSize).toHaveBeenCalledWith(2048);
+
+    // Files transformed
+    expect(req.connFiles[0].length).toBe('1024B');
+    expect(req.connFiles[0].chunkSize).toBeUndefined();
+    expect(req.connFiles[1].length).toBe('2048B');
+    expect(req.connFiles[1].chunkSize).toBeUndefined();
+
+    // contentType lifted and metadata cleaned
+    expect(req.connFiles[0].contentType).toBe('text/plain');
+    expect(req.connFiles[0].metadata).toBeUndefined();
+    expect(req.connFiles[1].contentType).toBe('image/jpeg');
+    expect(req.connFiles[1].metadata).toEqual({ extra: 'keep' });
+
+    // columns set correctly (no _id or chunkSize)
+    const renderedCtx = res.render.mock.calls[0][1];
+    expect(renderedCtx.title).toBe('Viewing Bucket: myBucket');
+    expect(renderedCtx.columns).toContain('filename');
+    expect(renderedCtx.columns).toContain('length');
+    expect(renderedCtx.columns).toContain('contentType');
+    expect(renderedCtx.columns).toContain('metadata');
+    expect(renderedCtx.columns).not.toContain('_id');
+    expect(renderedCtx.columns).not.toContain('chunkSize');
+
+    // stats
+    expect(renderedCtx.stats.avgChunk).toBe('255B');
+    expect(renderedCtx.stats.totalSize).toBe('3072B');
+
+    // render called with correct template
+    expect(res.render).toHaveBeenCalledWith('gridfs', renderedCtx);
+  });
+
+  // ---------- addFile ----------
+  test('addFile redirects with error when no file uploaded', async () => {
+    const req = {
+      files: null,
+      get: jest.fn().mockReturnValue('/referrer'),
+      session: {},
+    };
+    const res = {
+      redirect: jest.fn(),
+    };
+
+    await exp.addFile(req, res);
+
+    expect(req.session.error).toBe('No file uploaded!');
+    expect(res.redirect).toHaveBeenCalledWith('/referrer');
+  });
+
+  test('addFile uploads file successfully and sets success message', async () => {
+    const fileData = Buffer.from('hello');
+    const req = {
+      files: { filefield: { data: fileData, name: 'greeting.txt', mimetype: 'text/plain' } },
+      get: jest.fn().mockReturnValue('/back'),
+      db: {},
+      bucketName: 'myBucket',
+      session: {},
+    };
+    const res = { redirect: jest.fn() };
+
+    // Simulate finish event after a tick
+    const mockBucketInstance = mongo.GridFSBucket.mock.instances[0];
+    const uploadStream = mockBucketInstance.openUploadStream.mock.results[0].value;
+    process.nextTick(() => uploadStream.emit('finish'));
+
+    await exp.addFile(req, res);
+
+    expect(req.session.success).toBe('File uploaded!');
+    expect(res.redirect).toHaveBeenCalledWith('/back');
+  });
+
+  test('addFile handles upload error', async () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const req = {
+      files: { filefield: { data: Buffer.from('x'), name: 'x.bin', mimetype: 'application/octet-stream' } },
+      get: jest.fn().mockReturnValue('/back'),
+      db: {},
+      bucketName: 'bucket',
+      session: {},
+    };
+    const res = { redirect: jest.fn() };
+
+    const mockBucketInstance = mongo.GridFSBucket.mock.instances[0];
+    const uploadStream = mockBucketInstance.openUploadStream.mock.results[0].value;
+    process.nextTick(() => uploadStream.emit('error', new Error('boom')));
+
+    await exp.addFile(req, res);
+
+    expect(req.session.error).toMatch(/Could not upload the file/);
+    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.any(Error));
+    expect(res.redirect).toHaveBeenCalledWith('/back');
+    consoleErrorSpy.mockRestore();
+  });
+
+  // ---------- getFile ----------
+  test('getFile redirects with error when file not found', async () => {
+    const req = {
+      db: {},
+      bucketName: 'bucket',
+      fileID: 'abcd1234',
+      get: jest.fn().mockReturnValue('/ref'),
+      session: {},
+    };
+    const res = { redirect: jest.fn() };
+    const mockBucket = mongo.GridFSBucket.mock.instances[0];
+    mockBucket.find.mockReturnValue({
+      limit: jest.fn().mockReturnThis(),
+      toArray: jest.fn().mockResolvedValue([]),
+    });
+
+    await exp.getFile(req, res);
+
+    expect(req.session.error).toBe('File not found!');
+    expect(res.redirect).toHaveBeenCalledWith('/ref');
+  });
+
+  test('getFile streams existing file with proper headers', async () => {
+    const req = {
+      db: {},
+      bucketName: 'bucket',
+      fileID: 'abcd1234',
+      get: jest.fn(),
+      session: {},
+    };
+    const setMock = jest.fn();
+    const pipeMock = jest.fn();
+    const res = { set: setMock, pipe: pipeMock };
+    const fileDoc = {
+      _id: { hex: 'abcd1234' },
+      filename: 'photo.png',
+      metadata: { contentType: 'image/png' },
+    };
+    const mockBucket = mongo.GridFSBucket.mock.instances[0];
+    mockBucket.find.mockReturnValue({
+      limit: jest.fn().mockReturnThis(),
+      toArray: jest.fn().mockResolvedValue([fileDoc]),
+    });
+    mockBucket.openDownloadStream.mockReturnValue({
+      on: (event, cb) => {
+        // no error emitted
+        return { pipe: pipeMock };
+      },
+    });
+
+    await exp.getFile(req, res);
+
+    expect(setMock).toHaveBeenCalledWith('Content-Type', 'image/png');
+    expect(setMock).toHaveBeenCalledWith(
+      'Content-Disposition',
+      'attachment; filename="photo.png"'
+    );
+    expect(pipeMock).toHaveBeenCalledWith(res);
+  });
+
+  test('getFile handles stream error', async () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const req = {
+      db: {},
+      bucketName: 'bucket',
+      fileID: 'abcd1234',
+      get: jest.fn(),
+      session: {},
+    };
+    const setMock = jest.fn();
+    const endMock = jest.fn();
+    const res = { set: setMock, end: endMock };
+    const fileDoc = { _id: { hex: 'abcd1234' }, filename: 'a.txt', contentType: 'text/plain' };
+    const mockBucket = mongo.GridFSBucket.mock.instances[0];
+    mockBucket.find.mockReturnValue({
+      limit: jest.fn().mockReturnThis(),
+      toArray: jest.fn().mockResolvedValue([fileDoc]),
+    });
+    mockBucket.openDownloadStream.mockReturnValue({
+      on: (event, cb) => {
+        if (event === 'error') {
+          process.nextTick(() => cb(new Error('stream fail')));
+        }
+        return { on: () => {} };
+      },
+      pipe: jest.fn(),
+    });
+
+    await exp.getFile(req, res);
+
+    // wait for async error handling
+    await new Promise(process.nextTick);
+
+    expect(req.session.error).toBe('Error: Error: stream fail');
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Got error while processing stream')
+    );
+    expect(endMock).toHaveBeenCalled();
+    consoleErrorSpy.mockRestore();
+  });
+
+  // ---------- deleteFile ----------
+  test('deleteFile succeeds and sets success message', async () => {
+    const req = {
+      db: {},
+      bucketName: 'bucket',
+      fileID: 'deadbeef',
+      get: jest.fn().mockReturnValue('/back'),
+      session: {},
+    };
+    const res = { redirect: jest.fn() };
+    const mockBucket = mongo.GridFSBucket.mock.instances[0];
+    mockBucket.delete.mockResolvedValue();
+
+    await exp.deleteFile(req, res);
+
+    expect(req.session.success).toBe('File _id: "deadbeef" deleted! ');
+    expect(res.redirect).toHaveBeenCalledWith('/back');
+  });
+
+  test('deleteFile handles error', async () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const req = {
+      db: {},
+      bucketName: 'bucket',
+      fileID: 'badid',
+      get: jest.fn().mockReturnValue('/back'),
+      session: {},
+    };
+    const res = { redirect: jest.fn() };
+    const mockBucket = mongo.GridFSBucket.mock.instances[0];
+    mockBucket.delete.mockRejectedValue(new Error('boom'));
+
+    await exp.deleteFile(req, res);
+
+    expect(req.session.error).toMatch(/Could not delete the file/);
+    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.any(Error));
+    expect(res.redirect).toHaveBeenCalledWith('/back');
+    consoleErrorSpy.mockRestore();
+  });
+});
+```
