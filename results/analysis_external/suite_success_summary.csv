@@ -1,0 +1,3 @@
+model,total_trials,passed_trials,success_rate_pct,bootstrap_ci_95_low,bootstrap_ci_95_high,flipping_controllers_count,total_controllers,flip_share_pct
+gemini-3.6-flash,75,8,10.666666666666668,1.3888888888888886,24.24242424242424,4,25,16.0
+gpt-oss-120b,75,5,6.666666666666667,0.0,17.391304347826086,2,25,8.0

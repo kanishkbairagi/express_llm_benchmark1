@@ -50,3 +50,4 @@
 - **Descriptive Metrics:** Repository star counts are reported descriptively.
 - **Limitations:** Potential training data contamination risk for popular public repositories is an explicitly stated limitation.
 - **Deviations:** Any protocol deviation during execution must be logged in `LAB_NOTEBOOK.md`.
+Post-hoc (written after seeing Set B failure breakdowns): failure classification table; no change to primary analysis.

@@ -1,0 +1,4 @@
+finishReason,gemini-3.6-flash,gpt-oss-120b,Total
+STOP,75,0,75
+stop,0,75,75
+Total,75,75,150

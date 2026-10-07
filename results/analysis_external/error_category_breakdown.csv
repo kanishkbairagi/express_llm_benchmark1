@@ -1,0 +1,6 @@
+errorCategory,gemini-3.6-flash,gpt-oss-120b,Total
+AssertionFailure,25,50,75
+SyntaxError,1,4,5
+other_error,0,1,1
+runtime_error,41,15,56
+Total,67,70,137

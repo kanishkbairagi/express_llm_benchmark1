@@ -1,0 +1,9 @@
+model,metric,n_trials,mean,median,p25,p75,iqr
+gemini-3.6-flash,Prompt Tokens,75,1036.48,1003.0,811.0,1205.0,394.0
+gemini-3.6-flash,Completion Tokens,75,2178.36,2149.0,1751.0,2585.0,834.0
+gemini-3.6-flash,Thinking/Reasoning Tokens,75,2875.0,2692.0,2039.0,3342.5,1303.5
+gemini-3.6-flash,Total Tokens,75,6089.84,6208.0,4729.5,7084.5,2355.0
+gpt-oss-120b,Prompt Tokens,75,935.08,907.0,733.0,1071.0,338.0
+gpt-oss-120b,Completion Tokens,75,2665.5066666666667,2549.0,2203.5,2995.0,791.5
+gpt-oss-120b,Thinking/Reasoning Tokens,75,904.2,644.0,495.5,1240.0,744.5
+gpt-oss-120b,Total Tokens,75,3600.5866666666666,3457.0,3080.5,4257.0,1176.5

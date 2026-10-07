@@ -3,3 +3,4 @@
 2026-10-04: Deviation: the primary comparison in analyze_trials.py used controllers with 5/5 executed suites for both models (22 controllers) instead of trial-level matching from analysis_plan.md; sensitivity analyses A and B added to show both.
 2026-10-04: Set B: orderControllers.js excluded per protocol (import-time Stripe client crash); replacement chosen by the same deterministic rule; protocol committed 21:51, candidate search ran after.
 2026-10-0X: Set B generation completed: k=3, 25 external controllers, both models, 150/150 trials, 26 transient API failures recovered on resume. Gemini API keys used for Set B: <NUMBER OF KEYS> (user to fill in), billing not enabled.
+2026-10-0X: Post-hoc (written after seeing Set B failure breakdowns): failure classification table; no change to primary analysis. External controller module styles: 0 CommonJS (require/module.exports), 25 ES Modules (import/export).
