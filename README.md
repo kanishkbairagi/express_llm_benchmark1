@@ -1,56 +1,20 @@
 # Express.js Free-Tier LLM Unit Test Generation Benchmark
 
-Companion repository for *"A Single-Run Empirical Comparison of Free-Tier LLMs
-on Express.js Unit Test Generation and Line Coverage"* (Kanishk Bairagi).
+Empirical evaluation benchmarking `gemini-3.6-flash` and `gpt-oss-120b` (via Groq) on automated unit test generation for Express.js controllers in native ES Modules.
 
-This repo contains everything needed to reproduce the benchmark, and to
-extend it into a repeated-trial study (see [Limitations](#limitations) below).
+## Study Overview
 
-## Contents
+This repository contains a repeated-trial benchmark evaluating two models across two controller suites:
 
-- `dataset/` — 25 hand-authored Express.js controller modules (native ESM),
-  covering the domains listed in Table I of the paper (auth, payment, cart,
-  webhook, etc.)
-- `run-benchmark.mjs` — evaluation harness: queries both models, sanitizes
-  output, executes under Jest with `--experimental-vm-modules`, and
-  aggregates results (single-run or repeated-trial mode)
-- `results/` — raw and aggregated output from harness runs
-- `express_llm_benchmark.tex` / `.pdf` — the paper itself
+- **Set A**: 25 author-written Express.js controllers (`dataset/*.js`), evaluated over 5 repeated trials per model ($k=5$, 250 total trials).
+- **Set B**: 25 external Express.js controllers from 13 public GitHub repositories (`dataset/external/`, registered in `external_manifest.json`), evaluated over 3 repeated trials per model ($k=3$, 150 total trials).
 
-## Requirements
+### Evaluation Configuration
+- **Sampling Parameters**: Provider-default sampling (temperature, top-p, top-k; neither model was queried with forced $T=0$).
+- **Token Cap**: 32,768 max output tokens per request.
+- **Execution & Test Framework**: Jest ESM (`--experimental-vm-modules`) and StrykerJS mutation testing.
 
-- Node.js >= 18
-- `npm install jest --save-dev`
-- API keys for both endpoints (both free-tier at time of writing):
-  - `GEMINI_API_KEY` — [Google AI Studio](https://aistudio.google.com/)
-  - `GROQ_API_KEY` — [Groq Console](https://console.groq.com/)
+## Manuscript & Documentation
 
-## Running the benchmark
-
-Single run (as reported in the paper):
-
-```bash
-GEMINI_API_KEY=... GROQ_API_KEY=... node run-benchmark.mjs --trials 1
-```
-
-Repeated-trial mode (recommended — see Limitations):
-
-```bash
-GEMINI_API_KEY=... GROQ_API_KEY=... node run-benchmark.mjs --trials 5
-```
-
-Output lands in `./results/raw-trials.json` and `./results/aggregated.{json,csv}`.
-
-## Limitations
-
-As discussed in the paper's Threats to Validity section, the results
-reported are from a **single run per controller per model** ($k=1$,
-temperature $T=0$). This harness supports repeated trials
-(`--trials N`) specifically so this limitation can be addressed; PRs
-with `k >= 3` result sets are welcome.
-
-The benchmark dataset was hand-authored by the same person who ran the
-evaluation, which is a known source of potential dataset-model alignment
-bias — see the paper for full discussion.
-
-
+- Current study manuscript and tables: [`paper/main.tex`](paper/main.tex) and [`paper/tables/`](paper/tables/).
+- **Superseded Single-Run Notice**: The earlier single-run manuscript has been archived and superseded. See [`archive/superseded_single_run/SUPERSEDED.md`](archive/superseded_single_run/SUPERSEDED.md) for details on known errors in that preliminary draft.
