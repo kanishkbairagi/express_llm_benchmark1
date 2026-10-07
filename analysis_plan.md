@@ -51,3 +51,4 @@
 - **Limitations:** Potential training data contamination risk for popular public repositories is an explicitly stated limitation.
 - **Deviations:** Any protocol deviation during execution must be logged in `LAB_NOTEBOOK.md`.
 Post-hoc (written after seeing Set B failure breakdowns): failure classification table; no change to primary analysis.
+Post-hoc (written after seeing Set B results): 'executable' in the registered analysis counted suites that crashed before running any test; sensitivity C restricts to suites with at least one test run. Primary analysis unchanged.
