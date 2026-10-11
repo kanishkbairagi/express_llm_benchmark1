@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
-\usepackage{booktabs,array,amsmath,xcolor,etoolbox,listings,lineno}
+\usepackage{graphicx,booktabs,array,amsmath,xcolor,etoolbox,listings,lineno}
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \setlength{\tabcolsep}{3pt}
 \AtBeginEnvironment{table}{\small}
@@ -21,7 +21,7 @@
 \linenumbers
 
 \begin{abstract}
-We compare two LLMs, \textit{gemini-3.6-flash} and \textit{gpt-oss-120b} (via Groq), on generating Jest unit tests for Express.js controllers, using repeated trials rather than a single run. Set~A contains 25 controllers written by the author (5 trials per model per controller, 250 suites). Set~B contains 25 controllers from 13 public repositories, chosen by a rule-based protocol (3 trials, 150 suites). A deterministic non-LLM generator serves as a descriptive baseline. On Set~A, 111 of 125 Gemini suites and 99 of 125 Groq suites passed every test (88.8\% vs.\ 79.2\%; the confidence intervals overlap). On the 22 controllers that executed in all trials for both models, Gemini achieved higher coverage (line $+6.6$ points, 95\% CI [5.5, 7.8]) and a higher mutation score ($+13.5$ points, [10.7, 16.8]), but 9 of 25 (Gemini) and 15 of 25 (Groq) controllers flipped between passing and failing across trials. On Set~B, only 8 of 75 Gemini and 5 of 75 Groq suites passed every test, and the registered comparison found no detectable difference (line coverage $-6.2$ points, [$-14.8$, 4.6]). Many Set~B failures were crashes before any test ran (missing packages, wrong relative import paths). A post hoc analysis restricted to trials where both models' tests ran favored Gemini (line $+17.5$ points, [3.2, 31.4]). Results are specific to these two models, this prompt, and this harness.
+We compare two LLMs, \textit{gemini-3.6-flash} and \textit{gpt-oss-120b} (via Groq), on generating Jest unit tests for Express.js controllers using repeated trials. Set~A contains 25 author-written controllers (5 trials per model, 250 suites). Set~B contains 25 controllers from 13 public repositories selected by a rule-based protocol (3 trials, 150 suites). A deterministic non-LLM generator serves as a baseline. On Set~A, 111 of 125 Gemini suites and 99 of 125 Groq suites passed all tests (88.8\% vs.\ 79.2\%; overlapping confidence intervals). On 22 controllers executing across all trials, Gemini achieved higher coverage (line $+6.6$ points, 95\% CI [5.5, 7.8]) and mutation score ($+13.5$ points, [10.7, 16.8]), though 9 Gemini and 15 Groq controllers flipped pass/fail status across trials. On Set~B, only 8 of 75 Gemini and 5 of 75 Groq suites passed; the primary comparison showed no detectable difference (line coverage $-6.2$ points, [$-14.8$, 4.6]). Most Set~B failures were pre-execution crashes from missing packages or invalid paths. A post hoc analysis of runnable tests favored Gemini (line $+17.5$ points, [3.2, 31.4]).
 \end{abstract}
 
 \smallskip
@@ -118,7 +118,6 @@ The pilot ran each controller once per model, across several sessions on two day
 \tablein{table1_pilot_run.tex}
 
 \subsection{Set A: author-written controllers (RQ1, RQ2)}
-% SRC: results/analysis/suite_success_summary.csv, per_trial_summary.csv, primary_controller_comparison.csv
 Across five trials, 111 of 125 Gemini suites (88.8\%, 95\% CI [81.6, 95.2]) and 99 of 125 Groq suites (79.2\%, [69.6, 87.2]) passed every test. Gemini produced 12 assertion-failure suites and 2 syntax errors; Groq produced 25 assertion-failure suites and 1 syntax error. No output was truncated.
 
 Outcomes varied between trials: 9 of 25 controllers flipped between fully passing and failing for Gemini, and 15 of 25 for Groq (Table~\ref{tab:seta_suite_success}). Per-trial means across the five trials were 24.6 (SD 0.55) executable and 22.2 (SD 1.64) fully passing suites for Gemini, and 24.8 (0.45) and 19.8 (1.30) for Groq.
@@ -130,7 +129,6 @@ On the 22 controllers that executed in all trials for both models (excluded: \te
 \textbf{Cost.} Mean output tokens per call were about 4{,}726 for Gemini (3{,}044 completion plus 1{,}682 thinking tokens) and 2{,}881 for Groq (2{,}463 completion plus 418 reasoning tokens; Table~\ref{tab:token_usage}); Gemini's higher coverage should be read together with this larger generation budget and with its larger tests (426 vs.\ 295 tests passed per trial).
 
 \subsection{Set B: external controllers (RQ3)}
-% SRC: results/analysis_external/*.csv
 Only 8 of 75 Gemini suites (10.7\%, repository-cluster 95\% CI [1.4, 24.2]) and 5 of 75 Groq suites (6.7\%, [0.0, 17.4]) passed every test. In the registered primary comparison (21 controllers, three trials each; Table~\ref{tab:setb_comparison}), Gemini's line coverage was lower by 6.2 points (95\% CI [$-14.8$, 4.6]); branch ($-1.9$ points) and function ($-4.8$ points) differences also had intervals containing zero, and the trial-level and zero-imputed analyses agreed. Only one controller had fully passing suites for both models, so a mutation comparison was not possible.
 
 Of the 150 Set~B trials, 62 ran no test at all (42 Gemini, 20 Groq), almost all because the test file crashed on import. A post hoc classification of the 137 non-passing trials (Table~\ref{tab:setb_failures}) shows: 27 trials imported a package that is not installed (\texttt{supertest}; 17 Gemini, 10 Groq); 28 imported a relative path that is valid from the controller's directory but not from the test file's directory (24 Gemini, 4 Groq); 1 Groq trial invented a path; 5 were syntax errors; and 75 were assertion failures (25 Gemini, 50 Groq). The first two categories come from the prompt not specifying the test location or installed packages, so they reflect the harness as much as the models.
@@ -140,7 +138,6 @@ Of the 150 Set~B trials, 62 ran no test at all (42 Gemini, 20 Groq), almost all 
 \tablein{table5_setb_failures.tex}
 
 \subsection{Naive baseline (RQ4)}
-% SRC: results/baseline_naive/*.csv, results/analysis/*.csv, results/analysis_external/*.csv
 The baseline is a deterministic script that, for each exported handler, makes three calls with mocked request, response, and next objects and asserts only that the call settles. It uses no LLM and no controller-specific edits. On the 22 matched Set~A controllers its mean line, branch, and function coverage was 37.8\%, 33.9\%, and 39.5\%, against 94.1\%, 94.6\%, and 61.4\% (Gemini) and 87.5\%, 86.8\%, and 43.0\% (Groq). On Set~B (19-controller subset) the baseline's mean line coverage was 34.3\% over all 19 controllers (43.4\% over the 15 whose baseline suite ran), against 50.8\% (Gemini) and 33.3\% (Groq); the baseline's function coverage (57.0\%, or 72.2\% over runnable suites) exceeded both models' (50.3\% and 30.2\%) because it calls every exported function (Table~\ref{tab:naive_baseline}). These comparisons are descriptive: the baseline is a single deterministic run, the model figures are means over matched trials, and the populations of suites differ. The baseline's only assertion is that a call settles, so it cannot detect faults; we did not mutation-test it.
 \tablein{table6_naive_baseline.tex}
 \tablein{table7_token_usage.tex}
